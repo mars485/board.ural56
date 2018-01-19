@@ -1,0 +1,166 @@
+<html>
+
+<head>
+    <meta charset="{%$settings.charset%}">
+    <title>{%$title_popup%}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%$smarty.const.THEME%}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{%$smarty.const.THEME%}assets/css/style.css?r={%10000|rand:9999999999%}" rel="stylesheet">
+    
+    <script>
+    function IsNumeric(sText){
+        var ValidChars = "0123456789.";
+        var IsNumber=true;
+        var Char;
+        for (i = 0; i < sText.length && IsNumber == true; i++){
+          Char = sText.charAt(i);
+          if (ValidChars.indexOf(Char) == -1){
+             IsNumber = false;
+          }
+        }
+        return IsNumber;
+        }
+    
+    function calc(num)
+    	{
+    	var pr;
+    	pr = parseInt(document.frm.days.value) * {%$service.price%};
+    	if(isNaN(pr))
+    		{
+    		document.getElementById('count').innerHTML = '{%$locale.636%}';
+    		document.frm.submit.disabled = true;
+    		document.frm.spAmount.value = '';
+    		}
+    	else if(parseInt(document.frm.days.value) > {%$service.max%})
+    		{
+    		document.getElementById('count').innerHTML = '{%$locale.637%}';
+    		document.frm.submit.disabled = true;
+    		document.frm.spAmount.value = '';
+    		}
+    	else if(parseInt(document.frm.days.value) < {%$service.min%})
+    		{
+    		document.getElementById('count').innerHTML = '{%$locale.638%}';
+    		document.frm.submit.disabled = true;
+    		document.frm.spAmount.value = '';
+    		}
+    	else
+    		{
+    		document.getElementById('count').innerHTML = pr + ' ' + '{%$Currency%}';
+    		document.frm.submit.disabled = false;
+    		document.frm.spAmount.value = pr;
+    		}
+    
+    	}
+    </script>
+</head>
+<body class="premium">
+    <h3>{%$message.title%}</h3>      
+
+        
+        
+        
+            {%if $status == 'go'%}
+            <div class="billing_html">
+                {%$html%}
+            </div>
+            {%elseif $status == 'select'%}
+            
+
+            
+            
+            <p>{%$locale.191%}: <b>{%$Count%}</b> {%$Currency%}. {%$locale.182%}: <b>{%$service.name%}</b></p>
+            <p>{%$locale.661%}:</p>
+            <div class="bil">
+            	{%foreach from=$billing key='k' item='bil'%}
+            		{%if $bil.status == 1%}
+                        {%assign var='icon' value="`$smarty.const.FULLPATH`templates/`$smarty.const.THEME_NAME`/images/billing/`$k`.png"%}
+                        {%assign var='link' value="?service=`$smarty.get.service`&message_id=`$smarty.get.message_id`&p=`$bil.uri`&id=`$payment_id`"%}
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <a href="{%$link%}">
+                                    {%if file_exists($icon)%}
+                                        {%assign var='icon' value="`$smarty.const.THEME`images/billing/`$k`.png"%}
+                                    {%else%}
+                                        {%assign var='icon' value="`$smarty.const.THEME`images/billing/default.png"%}
+                                    {%/if%}
+                                    <img src="{%$icon%}" alt="{%$bil.name%}"  class="img-thumbnail"/>
+                                </a>
+                            </div>
+                            <div class="col-xs-9">
+                                <p><b>{%$bil.name%}</b> &mdash; {%$bil.descr%}</p>
+                                <p><a href="{%$link%}" class="btn btn-primary btn-sm">{%$locale.339%}</a></p>
+                            </div>
+                        </div>
+            		{%/if%}
+            	{%/foreach%}
+            </div>
+            
+            {%elseif $status == 'calc'%}
+            
+                <div class="row">
+                    <div class="col-xs-5">
+                        <ul class="nav nav-pills nav-stacked">
+                            {%foreach from=$services item='serv'%}
+                                <li {%if $smarty.get.service == $serv.type%}class="active"{%/if%}><a href="?service={%$serv.type%}&message_id={%$smarty.get.message_id%}">{%$serv.name%}</a></li>
+                            {%/foreach%}
+                        </ul>
+                    </div>
+                    <div class="col-xs-7">
+                    	<form name="frm" action='?service={%$smarty.get.service%}&message_id={%$smarty.get.message_id%}' method='post'>
+                                     
+                            {%if $service_packages%}
+                                <label>{%$locale.160%}</label>
+                                <table class="table table-hover checkboxtable">
+                            		{%foreach from=$service_packages item='p'%}
+                                        {%assign var='c' value=$service.price*$p.days%}
+                                        <tr>
+                                            <td>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input id="days_{%$p.id%}" type="radio" name="days" value="{%$p.days%}">
+                                                        <strong>{%$p.text%}</strong> 
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                            <div class="radio">
+                                                <label for="days_{%$p.id%}">{%$c%} {%$Currency%}</label>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                    {%/foreach%}
+                                
+                                </table>
+                            {%else%}
+                                <p>
+                                    <label for="days">{%$locale.160%}</label>
+                                    <div class="input-group">
+                                        <input onchange="calc();" onkeyup="var n=this.value.replace(/([^0-9])/g,''); if(n!=this.value) this.value=n; calc();"
+                                            id="days" name="days" value="{%$days%}" class="form-control"                
+                                            placeholder="{%$service.min%} &mdash; {%$service.max%}" type="number" />
+                                        <span class="input-group-addon">{%$locale.175%}</span>
+                                    </div>
+                                </p>
+                                <p class="lead">{%$locale.191%} <span id='count'>{%$count%}</span></p>
+                                           
+                            {%/if%}
+                
+                			<input type="submit" value="{%$locale.65%}" class="btn btn-primary" name="submit" />
+        
+                
+                
+                        </form>
+                    </div>
+                </div>
+            {%/if%}
+        
+        
+        
+        
+
+
+    
+
+</body>
+</html>

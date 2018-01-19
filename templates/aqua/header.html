@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="{%$settings.charset%}">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="author" content="{%$settings.autor%}"/>
+    <meta name="description" content="{%$description%}"/>
+    <meta name="keywords" content="{%$keywords%}"/>
+    <meta name="copyright" content="{%$settings.copyright%}"/>
+    {%if $noindex%}
+    <meta name="robots" content="noindex,nofollow"/>
+    {%/if%}
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fav and touch icons -->
+    <!-- Fav and touch icons -->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <title>
+    {%foreach from=$title_reverse item='tit' name='i'%}
+        {%$tit.name|strip_tags%}
+        {%if $smarty.foreach.i.last eq false %} / {%/if%}
+    {%/foreach%}
+    {%if $regions|@count > 0%}
+        {%$locale.1019%}
+    	{%foreach from=$regions item='region' name='i'%}
+            {%$region.name%}{%if $smarty.foreach.i.last eq false %}, {%/if%}
+    	{%/foreach%}
+    {%/if%}
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%$smarty.const.THEME%}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles needed for carousel slider -->
+    <link href="{%$smarty.const.THEME%}assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="{%$smarty.const.THEME%}assets/css/owl.theme.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{%$smarty.const.THEME%}assets/css/style.css" rel="stylesheet">
+    
+    {%if $modtype=='ind'%}
+		<!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+		<link rel="stylesheet" href="{%$smarty.const.THEME%}assets/css/settings.css" media="screen" />
+    {%/if%}
+    
+    <script>
+        var TPL_PATH = "{%$smarty.const.PATH%}";
+        var TPL_PATH_THEME = '{%$smarty.const.THEME%}';
+        var TPL_REGION_ID = {%if $second_region.id%}{%$second_region.id%}{%else%}0{%/if%};
+        var TPL_AUTOROTATE = {%if $settings.message_block_type == 2 %}2000{%else%}false{%/if%};
+        var TPL_L_00 = '{%$locale.76%}';
+        var TPL_L_01 = '{%$locale.184%}';
+        var TPL_L_02 = '{%$locale.335%}';
+        var TPL_L_03 = '{%$locale.43%}';
+        var TPL_L_04 = '{%$locale.81%}';
+        var TPL_L_05 = '{%$locale.82%}';
+        var TPL_L_06 = '{%$locale.986%}';
+        var TPL_L_07 = '{%$locale.1194%}';
+        var TPL_L_08 = '{%$locale.1195%}';
+        paceOptions = {
+            elements: true
+        };        
+        var fields = new Array();
+        var yamaps = new Array();
+    </script>
+    {%if $modtype != "ind"%}
+    <script src="{%$smarty.const.THEME%}assets/js/pace.min.js"></script>
+    {%/if%}
+</head>
+<body>
+<div id="wrapper">
+    {%assign var=second_region_name value=""%}
+    {%if $second_region%}
+        {%assign var=second_region_name value=$second_region.name|@count%}
+        {%assign var=second_region_name value=$second_region_name-1%}
+        {%assign var=second_region_name value=$second_region.name[$second_region_name]%}
+    {%/if%}  
+    <div class="header">
+        <nav class="navbar   navbar-site navbar-default" role="navigation">
+            <div class="container">
+                    <div class="navbar-header left-head">
+                        <a href="{%$settings.path%}" class="navbar-brand logo logo-title">
+                            <span class="logo-icon">
+                                <img alt='{%$settings.copyright%}' src='{%$settings.logo%}' />
+                            </span>
+                            <!--span class="logo-text">
+                                {%$smarty.const.TITLE%}
+                            </span-->
+                        </a>
+                    </div>
+                    <div class="right-head">
+                        <!--button class="filter-toggle2 navbar-toggle" type="button">
+                            <span class="sr-only">Left menu bar</span> 
+                            <i class="fa fa-angle-double-right"></i>
+                        </button-->
+                        <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="sr-only">Main menu</span> 
+                            <i class="icon-menu-1"></i>
+                        </button>
+                        <!--button class="filter-toggle navbar-toggle" type="button">
+                            <span class="sr-only">Right menu bar</span> 
+                            <i class="fa fa-angle-double-left"></i>
+                        </button-->
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="{%$settings.path%}">Главная</a>
+								</li>
+                        		<li><a href="{%$settings.path%}mail/">{%$locale.266%}</a></li>
+                        		<li>
+                                    <a href="{%$settings.path%}users/" id="menu-user"><i class="fa fa-user" aria-hidden="true"></i> {%$locale.41%}</a>
+                                    <div id="menu-user-content" style="display: none;"> 
+                                        <ul>
+                                            {%if !$settings.user%}
+                                                <li><a class="btn btn-primary" href="{%$settings.path%}users/register/">{%$locale.24%}</a></li>
+                                            {%/if%}
+											<li>
+                                    <a href="{%$settings.path%}notepad/">
+                                        {%$locale.244%}
+                                        <span {%if $counter.notepad == 0%}style="display: none;"{%/if%} class="badge n_count">{%$counter.notepad%}</span>
+                                    </a>
+                                </li>
+                                            <li><a href="{%$settings.path%}users/">{%$locale.265%}</a></li>
+                                            <li><a href="{%$settings.path%}users/moderated/">{%$locale.979%}</a></li>
+                                            <li><a href="{%$settings.path%}users/update/">{%$locale.1098%}</a></li>
+                                            <li><a href="{%$settings.path%}users/order/">{%$locale.65%}</a></li>
+                                            <li><a href="{%$settings.path%}users/pay/">{%$locale.64%}</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                {%if $settings.shop == 1%}
+                                    <li><a href="{%$settings.path%}shops/">{%$locale.1103%}</a></li>
+                                {%/if%}
+                                <li class="postadd">
+                                    <a class="btn btn-block btn-border btn-post btn-danger" href="{%$settings.path%}add/">{%$locale.69%}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/.nav-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <!-- /.header -->
+    {%if $modtype == 'ind'%}
+				
+
+        <!-- /.intro -->
+    {%/if%}
+

@@ -1,0 +1,4 @@
+
+	{%foreach from=$languages item='language'%}
+        <a rel="nofollow" href="{%$settings.path%}change_language/?language={%$language%}"  class="btn  btn-{%if $settings.locale == $language%}primary{%else%}default{%/if%}" >{%$language%}</a>
+	{%/foreach%}

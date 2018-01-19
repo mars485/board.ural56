@@ -1,0 +1,64 @@
+
+	{%if $err|@count > 0%}
+        <div class="alert alert-danger" role="alert">
+            <ul>
+            {%foreach from=$err item='er'%}
+                <li>{%$er%}</li>
+            {%/foreach%}
+            </ul>
+        </div>
+    {%elseif isset($smarty.post.msg)%}
+        <div class="alert alert-success" role="alert">
+                {%$locale.227%}
+        </div>
+    {%/if%}
+    {%if $messages|@count > 0%}
+    <form name="prolong_few" action="" method="POST">
+
+        <ul>
+            {%foreach from=$messages item='message'%}
+                <li>
+                    <label>   
+                        <p>             
+                            <input {%if $smarty.get.message == $message.id%}checked{%/if%} name="msg[]" 
+                                class="MessagesCheck" type="checkbox" value="{%$message.id%}" />
+                            
+                            {%$message.title|truncate_utf:100:'...'%}
+                            
+                            <span class="badge" data-original-title="{%$locale.14%}"  data-placement="top" data-toggle="tooltip">
+                            <i class="fa fa-times-circle"></i>&nbsp;{%$message.date_del|date_format:"%d.%m.%Y"%}
+                            </span>
+                            
+                            
+                            <a href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                            </a>
+                            
+                        </p>
+                    </label>
+                </li>
+            {%/foreach%}
+        </ul>
+
+        <p>
+            <select size='1' name='timing' class='form-control' style="width: auto;">
+            	{%foreach  from=$timing item='time'%}
+            	   <option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+            	{%/foreach%}
+            </select>
+        </p>
+        <p>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-mail-forward"></i> {%$locale.145%}</button>
+        </p>
+
+        
+        <p>&nbsp;</p>
+
+        
+        
+    </form>
+    {%elseif !isset($smarty.post.msg)%}
+        <div class="alert alert-warning error" role="alert">
+                <p>{%$locale.1092%}</p>
+        </div>
+    {%/if%}

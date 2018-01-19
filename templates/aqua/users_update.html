@@ -1,0 +1,12 @@
+<div id="panel_update">
+    {%if isset($smarty.get.notice)%}
+        <div class="alert alert-success">{%$locale.958%}</div>
+    {%/if%}
+    <div class="alert alert-info">{%$infotext%}</div>
+    <h4 class="line">{%$messages_counter%}</h4>
+    
+    {%include file='list_short.html'%}
+    
+    {%include file="pagination.html"%}
+    
+</div>

@@ -1,0 +1,87 @@
+<form name='form' action='#order' method='post'>
+
+{%if $order%}
+	<div class="alert alert-info">
+	<p class="lead">{%$locale.181%}</p>
+		<ul>
+			<li><b>{%$locale.182%}</b>: {%$services[$smarty.post.service].name%}</li>
+			<li><b>{%$locale.160%}</b>: {%$smarty.post.days%} {%$locale.175%}</li>
+			<li><b>{%$locale.183%}</b>: {%$messages[$smarty.post.message_id].title|truncate_utf:100:"..."%}</li>
+			<li><b>{%$locale.185%}</b>: {%$count%} {%$currency_names[$settings.currency].name2%}</li>
+		</ul>
+        <div class="text-center"><input class="btn btn-success" type='submit' name='submit_order_ok' value='{%$locale.162%}'>
+<input class="btn btn-default" type='button' onclick="javascript:document.location.href='{%$settings.path%}users/order/'" value='{%$locale.184%}'></div>
+
+
+	</div>
+
+
+<input name='service' type='hidden' value='{%$smarty.post.service%}'>
+<input name='days' type='hidden' value='{%$smarty.post.days%}'>
+<input name='message_id' type='hidden' value='{%$smarty.post.message_id%}'>
+
+{%else%}
+
+
+    {%include file='list_short.html'%}
+
+    <a name="order"></a>
+    
+    <div class="well">
+        <h3><i class=" icon-certificate icon-color-1"></i> {%$locale.159%}</h3>
+          
+        <div class="form-group">
+            <table class="table table-hover checkboxtable">
+            
+        	    {%foreach from=$services item='serv'%}
+                <tr>
+                    <td>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="service" id="optionsRadios0" value="{%$serv.type%}" {%if $smarty.post.service == $serv.type || $smarty.get.service == $serv.type %}checked{%/if%}>
+                                <strong>{%$serv.name%}</strong> 
+                                <p><em>{%$serv.tip%}</em></p>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <p><strong>{%$serv.price%}&nbsp;{%$currency_names[$settings.currency].name2%}/{%$locale.173%}</strong></p>
+                        <p><small>{%$locale.170%} {%$serv.word_max%}, {%$locale.171%} {%$serv.word_min%}</small></p>
+                    </td>
+                </tr>
+                {%/foreach%}
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                {%$locale.160%}<br />
+                                <small>{%$locale.172%}</small>
+                            </div>
+                            <div class="col-md-4">
+                                <input name='days' type='number' class="form-control" value='{%$smarty.post.days%}'>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {%$error%}
+                		{%if $submit%}
+                			<p class="lead">{%$count%} {%$currency_names[$settings.currency].name2%}</p>
+                		{%else%}
+                			{%$count%}
+                		{%/if%}
+                    </td>
+                </tr>
+            </table>
+          
+        </div>
+        <div class="row" style="margin:10px;">
+        <div class="pull-left"><input type='submit' name='submit_calc' value='{%$locale.177%}' class="btn btn-success"></div>
+        <div class="pull-right">{%if $submit%}<input type='submit' name='submit_order' value='{%$locale.162%}' class="btn btn-primary">{%/if%}</div>
+        
+        </div>
+        
+    </div>
+
+</form>
+{%/if%}

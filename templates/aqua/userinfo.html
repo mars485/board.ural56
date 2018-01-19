@@ -1,0 +1,22 @@
+                    
+
+    <h1 class="once_information">{%$user.name%}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <ul class="once_list2">
+                <li>{%$locale.368%}: <i class="fa fa-clock-o" aria-hidden="true"></i> {%$user.date|date_format:"%d.%m.%Y"%}</li>
+                <li>{%$locale.765%}: <i class="fa fa-folder-open" aria-hidden="true"></i> {%$user.count_messages%}</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <a class="btn btn-default btn-sm contact_modal" href="{%$settings.path%}sendmail/?userid={%$user.id%}&tpl=message2user">
+                <i class=" icon-mail-2"></i> {%$locale.266%} 
+            </a>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    <h5 class="list-title">{%$locale.775%}</h5>
+    {%include file='list.html'%}
+
+
+{%include file='form_contact.html'%}

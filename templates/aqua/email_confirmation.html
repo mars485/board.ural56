@@ -1,0 +1,61 @@
+  
+    {%if $sended%}
+        <div class="alert alert-success" >
+            <i class="fa fa-check" aria-hidden="true"></i> {%$locale.48%}
+        </div>
+    {%else%}
+    
+    
+        {%if isset($smarty.get.show_notice)%}
+            <div class="alert alert-warning" >
+                {%$locale.1046%}
+            </div>
+        {%/if%}
+        
+        {%if $err%}
+            <div class="alert alert-danger" >
+                <ul>
+                    {%foreach from=$err item='e'%}
+                        <li>{%$e%}</li>
+                    {%/foreach%}
+                </ul>
+            </div>
+        {%/if%}
+        
+        <form method='POST' action='' class='form-horizontal'>
+            <div class="form-group">
+                <label class="col-md-3 control-label"  for="remail">
+                    {%$locale.26%}
+                </label>
+                <div class="col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                        <input id="remail" value="{%$email%}" class="form-control" placeholder="{%$locale.26%}" required="" type="email">
+                    </div>
+                </div>
+            </div>
+        	{%if $settings.captcha == 1%}
+                <div class="form-group">
+                    <label class="col-md-3 control-label">
+                            {%$locale.44%}
+                    </label>
+                    <div class="col-md-8">
+                        <div class="captcha_cont">
+                            {%if $settings.captcha_type == 3%}
+                                <script src="https://www.google.com/recaptcha/api.js"></script>
+                                <div class="g-recaptcha" data-sitekey="{%$settings.recaptcha1%}"></div>
+                            {%else%}
+                                <img src='{%$settings.path%}captcha/{%"100000"|mt_rand:900000%}'>
+                                <input name="captcha" required="" class="form-control required" type="number" placeholder="{%$locale.1182%}" autocomplete="off">
+                            {%/if%}
+                        </div>
+                    </div>
+                </div>
+        	{%/if%}
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-3">
+                    <input class='btn btn-success' type='submit' name='submit' value='{%$locale.55%}' />
+                </div>
+            </div>
+        </form>
+    {%/if%}

@@ -1,0 +1,118 @@
+<div class="blogs-comments-area">
+	<h5 class="title-2">
+    	{%if $message.comments_count < 1 %}
+            {%$locale.1020%}
+        {%else%}
+            {%$message.comments_count_text%}
+        {%/if%}
+    </h5>
+
+	<div class="blogs-comment-respond" id="respond">
+        {%if $message.comments_count < 1 %}
+            <div class="alert alert-warning">{%$locale.779%}</div>
+        {%else%}
+    		{%if $message.comments_count > 0 %}      
+                <ul class="blogs-comment-list">
+        			{%foreach from=$message.comments  item='comment'%}
+                        {%assign var='contact_link' value="`$settings.path`sendmail/?comment_id=`$comment.id`&userid=`$comment.userinfo.id`"%}
+                        {%if $comment.userinfo%}
+                            {%assign var='username' value=$comment.userinfo.name%}
+                        {%else%}
+                            {%assign var='username' value=$comment.user_name%}
+                        {%/if%}
+                        
+    					<li>
+    						<div class="blogs-comment-wrapper">
+    							<div class="blogs-comment-details">
+    								<div class="blogs-comment-name">
+    									<a href="{%$contact_link%}" class="contact_modal">{%$username%} </a>
+    									<span class="blogs-comment-date">{%$comment.date|userdate%}</span>
+    								</div>
+    								<div class="blogs-comment-description">
+    									<p>{%$comment.text|wordwrap:100%}</p>
+    								</div>
+                                    {%if $comment.editable%}
+                                        <div class="blogs-comment-reply editblock">
+                                            <a class="btn btn-primary btn-xs com_edit" data-id="{%$comment.id%}" href="#"> <i class="fa fa-edit"></i> <span>{%$locale.200%}</span> </a>
+                                            <a class="btn btn-danger btn-xs com_delete" data-id="{%$comment.id%}" href="#"> <i class=" fa fa-trash"></i> <span>{%$locale.201%}</span> </a>
+                                        </div>
+                                    {%/if%}
+    							</div>
+    						</div>
+    					</li>
+
+        			{%/foreach%}
+                </ul>
+    		{%/if%}
+        {%/if%}
+    
+    
+		<!--Comment list End-->
+
+
+
+		<h3 class="blogs-comment-reply-title list-title">{%$locale.780%}</h3>
+        {%assign var='comtext' value=""%}
+    	{%if $smarty.post.commentsubmit%}
+    			{%if $message.comment_err|@count > 0%}
+    				<div class="alert alert-danger">
+    					<ul>
+    						{%foreach from=$message.comment_err  item='err'%}
+    							<li>{%$err%}</li>
+    						{%/foreach%}
+    					</ul>
+    				</div>
+                    {%assign var='comtext' value=$smarty.post.comtext%}
+    			{%else%}
+    				<div class='alert alert-success'>{%$locale.834%}</div>
+    			{%/if%}
+    	{%/if%}
+        
+        {%if $settings.user || (!$settings.user && $settings.comment_unreg == 1)%}
+			<form class="blogs-comment-form" id="blogs-commentform" method="post" action="">
+                {%if !$settings.user%}
+					<div class="row form-group">
+                        <div class="col-md-4 text-left"><span>{%$locale.28%}</span></div>
+						<div class="col-md-8">
+                            <input required="" class="form-control" type="text" placeholder="{%$locale.28%}" value="{%$smarty.post.comusername%}" name="comusername">
+                        </div>
+						
+					</div>
+					<div class="row form-group">
+                        <div class="col-md-4 text-left"><span>{%$locale.26%}</span></div>
+						<div class="col-md-8">
+                            <input required="" class="form-control" type="email" placeholder="{%$locale.26%}" value="{%$smarty.post.comuseremail%}" name="comuseremail">
+                        </div>	
+					</div>
+                {%/if%}
+				<div class="row form-group">
+                    <div class="col-md-4 text-left"><span>{%$locale.44%}</span></div>
+					<div class="col-md-8">
+                        <div class="captcha_cont">
+                            {%if $settings.captcha_type == 3%}
+                                <script src="https://www.google.com/recaptcha/api.js"></script>
+                                <div class="g-recaptcha" data-sitekey="{%$settings.recaptcha1%}"></div>
+                            {%else%}
+                                <img src='{%$settings.path%}captcha/{%"100000"|mt_rand:900000%}'>
+                                <input name="captcha" required="" class="form-control required" type="number" placeholder="{%$locale.1182%}" autocomplete="off">
+                            {%/if%}
+                        </div>
+                    </div>	
+				</div>
+
+				<div class="form-group">
+					<textarea class="form-control" required="" placeholder="{%$locale.192%}" name="comtext">{%$comtext%}</textarea>
+                </div>
+                <input type="hidden" name="commentsubmit" value="1" />
+				<button type="submit" class="btn-success btn btn-lg"> {%$locale.55%} </button>
+                
+            </form>
+        {%else%}
+            <div class="alert alert-warning">{%$locale.788%}</div>
+        {%/if%}
+
+	</div>
+	<!-- #respond -->
+
+
+</div>

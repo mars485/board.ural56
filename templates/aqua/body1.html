@@ -1,0 +1,86 @@
+{%if $modtype != 'cat'%}
+    {%assign var='category_count' value=$counter.messages_all%}
+{%else%}
+    {%assign var='category_count' value=$count_cat_messages%}
+{%/if%}
+
+{%include file='header.html'%}
+
+
+    <div class="main-container">
+        <div class="container">
+
+            {%$blocks.h%}
+
+            <div class="row">
+                {%if $blocks.l != ""%}
+                    <!-- this (.mobile-filter-sidebar) part will be position fixed in mobile version -->
+                    <div class="col-sm-3 page-sidebar mobile-filter-sidebar">
+                        <aside>
+                            <div class="inner-box">
+                                {%$blocks.l%}
+                                <div style="clear:both"></div>
+                            </div>
+                        </aside>
+                    </div>
+                    <!--/.page-side-bar-->
+                {%/if%}
+          
+
+                <div class="col-sm-{%if $blocks.r == "" || $blocks.l == ""%}9{%else%}6{%/if%} page-content">
+                
+                    {%$blocks.t%}      
+                               
+                    <div class="inner-box category-content">
+                    <h1 class="title-2">
+                        {%if $smarty.get.cat.0 == 'users'%}
+                            {%assign var='c' value=$smarty.get.cat.1%}
+                                {%if $c == "" %}{%$locale.61%}
+                                    {%elseif $c == 'moderated'%}{%$locale.979%}
+                                    {%elseif $c == 'deleted'%}{%$locale.980%}
+                                    {%elseif $c == 'update'%}{%$locale.1094%}
+                                    {%elseif $c == 'info'%}{%$locale.126%}
+                                    {%elseif $c == 'subscribe'%}{%$locale.62%}
+                                    {%elseif $c == 'orders'%}{%$locale.209%}
+                                    {%elseif $c == 'state'%}{%$locale.63%}
+                                    {%elseif $c == 'pay'%}{%$locale.64%}
+                                    {%elseif $c == 'order'%}{%$locale.65%}
+                                    {%elseif $c == 'shop'%}{%$locale.1104%}{%if $settings.user.shop.name != ""%} &laquo;{%$settings.user.shop.name%}&raquo;{%/if%}
+                                {%/if%}
+                        {%else%}
+                            {%$title_second.name%}
+                        {%/if%}
+
+                    </h1>
+                        
+                        
+                        {%if $modtype != 'ind'%}
+                            {%if $title_normal|@count > 2 || $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+                                <ol class="breadcrumb">
+                    				{%foreach from=$title_normal item='t' name='t'%}
+                                        {%if !$smarty.foreach.t.last%}
+                                        <li>
+                                            {%if $smarty.foreach.t.first%}
+                                                <a href="{%$t.link%}"><i class="icon-home fa"></i></a>
+                                            {%else%}
+                            					<a href='{%$t.link%}'>
+                                                    {%$t.name%} 
+                                                </a>
+                                            {%/if%}
+                                        </li>
+                                        {%/if%}
+                                        {%if $smarty.foreach.t.first%}
+                                            {%if $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+                                                {%assign var='breadcrumb' value=$message.cat|breadcrumb:$categories%}
+                                                {%foreach from=$breadcrumb item='t2'%}
+                                                    <li>
+                                                        <a href="{%$t2.href%}">{%$t2.name%}</a>
+                                                    </li>
+                                                {%/foreach%}
+                                            {%/if%}
+                                        {%/if%}
+                    				{%/foreach%}
+                                </ol>
+                            {%/if%}
+                        {%/if%}
+

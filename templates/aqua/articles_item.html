@@ -1,0 +1,27 @@
+{%assign var=t value=$title_normal|@count%}
+{%assign var=t value=$t-1%}
+{%assign var=t value=$title_normal[$t]%}
+
+<div class="blog-post-content-desc">
+	<span class="info-row blog-post-meta">
+        <span class="date"><i class="icon-clock"></i> {%$article.pubdate|userdate%} </span>  -
+        <span class="item-location">
+            <a href="{%$t.href%}">
+                <i class="icon-folder-open"></i> {%$t.name%}
+            </a>
+        </span> 
+	</span>
+	<div class="blog-post-content">
+		<h2>{%$article.name%}</h2>
+		<div class="blog-article-text">
+
+
+
+				{%$article.content.full%}
+
+
+
+		</div>
+	</div>
+</div>
+

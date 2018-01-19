@@ -1,0 +1,28 @@
+<div class="row tree2">
+{%foreach from=$tree item=el%}
+    {%assign var="uri" value=$settings.path_rel%}
+    {%assign var="count" value=$el.id|count_msg%}
+    <div class='cat-list maintree'>
+        <h3 class="cat-title">
+            <a href='{%$uri%}{%$el.uri%}/' {%if $el.img == ""%}class="noimg"{%/if%}>
+            {%if $el.img != ""%}
+                <img class="ln-shadow" src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$el.name%}' />
+            {%/if%}
+            {%$el.name%}
+            <span class="count">{%$count%}</span>
+            </a>
+            {%if $el.cat%}
+                <span data-target=".cat-id-{%$el.id%}" data-toggle="collapse"
+                      class="btn-cat-collapsed collapsed">   <span
+                        class=" icon-down-open-big"></span> </span>
+            {%/if%}
+        </h3>
+        <ul class="cat-collapse collapse in cat-id-{%$el.id%}">
+            {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+            {%foreach from=$el.cat item='el2' name='ind'%}
+                <li><a href="{%$uri%}{%$el2.uri%}/">{%$el2.name%}</a>{%if $smarty.foreach.ind.last eq false %}, {%/if%}</li>	
+            {%/foreach%}
+        </p>
+    </div>
+{%/foreach%}
+</div>
