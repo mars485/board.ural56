@@ -409,18 +409,18 @@ p.required, .required sup {
 }
 
 .btn-danger {
-    background-color: #E74C3C;
+    background-color: #0EA712;
     color: #FFFFFF;
 }
 
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger, .btn-post:hover, .btn-post:active {
-    background-color: #EC7063;
-    border-color: #EC7063;
+    background-color: #0ca722;
+    border-color: #0ca722;
     color: #FFFFFF;
 }
 
 .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
-    background: #C44133;
+    background: #0ea712;
 }
 
 .btn-danger.disabled, .btn-danger[disabled], fieldset[disabled] .btn-danger, .btn-danger.disabled:hover, .btn-danger[disabled]:hover, fieldset[disabled] .btn-danger:hover, .btn-danger.disabled:focus, .btn-danger[disabled]:focus, fieldset[disabled] .btn-danger:focus, .btn-danger.disabled:active, .btn-danger[disabled]:active, fieldset[disabled] .btn-danger:active, .btn-danger.disabled.active, .btn-danger.active[disabled], fieldset[disabled] .btn-danger.active {
@@ -929,18 +929,18 @@ button.btn-search {
 
 .cat-list {
     display: block;
-    margin-bottom: 30px;
+    /**margin-bottom: 30px;**/
     line-height: 24px;
 }
 
 .cat-list h3, .title-3 {
     font-family: Open Sans Condensed, Helvetica Neue, sans-serif;
     font-weight: bold;
-    text-transform: uppercase;
+    /**text-transform: uppercase;**/
 }
 
 .cat-list h3 a, .cat-list h3 {
-    color: #2980B9;
+    color: #4b4e50;
     position: relative;
 }
 
@@ -956,6 +956,7 @@ button.btn-search {
     padding-left: 48px;
     padding-top: 0;
     position: relative;
+    background-color: #adff2f;
 }
 
 .cat-list h3 .count {
@@ -985,7 +986,7 @@ button.btn-search {
     border-radius: 2px;
     font-style: normal;
     transition: all 0.1s ease 0s;
-    font-size: 12px;
+    /**font-size: 12px;**/
     color: #4e575d;
 }
 
@@ -4807,11 +4808,11 @@ ul.list-number {
 
 
 .maintree{
-    width: 47%;
-    min-height: 100px;
+    /** width: 47%; **/
+    /**min-height: 100px;**/
     display: inline-block;
     vertical-align: top;
-    margin: 5px;
+    margin: 2px;
     }
   
 .Ads-options{
@@ -5751,4 +5752,9 @@ a.license:hover{
 }
 .bx-wrapper img {
 	max-width: 500px!important;
+}
+
+#subcat {
+    font-size: 15px;
+    padding: 5px;
 }
