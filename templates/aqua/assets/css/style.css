@@ -1178,6 +1178,9 @@ button.btn-search {
 
 .add-image a img {
     width: 100%;
+    max-width: 65px;
+    max-height: 50px;
+    position: relative;
 }
 
 .add-title {
@@ -4025,7 +4028,7 @@ nav.slider-nav a.next {
 /* NAVBAR FIXED */
 
 .navbar-site {
-    position: fixed;
+    /**position: fixed;**/
     top: 0;
     left: 0;
     right: 0;

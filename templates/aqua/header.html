@@ -73,8 +73,9 @@
         {%assign var=second_region_name value=$second_region.name|@count%}
         {%assign var=second_region_name value=$second_region_name-1%}
         {%assign var=second_region_name value=$second_region.name[$second_region_name]%}
-    {%/if%}  
+    {%/if%}
     <div class="header">
+        <p style="text-align: center;"><img alt="" src="/uploads/images/562-f97c38637b17f6f7ef6d0ec957e5e80f.png" style="width: 1000px; height: 100px;" /></p>
         <nav class="navbar   navbar-site navbar-default" role="navigation">
             <div class="container">
                     <div class="navbar-header left-head">
@@ -82,9 +83,9 @@
                             <span class="logo-icon">
                                 <img alt='{%$settings.copyright%}' src='{%$settings.logo%}' />
                             </span>
-                            <!--span class="logo-text">
+                            <span class="logo-text">
                                 {%$smarty.const.TITLE%}
-                            </span-->
+                            </span>
                         </a>
                     </div>
                     <div class="right-head">
@@ -102,10 +103,10 @@
                         </button-->
                         <div class="navbar-collapse collapse">
                             <ul class="nav navbar-nav navbar-right">
-								<li>
+								<!--li>
 									<a href="{%$settings.path%}">Главная</a>
 								</li>
-                        		<li><a href="{%$settings.path%}mail/">{%$locale.266%}</a></li>
+                        		<li><a href="{%$settings.path%}mail/">{%$locale.266%}</a></li-->
                         		<li>
                                     <a href="{%$settings.path%}users/" id="menu-user"><i class="fa fa-user" aria-hidden="true"></i> {%$locale.41%}</a>
                                     <div id="menu-user-content" style="display: none;"> 
@@ -131,8 +132,8 @@
                                     <li><a href="{%$settings.path%}shops/">{%$locale.1103%}</a></li>
                                 {%/if%}
                                 <li class="postadd">
-                                    <a class="btn btn-block btn-border btn-post btn-danger" href="{%$settings.path%}add/">{%$locale.69%}</a>
-                                </li>
+        <a class="btn btn-block btn-border btn-post btn-danger" href="{%$settings.path%}add/">{%$locale.69%}</a>
+    </li>
                             </ul>
                         </div>
                     </div>
