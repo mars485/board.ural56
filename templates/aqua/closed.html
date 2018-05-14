@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="{%$settings.charset%}">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{%$smarty.const.THEME%}assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{%$smarty.const.THEME%}assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{%$smarty.const.THEME%}assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="{%$smarty.const.THEME%}assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="{%$smarty.const.THEME%}assets/ico/favicon.png">
+    <title>{%$setting.title%}</title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%$smarty.const.THEME%}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{%$smarty.const.THEME%}assets/css/style.css" rel="stylesheet">
+    <link href="{%$smarty.const.THEME%}assets/css/coming-soon.css" rel="stylesheet">
+
+
+</head>
+<body class="coming-soon-page">
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+
+                <div class="landModal-inner">
+
+                    <p> {%$settings.closed_info%} </p>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+<section class="landing-page ">
+    <header class="landing-header">
+        <div class="inner">
+            <div class="pull-left">
+                <div class="site-title logo-title"> {%$settings.title%} </div>
+            </div>
+            <div class="pull-right">
+                <i data-toggle="modal" data-target="#myModal" class="icon icon-info-circled"></i>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="inner hw100">
+        <div class="landing-intro fade-in" style="
+    background:url({%$smarty.const.THEME%}images/bg.jpg) no-repeat center;
+	background-size:cover;">
+            <div class="dtable hw100 hasOverly">
+                <div class="dtable-cell hw100">
+                    <div class="container text-center">
+                        <div class="landing-text">
+                            <h1 class="intro-title animated fadeInDown  delay-1"> {%$locale.1275%} </h1>
+
+                            <div id="site-countdown" class="animated  fadeInUp delay-3">
+                                <div class="cDays">
+                                    <span class="count"></span>
+                                    <span class="text"> {%$locale.994%}</span>
+
+                                </div>
+                                <div class="cHours">
+                                    <span class="count"></span>
+                                    <span class="text">{%$locale.1276%}</span>
+                                </div>
+                                <div class="cMinuets">
+                                    <span class="count"></span>
+                                    <span class="text">{%$locale.1277%}</span>
+                                </div>
+                                <div class="cSecond">
+                                    <span class="count"></span>
+                                    <span class="text">{%$locale.851%}</span>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/.landing-intro -->
+
+
+    </div>
+    <!-- /.inner -->
+
+
+</section>
+
+<!-- /.landing-page -->
+
+
+<!-- Le javascript
+================================================== -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="{%$smarty.const.THEME%}assets/js/jquery/3.2.1/jquery.min.js"><\/script>')</script>
+<script src="{%$smarty.const.THEME%}assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+<!-- include custom script for site  -->
+<script src="{%$smarty.const.THEME%}assets/js/script.js"></script>
+
+
+<!-- include countdown script for coming soon page  -->
+<script src="{%$smarty.const.THEME%}assets/plugins/jquery.countdown-2.1.0/jquery.countdown.js"></script>
+<script type="text/javascript">
+    $("#site-countdown")
+            .countdown("{%$settings.closed_time%}", function (event) {
+                $('.cDays .count').text(
+                        event.strftime(" %D")
+                );
+
+                $('.cHours .count').text(
+                        event.strftime(" %H")
+                );
+
+                $('.cMinuets .count').text(
+                        event.strftime(" %M")
+                );
+
+                $('.cSecond .count').text(
+                        event.strftime("%S")
+                );
+
+            });
+</script>
+
+</body>
+</html>

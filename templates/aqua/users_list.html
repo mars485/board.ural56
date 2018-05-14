@@ -1,0 +1,19 @@
+
+<div class="alert alert-info">
+    {%$messages_counter%}
+</div>
+
+
+
+
+<ul class="allusers">
+    {%foreach from=$allusers item='user' name='i'%}
+        <li>
+            <a href="{%$settings.path%}userinfo/{%$user.id%}/"><i class="fa fa-user" aria-hidden="true"></i> {%$user.name%}</a>
+            {%if $user.messages > 0%}<span class="badge">({%$user.messages%})</span>{%/if%}
+        </li>
+    {%/foreach%}
+</ul>
+
+{%include file="pagination.html"%}
+

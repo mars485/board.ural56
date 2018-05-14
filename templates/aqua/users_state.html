@@ -1,0 +1,29 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+    <thead>
+    	<tr>
+    		<td width='15%'><b>{%$locale.189%}</b></td>
+    		<td width='20%'><b>{%$locale.190%}</b></td>
+    		<td width='15%'><b>{%$locale.191%}</b></td>
+    		<td width='15%'><b>{%$locale.197%}</b></td>
+    		<td width='35%'><b>{%$locale.192%}</b></td>
+    	</tr>
+    </thead>
+    {%foreach from=$state item='serv'%}
+    	<tr class="state_list_{%$serv.type%}">
+    		<td><small>{%$serv.time|date_format:"%d.%m.%Y %H:%M"%}</small></td>
+    		<td>
+    		{%if $serv.type == 'i' %}<span class="label label-primary">{%$locale.193%}</span>
+    		{%elseif $serv.type == 'p' %}<span class="label label-primary">{%$locale.194%}</span>
+    		{%elseif $serv.type == 'o' %}<span class="label label-warning">{%$locale.195%}</span>
+    		{%elseif $serv.type == 'm' %}<span class="label label-warning">{%$locale.196%}</span>
+    		{%elseif $serv.type == 'e' %}<span class="label label-dander">ERROR!</span>
+    		{%/if%}
+    		</td>
+    		<td><span class="badge">{%$serv.pay%}</span></td>
+    		<td><span class="badge">{%$serv.rest%}</span></td>
+    		<td><p class="text-info">{%$serv.comments%}</p></td>
+    	</tr>
+    {%/foreach%}
+    </table>
+</div>

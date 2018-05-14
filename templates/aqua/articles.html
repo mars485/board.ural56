@@ -1,0 +1,42 @@
+{%if $articles_cat.description|strip_tags|trim != ""%}
+    <div class="blog-post-content-desc">
+		<div class="blog-article-text">
+            {%$articles_cat.description%}
+		</div>
+    </div>
+{%/if%}
+
+
+
+{%foreach from=$articles item='article'%}
+    <article class="blog-post-item">
+        <!--blog content-->
+        <div class="blog-post-content-desc">
+    
+            <div class="blog-post-content">
+                <h2>
+                    <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$article.name%}</a>
+                </h2>
+                <span class="info-row">
+                    <span class="date"><i class="icon-clock"></i> {%$article.pubdate|userdate%} </span>  -
+                    <span class="item-location">
+                        <a href="{%$settings.path%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/">
+                            <i class="icon-folder-open"></i> {%$articles_cat.name%}
+                        </a>
+                    </span> 
+                </span>
+                <p>{%$article.content.short%}</p>
+                {%if $article.content.more%}
+                    <div class="row">
+                        <div class="col-md-12 clearfix blog-post-bottom">
+                            <a class="btn btn-primary  pull-left" href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$locale.15%}</a>
+                        </div>
+                    </div>
+                {%/if%}
+            </div>
+        </div>
+    </article>
+{%/foreach%}
+
+
+{%include file="pagination.html"%}

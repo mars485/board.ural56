@@ -1,0 +1,139 @@
+
+    <div class="table-action">
+        <div class="row">
+            <label for="checkAll" class="col-xs-8">
+                {%if $smarty.get.cat.1 == 'order'%}
+                    <h3>{%$locale.161%}</h3>
+                {%else%}
+                    <input type="checkbox" id="checkAll" />
+                    {%$locale.985%} | 
+                    {%if $smarty.get.cat.1 != 'deleted'%}
+                        <a id="panel_delete" href="#" class="btn btn-xs btn-danger">
+                            {%$locale.201%} <i class="glyphicon glyphicon-remove "></i>
+                        </a>               
+                    {%else%}
+                        <a id="panel_delete" href="#" class="btn btn-xs btn-primary">
+                            {%$locale.984%} <i class="fa fa-recycle"></i>
+                        </a> 
+                    {%/if%}
+                    {%if $smarty.get.cat.1 == "update"%}
+                        <a id="panel_upd" href="#" class="btn btn-xs btn-warning">
+                            {%$locale.1187%} <i class=" icon-arrows-cw-1"></i>
+                        </a> 
+                        <form name="upd" id="upd_form" method="POST"></form>
+                    {%/if%}
+                {%/if%}
+            </label>
+            <div class="table-search col-xs-4">
+                <input type="text" class="form-control" id="ads-filter" placeholder="{%$locale.1186%}">
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+    
+    {%if $messages|@count == 0%}
+        <div class="alert alert-warning">
+            {%$locale.1113%}
+        </div>
+    {%else%}
+        <div class="table-responsive">
+            <table id="panel_ads" data-filter="#ads-filter" data-filter-text-only="true"
+                class="table table-striped table-bordered add-manage-table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th class="hidden-xs"> {%$locale.110%}</th>
+                    <th> {%$locale.274%}</th>
+                    <th> {%$locale.275%}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {%foreach from=$messages item='message' name='i'%}   
+                        {%assign var="link" value="`$settings.path``$smarty.const.MESSAGES`/`$message.link`"%}
+                        <tr id="message_{%$message.id%}">
+                            <td style="width:2%" class="add-img-selector">
+                                {%if $smarty.get.cat.1 == "order"%}
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="message_id" class="panel_check" value="{%$message.id%}" {%if $smarty.post.message_id == $message.id || $smarty.get.message_id == $message.id%} checked {%/if%} />
+                                        </label>
+                                    </div>
+                                {%else%}
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="panel_check" value="{%$message.id%}" />
+                                        </label>
+                                    </div>
+                                {%/if%}
+                                
+                            </td>
+                            <td class="add-img-td hidden-xs"><a href="{%$link%}">
+                            {%if $message.fields.i.0.value != ""%}
+                                <img class="thumbnail  img-responsive"
+                                        src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}"
+                                        alt="img"></a>
+                            {%/if%}
+                            </td>
+                            <td class="ads-details-td">
+                                <p>
+                                    <strong> 
+                                        <a href="{%$link%}" title="{%$message.title|truncate_utf:100:'...'%}">
+                                            {%$message.title|truncate_utf:300:'...'%}
+                                        </a> 
+                                    </strong>
+                                </p>
+                                <div class="info">
+                                    <span data-original-title="{%$locale.276%}"  data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-clock-o"></i>&nbsp;{%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}
+                                    </span> |
+                                    <span data-original-title="{%$locale.14%}"  data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-times-circle"></i>&nbsp;{%$message.date_del|date_format:"%d.%m.%Y %H:%M"%}
+                                    </span> |
+                                    {%if $message.fields.p.0%}
+                                        <span data-original-title="{%$message.fields.p.0.name%}"  data-placement="top" data-toggle="tooltip">
+                                        {%if $rates_default.charcode == 'rur'%}
+                                            {%$message.fields.p.0.value.num%}<i class="fa fa-rub" aria-hidden="true"></i>
+                                        {%elseif $rates_default.charcode == 'usd'%}
+                                            {%$message.fields.p.0.value.num%}<i class="fa fa-usd" aria-hidden="true"></i>
+                                        {%elseif $rates_default.charcode == 'eur'%}
+                                            {%$message.fields.p.0.value.num%}<i class="fa fa-eur" aria-hidden="true"></i>
+                                        {%else%}
+                                            {%$message.fields.p.0.value.txt%}
+                                        {%/if%}
+                                        </span> |
+                                    {%/if%}                                
+                                    <span data-original-title="{%$locale.686%}"  data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-eye"></i>&nbsp;{%$message.counter%}
+                                    </span>                                
+                                </div>
+                            </td>
+                            <td class="action-td">
+                                <a class="btn btn-primary btn-xs" href="{%$settings.path%}edit/{%$message.id%}"> <i class="fa fa-edit"></i> <span>{%$locale.200%}</span> </a>                           
+                                {%if $message.status != 2%}
+                                    <a class="btn btn-danger btn-xs m_delete" data-id="{%$message.id%}" href="{%$settings.path%}delete/{%$message.id%}"> <i class=" fa fa-trash"></i> <span>{%$locale.201%}</span> </a>
+                                    {%if $message.prolong%}
+                                        <a class="btn btn-primary btn-xs" href="{%$settings.path%}prolongation/?message={%$message.id%}&key={%$message.id|cat:$settings.rand|md5%}"> <i class="fa fa-mail-forward"></i> <span>{%$locale.145%}</span></a> </a>
+                                    {%/if%} 
+                                {%else%}
+                                    <a class="btn btn-primary btn-xs" href="{%$settings.path%}restore/{%$message.id%}"> <i class=" fa fa-recycle"></i> <span>{%$locale.619%}</span> </a>                         
+                                {%/if%}
+                                
+                                {%if $message.status==1%}
+                                    <a class="btn btn-primary btn-xs" href="{%$settings.path%}users/order/?message_id={%$message.id%}">
+                                        <i class="icon-certificate icon-color-1"></i> <span>{%$locale.65%}</span>
+                                    </a>
+                                {%/if%}
+                            </td>
+                            
+                        </tr>   
+                    {%/foreach%}
+                </tbody>
+            </table>
+        </div>
+    {%/if%}
+
+{%include file='form_premium.html'%}

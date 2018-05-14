@@ -1,0 +1,192 @@
+{%if $settings.user%}
+
+    <div class="user-panel-sidebar">
+        <div class="collapse-box">
+            <h5 class="collapse-title no-border"> 
+                <a href="#userpanel_ads" data-toggle="collapse">
+                    {%$locale.1106%}
+                    <span class="pull-right"><i class="fa fa-angle-down "></i></span>
+                </a>
+            </h5>
+    
+            <div class="panel-collapse collapse in" id="userpanel_ads">
+                <ul class="acc-list">
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == ""%}class="active"{%/if%} href="{%$settings.path%}users/">
+                            <i class="icon-docs"></i> {%$locale.61%} {%if $counter.user.pub%}<span class="badge">{%$counter.user.pub%}</span>{%/if%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "moderated"%}class="active"{%/if%} href="{%$settings.path%}users/moderated/">
+                            <i class="icon-hourglass"></i> {%$locale.979%} {%if $counter.user.mod%}<span class="badge">{%$counter.user.mod%}</span>{%/if%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "deleted"%}class="active"{%/if%} href="{%$settings.path%}users/deleted/">
+                            <i class=" icon-trash"></i> {%$locale.980%} {%if $counter.user.del%}<span class="badge">{%$counter.user.del%}</span>{%/if%}
+                        </a>
+                    </li>
+                    {%if $settings.update_allow == 1%}
+                        <li>
+                            <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "update"%}class="active"{%/if%} href="{%$settings.path%}users/update/">
+                                <i class=" icon-arrows-cw-1"></i> {%$locale.1178%} {%if $counter.user.upd%}<span class="badge">{%$counter.user.upd%}</span>{%/if%}
+                            </a>
+                        </li>
+                    {%/if%}
+    
+                </ul>
+            </div>
+        </div>
+    
+        {%if $settings.shop == 1%}
+    
+            <div class="collapse-box">
+                <h5 class="collapse-title no-border"> 
+                    <a href="#userpanel_shop" data-toggle="collapse">
+                        {%$locale.1104%}
+                        {%if $settings.shop_pay == 1%}
+                            {%if $settings.user.shop.next_pay_timestamp%}
+                            <span class="badge">{%$locale.1169%} {%$settings.user.shop.next_pay_timestamp|date_format:"%d.%m.%Y"%}</span>
+                            {%/if%}
+                        {%/if%}
+                        <span class="pull-right">
+                            <i class="fa fa-angle-down"></i>
+                        </span>
+                    </a>
+                </h5>
+    
+                <div class="panel-collapse collapse in" id="userpanel_shop">
+                    <ul class="acc-list">
+                        <li>
+                            <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "shop" && $smarty.get.act == ""%}class="active"{%/if%} href="{%$settings.path%}users/shop/">
+                                <i class="icon-info"></i> {%$locale.1121%}
+                            </a>
+                        </li>
+                        <li>
+                            <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "shop" && $smarty.get.act == "contacts"%}class="active"{%/if%} href="{%$settings.path%}users/shop/?act=contacts">
+                                <i class="icon-address"></i> {%$locale.1122%}
+                            </a>
+                        </li>
+                        <li>
+                            <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "shop" && $smarty.get.act == "delivery"%}class="active"{%/if%} href="{%$settings.path%}users/shop/?act=delivery">
+                                <i class="icon-truck-1"></i> {%$locale.1123%}
+                            </a>
+                        </li>
+                        <li>
+                            <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "worktime" && $smarty.get.act == "delivery"%}class="active"{%/if%} href="{%$settings.path%}users/shop/?act=worktime">
+                                <i class="icon-clock"></i> {%$locale.1231%}
+                            </a>
+                        </li>
+    
+    
+                    </ul>
+                </div>
+            </div>
+        
+        {%/if%}                            
+    
+        <div class="collapse-box">
+            <h5 class="collapse-title no-border"> 
+                <a href="#userpanel_opt" data-toggle="collapse">
+                    {%$locale.306%}
+                    <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                </a>
+            </h5>
+    
+            <div class="panel-collapse collapse in" id="userpanel_opt">
+                <ul class="acc-list">
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "info"%}class="active"{%/if%} href="{%$settings.path%}users/info/">
+                            <i class="fa fa-lock" aria-hidden="true"></i> {%$locale.126%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "subscribe"%}class="active"{%/if%} href="{%$settings.path%}users/subscribe/">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i> {%$locale.62%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "orders"%}class="active"{%/if%} href="{%$settings.path%}users/orders/">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i> {%$locale.209%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "order"%}class="active"{%/if%} href="{%$settings.path%}users/order/">
+                            <i class="fa fa-cart-plus" aria-hidden="true"></i> {%$locale.65%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "state"%}class="active"{%/if%} href="{%$settings.path%}users/state/">
+                            <i class="fa fa-list-alt" aria-hidden="true"></i> {%$locale.63%}
+                        </a>
+                    </li>
+                    <li>
+                        <a {%if $smarty.get.cat.0 == "users" && $smarty.get.cat.1 == "pay"%}class="active"{%/if%} href="{%$settings.path%}users/pay/">
+                            <i class="fa fa-money" aria-hidden="true"></i> {%$locale.64%} <span class="badge">{%$settings.user.balance%} {%$currency_names[$settings.currency].name2%}</span>
+                        </a>
+                    </li>
+    
+                    <li>
+                        <a href="#" onclick="if(confirm('{%$locale.43%}')){document.location.href='{%$settings.path%}users/exit/';}return false;">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> {%$locale.42%}
+                        </a>
+                    </li>
+    
+    
+    
+    
+                </ul>
+            </div>
+        </div>
+    
+    </div>
+
+{%else%}
+        {%if $smarty.post.submit_login2 && !$settings.user && $smarty.get.cat.0 != "users"%}
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {%$locale.1183%}
+            </div>
+        {%/if%}
+        <form role="form" method="POST" action="" name="login_block">
+            <div class="form-group">
+                <label for="sender-email" class="control-label">{%if $settings.sms == 1%}{%$locale.1184%}{%else%}{%$locale.21%}{%/if%}:</label>
+
+                <div class="input-icon"><i class="icon-user fa"></i>
+                    <input name="email_login2" id="sender-email" type="text" placeholder="{%if $settings.sms == 1%}{%$locale.1184%}{%else%}{%$locale.21%}{%/if%}" class="form-control email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="user-pass" class="control-label">{%$locale.22%}:</label>
+
+                <div class="input-icon"><i class="icon-lock fa"></i>
+                    <input name="password_login2" type="password" class="form-control" placeholder="{%$locale.22%}" id="user-pass">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit"  class="btn btn-primary  btn-block">{%$locale.23%}</button>
+            </div>
+            <input name="submit_login2" value="1" type="hidden" />
+        </form>
+
+
+        {%if $settings.ulogin == 1%}
+            <div class="text-center">
+                <div id="uLogin" data-ulogin="display=small;fields=first_name,last_name,email;verify=1;providers=vkontakte,odnoklassniki,mailru,facebook,twitter,yandex,google,liveid,livejournal;hidden=other;redirect_uri={%$settings.http%}%3A%2F%2F{%$smarty.server.HTTP_HOST%}{%$smarty.const.PATH%}users/?ulogin"></div>
+            </div>
+        {%/if%}
+
+        <hr />
+
+        <p class="pull-left">
+            <a href="{%$settings.path%}users/register/"><i class="fa fa-user-plus" aria-hidden="true"></i> {%$locale.24%} </a>
+        </p>
+
+
+        <p class="pull-right">
+            <a href="{%$settings.path%}users/password_recovery/"><i class="fa fa-unlock-alt" aria-hidden="true"></i> {%$locale.519%} </a>
+        </p>
+
+        <div style=" clear:both"></div>
+        
+{%/if%}

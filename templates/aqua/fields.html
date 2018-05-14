@@ -1,0 +1,146 @@
+{%assign var='yandex' value=0%}
+
+{%foreach  from=$fields item='field' key='field_key'%}
+    {%assign var='value' value=$check[$field_key]%}
+	{%if $field.type == 'j'%} 
+        <div class="yandex_field">
+            <p>
+                <label>
+                    {%$field.name%}
+                    {%if $field.comment != ""%}
+                        <i class="icon-info-circled-alt" data-original-title="{%$field.comment%}"  data-placement="top" data-toggle="tooltip"></i>
+                    {%/if%}
+                    {%if $field.req == 1%}
+                        <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                    {%/if%}
+                </label>
+            </p>
+    		<iframe id='frame-{%$field_key%}' scrolling='no' src="{%$settings.path%}yamaps/?field={%$field_key%}"></iframe>
+            <input id="{%$field_key%}" name="{%$field_key%}" type="hidden" value=""/>
+        </div>
+    {%else%}
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="title" >
+                {%$field.name%}
+                {%if $field.comment != ""%}
+                    <i class="icon-info-circled-alt" data-original-title="{%$field.comment%}"  data-placement="top" data-toggle="tooltip"></i>
+                {%/if%}
+                {%if $field.req == 1%}
+                    <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                {%/if%}
+            </label>
+            <div class="col-md-8">
+    			{%if $field.type == 'v'%}
+    				<input 
+                        {%if $field.type_string != "t"%}maxlength='{%$field.max%}'{%/if%} 
+                        name='{%$field_key%}' 
+                        type='{%if $field.type_string=="n"%}number{%else%}text{%/if%}' 
+                        class='form-control  {%if $field.type_string == "t"%}phonemask{%else%}calcletters{%/if%}' 
+                        value='{%$value%}' 
+                        {%if $field.req == 1%}required=""{%/if%} />
+    			{%/if%}
+    
+    			{%if $field.type == 't'%}
+    				<textarea maxlength='{%$field.max%}'  name='{%$field_key%}' wrap='on' class='form-control calcletters' {%if $field.req == 1%}required=""{%/if%}>{%$value%}</textarea>
+    			{%/if%}
+    
+    			{%if $field.type == 's'%}
+    				<select size='1' name='{%$field_key%}' class='form-control' {%if $field.req == 1%}required=""{%/if%}>
+    					{%if $field.req == 2%}
+    						<option value='' >{%$locale.217%}</option>
+    					{%/if%}
+    					{%foreach  from=$field.values_array item='vl' key='k'%}
+    					<option value='{%$k%}'>{%$vl%}</option>
+    					{%/foreach%}
+    				</select>
+    			{%/if%}
+    
+    			{%if $field.type == 'r'%}
+    				{%if $field.req == 2%}
+    					<label class="field_label"><input name='{%$field_key%}' type='radio' value='' {%if $field.req == 1%}required=""{%/if%} />&nbsp;{%$locale.217%}</label><br />
+    				{%/if%}
+    				{%foreach  from=$field.values_array item='vl' key='k'%}
+    				<label class="field_label"><input name='{%$field_key%}' type='radio' value='{%$k%}' {%if $field.req == 1%}required=""{%/if%} />&nbsp;{%$vl%}</label><br />
+    				{%/foreach%}
+    			{%/if%}
+    
+    			{%if $field.type == 'c'%}
+    				{%foreach  from=$field.values_array item='vl' key='k'%}
+    				<label class="field_label"><input name='{%$field_key%}[{%$k%}]' type='checkbox' value='ON' />&nbsp;{%$vl%}</label><br />
+    				{%/foreach%}
+    			{%/if%}
+    
+    			{%if $field.type == 'f' ||  $field.type == 'i'%}
+                    {%if $settings.uploadtype == 1%}
+                        <iframe class="fileupload" src="{%$settings.path%}ajaxfileupload/?field_key={%$field_key%}&file={%$field.file|urlencode%}" ></iframe>
+                    {%else%}
+                        <script>
+                            $(document).ready(function() {        
+                              $('#{%$field_key%}').uploadify({
+                                'uploader'  : '{%$settings.path%}js/uploadify/uploadify.swf',
+                                'buttonImg' : '{%$settings.path%}imgtext.png',
+                                'height'      : 18,
+                                'weight'      : 200,
+                                'wmode'       : 'transparent',
+                                'script'    : '{%$settings.path%}uploadify/',
+                                'cancelImg' : '{%$settings.path%}js/uploadify/cancel.png',
+                                'fileExt'   : '{%foreach from=$field.values_array item='vl' name='ii'%}*.{%$vl%}{%if $smarty.foreach.ii.last eq false %};{%/if%}{%/foreach%}',
+                                'fileDesc'    : '{%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}',
+                                'multi'     : true,
+                                'auto'      : true,
+                                'sizeLimit'   : 104857600,  //in bytes
+                                'scriptData'  : {'field_id':{%$field.id%}, 'form_id':form_id},
+                                'onComplete': function (event, queueID, fileObj, response, data) 
+                                    {
+                                        if(response != 'error')
+                                            {
+                                            $('#h1-{%$field_key%}').show('fast');
+                                            $('#i-{%$field_key%}').attr('src', response);                                       
+                                            $('#h2-{%$field_key%}').show('fast');                                       
+                                            }                            
+                                    } 
+                              });  
+                             });   
+                        </script>
+    					<table width='100%' border="0">
+        					<tr>
+        					    <td>
+                					<input id='{%$field_key%}' name='{%$field_key%}' type='file' value='' class='form-control' {%if $field.req == 1%}required=""{%/if%}>
+                					<span class="filetypes">{%$locale.85%}: {%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}</span>
+                					<div id="r-{%$field_key%}"></div>
+                                </td>
+                                <td width='50'>
+            						<div {%if !$field.file%}style='display:none;'{%/if%} id='h1-{%$field_key%}'>
+            							     <img id="i-{%$field_key%}" width="60" height="40" border="0" class='help' src="{%$field.file%}" />
+            						</div>
+            					</td>
+                            </tr>
+        					<tr>
+                                <td colspan='2' align='right' style='font-size:10px; color:red;'>
+                                    <a {%if !$field.file%}style='display:none;'{%/if%} href="#" onclick="deletetmpfile('{%$field.id%}', '{%$smarty.get.form_id%}'); return false;" id='h2-{%$field_key%}'><img src="{%$smarty.const.THEME%}images/del.png" /></a>
+            					</td>
+                            </tr>
+    					</table>
+                    {%/if%}
+    			{%/if%}
+    
+    			{%if $field.type == 'y'%}
+    				<input name='{%$field_key%}' type='text' class='form-control' value='{%$value%}' {%if $field.req == 1%}required=""{%/if%}/>
+    			{%/if%}
+    
+    			{%if $field.type == 'p'%}
+                    <div class="price_select">
+                        <input name='{%$field_key%}' type='text' class='form-control' value='{%$value%}' {%if $field.req == 1%}required=""{%/if%} />
+                        <select size='1' name="{%$field_key%}_rates" class='form-control' {%if $field.req == 1%}required=""{%/if%}>
+            				{%foreach  from=$field.rates item='rates'%}
+            				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+            				{%/foreach%}
+                        </select>
+                    </div>
+    			{%/if%}
+            </div>
+        </div>
+	{%/if%}
+  
+{%/foreach%}
+

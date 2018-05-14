@@ -1,0 +1,299 @@
+{%if $err|@count > 0%}
+	<div class="alert alert-danger">
+        <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {%$locale.1196%}!</p>
+		<ul>
+		{%foreach from=$err item='error'%}
+			<li>{%$error%}</li>
+		{%/foreach%}
+		</ul>
+	</div>
+{%/if%}
+
+{%if $redirect%}
+	<div class="alert alert-success" >
+		{%if $editable%}
+            <p>
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 
+                {%$locale.134%}
+            </p>
+	        {%if $settings.default_message_status == 0%}
+	           <p><i>{%$locale.135%}</i></p>
+	        {%elseif $settings.default_message_status == 1 && $settings.user%}
+    	        <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}users/">{%$locale.104%}</a></p>
+    	        <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a></p>
+             {%else%}
+    	        <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}messages/{%$check.id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a></p>       
+    	        <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a></p>
+	        {%/if%}
+	  	{%else%}
+	         <p>
+                <i class="fa fa-check-square-o" aria-hidden="true"></i> 
+                {%$locale.101%}
+                {%if $MessageDisabled%}
+                    {%$locale.1264%}
+                {%/if%}
+             </p>
+	        {%if $settings.default_message_status == 0%}
+	           <p><i>{%$locale.102%}</i></p>
+            {%elseif $settings.default_message_status == 1 && $settings.user%}
+	           <p><i>{%$locale.103%}</i></p>
+    	       <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}users/">{%$locale.104%}</a></p>
+    	       <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a></p>
+            {%else%}
+	           <p><i class="fa fa-arrow-right" aria-hidden="true"></i> <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a></p>              
+	        {%/if%}
+
+            {%if $RegisteredUser%}
+                <p><i>{%$locale.48%}</i></p>
+            {%/if%}
+	  	{%/if%}
+	</div>
+
+{%else%}
+
+
+    {%if $check.region == ''%}
+        {%assign var='region_default' value=$second_region.id%}
+    {%else%}
+        {%assign var='region_default' value=$check.region%}
+    {%/if%}
+    
+    
+    <form name="add" action="?" method="post" class="form-horizontal" id="main_form">
+        <input type="hidden" name="form_id" id="form_id" value="{%$form_id%}"/>
+        <input type="hidden" name="add_cat" id="add_cat" value="{%$cat_default%}"/>
+		<!--input type="hidden" name="add_cat" id="add_cat" value="769"/-->
+        <input type="hidden" name="add_region" id="add_region" value="{%$region_default%}"/>
+        <input name="post_filter" type="hidden" value="false">
+
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="title">
+                {%$locale.72%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.73%}"  data-placement="top" data-toggle="tooltip"></i>
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>                
+            </label>
+            <div class="col-md-8">
+                <input value="{%$check.title%}" maxlength="{%$settings.max_title%}" data-default="Загаловок" name="title" data-original-title="{%$locale.73%}" class="form-control calcletters" placeholder="{%$locale.72%}" required="" type="text">
+            </div>
+        </div>
+        <div class="form-group multiselect_cont">
+            <label class="col-md-3 control-label">
+                {%$locale.83%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.84%}"  data-placement="top" data-toggle="tooltip"></i>
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="multiselect" data-action="" data-name="region" data-default="{%$region_default%}">
+                    <p class="text-info">{%$allregions[$region_default].name%} <a class="btn btn-warning btn-xs" href="#">{%$locale.837%}</a></p>
+                </div>
+                <div class="alert alert-success" id="alert_region_success" style="display: none;">{%$locale.82%}</div>
+                <div class="alert alert-warning" id="alert_region_warning" style="display: none;">{%$locale.1177%}</div>
+            </div>
+        </div>
+        <div class="form-group multiselect_cont">
+            <label class="col-md-3 control-label" >
+                {%$locale.79%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.80%}"  data-placement="top" data-toggle="tooltip"></i>
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+            </label>
+            <div class="col-md-8">
+                <!--div class="multiselect" data-action="load" data-name="cat" data-default="{769}"-->
+                <div class="multiselect" data-action="load" data-name="cat" data-default="{%$cat_default%}">
+                    <p class="text-info">{%$allcategories[$cat_default].name%} <a class="btn btn-warning btn-xs" href="#">{%$locale.837%}</a></p>
+                </div>
+                <div class="alert alert-success" id="alert_cat_success" style="display: none;">{%$locale.82%}</div>
+                <div class="alert alert-warning" id="alert_cat_warning" style="display: none;">{%$locale.1177%}</div>
+            </div>
+        </div>
+        <div id="fields">
+            <div id="fields_loading" style="display: none;"><i class="fa fa-spinner fa-pulse fa-3x" aria-hidden="true"></i></div>
+        </div>
+        {%if !$editable%}
+		
+		<div class="form-group text_field">
+            <div class="col-md-12">
+                <p>
+                    <label>
+                            {%$locale.74%}
+                            <i class="icon-info-circled-alt" data-original-title="{%$locale.75%} {%$settings.max_text%}"  data-placement="top" data-toggle="tooltip"></i>
+                            <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                    </label>
+                </p>
+        		{%if $settings.fckeditor == 1%}
+        		  <textarea required="" maxlength="{%$settings.max_text%}" class="form-control ckeditor" name="content">{%$check.content%}</textarea>
+        		{%else%}
+        		  <textarea required="" maxlength="{%$settings.max_text%}" class="form-control calcletters" name="content" rows="5">{%$check.content%}</textarea>
+        		{%/if%}
+            </div>
+        </div>
+		
+            <div class="form-group">
+                <label class="col-md-3 control-label"  for="timing">
+                    {%$locale.78%}
+                    <i class="icon-info-circled-alt" data-original-title="{%$locale.77%}"  data-placement="top" data-toggle="tooltip"></i>
+                    <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                </label>
+                <div class="col-md-8">
+        			{%if $settings.active_service == 1%}
+        				{%if !$editable%}
+        					<iframe src="{%$settings.patch%}timing/?days={%$check.active_days%}" id="frame_days"></iframe>
+        				    <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+        				    <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+        			    {%/if%}
+        			{%else%}
+        				<select size="1" name="timing" class="form-control" required="">
+        					<option>{%$locale.81%}</option>
+        					{%foreach  from=$timing item='time'%}
+        					   <option value="{%$time.id%}" {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+        					{%/foreach%}
+        				</select>
+        			{%/if%}
+                </div>
+            </div> 
+        {%/if%}
+
+        {%if $settings.user %}
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="name">
+                {%$locale.28%}
+            </label>
+            <div class="col-md-8">
+                <input value="{%$settings.user.name%}" disabled="" class="form-control" placeholder="{%$locale.28%}" required="" type="text">
+            </div>
+        </div> <!--Ваше имя-->
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="name">
+                {%$locale.26%}
+            </label>
+            <div class="col-md-8">
+                <input value="{%$settings.user.email%}" disabled="" class="form-control" placeholder="{%$locale.26%}" required="" type="text">
+            </div>
+        </div> <!--Ваш e-mail-->
+        {%else%}
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="name" >
+                {%$locale.28%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.29%}"  data-placement="top" data-toggle="tooltip"></i>
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+            </label>
+            <div class="col-md-8">
+                <input name="name" value="{%$check.user%}" class="form-control"
+                       placeholder="{%$locale.28%}" required="" type="text"
+                       {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%}
+                >
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="email">
+                {%$locale.26%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.27%} {%$locale.71%}"  data-placement="top" data-toggle="tooltip"></i>
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+            </label>
+            <div class="col-md-8">
+                <input name="email"
+                       value="{%$check.email%}" class="form-control"
+                       placeholder="{%$locale.26%}" required=""
+                       {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%}
+                type="email">
+            </div>
+        </div>
+        {%if !$editable%}
+        <div class="form-group">
+            <label class="col-md-3 control-label"  for="password1">
+                {%$locale.22%}
+                <i class="icon-info-circled-alt" data-original-title="{%$locale.988%}"  data-placement="top" data-toggle="tooltip"></i>
+                {%if $settings.unreg != 1%}
+                <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                {%/if%}
+            </label>
+            <div class="col-md-8">
+                <input name="password1" id="password1"
+                       value="" class="form-control"
+                       placeholder="{%$locale.22%}" {%if $settings.unreg != 1%}required=""{%/if%}
+                       type="password">
+                <input name="password2" id="password2"
+                       value="" class="form-control"
+                       placeholder="{%$locale.33%}" {%if $settings.unreg != 1%}required=""{%/if%}
+                       type="password"
+                       style="display:none;">
+                <div class="alert alert-success" style="display: none;" id="password_success">
+                    <i class="fa fa-check" aria-hidden="true"></i> {%$locale.1179%}
+                </div>
+                <div class="alert alert-warning" style="display: none;" id="password_warning">
+                    <i class="fa fa-exclamation" aria-hidden="true"></i> {%$locale.1180%}
+                </div>
+                <div class="alert alert-info" style="display: none;" id="password_info">
+                    <i class="fa fa-exclamation" aria-hidden="true"></i> {%$locale.1181%}
+                </div>
+
+            </div>
+        </div>
+        {%/if%}
+        {%/if%}
+               
+        <!--div class="form-group">
+            <label class="col-md-3 control-label">
+                    {%$locale.107%}
+                    <i class="icon-info-circled-alt" data-original-title="{%$locale.106%}"  data-placement="top" data-toggle="tooltip"></i>
+            </label>
+            <div class="col-md-8">
+                <input name="tagsinput" type="text" value="{%$check.tags%}" id="tagsinput" class="form-control">
+        		<div id="tag_block">
+        			{%foreach from=$settings.tags item='tag'%}
+                        {%if trim($tag.tag_name) != ""%}
+        				    <a href="#">{%$tag.tag_name%}</a>&nbsp;
+                        {%/if%}
+                    {%/foreach%}
+        		</div>
+            </div>
+        </div-->
+    	{%if $settings.captcha == 1%}
+            <div class="form-group">
+                {%if $settings.captcha_type == 3%}
+                    <div class="col-md-8 col-md-offset-3">
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <div class="g-recaptcha" data-sitekey="{%$settings.recaptcha1%}"></div>
+                    </div>
+                {%else%}
+                    <label class="col-md-3 control-label">
+                            {%$locale.44%}
+                            <i class="icon-info-circled-alt" data-original-title="{%$locale.45%}"  data-placement="top" data-toggle="tooltip"></i>
+                            <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>
+                    </label>
+                    <div class="col-md-8">
+                        <div class="captcha_cont">
+                            <img src='{%$settings.path%}captcha/{%"100000"|mt_rand:900000%}'>
+                            <input name="captcha" required="" class="form-control required" type="number" placeholder="{%$locale.1182%}" autocomplete="off">
+                        </div>
+                    </div>
+                {%/if%}
+            </div>
+    	{%/if%}
+    	{%if $settings.license_text != ""%}
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-3">
+                    <div class="checkbox"><label><!--input type="checkbox" required=""--> {%$locale.1263%}</label></div>
+                </div>
+            </div>
+            <div class="modal fade" id="license_text" tabindex="-1" role="dialog" aria-labelledby="license_title" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="license_title">{%$locale.1262%}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {%$settings.license_text|nl2br%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	{%/if%}
+        <div class="form-group form_submit">
+            <div class="col-md-12">
+                <input class="btn btn-success btn-lg" type="submit" name="submit" value="{%$locale.55%}">
+            </div>
+        </div>
+    </form>
+{%/if%}

@@ -1,0 +1,46 @@
+
+
+{%if $settings.user%}
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>{%$locale.183%}</th>
+                <th>{%$locale.212%}</th>
+                <th>{%$locale.211%}</th>
+                <th>{%$locale.213%}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%foreach from=$orders item='order'%}
+                <tr>
+                    <td>
+                        {%$order.message.title|truncate_utf:100:'...'%}
+                    </td>
+                    <td>
+                        {%$services[$order.type].name%}
+                    </td>
+                    <td>
+                        {%if $order.status == 0%}
+                            {%$order.number%}
+                        {%else%}
+                            {%$order.time_end|date_format:"%d.%m.%Y %H:%M"%}
+                        {%/if%}
+                    </td>
+                    <td>
+                        {%if $order.status == 0%}
+                            <span class="label label-default">{%$locale.215%}</span>
+                        {%else%}
+                            <span class="label label-success">{%$locale.214%}</span>
+                        {%/if%}
+                    </td>
+                </tr>
+            {%/foreach%}
+        </tbody>
+    </table>
+</div>
+
+
+{%/if%}
+

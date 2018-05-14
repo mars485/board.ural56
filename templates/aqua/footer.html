@@ -1,0 +1,377 @@
+    
+    {%$blocks.f%}
+
+	
+    <!--div class="page-info hasOverly">
+        <div class="bg-overly ">
+            <div class="container text-center section-promo">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6 col-xxs-12">
+                        <div class="iconbox-wrap">
+                            <div class="iconbox">
+                                <div class="iconbox-wrap-icon">
+                                    <i class="icon icon-docs"></i>
+                                </div>
+                                <div class="iconbox-wrap-content">
+
+                                    <h5><span>{%$counter.messages_on%}</span></h5>
+
+                                    <div class="iconbox-wrap-text">{%$counter.messages_on|om_number:$locale.3:$locale.4:$locale.5%}</div>
+                                </div>
+                            </div>
+                            <!-- /..iconbox >
+                        </div>
+                        <!--/.iconbox-wrap>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-6 col-xxs-12">
+                        <div class="iconbox-wrap">
+                            <div class="iconbox">
+                                <div class="iconbox-wrap-icon">
+                                    <i class="icon  icon-th-large-1"></i>
+                                </div>
+                                <div class="iconbox-wrap-content">
+                                    {%assign var=count_cat value=$categories|@count%}
+                                    <h5><span>{%$count_cat%}</span></h5>
+                                    <div class="iconbox-wrap-text">{%$count_cat|om_number:$locale.1222:$locale.1223:$locale.1224%}</div>
+                                </div>
+                            </div>
+                            <!-- /..iconbox >
+                        </div>
+                        <!--/.iconbox-wrap>
+                    </div>
+
+                    <div class="col-sm-3 col-xs-6  col-xxs-12">
+                        <div class="iconbox-wrap">
+                            <div class="iconbox">
+                                <div class="iconbox-wrap-icon">
+                                    <i class="icon  icon-map"></i>
+                                </div>
+                                <div class="iconbox-wrap-content">
+                                    {%assign var=count_regions value=$allregions|@count%}
+                                    <h5><span>{%$count_regions%}</span></h5>
+
+                                    <div class="iconbox-wrap-text">{%$count_regions|om_number:$locale.1225:$locale.1226:$locale.1227%}</div>
+                                </div>
+                            </div>
+                            <!-- /..iconbox >
+                        </div>
+                        <!--/.iconbox-wrap>
+                    </div>
+                    {%if $settings.shop == 1%}
+                        <div class="col-sm-3 col-xs-6 col-xxs-12">
+                            <div class="iconbox-wrap">
+                                <div class="iconbox">
+                                    <div class="iconbox-wrap-icon">
+                                        <i class="icon icon-shop"></i>
+                                    </div>
+                                    <div class="iconbox-wrap-content">
+                                        <h5><span>{%$counter.shops%}</span></h5>
+    
+                                        <div class="iconbox-wrap-text"> {%$counter.shops|om_number:$locale.1114:$locale.1115:$locale.1116%}</div>
+                                    </div>
+                                </div>
+                                <!-- /..iconbox ->
+                            </div>
+                            <!--/.iconbox-wrap->
+                        </div>
+                    {%/if%}
+
+                </div>
+
+            </div>
+        </div>
+    </div-->
+    <!-- /.page-info -->
+
+    <div class="footer" id="footer">
+        <div class="container">
+            <ul class=" pull-left navbar-link footer-nav">
+                <li>
+                <a href="{%$settings.path%}"> {%$locale.261%} </a>
+        		<a href="{%$settings.path%}mail/">{%$locale.266%}</a>
+        		<a href="https://www.ural56.ru/news/">{%$locale.976%}</a>
+                {%if $settings.shop == 1%}
+                    <a href="{%$settings.path%}shops/">{%$locale.1103%}</a>
+                {%/if%}
+                <a href="{%$settings.path%}add/">{%$locale.69%}</a>
+                <a href="{%$settings.path%}rules/">Политика конфиденциальности</a>
+                </li>
+
+				<!--Блок информеров начало-->
+				<div class="statistic"></div>
+				<!--Блок информеров конец-->
+            </ul>
+			
+            <ul class=" pull-right navbar-link footer-nav">
+                <li> &copy;2017-{%'Y'|date%} <a href="//ural56.ru">Урал56.Ру</a></li>
+                <!--li> Сайт разработан и поддерживаеться компанией <a href="https://itgsystem.ru" target="_blank">IT Group</a></li-->
+            </ul>
+        </div>
+    </div>
+    <!-- /.footer -->
+</div>
+
+<div class="menu-overly-mask"></div>
+
+<!-- Modal Change Region -->
+{%* Диалог выбора региона *%}
+
+{%assign var='region_name' value=$regions|@count%}
+{%assign var='region_name' value=$region_name-1%}
+{%assign var='region_name' value=$second_region.name[$region_name]%}
+{%if isset($allregions[$second_region.id].parent) %}
+    {%assign var='parent_region_id' value=$allregions[$second_region.id].parent%}
+{%else%}
+    {%assign var='parent_region_id' value=0%}
+{%/if%}
+{%if isset($allregions[$parent_region_id].parent) %}
+    {%assign var='back_region_id' value=$allregions[$parent_region_id].parent%}
+{%else%}
+    {%assign var='back_region_id' value=0%}
+{%/if%}
+
+<script>
+var parent_region = {%$parent_region_id%};
+var back_region = {%$back_region_id%};
+var current_region = TPL_REGION_ID;
+</script>
+<div class="modal fade" id="selectRegion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"><i class=" icon-map"></i> {%$locale.83%} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="row region_control">
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_back">
+                                <i class=" icon-level-up  ln-shadow-box  shape-4"></i> 
+                                {%$locale.1199%}
+                               </a>
+                            </div>
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_all">
+                               <i class="icon-globe-1 ln-shadow-box  shape-4"></i> 
+                                {%$locale.1200%}
+                               </a>
+                            </div>
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_current" {%if $regions|@count == 0%}style="display:none"{%/if%}>
+                                   <i class="icon-location-circled  ln-shadow-box  shape-4"></i> 
+                                    {%$locale.1201%}
+                                        <span id="region_select_current_name">
+                                        {%$allregions[$parent_region_id].name%}
+                                        </span>
+                                </a>
+                            </div>
+
+
+
+                        </div>
+
+                        <div style="clear:both"></div>
+
+                        <hr class="hr-thin">
+                    </div>
+                    <div>
+                        
+                        <ul id="regionlist">
+                            
+                        </ul>
+                        <div id="region_loader_img" style="visibility: hidden;">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                            <div>{%$locale.1099%}...</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.modal -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+
+<script>window.jQuery || document.write('<script src="{%$smarty.const.THEME%}assets/js/jquery/3.2.1/jquery.min.js"><\/script>')</script>
+
+<!-- Modal Confirm Region -->
+{%* Диалог подтверждение региона при пером заходе на сайт *%}
+{%if count($smarty.cookies) == 0 && $region_name != ""%}
+    <div class="modal fade" id="welcome_region" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel2"><i class=" icon-map"></i> {%$locale.6%} {%$region_name%}?</h4>
+                </div>
+                <div class="modal-body">
+                    <a href="#" id="welcome_region_cansel" class="btn btn-success">{%$locale.1202%}</a>
+                    <a href="#" id="welcome_region_change" class="btn btn-warning">{%$locale.10%}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%/if%}
+<!-- /.modal -->
+
+<!-- include main libs  -->
+<script src="{%$smarty.const.THEME%}assets/js/main_libs.js"></script>
+
+{%if $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+    <!-- bxSlider CSS file -->
+    <link href="{%$smarty.const.THEME%}assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet"/>
+    <!-- bxSlider Javascript file -->
+    <script src="{%$smarty.const.THEME%}assets/plugins/bxslider/jquery.bxslider.min.js"></script>
+    <script>
+        $('.bxslider').bxSlider({
+            pagerCustom: '#bx-pager',
+            adaptiveHeight: true
+        });
+    </script>
+{%/if%}
+
+{%if in_array($smarty.get.cat.0, array('edit', 'add', 'users'))%}
+    <script>
+        var CKToolbal = 'Basic';
+    </script>
+    <script src="{%$settings.path%}ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="{%$smarty.const.THEME%}assets/plugins/inputmask/inputmask_all.js"></script>
+{%/if%}
+
+{%if $settings.ulogin == 1 && !$settings.user%}
+    <script src="//ulogin.ru/js/ulogin.js"></script>
+{%/if%}
+
+{%if $smarty.get.cat.0 == 'users'%}
+    <!-- include footable   -->
+    <script src="{%$smarty.const.THEME%}assets/js/footable.js?v=2-0-1" type="text/javascript"></script>
+    <script src="{%$smarty.const.THEME%}assets/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#panel_ads').footable().on('footable_filtering', function (e) {
+                var selected = $('.filter-status').find(':selected').text();
+                if (selected && selected.length > 0) {
+                    e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                    e.clear = !e.filter;
+                }
+            });
+        });
+    </script>
+    {%if $smarty.get.cat.1 == 'shop'%}
+        <link href="{%$smarty.const.THEME%}assets/css/jquery.timepicker.min.css" rel="stylesheet"/>
+        <script src="{%$smarty.const.THEME%}assets/js/jquery.timepicker.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $('.wt_from').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '06:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('.wt_to').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '16:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        
+        $('.wt_pause').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '12:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        
+        $('.clone').click(function(event) {
+            var classname = $(this).attr('data-class');
+            $('.'+classname).each(
+              function(){
+                if($(this).val() != ""){
+                    $('.'+classname).val($(this).val());
+                    return false;
+                }
+              }
+            );
+            event.preventDefault();
+        });
+        
+        </script>
+
+    {%/if%}
+{%/if%}
+
+{%if $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+    {%if $settings.sharing == 1%}
+        <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+        <script src="//yastatic.net/share2/share.js"></script>
+    {%elseif $settings.sharing == 2%}
+        <link rel="stylesheet" href="{%$settings.path%}js/social/social-likes_classic.css">
+        <script src="{%$settings.path%}js/social/social-likes.min.js"></script>
+    {%/if%}
+{%/if%}
+
+{%if $modtype=='ind'%}
+		<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+		<script src="{%$smarty.const.THEME%}assets/js/jquery.themepunch.tools.min.js"></script>
+		<script src="{%$smarty.const.THEME%}assets/js/jquery.themepunch.revolution.min.js"></script>
+		<script>
+			// Revolution Slider
+			var revapi;
+			jQuery(document).ready(function() {
+				   revapi = jQuery('.tp-banner').revolution(
+					{
+						delay: 5000,
+						startwidth: 1200,
+						startheight: 300,
+                        gridwidth:1200,
+                        gridheight:300,
+						hideThumbs: 200,
+						shadow: 0,
+						navigationType: "none",
+						hideThumbsOnMobile: "on",
+						hideArrowsOnMobile: "on",
+						hideThumbsUnderResoluition: 0,
+						touchenabled: "on",
+						fullWidth: "on"
+					});
+			});	
+		</script>
+{%/if%}
+
+<!-- include custom script for site  -->
+<script src="{%$smarty.const.THEME%}assets/js/script.js"></script>
+
+<!--[if lte IE 8]>
+    <div id="browser_reject">
+        <a href="#" onclick="document.getElementById('browser_reject').style.display = 'none'; return false;">[x]</a>
+        {%$locale.1228%}
+        <a href="//www.google.ru/chrome/browser/desktop/">Google Crome</a>,
+        <a href="//www.mozilla.org/ru/firefox/new/">Mozilla Firefox</a>,
+        <a href="//www.microsoft.com/windows/microsoft-edge">Microsoft Edge</a>
+    </div>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<div class="category-list">
+    {%if $modtype == "ind" || $modtype == "cat"%}
+        <div class="tab-box ">
+            {%if $settings.shop == 1%}
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs add-tabs" role="tablist">
+                    <li {%if $settings.filter.shop == 'all'%}class="active"{%/if%}>
+                        <a href="?filter[shop]=all"  rel="nofollow">{%$locale.1214%} 
+                        <span class="badge">{%$list_shop_count.all%}</span>
+                        </a>
+                    </li>
+                    
+                    <li {%if $settings.filter.shop == 'only'%}class="active"{%/if%}>
+                        <a href="?filter[shop]=only"  rel="nofollow">
+                                    {%$locale.1211%}
+                        <span class="badge">{%$list_shop_count.only%}</span>
+                        </a>
+                    </li>
+                    <li {%if $settings.filter.shop == 'none'%}class="active"{%/if%}>
+                        <a href="?filter[shop]=none"  rel="nofollow">
+                                    {%$locale.1212%}
+                        <span class="badge">{%$list_shop_count.none%}</span>
+                        </a>
+                    </li>
+                </ul>
+            {%else%}
+                <div style="height: 40px;"></div>
+            {%/if%}
+    
+            <div class="tab-filter" id="listsort_cont">
+                <select id="listsort" class="selectpicker select_redirect form-control" data-style="btn-select" data-width="auto">
+                    <option value="">{%$locale.1204%}</option>
+                    <option {%if $settings.filter.sort == 'date_asc'%}selected{%/if%} value="?filter[sort]=date_asc">{%$locale.1205%}</option>
+                    <option {%if $settings.filter.sort == 'date_desc'%}selected{%/if%} value="?filter[sort]=date_desc">{%$locale.1206%}</option>
+                    <option {%if $settings.filter.sort == 'price_asc'%}selected{%/if%} value="?filter[sort]=price_asc">{%$locale.1207%}</option>
+                    <option {%if $settings.filter.sort == 'price_desc'%}selected{%/if%} value="?filter[sort]=price_desc">{%$locale.1208%}</option>
+                </select>
+            </div>
+        </div>
+        <!--/.tab-box-->
+    {%/if%}
+
+    <div class="listing-filter">
+        <div class="pull-left col-xs-8">
+            <div class="breadcrumb-list">
+                {%if $regions|@count > 0%}
+                    <a href="#selectRegion" class="current selectRegion" data-toggle="modal"><span>{%$locale.1209%}</span></a>
+                    <span class="cityName"> 
+                	{%foreach from=$regions item='region' name='i'%}
+                        {%$region.name%}{%if $smarty.foreach.i.last eq false %}, {%/if%}
+                	{%/foreach%}
+                    </span> 
+                {%else%}
+                    <a href="#" class="current"><span>{%$locale.9%}</span></a>
+
+                {%/if%}
+                    <a href="#selectRegion" class="selectRegion" data-toggle="modal" title="{%$locale.1210%}"> 
+                        <span class="caret"></span> 
+                    </a>
+            </div>
+        </div>
+        <div class="pull-right col-xs-4 text-right listing-view-action"><span
+                class="list-view active"><i class="  icon-th"></i></span> <span
+                class="compact-view"><i class=" icon-th-list  "></i></span> <span
+                class="grid-view "><i class=" icon-th-large "></i></span></div>
+        <div style="clear:both"></div>
+    </div>
+    <!--/.listing-filter-->
+
+    
+    <!-- Mobile Filter bar End-->
+
+    <div class="adds-wrapper">
+        <div class="tab-content">
+            <div class="tab-pane active" id="allAds">
+                                
+            {%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+            {%assign var='count' value=$blocks.m|@count %}
+            {%assign var='count' value=`$count-1`%}
+            {%if $count < 0%}{%assign var='count' value=0%}{%/if%}
+            {%assign var='counter' value=0%}
+            {%foreach from=$messages item='message' name='i'%}                            
+        
+                <div class="item-list{%if $message.marked == 1%} marked{%/if%}{%if $message.shop%} shop{%/if%}">
+                    {%if $message.block == 1%}
+                        <div class="cornerRibbons AdsBlock">
+                            <a href="#"> VIP</a>
+                        </div>
+                    {%elseif $message.raised == 1%}
+                        <div class="cornerRibbons AdsRaised">
+                            <a href="#"> TOP</a>
+                        </div>
+                    {%elseif $message.marked == 1%}
+                        <div class="cornerRibbons AdsMarked">
+                            <a href="#"> {%$locale.1197%}!</a>
+                        </div>
+                    {%/if%}
+        
+                
+                    
+                    <div class="col-sm-2 no-padding photobox">
+                        {%if $message.fields.i.0.value != ""%}
+                            <div class="add-image">
+                                    <span class="photo-count"><i class="fa fa-camera"></i> {%$message.fields.i|@count%} </span> 
+                                    <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                                        <img class="thumbnail no-margin" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title|truncate_utf:100:'...'%}">
+                                    </a>
+                            </div>
+                        {%else%}
+                        <div class="add-image">
+                        <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                            <img class="thumbnail no-margin" src="{%$smarty.const.THEME%}images/noimage.png" alt="img">
+                        </a>
+                        </div>
+                        {%/if%}
+                    </div>
+                    
+                    <!--/.photobox-->
+                    <div class="col-sm-8 add-desc-box">
+                        <div class="add-details">
+                            <h5 class="add-title"><a href='{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>{%$message.title|truncate_utf:300:'...'%}</a></h5>
+                            <span class="info-row">
+                                {%if $message.shop%}
+                                <span class="add-type business-ads tooltipHere" data-toggle="tooltip"
+                                                              data-placement="right" title="{%$locale.1104%}: {%$message.shop.name%}">M </span> 
+                                {%/if%}
+                                <span class="date">
+                                    <i class=" icon-clock"></i> {%$message.date_add|userdate%} 
+                                    -
+                                </span>
+                                
+                                <span class="item-location">
+                                    <i class="fa fa-map-marker"></i> {%$allregions[$message.region].name%}
+                                </span> 
+                                
+                                <span class="category">- <i class="icon-docs"></i>{%$categories[$message.cat].name%}</span>     
+                            </span>
+                        </div>
+                    </div>
+                    <!--/.add-desc-box-->
+                    <div class="col-sm-2 text-right  price-box">
+                        {%if $message.fields.p.0%}
+                        <h2 class="item-price">
+                            {%if $rates_default.charcode == 'rur'%}
+                                <i class="fa fa-rub" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                            {%elseif $rates_default.charcode == 'usd'%}
+                                <i class="fa fa-usd" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                            {%elseif $rates_default.charcode == 'eur'%}
+                                <i class="fa fa-eur" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                            {%else%}
+                                {%$message.fields.p.0.value.txt%}
+                            {%/if%}
+                        </h2>
+                        {%/if%}
+                        <div class="text-nowrap">
+                            {%*if $message.marked == 1%}
+                                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                                    <span>{%$locale.1197%}</span>
+                                </a>
+                            {%elseif $message.raised == 1%}
+                                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                                    <span>TOP</span> 
+                                </a> 
+                            {%elseif $message.block == 1%}
+                                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                                    <span>VIP</span>
+                                </a>
+                            {%/if*%}
+                            
+                            <a class="btn {%if $message.fav == 1%}btn-default{%else%}btn-success{%/if%} btn-sm make-favorite notepad" data-id="{%$message.id%}"> 
+                                <i class="fa fa-bookmark-o"></i> <span>{%$locale.244%}</span> </a>
+                            </div>
+                        </div>
+                    <!--/.add-desc-box-->
+                </div>
+                <!--/.item-list-->
+        
+                {%assign var='counter' value=`$counter+1`%}
+                
+                {%if $counter == $settings.middle_block%}
+                	{%assign var='counter' value=0%}
+                	{%assign var='rand' value="0"|mt_rand:$count%}
+                	{%$blocks.m.$rand%}
+                {%/if%}
+            
+            {%/foreach%}
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <!--/.adds-wrapper-->
+
+</div>
+{%include file="pagination.html"%}

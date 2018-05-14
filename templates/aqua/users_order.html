@@ -1,0 +1,37 @@
+
+
+{%if $order%}
+	<div class="alert alert-info">
+	<p class="lead">{%$locale.181%}</p>
+		<ul>
+			<li><b>{%$locale.182%}</b>: {%$services[$smarty.post.service].name%}</li>
+			<li><b>{%$locale.160%}</b>: {%$smarty.post.days%} {%$locale.175%}</li>
+			<li><b>{%$locale.183%}</b>: {%$messages[$smarty.post.message_id].title|truncate_utf:100:"..."%}</li>
+			<li><b>{%$locale.185%}</b>: {%$count%} {%$currency_names[$settings.currency].name2%}</li>
+		</ul>
+        <div class="text-center"><input class="btn btn-success" type='submit' name='submit_order_ok' value='{%$locale.162%}'>
+<input class="btn btn-default" type='button' onclick="javascript:document.location.href='{%$settings.path%}users/order/'" value='{%$locale.184%}'></div>
+
+
+	</div>
+
+
+<input name='service' type='hidden' value='{%$smarty.post.service%}'>
+<input name='days' type='hidden' value='{%$smarty.post.days%}'>
+<input name='message_id' type='hidden' value='{%$smarty.post.message_id%}'>
+
+{%else%}
+
+<div id="load_order_iframe" data-type="{%$smarty.get.service%}">
+    {%include file='list_short.html'%}
+</div>
+
+{%include file="pagination.html"%}
+
+<a name="order"></a>
+
+<iframe id="order_iframe" style="border: 0px; width:100%; height:400px" src="{%$settings.path%}services.html?service={%$smarty.get.service%}&message_id={%$smarty.get.message_id%}">
+
+</iframe> 
+
+{%/if%}

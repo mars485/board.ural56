@@ -1,0 +1,69 @@
+{%if $messages|@count > 0%}
+    <script>
+    function functionLoop(){
+        if(document.getElementById('active_service').value == 'b'){
+                sum = '<a href={%$settings.path%}>{%$locale.180%}</a>';
+            }
+            else{
+            var sum = parseFloat(document.getElementById('active_service').value) * {%$messages|@count%};
+            if(isNaN(sum)){
+                sum = '{%$locale.1057%}';
+            }else{
+                sum = sum + ' {%$Currency%}';
+            }
+        }   
+        document.getElementById('recount_sum').innerHTML = sum;
+    }
+    var intervalID = setInterval("functionLoop()",500);
+    </script>
+    <h3>{%$locale.981%}</h3>
+    
+    <p>&nbsp;</p>
+    <div class="row">
+        <div class="col-md-6">
+            <p>{%$locale.78%}:</p>
+            <form name='add' action='' method='post'>
+        		<iframe src="{%$settings.path%}timing/?days={%$check.active_days%}&count={%$messages|@count%}" id="frame_days"></iframe>
+        	    <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+        	    <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+                <p>
+                    <button type="submit" name="debit" class="btn btn-primary">
+                        <i class="fa fa-recycle" aria-hidden="true"></i> {%$locale.619%}
+                    </button>
+                </p>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <p>
+                    {%$locale.1053%}{%$messages|@count%} 
+                    {%$messages|@count|om_number_smarty:$locale[3]:$locale[4]:$locale[5]%}: 
+                    <span id="recount_sum">??</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    
+{%elseif $err%}
+
+			<div class='alert alert-danger'>
+				<ul>
+					{%foreach  from=$err item='er'%}
+					   <li>{%$er%}</li>
+					{%/foreach%}
+				</ul>
+			</div>
+
+{%else%}
+    <div class='alert alert-success'>
+        <p class="lead">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            {%$locale.982%}
+        </p>
+        <p><i class="fa fa-link" aria-hidden="true"></i> <a href="{%$settings.path%}users/">{%$locale.104%}</a></p>
+    </div>
+{%/if%}
+
+

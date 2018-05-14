@@ -1,0 +1,53 @@
+<div class='order'>
+
+    {%if $go%}
+    	<p class="lead">{%$locale.191%}: <b>{%$Count%}</b> {%$Currency%}</p>
+    	<p class="mute">{%$locale.661%}: </p>
+        <div class="bil">
+        	{%foreach from=$billing key='k' item='bil'%}
+        		{%if $bil.status == 1%}
+                    {%assign var='icon' value="`$smarty.const.FULLPATH`templates/`$smarty.const.THEME_NAME`/images/billing/`$k`.png"%}
+        			{%assign var='link' value="?p=`$bil.uri`&id=`$payment_id`"%}
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="{%$link%}">
+                                {%if file_exists($icon)%}
+                                    {%assign var='icon' value="`$smarty.const.THEME`images/billing/`$k`.png"%}
+                                {%else%}
+                                    {%assign var='icon' value="`$smarty.const.THEME`images/billing/default.png"%}
+                                {%/if%}
+                                <img src="{%$icon%}" alt="{%$bil.name%}"  class="img-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="col-md-9">
+                            <p><b>{%$bil.name%}</b> &mdash; {%$bil.descr%}</p>
+                            <p><a href="{%$link%}" class="btn btn-primary btn-sm">{%$locale.339%}</a></p>
+                        </div>
+                    </div>
+        		{%/if%}
+        	{%/foreach%}
+        </div>
+    {%else%}
+        {%if $err%}
+            <div class='alert alert-danger'>
+                {%$locale.629%}
+            </div>
+        {%/if%}
+    	<form action='?' method='post' class="form-horizontal">
+            <div class="form-group">
+            	<label for="num" class="control-label col-md-4" style="padding-top: 7px;">
+                    <p class="lead">{%$locale.191%}:</p>
+                </label>
+                <div class="input-group col-md-4">
+                	<input id="num" type='number' class="form-control" name='num' value='' size='4'>
+                	<span class="input-group-addon">{%$Currency%}</span>
+                </div>
+            </div>
+        	<div class="form-group">
+               <div class="col-md-12 text-center">
+        	       <input type='submit' value='{%$locale.64%}' class="btn btn-primary">
+               </div>
+            </div>
+    	</form>
+    {%/if%}
+</div>

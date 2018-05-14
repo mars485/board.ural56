@@ -1,0 +1,8 @@
+<ul id="tag_cloud">
+	{%foreach from=$settings.tags item='tag'%}
+    {%if $tag.tag_name|trim != ""%}
+		<li class="{%$tag.tag_class%}"><a style="{%*$tag.tag_style*%}" href="{%$settings.path%}tags/{%$tag.tag_name|urlencode%}/">{%$tag.tag_name%}</a></li>
+    {%/if%}
+    {%/foreach%}
+</ul>
+<div style="clear: both;"></div>
