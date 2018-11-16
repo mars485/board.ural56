@@ -1,0 +1,97 @@
+    
+	<div id="tree_h1"></br><div id="posl_h">{%$locale.1269%}</div><div id="posl_hn">{%$locale.1270%}</div></div>
+	<div id="width_block">  
+{%if $karusel_messages|@count > 0 %}
+
+  {%*считаем количество объявлений выводимых за раз*%}
+{%if $settings.rand_block == ""%}
+	{%assign var='rand_block' value='1'%}
+{%else%}
+	{%assign var='rand_block' value=$settings.rand_block%}
+{%/if%}
+{%if $karusel_messages|@count%}
+	{%assign var='rand_block' value=$karusel_messages|@count%}
+{%/if%}
+ 
+
+
+
+
+	
+		   
+		   {%*собственно вывод объявлений в зависимости от их расположения*%}
+{%section name='loop' loop=$rand_block%}
+	{%assign var='message' value=`$karusel_messages[$smarty.section.loop.index]`%}
+		   <div id="body_block">
+		   <div id="img_block">
+		   <table style="border-spacing: 0; width: 100%; height:70px;">
+		   <tbody>
+		   <tr>
+		   <td style="vertical-align: inherit; text-align: center;">
+		  <a style="display: block" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}"> {%if $message.fields.i.0.value != ""%}<img style="max-height: 170px;  min-width: 70px;  min-height: 60px; max-width: 70px;" src="{%$settings.path%}uploads/images/tb/{%$message.fields.i.0.value%}" alt="{%$message.title%}" />{%else%}<img src="{%$smarty.const.THEME%}images_karusel/no-foto.png" style="width: 70px;" alt="{%$message.title%}" />{%/if%}</a>
+			</td>
+			</tr>
+			</tbody>
+			</table>
+</div>
+		  <div id="telo_block">
+		  <div id="telo_block_h1"><a style="display: block" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:85:'...'%}</a></div>
+		  <div id="telo_block_cena">{%if $message.fields.p == NULL%}
+			{%$locale.1116%}
+			{%else%}
+				{%foreach  from=$message.fields.p item='v'%}
+			
+					
+							{%if $settings.user || (!$settings.user && $v.hide == 0)%}
+								{%$v.value.txt|droblenie%}
+							{%else%}
+								{%$after_registration%}
+							{%/if%}
+					   {%$locale.1117%}
+{%/foreach%}{%/if%}</div>
+		  <div id="telo_block_text">{%$message.text|truncate:55:'...'%}</div>
+		  </div>
+		   
+		   
+		   </div>
+
+	 
+			  {%/section%}
+				
+			{%else%}	
+			  
+			 
+<div id="width_block">
+
+		  <div id="no_posl">Нет объявлений. Попробуйте найти объявления в ближайшем регионе.</div>
+
+</div>
+   {%/if%}
+  
+    </div>
+  <div id="nov_glav">
+  
+<link rel="stylesheet" type="text/css" href="{%$smarty.const.THEME%}css/novost.css" />
+  <script>
+
+$(document).ready(function($) {
+ var loaderImg = "<img src='loader.gif' alt='загрузка...' />"; // картинка до загрузки
+ $("div#thief").html(loaderImg).html(function(){
+ 			var a=loaderImg;
+			$.ajax({ // запрашиваем данные со страницы-донора
+				url:'{%$settings.patch%}articles/',
+				dataType:"html",
+				async:false,
+				success:function(b){a=$(b).find('#victim')},  // извлекаем html из нужного элемента
+				error:function(){alert("Ajax!Ошибка.")}
+				});
+				return a
+ });
+ $("div#thief").fadeIn('fast'); // отображаем блок, если он был скрыт
+ return false;
+});
+</script>
+
+<div id="thief"></div>
+  </div>
+ 

@@ -1,0 +1,23 @@
+<div align='center'>
+
+{%$locale.20%}<br />
+{%if $settings.login_error2 == 'true'%}
+<div class='error'>
+{%$locale.47%}
+</div>
+{%/if%}
+<form name='form' action='?' method='post'>
+<input style='width:150px; color: silver; margin:3px;' name='email_login2' type='text' value='{%$locale.21%}'  onblur='alterNate(this)' onfocus='alterNate(this)'><br />
+<input style='width:150px; color: silver; margin:3px;' name='password_login2' type='password' value='{%$locale.21%}'  onblur='alterNate(this)' onfocus='alterNate(this)'><br />
+<input type='submit' name='submit_login2' value='{%$locale.23%}'>
+<input type='button' onclick="go('{%$settings.patch%}users/register/');" value='{%$locale.24%}' /><br />
+{%if $settings.ulogin == 1%}
+<div id="uLogin2" data-ulogin="display=panel;fields=first_name,last_name,email;providers=vkontakte,facebook,odnoklassniki,twitter;hidden=other;redirect_uri=http%3A%2F%2F{%$smarty.server.HTTP_HOST%}{%$smarty.const.PATH%}users/?ulogin"></div>
+{%/if%}
+<br />
+<a href="{%$settings.patch%}users/password_recovery/" style='margin:3px;'>{%$locale.52%}</a>
+<br />
+</form>
+</center>
+
+</div>

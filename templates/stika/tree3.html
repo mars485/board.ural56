@@ -1,0 +1,35 @@
+<style>
+#tree_cat_tree {
+display: none;
+}
+</style>
+<div id="tree_cat">{%$locale.1119%}</div>
+<div id="ob">
+
+{%foreach from=$tree item=el%}
+
+
+
+
+
+<div id="menfon">
+<a style="display: block;" href="{%$settings.path_region%}{%$uri%}{%$el.uri%}/">
+<img style=" max-height: 70px;" src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$el.name%}'>
+<table  align="center" style="text-align: center; height: 50px; margin-top: 5px;font-size: 17px;
+  font-weight: 600;
+  color: rgb(19, 84, 118);"> 
+<tbody>
+<tr>
+<td>
+
+{%$el.name%}
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</a>
+</div>{%/foreach%}
+ 
+</div>
+

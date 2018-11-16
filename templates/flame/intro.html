@@ -1,0 +1,6 @@
+{%foreach from=$list_tree item=el%}
+    <li {%if $el.cat%}class="cat"{%/if%}><a href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a></li>
+    {%if $el.cat%}
+        {%include file="intro.html" list_tree=$el.cat uri="`$uri``$el.uri`/"%}
+    {%/if%}
+{%/foreach%}

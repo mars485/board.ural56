@@ -1,0 +1,51 @@
+<div align="center">
+    {%if isset($smarty.get.notice)%}
+        <div class="ok">{%$locale.958%}</div>
+    {%/if%}
+	
+    <p class="text-info">{%$infotext%}</p>
+    <h4 class="line">{%$messages_counter%}</h4>
+</div>
+<form name="update" action="" method="POST">
+
+    <ul style="margin-left: 20px; margin-bottom: 20px; list-style-type: none;">
+        {%foreach from=$messages item='message' name='i'%}
+            <li>
+                <input checked name="msg[]" class="MessagesCheck" type="checkbox" value="{%$message.id%}" />
+                <a href='{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>{%$message.title%}</a>
+            </li>
+        {%/foreach%}
+    </ul>
+    
+    <input type="submit" class="btn btn-default" value="{%$locale.1098%}" />
+
+</form>
+
+{%if $pages != ""%}
+    {%assign var='plim' value=10%}{%* Количество номеров страниц, которые будут выводиться за раз *%}
+    {%if $smarty.get.page < 1%}{%assign var='page' value=1%}{%else%}{%assign var='page' value=$smarty.get.page%}{%/if%}
+    {%if $smarty.get.page > $pages%}{%assign var='page' value=$pages%}{%/if%}
+    {%math equation="(ceil(p/l))*l" p=$page l=$plim assign='lastp'%}
+       {%if $lastp > $pages%}{%assign var='lastp' value=$pages%}{%/if%}
+       {%if $page <= $plim || $pages <= $plim%}{%assign var='firstp' value=0%}
+       {%else%}{%assign var='firstp' value=$lastp-$plim%}
+        {%/if%}
+       
+         <ul class="pagination">
+        {%if $page <= $plim%}{%else%}  
+         <li><a href="page1.html{%$get_str%}" title=""> 1 </a></li>
+         <li><a href="page{%$page-$plim%}.html{%$get_str%}" title=""> &laquo; </a></li>
+       {%/if%}
+       {%section name=page loop=$pages start=$firstp max=$plim%}
+          {%assign var="p" value=$smarty.section.page.index+1%}
+          <li {%if $page == $p%}class="active"{%/if%}><a href="page{%$p%}.html{%$get_str%}">{%$p%}</a></li>
+       {%/section%}
+       {%if $page <= $pages-$plim+1%} 
+         <li><a href="page{%$page+$plim%}.html{%$get_str%}" title=""> &raquo; </a></li>
+         <li><a href="page{%$pages%}.html{%$get_str%}" title=""> {%$pages%}</a> </li>
+       {%/if%}
+       </ul>
+       
+{%/if%}
+
+<div class="clear"></div>

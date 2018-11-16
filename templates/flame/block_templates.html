@@ -1,0 +1,7 @@
+<div class="blockchange">
+    <select name="template" class="selectpicker select_redirect form-control" data-style="btn-select" data-width="auto">
+    	{%foreach from=$templates item='template'%}
+      	<option value="{%$settings.path%}change_template/?template={%$template%}" {%if $settings.theme == $template%}selected{%/if%}>{%$template%}</option>
+    	{%/foreach%}
+    </select>
+</div>

@@ -1,0 +1,97 @@
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+<div id="promo-slider" class="csw">
+	<div class="panelContainer">
+{%/if%}
+    
+    
+{%if $settings.rand_block == ""%}
+	{%assign var='rand_block' value='1'%}
+{%else%}
+	{%assign var='rand_block' value=$settings.rand_block%}
+{%/if%}
+
+{%if $promo_messages|@count < $settings.rand_block %}
+	{%assign var='rand_block' value=$promo_messages|@count%}
+{%/if%}
+
+{%section name='loop' loop=$rand_block%}
+	{%assign var='message' value=`$promo_messages[$smarty.section.loop.index]`%}
+
+    {%if $place == 'h' or $place == 'f'%}
+    <!--//растяжки вверху-внизу -> //-->
+    <div class="block-stretch-promo-hf">
+            <div>
+			{%if $message.user_id != 0%}
+				<a class="userinfo-promo" title="{%$locale.772%}" href="{%$settings.path%}userinfo/{%$message.user_id%}/">{%$message.user_id_name%}</a>
+			{%elseif $message.email != ""%}
+				<a class="mail-promo group iframe" title="{%$locale.157%}" href="{%$settings.path%}sendmail/?messageid={%$message.id%}&userid={%$message.user_id%}">{%$message.user%}</a>
+			{%else%}
+				{%$message.user%}
+			{%/if%}
+            
+            <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.text|strip_tags|truncate_utf:100:'...'%}</a>
+            </div>
+    </div>
+    <!--// <- растяжки вверху-внизу//-->
+    {%/if%}
+    
+    {%if $place == 't' or $place == 'b' or $place == 'm'%}
+    <!--//блоки вверху-внизу -> //-->
+    <div class="block-stretch-promo-tbm">
+            <div>
+        	{%if $message.fields.i.0.value != ""%}
+        		<img align='left' src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}" border="0" height="38" />
+        	{%/if%}
+			{%if $message.user_id != 0%}
+				<a class="userinfo-promo" title="{%$locale.772%}" href="{%$settings.path%}userinfo/{%$message.user_id%}/">{%$message.user_id_name%}</a>
+			{%elseif $message.email != ""%}
+				<a class="mail-promo group iframe" title="{%$locale.157%}" href="{%$settings.path%}sendmail/?messageid={%$message.id%}&userid={%$message.user_id%}">{%$message.user%}</a>
+			{%else%}
+				{%$message.user%}
+			{%/if%}
+            <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title%}</a>
+            {%$message.text|strip_tags|truncate:200:'...'%}
+            </div>        
+    </div>
+    <!--// <- блоки вверху-внизу//-->
+    {%/if%}
+    
+    {%if $place == 'l' or $place == 'r'%}
+        <!--//блоки слева-справа -> //-->    
+        {%if $settings.message_block_type == 2%}
+            <div class="panel">
+        {%/if%}
+        <div class='blocks'>
+        	<div class='blocks_head'>
+        		{%$message.title|truncate_utf:15:'...'%}
+        	</div>
+        	<div class='blocks_content'>
+        		<br />
+            		{%if $message.fields.i.0.value != ""%}
+            			<center>
+                        <img style="margin: 5px;" src="{%$settings.patch%}uploads/images/ts/{%$message.fields.i.0.value%}" width="140" alt="{%$message.title%}" border="0" />
+       		            </center>
+                    {%/if%}
+                    <p align='left'>{%$message.text|strip_tags|truncate:200:'...'%}</p>
+                    <p align='left'><a class="link" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$locale.216%} &rarr;</a></p>
+        		<br />
+        	</div>
+        </div>
+    
+        {%if $smarty.section.loop.last eq false %}{%include file='block_seporator.html'%}{%/if%}
+        
+        {%if $settings.message_block_type == 2%}
+            </div>
+        {%/if%}
+        <!--// <- блоки слева-справа//-->
+        {%/if%}
+        
+
+
+{%/section%}
+
+
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+	</div>
+</div>
+{%/if%}

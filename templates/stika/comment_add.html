@@ -1,0 +1,40 @@
+{%if $settings.comment_on%}
+	<form action='#' class="new_comment" method='POST'>
+	
+	
+	{%if $settings.user || (!$settings.user && $settings.comment_unreg == 1)%}
+	
+<table>
+<tbody>
+{%if !$settings.user%}
+<tr>
+<td align="right" style=" line-height: 40px; font-size: 17px; color: #366f9f;  vertical-align: top;"><p style="  margin-right: 3px;">Ваше имя:</p> </td><td><input name="comusername" type="text"  value="{%$smarty.post.comusername%}"  ></td>
+</tr>
+
+<tr>
+<td align="right" style="line-height: 40px;  font-size: 17px; color: #366f9f; vertical-align: top;"><p style="  margin-right: 3px;">Email:</p> </td><td><input name="comuseremail" type="text" value="{%$smarty.post.comuseremail%}" ></td>
+</tr>
+{%/if%}
+
+<tr>
+<td align="right" style="line-height: 40px;  font-size: 17px; color: #366f9f; vertical-align: top;"><p style="  margin-right: 3px;">Текст комментария:</p> </td><td><textarea name='comtext'>{%$smarty.post.comtext%}</textarea></td>
+</tr>
+{%if $settings.captcha == 1%}
+
+	<tr>
+					<td align="right"><img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'></td>
+					<td><input style="width: 150px;" class="input-small" name='captcha' type='text' value='' size='5'></td>
+				</tr>
+				{%/if%}
+				
+<tr><td></td><td><input id="btns" type="submit" name="commentsubmit" value="{%$locale.55%}"></td></tr>
+				
+	
+</tbody>
+</table>
+{%else%}
+	{%$locale.788%}
+	{%/if%}
+
+	</form>
+{%/if%}

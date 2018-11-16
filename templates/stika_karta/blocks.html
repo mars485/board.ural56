@@ -1,0 +1,32 @@
+{%if $place == 'h' or $place == 'f'%}
+<!--//растяжки вверху-внизу -> //-->
+<div class="block-stretch">{%$html%}</div>
+<!--// <- растяжки вверху-внизу//-->
+{%/if%}
+
+{%if $place == 't' or $place == 'b'%}
+<!--//блоки вверху-внизу -> //-->
+<div class="block-stretch">{%$html%}</div>
+<!--// <- блоки вверху-внизу//-->
+{%/if%}
+
+{%if $place == 'l' or $place == 'r'%}
+<!--//блоки слева-справа -> //-->
+<div class='blocks'>
+	<div class='blocks_head'>
+		{%$name%}
+	</div>
+	<div class='blocks_content'>
+		<br />
+		{%$html%}
+		<br />
+	</div>
+</div>
+<!--// <- блоки слева-справа//-->
+{%/if%}
+
+{%if $place == 'm'%}
+<!--//блок среди объявлений -> //-->
+<div class="block-stretch">{%$html%}</div>
+<!--// <- блок среди объявлений//-->
+{%/if%}

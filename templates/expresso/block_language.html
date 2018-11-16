@@ -1,0 +1,3 @@
+{%foreach from=$languages item='language'%}
+    <div class="btn {%if $settings.locale == $language%}btn-warning{%/if%}"  onclick="document.location.href='{%$settings.path%}change_language/?language={%$language%}'">{%$language%}</div>  
+{%/foreach%}

@@ -1,0 +1,23 @@
+{%foreach from=$sub_el item=sub_el%}
+        {%if $sub_el.uri==$current_reg%}
+		{%assign var="uri" value=$uri|cat:$el|cat:"/"%}
+		<li><a id="regss" href="{%$uri%}">{%$sub_el.name%}</a></li>
+        	{%if $sub_el.ipgeo_field!='c' %}
+			{%if $sub_el.cat%}<li id="gor_rec">Города</li>{%/if%}
+		
+		
+
+        	{%/if%}
+		<b id="www">{%include file="sub_region_recursive.html" uri=$uri parent=$sub_el.id sub_el=$sub_el.cat %}</b>
+	{%else%}	
+        	{%if $parent!=0 %}
+        		{%if $sub_el.name==$current_name %}
+				<li class="active_reg">{%$sub_el.name%}</li>
+			{%else%}
+				<li><a href="{%$uri|cat:$sub_el.uri|cat:"/"%}">{%$sub_el.name%}</a></li>
+        		{%/if%}
+		{%else%}
+		{%include file="sub_region_recursive.html" uri=$uri parent=0 sub_el=$sub_el.cat %}
+        	{%/if%}
+        {%/if%}
+{%/foreach%}

@@ -1,0 +1,43 @@
+   <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('.splLink').click(function(){
+        $(this).parent().children('div.splCont').toggle('normal');
+        return false;
+    });
+});
+</script>
+
+<style type="text/css">
+   .splCont {display: none;
+border: 1px solid #C2DAE6;
+background: none repeat scroll 0% 0% #FFF;
+border-radius: 5px;
+width: 550px;
+padding-right: 100px;
+margin-bottom: 20px;}
+</style>
+
+
+
+
+<div style="margin:15px;">
+    <h1 class="once_information">{%$user.name%}</h1>
+    
+    <ul class="once_list2">
+        <li><strong>{%$locale.368%}</strong>: {%$user.date|date_format:"%d.%m.%Y"%}</li>
+        <li><strong>{%$locale.765%}</strong>: {%$user.count_messages%}</li>
+
+
+<li><div>        <a class="splLink"  onclick="document.getElementById('iframe0').src='{%$settings.patch%}sendmail/?userid={%$user.id%}&tpl=message2user';" href="">Отправить сообщение</a>
+<div class="splCont">
+ <iframe id="iframe0" src=""></iframe>
+</div>
+</div></li>
+
+    </ul>
+
+    <div class="usermessages">{%$locale.775%}</div>
+    {%include file='list.html'%}
+</div>
+

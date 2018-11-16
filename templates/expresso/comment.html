@@ -1,0 +1,25 @@
+<li class="media">
+   {%if $comment.userinfo%}
+		<div class="pull-left"><div class="glyphicon glyphicon-user"></div></div>
+	{%else%}
+		<div class="pull-left"><div class="glyphicon glyphicon-envelope"></div></div>
+	{%/if%}
+    <div class="media-body">
+    {%if $comment.userinfo%}
+		<div class="pull-left left-margin"><h4 class="media-heading">	<a data-toggle="tooltip" title="{%$locale.772%}" href="{%$settings.patch%}userinfo/{%$comment.userinfo.id%}/">{%$comment.userinfo.name%}</a></h4></div>
+    {%else%}
+		<div class="pull-left left-margin"><h4 class="media-heading">  <a data-toggle="tooltip" class="group iframe" title="{%$locale.157%}" href="{%$settings.patch%}sendmail/?comment_id={%$comment.id%}">{%$comment.user_name%}</a></h4></div>
+	{%/if%}
+    {%if $comment.editable%} 
+    <div class="pull-left">  
+                <span class="editblock">         
+                 <a href="#" name="{%$comment.id%}" class="comm_edit" ><div class="glyphicon glyphicon-edit"></div> {%$locale.200%}</a>
+                 <a href="#" name="{%$comment.id%}" class="comm_delete"><div class="glyphicon glyphicon-trash"></div> {%$locale.201%}</a>
+                </span>
+    </div> 
+    {%/if%}
+    <div class="pull-right"><div class="glyphicon glyphicon-calendar"></div> {%$comment.date|date_format:"%d.%m.%Y в %H:%M"%}</div>
+    <div class="clearfix">&nbsp;</div>
+    <div class="comm_text left-margin">{%$comment.text|wordwrap:50%}</div>
+    </div>
+</li>

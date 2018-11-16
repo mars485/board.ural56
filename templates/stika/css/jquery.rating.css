@@ -1,0 +1,51 @@
+div.vote-wrap{
+    overflow: hidden;
+}
+
+div.vote-block{
+	position: relative;	
+	height: 20px;
+
+}
+
+div.vote-hover{
+    float: right;
+    cursor:  pointer;
+	margin-right: 5px;
+}
+
+
+div.vote-stars{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+div.vote-active{
+	position: absolute;
+	left: 0;
+	top: 0;
+	
+}
+
+div.vote-result{
+    color: #ccc;
+    font-size: 14px;
+line-height: 17px;
+
+}
+
+div.vote-success{
+
+min-width: 110px;
+
+font-size: 14px;
+float: right;
+margin-top: 5px;
+background: #ccc;
+color: #000;
+padding-left: 5px;
+padding-right: 5px;
+line-height: 20px;
+text-align: center;
+}

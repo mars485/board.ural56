@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={%$settings.charset%}"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <meta name="author" content="{%$settings.autor%}"/>
+        <meta name="description" content="{%$description%}"/>
+        <meta name="keywords" content="{%$keywords%}"/>
+        <meta name="copyright" content="{%$settings.copyright%}"/>
+        <meta name="sprypayUrlChecker" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+
+        {%if $noindex%}
+        <meta name="robots" content="noindex,nofollow"/>
+        {%/if%}
+
+        <title>
+            {%foreach from=$title_reverse item='tit' name='i'%}
+            {%$tit.name|strip_tags%}
+            {%if $smarty.foreach.i.last eq false %} / {%/if%}
+            {%/foreach%}
+        </title>
+        
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link href="{%$smarty.const.THEME%}css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="{%$smarty.const.THEME%}style.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{%$smarty.const.THEME%}lightbox/nivo-lightbox.css" type="text/css" />
+        <link rel="stylesheet" href="{%$smarty.const.THEME%}lightbox/themes/pjstore/pjstore.css" type="text/css" />
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!--[if IE]>
+            <link rel="stylesheet" href="{%$smarty.const.THEME%}style_ie.css" type="text/css" />
+        <![endif]-->
+
+        <script type="text/javascript" src="{%$settings.patch%}js/jquery.js"></script>
+        <script src="{%$settings.path%}js/jquery.easing.min.1.3.js" type="text/javascript"></script>
+        <script src="{%$smarty.const.THEME%}js/hideMaxListItem.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="{%$settings.path%}css/fancybox/jquery.fancybox-1.2.6.css" media="screen" />
+        <script type="text/javascript" src="{%$settings.path%}js/fancybox/jquery.fancybox-1.2.6.pack.js"></script>
+
+        <script type="text/javascript" src="{%$settings.path%}js/swfobject.js"></script>
+
+        {%if $smarty.get.cat.0 == 'add' ||  $smarty.get.cat.0 == 'edit' %}
+        <link type="text/css" href="{%$settings.path%}js/uploadify/uploadify.css" rel="stylesheet" />   
+        <script type="text/javascript" src="{%$settings.path%}js/uploadify/jquery.uploadify.v2.1.4.min.js"></script>
+        {%/if%}
+
+        {%if $settings.message_block_type == 2 %}
+            <!-- styles needed for carousel slider -->
+            <link href="{%$smarty.const.THEME%}css/owl.carousel.css" rel="stylesheet">
+            <link href="{%$smarty.const.THEME%}css/owl.theme.css" rel="stylesheet">
+            <script>
+                var TPL_AUTOROTATE = {%if $settings.message_block_type == 2 %}2000{%else%}false{%/if%};
+                var TPL_PATH = "{%$smarty.const.PATH%}";
+                var TPL_L_07 = '{%$locale.1194%}';
+                var TPL_L_08 = '{%$locale.1195%}';
+            </script>
+            <script src="{%$smarty.const.THEME%}js/owl.carousel.min.js"></script>
+        {%/if%}
+        <script type="text/javascript"> var first_dir = "{%$smarty.get.cat.0%}"; var second_cat_id = "{%$second_cat.id%}"; </script>
+
+        <script type="text/javascript" src="{%$settings.path%}uploads/temp/dynamic_{%$smarty.const.THEME_NAME%}.js"></script>
+
+        {%if $smarty.get.cat.0 == 'users' && ($smarty.get.cat.1 == 'register' || $smarty.get.cat.1 == 'info') %}
+        <script type="text/javascript" src="{%$settings.patch%}js/jquery.maskedinput-1.3.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(function($){
+
+                    $('#changephone').click(function(event){
+                        $('#changephoneform').show(500);
+                        $('#changephonenum').hide(500);
+                    });
+
+                    $("#phone, #b_phone").mask("(999) 999-99-99", {completed:function()
+                        {
+                            var smsphone = $('#stcode').attr('value') + ' ' + $("#phone").attr('value');
+                            $('#phonehidden').show(500);
+                            $('#sendsms').attr('value', '{%$locale.808%} '+smsphone);
+                            $('#sendsms').attr('name', smsphone);
+                        }});
+
+                    $('#sendsms').click(function(event){
+                        var phonenumber = $(this).attr('name');
+                        $.ajax({
+                            type: "GET",
+                            url: "{%$settings.patch%}sendsms/?num="+phonenumber,
+                            cache: true,
+                            success: function(html){
+                                if(html == 'ok')
+                                {
+                                    alert('{%$locale.812%}: '+phonenumber);
+                                }
+                                else
+                                {
+                                    alert(html);
+                                }
+                            }
+                        });
+                    });
+
+
+                });
+            });
+        </script>
+        {%/if%}
+
+    {%if $settings.ulogin == 1 && !$settings.user%}
+        <script src="//ulogin.ru/js/ulogin.js"></script>
+    {%/if%}
+    
+    {%if $smarty.get.cat.0 == 'edit' || $smarty.get.cat.0 == 'add'%}
+    <script>
+        var CKToolbal = '{%if $settings.editable%}Full{%else%}Basic{%/if%}';
+    </script>
+    <script src="{%$settings.path%}ckeditor/ckeditor.js"></script>
+    {%/if%}
+
+    </head>
+    <body>
+    <div id='dropdownRegionMenu' style='display: none;'></div>
+
+    <noindex>
+    <!--googleoff: index--><noscript>
+                             <div class="alert alert-danger">{%$locale.842%}</div>
+                           </noscript>
+    <script>
+    if (!navigator.cookieEnabled)
+       {document.write('<div class="alert alert-danger">{%$locale.843%}</div>');}
+    </script>
+    <!--googleon: index-->
+    </noindex>
+    
+<!-- Modal Region -->
+<div class="modal fade" id="RegionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-map-marker"></span> {%$locale.8%}</h4>
+      </div>
+      <div class="modal-body">       
+               <ul class="list-unstyled main-region">
+                    {%foreach from=$regions_recursive.cat item=el%}
+                        <li>
+                            {%assign var="uri" value=$settings.path%}
+                            <a class="main-region" href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a>
+                            {%if $el.cat%}
+                                {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+                                <ul class="list-unstyled list-inline list-region">{%include file="region_recursive.html" el=$el.cat%}</ul>
+                            {%/if%}
+                        </li>
+                    {%/foreach%}
+                </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{%$locale.11%}</button>
+        <a class="btn btn-warning" href='{%$settings.path%}change_region/?act=change_region&clean_region'>{%$locale.9%}</a>       
+      </div>
+    </div>
+  </div>
+</div>     
+<!-- // Madal Region-->
+    
+<div class="container wrapper">
+<div class="description hidden-xs hidden-sm"><h2>{%$smarty.const.TITLE%}</h2></div>   
+<div class="logo">
+  <a href="{%$settings.path%}"><img class="img-responsive" alt="{%$settings.copyright%}" src="{%$settings.logo%}" /></a>
+</div> 
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <div class="navbar-header">
+
+
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="glyphicon glyphicon-align-justify"></span>
+      </button>
+    <button type="button" class="navbar-toggle open-column" data-toggle="offcanvas">
+    <span class="glyphicon glyphicon-tasks"></span>
+    </button>
+    </div>
+    
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> 
+      <ul class="nav navbar-nav navbar-right">
+         {%assign var='lastregion' value=$second_region.name|@count%}
+         {%assign var='lastregion' value=$lastregion-1%}
+         {%assign var='lastregion' value=$second_region.name[$lastregion]%}
+         <li><a data-toggle="modal" data-target="#RegionModal" href="{%$settings.path%}region_changer/?pt="><span class="glyphicon glyphicon-map-marker"></span> {%if $second_region%}{%$lastregion%}{%else%}{%$locale.9%}{%/if%} </a></li>
+         <li><a href="{%$settings.path%}notepad/"><span class="glyphicon glyphicon-star"></span> {%$locale.244%} <span id="notepad-counter">{%$counter.notepad%}</span></a></li>
+       {%if $settings.user%}
+          <li class="dropdown active"><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-ok"></span> {%$locale.41%} <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="{%$settings.path%}users/"><span class="glyphicon glyphicon-list-alt"></span> {%$locale.265%} </a></li>
+                    <li><a href="{%$settings.patch%}add/"><span class="glyphicon glyphicon-plus"></span> {%$locale.69%} </a></li>
+                    <li class="divider"></li>
+                    <li><a href="{%$settings.patch%}users/info/">{%$locale.126%}</a></li>
+                    <li><a href="{%$settings.patch%}users/pay/">{%$locale.64%} ( {%$settings.user.balance%} {%$currency_names[$settings.currency].name2%} )</a></li>
+                    <li><a href="{%$settings.patch%}users/order/">{%$locale.65%}</a></li>
+                    <li><a href="{%$settings.patch%}users/orders/">{%$locale.209%}</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{%$settings.path%}users/exit/"><span class="glyphicon glyphicon-log-out"></span> {%$locale.42%} </a></li>
+          </ul>
+          </li>
+          {%else%}
+          <li class="dropdown {%if $smarty.get.cat.0 == 'users'%}active{%/if%}">
+            <a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-lock"></span> {%$locale.41%} <span class="caret"></span></a>
+             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a href="{%$settings.path%}users/"><span class="glyphicon glyphicon-log-in"></span> {%$locale.23%} </a></li>
+                    <li><a href="{%$settings.patch%}users/register"><span class="glyphicon glyphicon-pencil"></span> {%$locale.24%} </a></li>
+                    <li><a href="{%$settings.patch%}users/password_recovery/"><span class="glyphicon glyphicon-question-sign"></span> {%$locale.519%} </a></li>
+                    </ul>
+          </li>
+          {%/if%}
+          
+            {%*//upd1701080*%}
+            {%if $settings.shop == 1%}
+                <li><a href="{%$settings.path%}shops/"><span class="glyphicon glyphicon-shopping-cart"></span> {%$locale.1103%}</a></li>
+            {%/if%}
+            
+          <li><a class="link-add" href="{%$settings.path%}add/"><span class="glyphicon glyphicon-plus"></span> {%$locale.69%}</a></li>
+
+      </ul>
+    </div><!-- /.navbar-collapse -->
+</nav>
+<div class="row">
+     <div class="col-lg-12 block_h">
+        {%$blocks.h%}
+     </div>
+</div>
+</div><!-- /.container-->
+	
+<div class="container">  
+ <div class="row row-offcanvas row-offcanvas-left">

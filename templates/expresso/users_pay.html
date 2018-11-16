@@ -1,0 +1,50 @@
+<div class="row">
+      <div class="col-md-6 col-md-offset-3">
+      <h4>{%$locale.64%}</h4>
+      </div>
+</div>
+
+{%if $go%}
+ <div class='alert alert-info'>
+   <div class="text-center">
+	<p>{%$locale.191%}: <b>{%$Count%}</b> {%$Currency%}</p>
+	<p>{%$locale.661%}: </p>
+   </div>
+    <ul class="list-unstyled">
+	{%foreach from=$billing item='bil'%}
+		{%if $bil.status == 1%}
+			<li><span class="glyphicon glyphicon-hand-right"></span> <a href="?p={%$bil.uri%}&id={%$payment_id%}">{%$bil.name%}</a> - {%$bil.descr%}</li>
+            <li><hr /></li>
+		{%/if%}
+	{%/foreach%}
+    </ul>
+ </div>
+{%else%}
+
+{%if $err%}
+	<div class="center">
+		<div class='alert alert-danger'>
+		{%$locale.629%}
+		</div>
+	</div>
+{%/if%}
+
+	<form action='?' method='post'>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <table class="table">
+         <tr>
+	        <td>{%$locale.191%}:</td>
+	        <td><input class="form-control " type='text' name='num' value='' size='4'/></td>
+	        <td>{%$Currency%}</td>
+	     </tr>
+         <tr>
+            <td colspan="3" class="text-center">
+	         <input class="btn btn-warning" type='submit' value='{%$locale.64%}'/>
+            </td>
+         </tr>
+         </table>
+      </div>
+    </div>
+	</form>
+{%/if%}

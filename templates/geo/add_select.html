@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset={%$settings.charset%}'>
+<script type="text/javascript" src="{%$settings.path%}js/jquery.js"></script>
+	<script type="text/javascript">
+    var iframe_height = 28;
+	function loadPage(pageURL)
+		{
+		if(pageURL.options[pageURL.selectedIndex].value != 'none')
+			{
+			location.href = '{%$settings.patch%}add/select/{%$smarty.get.cat.2%}/?i=' + pageURL.options[pageURL.selectedIndex].value{%if $smarty.get.search == 'true'%} + '&search=true'{%/if%};
+			}
+		}
+ 
+    $(function() {
+        var iframe = $('#frame_{%$act2%}', parent.document.body);
+        iframe.height(iframe_height);
+    });
+
+	</script>
+    <style>
+        select{
+            width:100%;
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            color: #555555;
+            display: inline-block;
+            font-size: 13px;
+            height: 28px;
+            line-height: 28px;
+            margin-bottom: 9px;
+            padding: 4px;
+        }
+
+        div.selected {
+            background-color: #d5ffd5;
+            border: 1px solid green;
+            margin: 3px;
+            padding: 3px;
+            text-align: center;
+            width: 90%;
+            font-size: 13px;
+            font-family: Arial;
+        }
+    </style>
+</head>
+<body topmargin='0' leftmargin='0' >
+{%foreach from=$select_array item='select'%}
+{%$select%}
+<script>
+    $(function() {
+        var iframe = $('#frame_{%$act2%}', parent.document.body);
+        iframe.height(iframe.height() + iframe_height);
+    });
+</script>
+{%/foreach%}
+
+{%if $smarty.get.search == 'true' && $smarty.get.i != ''%}
+    <script>
+        {%if $smarty.get.cat.2 == 'cat'%}
+            top.loadFields("{%$smarty.get.i%}");
+        {%/if%}
+        top.document.add.add_{%$smarty.get.cat.2%}.value="{%$smarty.get.i%}";
+    </script>
+{%/if%}
+   
+
+</body>

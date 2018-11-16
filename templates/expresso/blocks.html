@@ -1,0 +1,33 @@
+{%if $place == 'h' or $place == 'f'%}
+<div class="well">{%$data.html%}</div>
+{%/if%}
+
+{%if $place == 'b' or $place == 'm'%}
+<div class="well">
+    {%$data.html%}
+</div>
+{%/if%}
+
+{%if $place == 't'%}
+<div class="well margin-top">
+    {%$data.html%}
+</div>
+{%/if%}
+
+{%if $place == 'l' or $place == 'r'%}
+      <h4>
+      {%$data.name%}
+        {%if $data.block_type == 'search'%}
+            <span class="pull-right">
+                <a href="#" class="gotomap" data-original-title="{%$locale.1257%}"  data-placement="top" data-toggle="tooltip">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                </a>
+            </span>
+        {%/if%}
+      </h4>
+      <div class="panel panel-default">
+        <div class="panel-body">
+   	     {%$data.html%}
+        </div>
+      </div>
+{%/if%}

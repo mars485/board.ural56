@@ -1,0 +1,49 @@
+{%if $settings.comment_on%}
+ <div class="col-lg-6 col-md-8 col-xs-12 border"> 
+	<form action='#' class="" method='POST'>
+
+	{%if $settings.user || (!$settings.user && $settings.comment_unreg == 1)%}
+		{%if !$settings.user%}
+			{%$locale.28%}:<br />
+			<input class="form-control" name="comusername" type="text"  value="{%$smarty.post.comusername%}"/><br />
+			{%$locale.21%}:<br />
+			<input class="form-control" name="comuseremail" type="text" value="{%$smarty.post.comuseremail%}"/><br />
+		{%/if%}
+		{%$locale.74%}:<br />
+		<textarea class="form-control" name='comtext'>{%$smarty.post.comtext%}</textarea>
+		
+			<table class="table">
+				{%if $settings.captcha == 1%}
+                <tr>
+                    {%if $settings.captcha_type == 3%}
+    					<td colspan="2">
+                        <script src="https://www.google.com/recaptcha/api.js"></script>
+                        <div class="g-recaptcha" data-sitekey="{%$settings.recaptcha1%}"></div>
+                        </td>
+                    {%else%}
+    					<td width="100px">
+                            <img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'/>
+                        </td>
+    					<td>
+                            <input class="form-control" name='captcha' type='text' value='' size='5'/>
+                        </td>                 
+                    {%/if%}
+				</tr>
+                {%/if%}
+                <tr>    
+                    <td  colspan="2"><input class="btn btn-warning pull-right" type="submit" name="commentsubmit" value="{%$locale.55%}"/></td>
+                </tr>
+			</table>
+			<br/>
+		
+  </div>
+   <div class="clearfix">&nbsp;</div>
+    {%else%}
+		<div class="alert alert-info">
+           <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+           {%$locale.788%}
+        </div>
+	{%/if%}
+   <div class="clearfix">&nbsp;</div>
+	</form>
+{%/if%}

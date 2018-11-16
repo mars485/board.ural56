@@ -1,0 +1,228 @@
+
+<script type="text/javascript" src="{%$smarty.const.THEME%}js/jquery.ui-slider.js"></script>
+<script type="text/javascript">
+jQuery("#slider").slider({
+	min: 0,
+	max: 1000,
+	values: [0,1000],
+	range: true,
+	step: 1000
+});
+jQuery("#slider").slider({
+	stop: function(event, ui) {
+		alert('Ползунок переехал на новую позицию!');
+    }
+});
+jQuery("#slider").slider("values",0, 10000);
+jQuery("#slider").slider({
+	min: 0,
+	max: 100000,
+	values: [0,100000],
+	range: true,
+	stop: function(event, ui) {
+		jQuery("input#minCost").val(jQuery("#slider").slider("values",0));
+		jQuery("input#maxCost").val(jQuery("#slider").slider("values",1));
+    },
+    slide: function(event, ui){
+		jQuery("input#minCost").val(jQuery("#slider").slider("values",0));
+		jQuery("input#maxCost").val(jQuery("#slider").slider("values",1));
+    }
+});
+
+
+jQuery("input#minCost").change(function(){
+	var value1=jQuery("input#minCost").val();
+	var value2=jQuery("input#maxCost").val();
+if (value1 > 100000) { value1 = 100000; jQuery("input#maxCost").val()}
+    if(parseInt(value1) > parseInt(value2)){
+		value1 = value2;
+		jQuery("input#minCost").val(value1);
+	}
+	jQuery("#slider").slider("values",0,value1);	
+});
+
+	
+jQuery("input#maxCost").change(function(){
+	var value1=jQuery("input#minCost").val();
+	var value2=jQuery("input#maxCost").val();
+	
+	if (value2 > 100000) { value2 = 100000; jQuery("input#maxCost").val()}
+
+	if(parseInt(value1) > parseInt(value2)){
+		value2 = value1;
+		jQuery("input#maxCost").val(value2);
+	}
+	jQuery("#slider").slider("values",1,value2);
+});
+
+</script>
+
+
+
+
+
+	
+   
+
+<div id="sort">
+<div id="padding-sort">
+<table id="table_sort">
+<tbody>
+<tr>
+<td style="  vertical-align: middle;">
+{%foreach from=$fields item='field'%}
+		{%assign var="id" value=`$field.id`%}
+		{%assign var="id" value=f_$id%}
+
+			{%if $field.type != 'i' &&  $field.type != 'f'   &&  $field.type != 'p'  &&  $field.type != 'r'   &&  $field.type != 'c'  &&  $field.type != 'y' &&  $field.type != 'j' &&  $field.type != 'v'%}
+			<div id="pole"><div id="pole_name">{%$field.name%}</div>
+
+			
+			
+<div>
+					{%if $field.type == 's'%}
+						<select size='1' name='{%$id%}' >
+							<option value='' >{%$locale.204%}</option>
+							{%foreach  from=$field.values_array item='vl' key='k'%}
+							     <option value='{%$k%}'>{%$vl%}</option>
+							{%/foreach%}
+						</select>
+					{%/if%}
+				</div>
+				</div>
+{%/if%}
+
+		{%/foreach%}
+		
+		{%foreach from=$fields item='field'%}
+		{%assign var="id" value=`$field.id`%}
+		{%assign var="id" value=f_$id%}
+
+			{%if $field.type != 'i' &&  $field.type != 'f'   &&  $field.type != 'p'  &&  $field.type != 'r'   &&  $field.type != 'c'  &&  $field.type != 'y' &&  $field.type != 'j' &&  $field.type != 's'%}
+			<div id="pole" style=""><div id="pole_name">{%$field.name%}</div>
+				<div>{%if $field.type == 'v' || $field.type == 't'%}
+							{%if $field.type_string == 'n' %}
+							{%assign var="sid" value=cond_$id%}
+								<select size='1' name='cond_{%$id%}'>
+    								<option value='eq'>{%$locale.206%}</option>
+    								<option value='over'>{%$locale.207%}</option>
+    								<option value='less'>{%$locale.208%}</option>
+								</select>
+							{%/if%}
+						<input name='{%$id%}' type='text' value='' style="  border: 1px solid #BABABA;
+  border-radius: 3px;
+  height: 25px;
+  width: 150px;">
+					{%/if%}	
+</div>
+				</div>
+				
+{%/if%}
+		{%/foreach%}
+
+</td>
+</tr>
+	</tbody>
+</table>			
+	</div>	
+<div id="hr"></div>
+			
+				<div style="width: 100%; float: left;">	
+					
+			<div id="sort_2">
+
+
+		
+		
+					
+		{%foreach from=$fields item='field'%}
+	{%assign var="id" value=`$field.id`%}
+		{%assign var="id" value=f_$id%}
+			{%if $field.type != 'i' &&  $field.type != 'f'  &&  $field.type != 'y' &&  $field.type != 'j' &&  $field.type != 'v' &&  $field.type != 's'%}
+			<div id="se"><div id="pole_name">{%$field.name%}</div>
+
+
+					{%if $field.type == 'r'%}
+					
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+							
+	<div>
+  <input id="{%$vl%}" type="radio" name="{%$id%}" value="{%$k%}">
+  <label for="{%$vl%}">{%$vl%}</label>
+</div>
+						
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'c'%}
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						
+							<div>
+  <input id="{%$vl%}" type="checkbox" name="{%$id%}[{%$k%}]" value="{%$k%}">
+  <label for="{%$vl%}">{%$vl%}</label>
+</div>
+						
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'p'%}
+						<span style="font-size: 13px; margin-left: 3px;">{%$locale.888%}:</span>
+						
+						<input name='{%$id%}[over]' type='text' value='' size='7' style='width: 70px; border: 1px solid #BABABA;
+  border-radius: 3px;' id="minCost"/>
+                       <span style="font-size: 13px; margin-left: 3px;">{%$locale.889%}:</span>
+						<input name='{%$id%}[less]' type='text' value='' size='7' style='width: 70px; border: 1px solid #BABABA;
+  border-radius: 3px;' id="maxCost"/>  
+
+                     <select style="display: none;" size='1' name="{%$id%}[rate]">
+            				{%foreach  from=$field.rates item='rates'%}
+            				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+            				{%/foreach%}
+                        </select>     
+						
+						<div id="slider"></div>
+					{%/if%}
+		</div>
+		
+		
+		
+			{%/if%}
+		{%/foreach%}
+		
+	
+		
+		
+		
+     <div id="se" style="margin-right: 0px;">
+	<div id="pole_name">Только с фото</div>
+	
+	
+	<div>
+  <input id="option" type="checkbox" name="must[images]" value="ON">
+  <label for="option">Да</label>
+</div>
+   
+
+	
+
+			{%foreach from=$fields key='k' item='field'%}
+				{%if $field.type == 'f' OR  $field.type == 'y' OR  $field.type == 'j'%}
+					    
+				{%/if%}
+			{%/foreach%}
+</div>
+
+</div>
+	
+	</div>
+
+   <div style="width: 100%; text-align: center; border-top: 1px dashed #cad3d8;
+   float: left; margin-top: 10px;   margin-bottom: 30px;">
+    	   <input type='submit' value='{%$locale.203%}' id="search_sumbit" />
+
+
+	</div>
+	</div>	
+
+  
+

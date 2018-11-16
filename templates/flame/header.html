@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="{%$settings.charset%}">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="author" content="{%$settings.autor%}"/>
+    <meta name="description" content="{%$description%}"/>
+    <meta name="keywords" content="{%$keywords%}"/>
+    <meta name="copyright" content="{%$settings.copyright%}"/>
+    {%if $noindex%}
+    <meta name="robots" content="noindex,nofollow"/>
+    {%/if%}
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <title>
+    {%foreach from=$title_reverse item='tit' name='i'%}
+        {%$tit.name|strip_tags%}
+        {%if $smarty.foreach.i.last eq false %} / {%/if%}
+    {%/foreach%}
+    {%if $regions|@count > 0%}
+        {%$locale.1019%}
+    	{%foreach from=$regions item='region' name='i'%}
+            {%$region.name%}{%if $smarty.foreach.i.last eq false %}, {%/if%}
+    	{%/foreach%}
+    {%/if%}
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%$smarty.const.THEME%}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles needed for carousel slider -->
+    <link href="{%$smarty.const.THEME%}assets/css/owl.carousel.css" rel="stylesheet">
+    <link href="{%$smarty.const.THEME%}assets/css/owl.theme.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{%$smarty.const.THEME%}assets/css/style.css" rel="stylesheet">
+    <script>
+        var TPL_PATH = "{%$smarty.const.PATH%}";
+        var TPL_PATH_THEME = '{%$smarty.const.THEME%}';
+        var TPL_REGION_ID = {%if $second_region.id%}{%$second_region.id%}{%else%}0{%/if%};
+        var TPL_AUTOROTATE = {%if $settings.message_block_type == 2 %}2000{%else%}false{%/if%};
+        var TPL_L_00 = '{%$locale.76%}';
+        var TPL_L_01 = '{%$locale.184%}';
+        var TPL_L_02 = '{%$locale.335%}';
+        var TPL_L_03 = '{%$locale.43%}';
+        var TPL_L_04 = '{%$locale.81%}';
+        var TPL_L_05 = '{%$locale.82%}';
+        var TPL_L_06 = '{%$locale.986%}';
+        var TPL_L_07 = '{%$locale.1194%}';
+        var TPL_L_08 = '{%$locale.1195%}';
+        paceOptions = {
+            elements: true
+        };        
+        var fields = new Array();
+        var yamaps = new Array();
+    </script>
+
+    <script src="{%$smarty.const.THEME%}assets/js/pace.min.js"></script>
+
+</head>
+<body>
+<div id="wrapper">
+    {%assign var=second_region_name value=""%}
+    {%if $second_region%}
+        {%assign var=second_region_name value=$second_region.name|@count%}
+        {%assign var=second_region_name value=$second_region_name-1%}
+        {%assign var=second_region_name value=$second_region.name[$second_region_name]%}
+    {%/if%}  
+    <div class="header">
+        <nav class="navbar   navbar-site navbar-default" role="navigation">
+            <div class="container">
+                    <div class="navbar-header left-head">
+                        <a href="{%$settings.path%}" class="navbar-brand logo logo-title">
+                            <span class="logo-icon">
+                                <img alt='{%$settings.copyright%}' src='{%$settings.logo%}' />
+                            </span>
+                            <span class="logo-text">
+                                {%$smarty.const.TITLE%}
+                            </span>
+                        </a>
+                    </div>
+                    <div class="right-head">
+                        <button class="filter-toggle2 navbar-toggle" type="button">
+                            <span class="sr-only">Left menu bar</span> 
+                            <i class="fa fa-angle-double-right"></i>
+                        </button>
+                        <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                            <span class="sr-only">Main menu</span> 
+                            <i class="icon-menu-1"></i>
+                        </button>
+                        <button class="filter-toggle navbar-toggle" type="button">
+                            <span class="sr-only">Right menu bar</span> 
+                            <i class="fa fa-angle-double-left"></i>
+                        </button>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                        		<li>
+                                    <a href="{%$settings.path%}notepad/">
+                                        {%$locale.244%}
+                                        <span {%if $counter.notepad == 0%}style="display: none;"{%/if%} class="badge n_count">{%$counter.notepad%}</span>
+                                    </a>
+                                </li>
+                        		<li><a href="{%$settings.path%}mail/">{%$locale.266%}</a></li>
+                        		<li><a href="{%$settings.path%}users/">{%$locale.41%}</a></li>
+                                {%if $settings.shop == 1%}
+                                    <li><a href="{%$settings.path%}shops/">{%$locale.1103%}</a></li>
+                                {%/if%}
+                                <li class="postadd">
+                                    <a class="btn btn-block btn-border btn-post btn-danger" href="{%$settings.path%}add/">{%$locale.69%}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/.nav-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <!-- /.header -->
+    {%if $modtype == 'ind'%}
+        <div class="intro">
+            <div class="dtable hw100">
+                <div class="dtable-cell hw100">
+                    <div class="container text-center">
+                        <h1 class="intro-title animated flip">
+                            {%$locale.0%}{%if $second_region_name != ""%}, {%$second_region_name%}{%/if%}             
+                        </h1>
+                        <p class="sub animateme fittext3 animated fadeIn"> 
+                        {%$locale.1190%}
+                            {%if $regions|@count > 0%}
+                                {%$locale.1019%}
+                                	{%foreach from=$regions item='region' name='i'%}
+                                        {%$region.name%}{%if $smarty.foreach.i.last eq false %}, {%/if%}
+                                	{%/foreach%}
+                            {%/if%}  
+                        </p>
+                        <div class="row search-row animated fadeInUp">
+                            <form name="top_seach" method="GET" action="{%$settings.path%}search/">
+                            <div class="col-lg-4 col-sm-4 search-col relative locationicon">
+                                <i class="icon-location-2 icon-append"></i>
+                                <input type="text" id="autocomplete-ajax"
+                                       value="{%$second_region_name%}"
+                                       class="form-control locinput input-rel searchtag-input has-icon"
+                                       placeholder="{%$locale.1191%}..." value="">
+                                <input name="add_region" value="{%$second_region.id%}" type="hidden" id="ajax_region_id"/>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 search-col relative"><i class="icon-docs icon-append"></i>
+                                <input type="text" name="text" class="form-control has-icon"
+                                       placeholder="{%$locale.873%}" value="">
+                            </div>
+                            <div class="col-lg-4 col-sm-4 search-col">
+                                <button class="btn btn-primary btn-search btn-block"><i
+                                        class="icon-search"></i><strong>{%$locale.1192%}!</strong></button>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="row front_region_select  animated fadeInUp">
+                            <a href="#selectRegion"  data-toggle="modal" class="btn btn-primary selectRegion">
+                                <i class="fa fa-globe" aria-hidden="true"></i> {%$locale.1203%}
+                            </a>
+                            <a href="{%$settings.path%}search/?map=1"  data-toggle="modal" class="btn btn-primary">
+                                <i class="fa fa-map-o" aria-hidden="true"></i> {%$locale.1257%}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.intro -->
+    {%/if%}

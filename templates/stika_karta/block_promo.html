@@ -1,0 +1,157 @@
+
+{%* верхнее обрамление левых-правых блоков при включЄнной опции "автопрокрутка блоков"*%}
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+<br /><br />
+<div class="headerContent">
+<div id="promo-slider" class="csw">
+	<div class="panelContainer">
+{%/if%}
+    
+  
+ 
+{%*считаем количество объ€влений выводимых за раз*%}
+{%if $settings.rand_block == ""%}
+	{%assign var='rand_block' value='1'%}
+{%else%}
+	{%assign var='rand_block' value=$settings.rand_block%}
+{%/if%}
+{%if $promo_messages|@count < $settings.rand_block %}
+	{%assign var='rand_block' value=$promo_messages|@count%}
+{%/if%}
+
+
+
+
+{%*собственно вывод объ€влений в зависимости от их расположени€*%}
+{%section name='loop' loop=$rand_block%}
+	{%assign var='message' value=`$promo_messages[$smarty.section.loop.index]`%}
+
+    {%if $place == 'h' or $place == 'f'%}
+    <!--//раст€жки вверху-внизу -> //-->
+    <div style="background: none repeat scroll 0 0 #F7F7F7;
+    border: 1px solid #E1E1E1;
+    margin-top: 10px;
+    padding: 8px; text-align:left">
+    <div style=" background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E1E1E1;
+    font-size: 13px;
+    line-height: 23px;
+    padding: 8px;">
+
+          {%if $message.fields.i.0.value != ""%}
+          <div class="pull-left">
+              <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+              <img style="max-width:100px" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}" /></a>
+              </div>{%/if%}
+              <div style="margin-left:10px;" class="pull-left">
+    
+          <h3 style="font-size:130%;"><a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:85:'...'%}</a></h3>
+          <p>	{%$message.text|strip_tags|truncate:250:"... <a href='`$settings.patch_region``$smarty.const.MESSAGES`/`$message.link`'>`$locale.15`</a>"%}</p>
+</div>
+          <div class="clearfix"></div>
+        </div></div>
+    <!--// <- раст€жки вверху-внизу//-->
+    {%/if%}
+    
+    {%if $place == 't' or $place == 'b' or $place == 'm'%}
+    <!--//блоки вверху-внизу -> //-->
+    <div style="background: none repeat scroll 0 0 #F7F7F7;
+    border: 1px solid #E1E1E1;
+    margin-top: 10px;
+    padding: 8px; text-align:left">
+    <div style=" background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E1E1E1;
+    font-size: 13px;
+    line-height: 23px;
+    padding: 8px;">
+
+          {%if $message.fields.i.0.value != ""%}
+          <div class="pull-left">
+              <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+              <img style="max-width:100px" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}" /></a>
+              </div>{%/if%}
+              <div style="margin-left:10px;" class="pull-left">
+    
+          <h3 style="font-size:130%;"><a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:85:'...'%}</a></h3>
+          <p>	{%$message.text|strip_tags|truncate:250:"... <a href='`$settings.patch_region``$smarty.const.MESSAGES`/`$message.link`'>`$locale.15`</a>"%}</p>
+</div>
+          <div class="clearfix"></div>
+        </div></div>
+
+    <!--// <- блоки вверху-внизу//-->
+    {%/if%}
+    
+    {%if $place == 'l' or $place == 'r'%}
+        <!--//блоки слева-справа -> //-->    
+		
+		
+        {%if $settings.message_block_type == 2%}
+            <div class="block_promo_right">
+        {%/if%}
+       <a style="display: block " href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+        <div id='promo_body'>
+	
+		<div id="promo_photo"> {%if $message.fields.i.0.value != ""%}<img style="min-height: 100%; width: 100%; min-width: 100%;max-width: 100%;" src="{%$settings.path%}uploads/images/tb/{%$message.fields.i.0.value%}" alt="{%$message.title%}" />
+		 {%else%}
+<img style="width: 100%;" src="{%$smarty.const.THEME%}images/no_photo.jpg" alt="{%$message.title%}" />
+ {%/if%}</div>
+        	<div class='promo_title'><table style="width: 100%; text-align: center;">
+					<tbody>
+					
+					<tr>
+					<td>
+					<span id="span_title_promo">{%$message.title|truncate:85:'...'%}</span>
+					</td>
+					</tr>
+					</tbody>
+					
+					</table></div>
+			
+			<div id="promo_cena">
+
+{%if $message.fields.p == NULL%}
+{%else%}
+{%/if%}
+<div id="cena_prom">
+{%if $message.fields.p == NULL%}
+{%$locale.1206%}
+{%else%}
+{%foreach  from=$message.fields.p item='v'%}
+{%if $settings.user || (!$settings.user && $v.hide == 0)%}								 
+{%if $message.cat == 477 ||  $message.cat == 479 ||  $message.cat == 483 ||  $message.cat == 481 ||  $message.cat == 485 ||  $message.cat == 487 ||  $message.cat == 489 ||  $message.cat == 491 ||  $message.cat == 493 ||  $message.cat == 495 ||  $message.cat == 497 ||  $message.cat == 499 ||  $message.cat == 501  ||  $message.cat == 503%}
+{%$v.value.txt%}{%$locale.1202%}
+{%else%}
+{%$v.value.txt|droblenie%} {%$locale.1207%}
+{%/if%}
+{%else%}
+{%$after_registration%}
+{%/if%}					 
+{%/foreach%}
+{%/if%}
+</div>
+<div id="torg_prom"> {%if $message.f_482|@count > 1%}{%foreach from=$message.f_482.value item='val' name='key' %}
+  +{%$val.name%}{%if $smarty.foreach.key.last eq false %}, {%/if%}
+  {%/foreach%}{%/if%}</div>
+
+			</div>
+
+
+    </div>
+	</a>
+        {%if $smarty.section.loop.last eq false %}{%include file='block_seporator.html'%}{%/if%}
+        
+        {%if $settings.message_block_type == 2%}
+            </div>
+        {%/if%}
+        <!--// <- блоки слева-справа//-->
+        {%/if%}
+{%/section%}
+
+
+
+{%* нижнее обрамление левых-правых блоков при включЄнной опции "автопрокрутка блоков"*%}
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+	</div>
+</div>
+</div>
+{%/if%}

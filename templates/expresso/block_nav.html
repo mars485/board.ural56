@@ -1,0 +1,17 @@
+<div class="rubriki">
+    <div class="list-group">
+    {%foreach from=$navigation item='nav'%}
+    		{%if $nav.status == 0 || $nav.status == $settings.user.status || ($nav.status == 9 && !$settings.user) || ($nav.status == 8 && $settings.user)%}
+    		{%if $nav.url == 'seporator'%}
+               {%include file='block_seporator.html'%}
+            {%else%}
+            {%assign var=checkurl value=$settings.path|cat:$smarty.get.cat.0%}
+            {%assign var=checkurl value=$checkurl|cat:'/'%}
+            {%if !($nav.url == $settings.path || $nav.url == $settings.path|cat:'users/' || $nav.url == $settings.path|cat:'add/' || $nav.url == $settings.path|cat:'register/' || $nav.url == $settings.path|cat:'users/order/' || $nav.url == $settings.path|cat:'users/register/')%}
+            <a class="list-group-item {%if $nav.url == $checkurl%} active {%/if%}" href="{%$nav.url%}">{%$nav.name%} <span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+            {%/if%}
+                {%/if%}
+    		{%/if%}
+    {%/foreach%}
+    </div>
+</div>

@@ -1,0 +1,91 @@
+
+		{%foreach from=$fields item='field'%}
+            
+    		{%assign var="id" value=`$field.id`%}
+    		{%assign var="id" value=f_$id%}
+
+			{%if !in_array($field.type, array('i', 'f', 'y', 'j'))%}
+				<div class='float_field'>
+                    <label class="list-title" for="bs_{%$field.id%}">{%$field.name%}</label>
+					{%if $field.type == 'v' || $field.type == 't'%}
+							{%if $field.type_string == "n" %}
+							    {%assign var="sid" value=cond_$id%}
+								<select size='1' name='cond_{%$id%}' class="form-control num_field">
+    								<option value='eq'>{%$locale.206%}</option>
+    								<option value='over'>{%$locale.207%}</option>
+    								<option value='less'>{%$locale.208%}</option>
+								</select>
+                                <input name='{%$id%}' type='number' value='' class="form-control num_field" id="bs_{%$field.id%}">
+                            {%else%}
+                                <input name='{%$id%}' type='text' value='' class="form-control" id="bs_{%$field.id%}">
+							{%/if%}
+					{%/if%}
+
+					{%if $field.type == 's'%}
+						<select size='1' name='{%$id%}' id="bs_{%$field.id%}" class="form-control" id="bs_{%$field.id%}">
+							<option value='' >{%$locale.204%}</option>
+							{%foreach  from=$field.values_array item='vl' key='k'%}
+							     <option value='{%$k%}'>{%$vl%}</option>
+							{%/foreach%}
+						</select>
+					{%/if%}
+
+					{%if $field.type == 'r'%}
+						<label class="radio-inline"><input name='{%$id%}' type='radio' value='' />&nbsp;{%$locale.204%}</label>
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						  <label class="radio-inline"><input name='{%$id%}' type='radio' value='{%$k%}' />&nbsp;{%$vl%}</label>
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'c'%}
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						  <label class="checkbox-inline"><input name="{%$id%}[{%$k%}]"  type='checkbox' value='{%$k%}' />&nbsp;{%$vl%}</label>
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'p'%}
+						<input class="form-control price_field" name='{%$id%}[over]' type='number' step='0.01' placeholder="{%$locale.888%}" value=''/>
+						<input class="form-control price_field" name='{%$id%}[less]' type='number' step='0.01' placeholder="{%$locale.889%}" value='' id="bs_{%$field.id%}"/>  
+                        <select size='1' name="{%$id%}[rate]" class="form-control price_field">
+            				{%foreach  from=$field.rates item='rates'%}
+            				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+            				{%/foreach%}
+                        </select>     
+					{%/if%}
+				</div>
+			{%/if%}
+		{%/foreach%}
+
+        <div class='float_field'>
+            <label class="list-title" for="bs_must">{%$locale.202%}</label>
+            <div class="checkbox">
+                <label><input name='must[images]' type='checkbox' value='ON' /> {%$locale.874%}</label>
+            </div>
+
+			{%foreach from=$fields key='k' item='field'%}
+				{%if $field.type == 'f' OR  $field.type == 'y' OR  $field.type == 'j'%}
+                    <div class="checkbox">
+					    <label><input name='must[{%$k%}]' type='checkbox' value='ON' /> {%$field.name%}</label>
+                    </div>
+				{%/if%}
+			{%/foreach%}
+        </div>
+        
+        {%if $smarty.get.map != 1%}
+            <div class='float_field'>
+                <label class="list-title" for="bs_sort">{%$locale.199%}</label>
+                <div class="radio">
+                    <label><input name='sort_by' type='radio' value='date_add' /> {%$locale.13%}</label>
+                </div>
+    			{%foreach from=$fields item='field'%}
+    				{%if ($field.type == 'v' && $field.type_string == 'n') || $field.type == 'p'%}
+                        <div class="radio">
+    					    <label><input name='sort_by' type='radio' value='f_{%$field.id%}' /> {%$field.name%}</label>
+                        </div>
+    				{%/if%}
+    			{%/foreach%}
+                <div class="checkbox">
+    			    <label><input name='desc' type='checkbox' value='yes' /> {%$locale.205%}</label>
+                </div>
+            </div>        
+        {%/if%}

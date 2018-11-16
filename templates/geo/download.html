@@ -1,0 +1,42 @@
+
+{%if !$settings.user && $field.hide == 1%}
+    <noindex>
+        <!--googleoff: index-->
+            <div align="center">
+                <div class="error" style="text-align: center;">       
+                    {%$locale.847%}           
+                    <br /><br />
+                    [ <a href="{%$settings.path%}users/login/">{%$locale.23%}</a> ] [ <a href="{%$settings.path%}users/register/">{%$locale.24%}</a> ]        
+                </div>
+            </div>
+        <!--googleon: index-->
+    </noindex>
+{%else%}
+    <div align="center">
+            <div class="ok">
+                <div id="downloadhtml"></div>   
+            </div>
+            
+			<script language="Javascript">
+			  var x=6;
+			  function countdown()
+			   {
+			     x--;
+			     if (x == 0)
+			      {
+					document.getElementById("downloadhtml").innerHTML = '{%$locale.848%} <br /><a href=\'{%$link%}?key={%$key%}/\'>{%$filename%}</a><br />{%$locale.849%}';
+					document.location.href='{%$link%}?key={%$key%}';
+			      }
+			     if (x > 0)
+			      {
+			        document.getElementById("downloadhtml").innerHTML = '{%$locale.850%} <b>'+x+'</b> {%$locale.851%}...';
+			        setTimeout('countdown()',1000);
+			      }
+			   }
+			  countdown();
+			</script>     
+
+    </div>
+{%/if%}
+
+<br /><br />

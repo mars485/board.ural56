@@ -1,0 +1,14 @@
+
+<div style="margin:15px;">
+    <h1 class="once_information">{%$user.name%}</h1>
+    
+    <ul class="once_list2">
+        <li><strong>{%$locale.368%}</strong>: {%$user.date|date_format:"%d.%m.%Y"%}</li>
+        <li><strong>{%$locale.765%}</strong>: {%$user.count_messages%}</li>
+        <!--li><strong>{%$locale.773%}</strong>: </li-->
+        <li><a class="group iframe" title="{%$locale.283%}" href="{%$settings.patch%}sendmail/?userid={%$user.id%}&tpl=message2user"><strong>{%$locale.283%}</strong></a></li>
+    </ul>
+
+    <div class="usermessages">{%$locale.775%}</div>
+    {%include file='list.html'%}
+</div>

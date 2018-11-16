@@ -1,0 +1,245 @@
+
+
+
+<div style="display: table;">
+
+
+	<script type="text/javascript">
+	// Массив всех объектов	
+	var data_obj = {
+	
+	};
+	
+	colorRegion = '#7BAD1C'; // Цвет всех регионов
+	focusRegion = '#53790A'; // Цвет подсветки регионов при наведении на объекты из списка
+	selectRegion = '#09090'; // Цвет изначально подсвеченных регионов
+	
+	highlighted_states = {};
+	
+	// Массив подсвечиваемых регионов, указанных в массиве data_obj
+	for(iso in data_obj){
+		highlighted_states[iso] = selectRegion;
+	}
+	
+	$(document).ready(function() {
+		$('#vmap').vectorMap({
+		    map: 'russia',
+		    backgroundColor: '#eee',
+			borderColor: '#ffffff',
+			borderWidth: 2,
+		    color: colorRegion,
+			colors: highlighted_states,			
+		    hoverOpacity: 0.7,		    
+		    enableZoom: false,
+		    showTooltip: true,			
+			
+			// Отображаем объекты если они есть
+			onLabelShow: function(event, label, code){
+				name = '<strong>'+label.text()+'</strong><br>';				
+				if(data_obj[code]){
+					list_obj = '<ul>';
+					for(ob in data_obj[code]){					
+						list_obj += '<li>'+data_obj[code][ob]+'</li>';
+					}
+					list_obj += '</ul>';
+				}else{
+					list_obj = '';
+				}				
+				label.html(name + list_obj);				
+				list_obj = '';				
+			},			
+			// Клик по региону
+		
+		   onRegionClick: function(element, code, region){
+
+ window.location.href=$('#'+code).attr('href');
+   }			
+		});		
+		
+	});
+	// Выводим список объектов из массива
+	$(document).ready(function() {
+		for(region in data_obj){
+			for(obj in data_obj[region]){
+				$('.list-object').append('<li><a href="'+selectRegion+'" id="'+region+'" class="focus-region">'+data_obj[region][obj]+' ('+region+')</a></li>');
+			}
+		}
+	});
+	
+	// Подсветка регионов при наведении на объекты
+	$(function(){
+	
+		$('.focus-region').mouseover(function(){			
+			iso = $(this).prop('id');
+			fregion = {};
+			fregion[iso] = focusRegion;
+			$('#vmap').vectorMap('set', 'colors', fregion);			
+		});
+		$('.focus-region').mouseout(function(){
+			c = $(this).attr('class');			
+			cl = (c === 'focus-region')?colorRegion:c;
+			iso = $(this).prop('id');
+			fregion = {};
+			fregion[iso] = cl;
+			$('#vmap').vectorMap('set', 'colors', fregion);
+		});
+	});	
+	</script>
+	
+	  <link href="{%$settings.patch%}jqvmap/css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />    
+    <script src="{%$settings.patch%}jqvmap/js/jquery.vmap.js" type="text/javascript"></script>
+    <script src="{%$settings.patch%}jqvmap/js/maps/jquery.vmap.russia.js" type="text/javascript"></script>
+<div style="width: 500px; height: 400px; margin: 0; position: relative; float: left;">
+<div id="karta_mira"> <div id="vmap" style="width: 500px; height:300px; float: left;"></div> 
+
+
+<script>
+    $(function(){
+        if($('#menu_regions').length){
+            blok_height = Number($('#menu_regions').css('height').replace('px',''));
+             
+            if(blok_height > 40){
+               $('#menu_regions').css('max-height','125px');
+               $('.kar-next').show();  
+            } 
+       }
+    });
+    
+    $('.kar-next').live('click', function(){
+        
+        if($('#menu_regions').css('max-height') != 'none'){
+           $('#menu_regions').css('max-height','');
+           $(this).text('Скрыть');
+        } else {
+           $('#menu_regions').css('max-height','125px');     
+           $(this).text('Все регионы');
+        }
+        
+        return false;
+    });
+</script>
+<div id="obs_cart">
+<div  id="menu_regions" style="max-height: 125px;">
+<ul>
+
+<li><a href="{%$settings.patch%}Rossiya/Adygeya/" id="ad" class="focus-region">Адыгея <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Altaiskii-krai/" id="al" class="focus-region">Алтайский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Altaiskii-krai/" id="lt" class="focus-region">Алтай <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Amurskaya-oblast/" id="am" class="focus-region">Амурская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Arhangelskaya-oblast/" id="ar" class="focus-region">Архангельская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Astrahanskaya-oblast/" id="as" class="focus-region">Астраханская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Bashkortostan/" id="bs" class="focus-region">Башкортостан <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Buryatiya/" id="br" class="focus-region">Бурятия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Bryanskaya-oblast/" id="bn" class="focus-region">Брянская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Belgorodskaya-oblast/" id="bl" class="focus-region">Белгородская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Vladimirskaya-oblast/" id="vm" class="focus-region">Владимирская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Volgogradskaya-oblast/" id="vl" class="focus-region">Волгоградская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Vologodskaya-oblast/" id="vo" class="focus-region">Вологодская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Voronezhskaya-oblast/" id="vn" class="focus-region">Воронежская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Dagestan/" id="da" class="focus-region">Дагестан <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Evreiskaya-avtonomnaya-oblast/" id="eu" class="focus-region">Еврейская автономная <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Zabaikalskii-krai/" id="zb" class="focus-region">Забайкальский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Ingushetiya/" id="in" class="focus-region">Ингушетия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Ivanovskaya-oblast/" id="iv" class="focus-region">Ивановская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Irkutskaya-oblast/" id="ir" class="focus-region">Иркутская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kabardino-Balkariya/" id="kb" class="focus-region">Кабардино-Балкария <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kalmykiya/" id="kk" class="focus-region">Калмыкия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Karachaevo-Cherkesiya/" id="kc" class="focus-region">Карачаево-Черкесия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kareliya/" id="kl" class="focus-region">Карелия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Komi/" id="ko" class="focus-region">Коми <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Krym/" id="cr" class="focus-region">Крым <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kaluzhskaya-oblast/" id="kj" class="focus-region">Калужская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kaliningradskaya-oblast/" id="kn" class="focus-region">Калининградская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kemerovskaya-oblast/" id="km" class="focus-region">Кемеровская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kirovskaya-oblast/" id="ki" class="focus-region">Кировская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kurganskaya-oblast/" id="ku" class="focus-region">Курганская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kurskaya-oblast/" id="ky" class="focus-region">Курская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kostromskaya-oblast/" id="kt" class="focus-region">Костромская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Krasnodarskii-krai/" id="ks" class="focus-region">Краснодарский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Krasnodarskii-krai/" id="kr" class="focus-region">Краснодарский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Kamchatskaya-oblast/" id="ka" class="focus-region">Камчатский Край</a></li>
+<li><a href="{%$settings.patch%}Rossiya/Lipeckaya-oblast/" id="lp" class="focus-region">Липецкая <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Marii-El/" id="ml" class="focus-region">Марий Эл <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Mordoviya/" id="mr" class="focus-region">Мордовия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Moskovskaya-oblast/" id="mc" class="focus-region">Московская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Murmanskaya-oblast/" id="mu" class="focus-region">Мурманская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Magadanskaya-oblast/" id="ma" class="focus-region">Магаданская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Novgorodskaya-oblast/" id="no" class="focus-region">Новгородская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Nizhegorodskaya-oblast/" id="nn" class="focus-region">Нижегородская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Neneckii-AO/" id="ne" class="focus-region">Ненецкий автономный округ</a></li>
+<li><a href="{%$settings.patch%}Rossiya/Novosibirskaya-oblast/" id="nv" class="focus-region">Новосибирская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Orlovskaya-oblast/" id="or" class="focus-region">Орловская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Orenburgskaya-oblast/" id="ob" class="focus-region">Оренбургская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Omskaya-oblast/" id="om" class="focus-region">Омская <span style="font-size: 10px;">обл.</span></a></li>
+
+
+<li><a href="{%$settings.patch%}Rossiya/Pskovskaya-oblast/" id="ps" class="focus-region">Псковская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Penzenskaya-oblast/" id="pz" class="focus-region">Пензенская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Permskii-krai/" id="pe" class="focus-region">Пермская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Permskii-krai/" id="pr" class="focus-region">Приморский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Rostovskaya-oblast/" id="ro" class="focus-region">Ростовская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Ryazanskaya-oblast/" id="rz" class="focus-region">Рязанская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Saha-(Yakutiya)/" id="sa" class="focus-region">Саха (Якутия) <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Severnaya-Osetiya/" id="so" class="focus-region">Северная Осетия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Stavropolskii-krai/" id="st" class="focus-region">Ставропольский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Smolenskaya-oblast/" id="sm" class="focus-region">Смоленская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Saratovskaya-oblast/" id="sr" class="focus-region">Саратовская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Samarskaya-oblast/" id="ss" class="focus-region">Самарская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Leningradskaya-oblast/" id="le" class="focus-region">Санкт-Петербург и Ленинградская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Sverdlovskaya-oblast/" id="sv" class="focus-region">Свердловская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Sahalinskaya-oblast/" id="sh" class="focus-region">Сахалинская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tatarstan/" id="ta" class="focus-region">Татарстан <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tyva-(Tuva)/" id="tv" class="focus-region">Тыва <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tulskaya-oblast/" id="tl" class="focus-region">Тульская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tomskaya-oblast/" id="tb" class="focus-region">Тамбовская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tverskaya-oblast/" id="tr" class="focus-region">Тверская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tyumenskaya-oblast/" id="tu" class="focus-region">Тюменская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Tyumenskaya-oblast/" id="tm" class="focus-region">Томская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Udmurtskaya-Respublika/" id="ud" class="focus-region">Удмуртия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Ulyanovskaya-oblast/" id="ul" class="focus-region">Ульяновская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Hakasiya/" id="hk" class="focus-region">Хакасия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Hanty-Mansiiskii-AO/" id="ht" class="focus-region">Ханты-Мансийский автономный округ</a></li>
+<li><a href="{%$settings.patch%}Rossiya/Habarovskii-krai/" id="ha" class="focus-region">Хабаровский <span style="font-size: 10px;">край</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Chechenskaya-Respublika/" id="cc" class="focus-region">Чечня <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Chuvashskaya-Respublika/" id="cu" class="focus-region">Чувашия <span style="font-size: 10px;">респ.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Chelyabinskaya-oblast/" id="cl" class="focus-region">Челябинская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Chukotskii-AO/" id="ch" class="focus-region">Чукотский автономный округ</a></li>
+<li><a href="{%$settings.patch%}Rossiya/Yaroslavskaya-oblast/" id="yr" class="focus-region">Ярославская <span style="font-size: 10px;">обл.</span></a></li>
+<li><a href="{%$settings.patch%}Rossiya/Yamalo-Neneckii-AO/" id="ya" class="focus-region">Ямало-Ненецкий автономный округ</a></li>
+
+	</ul>
+
+</div>
+<a class="kar-next" href="#">Все регионы</a>
+</div>
+</div>
+
+</div>
+
+
+
+<div id="kar-cat">
+<ul>
+{%foreach from=$categories item=el%}
+	
+    {%if $el.parent == 0%}
+
+        <li><a href="{%$settings.path_region%}{%$uri%}{%$el.uri%}/"><img style=" max-height: 70px;" src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$el.name%}'><br/><div id="na_k">{%$el.name%}</div></a></li>
+				
+    {%/if%}
+{%/foreach%}
+</ul>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

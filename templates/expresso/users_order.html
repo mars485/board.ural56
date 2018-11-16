@@ -1,0 +1,77 @@
+<div class="row">
+<div class="col-lg-12">
+<h4>{%$locale.65%}</h4>
+<form name='form' action='?' method='post'>
+
+{%if $order%}
+
+	<div class="alert alert-info">
+	<h3>{%$locale.181%}</h3>
+		<ul class="list-unstyled">
+			<li>{%$locale.182%}:<b> {%$services[$smarty.post.service].name%}</b></li>
+			<li>{%$locale.160%}: <b>{%$smarty.post.days%}</b></li>
+			<li>{%$locale.183%}: <b>{%$messages[$smarty.post.message_id].date_add|date_format:"%d.%m.%Y %H:%M"%} {%$messages[$smarty.post.message_id].title|truncate:100%}</b></li>
+			<li>{%$locale.185%}: <b>{%$count%}</b></li>
+		</ul>
+	<br />
+	<div class="center">
+    <input class="btn btn-warning" type='submit' name='submit_order_ok' value='{%$locale.162%}'/> 
+    <input class="btn btn-danger" type='button' onclick="javascript:go('{%$settings.patch%}users/order/')" value='{%$locale.184%}'/>
+    </div> 
+	</div>
+
+
+<input name='service' type='hidden' value='{%$smarty.post.service%}'/>
+<input name='days' type='hidden' value='{%$smarty.post.days%}'/>
+<input name='message_id' type='hidden' value='{%$smarty.post.message_id%}'/>
+
+{%else%}
+	<table>
+	<tr><td valign='top' width='130px'>{%$locale.159%}</td><td>
+
+	<table class="table">
+
+	    {%foreach from=$services item='serv'%}
+				<tr><td><input name='service' type='radio' value='{%$serv.type%}' {%if $smarty.post.service == $serv.type || $smarty.get.service == $serv.type %}checked{%/if%}></td>
+				<td><img data-toggle="tooltip" title="{%$serv.tip%}" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/> <b>{%$serv.name%}</b>: {%$serv.price%}&nbsp;{%$locale.169%}, {%$locale.170%} {%$serv.word_max%}, {%$locale.171%} {%$serv.word_min%}</td>
+				</tr>
+		{%/foreach%}
+
+	</table>
+
+	</td></tr>
+	<tr><td valign="top">{%$locale.160%}</td>
+        <td>
+          <table>
+           <tr>
+              <td><input name='days' type='text' value='{%$smarty.post.days%}' style="width: 50px;"/></td><td> - {%$locale.172%}{%$error%}</td>
+           </tr>
+         </table>
+        </td>
+    </tr>
+	<tr><td>{%$locale.161%}</td><td>
+		<select size='1' name='message_id' class="select-days">
+			{%foreach from=$messages item='mess'%}
+				<option value='{%$mess.id%}'{%if $smarty.post.message_id == $mess.id || $smarty.get.message_id == $mess.id%} selected {%/if%}>{%$mess.date_add|date_format:"%d.%m.%Y %H:%M"%} {%$mess.title|truncate:100%}</option>
+			{%foreachelse%}
+	        	<option value='none'>[{%$locale.176%}]</option>
+			{%/foreach%}
+		</select>
+	</td></tr>
+
+	<tr><td><input class="btn btn-warning" type='submit' name='submit_calc' value='{%$locale.177%}'/></td><td>
+		{%if $submit%}
+			<b>{%$count%}</b> &rarr; <input class="btn btn-warning" type='submit' name='submit_order' value='{%$locale.162%}'/>
+		{%else%}
+			{%$count%}
+		{%/if%}
+	</td></tr>
+
+	</table>
+</form>
+{%/if%}
+</div>
+</div>
+{%if $settings.user.balance > 0%}
+
+{%/if%}

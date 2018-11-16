@@ -1,0 +1,81 @@
+
+
+<div id='block-user'>
+
+{%if $settings.user%}
+
+	{%$locale.18%}, {%$settings.user.name%}!
+	<br>
+	{%$locale.19%} {%$user_counter%}
+	<input type='button' style='width:95%; margin:3px;' onclick="go('{%$settings.patch%}users/');" value='{%$locale.41%}'>
+	<input type='button' style='width:95%; margin:3px;' onclick="if(confirm('{%$locale.43%}')){go('{%$settings.patch%}users/exit/');}" value='{%$locale.42%}' />
+
+
+
+{%else%}
+
+
+    <div id="vrWrapper">
+        <div id="wr" class="wr">
+
+
+
+
+			<div id='login'>
+				<center>
+				<strong style='font-size:14px;'>{%$locale.20%}</strong><br />
+
+				<div id='error' style='display:none;'>
+				</div>
+
+				<form name='form' action='?' method='post'>
+				<center>
+				<input style='width:90%; margin:3px;' id='email_login' type='text' value='{%$locale.21%}' onblur='alterNate(this)' onfocus='alterNate(this)' /><br />
+				<input style='width:90%; margin:3px;' id='password_login' type='password' value='******' onblur='alterNate(this)' onfocus='alterNate(this)' /><br />
+				<input type='button' id='submit_login' value='{%$locale.23%}' style='width:90%;' /><br /><br />
+                {%if $settings.ulogin == 1%}
+                    <div id="uLogin" data-ulogin="display=small;fields=first_name,last_name,email;providers=vkontakte,facebook,odnoklassniki,twitter;hidden=other;redirect_uri=http%3A%2F%2F{%$smarty.server.HTTP_HOST%}{%$smarty.const.PATH%}users/?ulogin"></div>
+                    <br />
+                {%/if%}
+				<ul class='links' >
+					<p class='links'><a href="{%$settings.patch%}users/register/" class="register dashed" >{%$locale.24%}</a></p>
+					<p class='links'><a href="{%$settings.patch%}users/password_recovery/" class="remind dashed" >{%$locale.52%}</a></p>
+				</ul>
+				</center>
+				</form>
+				</center>
+			</div>
+
+			<div id='remind'>
+			<center>
+			<div id='info-remind' style='display:none;'>
+			</div>
+			<input style='width:90%; margin:3px;' id='email_remind' type='text' value='{%$locale.21%}' onblur='alterNate(this)' onfocus='alterNate(this)'><br />
+			<input type='button' id='submit_remind' value='{%$locale.519%}' style='width:90%;'>
+					<ul class='links'>
+							<p class='links'><a href="{%$settings.patch%}users/register/" class="register dashed" >{%$locale.24%}</a></p>
+							<p class='links'><a href="{%$settings.patch%}users/login/" class="login dashed" >{%$locale.301%}</a></p>
+					</ul>
+			</center>
+			</div>
+
+			<div id='register'>
+			<center>
+			<div id='info-register' style='display:none;'>
+			</div>
+			<input style='width:90%; margin:3px;' id='email_register' type='text' value='{%$locale.26%}' onblur='alterNate(this)' onfocus='alterNate(this)'><br />
+			<input style='width:90%; margin:3px;' id='name_register' type='text' value='{%$locale.28%}' onblur='alterNate(this)' onfocus='alterNate(this)'><br />
+			<input style='width:90%; margin:3px;' id='pass1_register' type='text' value='{%$locale.30%}' onfocus="replaceT(this);"><br />
+			<input style='width:90%; margin:3px;' id='pass2_register' type='text' value='{%$locale.33%}'  onfocus="replaceT(this);"><br />
+			<input type='button' id='submit_register' value='{%$locale.24%}' style='width:90%;'>
+
+						<p class='links'><a href="{%$settings.patch%}users/login/" class="login dashed" >{%$locale.301%}</a></p>
+						<p class='links'><a href="{%$settings.patch%}users/password_recovery/" class="remind dashed" >{%$locale.52%}</a></p>
+					</ul>
+			</center>
+			</div>
+
+		</div>
+	</div>
+{%/if%}
+</div>

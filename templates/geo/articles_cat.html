@@ -1,0 +1,23 @@
+<h3>{%$locale.1027%}</h3>
+
+<ul class="articles_cat">
+{%foreach from=$articles_cat item='cat'%}
+    <li><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$cat.uri%}/">{%$cat.name%}</a> ({%$cat.count%})</li>
+{%/foreach%}
+</ul>
+
+<h3>{%$locale.1037%}</h3>
+
+{%foreach from=$articles item='article'%}
+    <div class="article">
+        <h4><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$article.cat_uri%}/{%$article.uri%}">{%$article.name%}</a></h4>
+        <span class="smalldate">{%$article.pubdate|date_format:"%d.%m.%Y"%}</span>
+        <div>
+            {%$article.content.short%}
+            {%if $article.content.more%}
+                <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$article.cat_uri%}/{%$article.uri%}">{%$locale.15%}</a>
+            {%/if%}
+        </div>
+    </div>
+{%/foreach%}
+

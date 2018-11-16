@@ -1,0 +1,8842 @@
+# Dumped by EliteBoard v2
+# Home page: http://illusionweb.ru
+#
+# MySQL version: (5.5.56-MariaDB) running on 188.120.231.77 (board.ural56.ru)
+# Date: 16.04.2018 15:16:55
+# DB: "ural56"
+# Prefix: "eboard_"
+#---------------------------------------------------------
+
+SET NAMES utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_articles`;
+CREATE TABLE `eboard_articles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat` int(11) NOT NULL,
+  `uri` varchar(200) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `content` text NOT NULL,
+  `keywords` text NOT NULL,
+  `index` int(11) NOT NULL DEFAULT '0',
+  `pubdate` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_articles_cat`;
+CREATE TABLE `eboard_articles_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `uri` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_billing`;
+CREATE TABLE `eboard_billing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uri` varchar(20) NOT NULL,
+  `status` varchar(1) NOT NULL DEFAULT '0',
+  `key1` varchar(50) NOT NULL,
+  `key2` varchar(50) NOT NULL,
+  `key3` varchar(50) NOT NULL,
+  `key4` varchar(50) NOT NULL,
+  `key5` varchar(50) NOT NULL,
+  `text1` text NOT NULL,
+  `text2` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('8', 'onpay', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('7', 'sprypay', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('10', 'robokassa', '1', 'doural56', 'NauvQ4vAgG5avTa7h1k5', 'goscS44z2PbJvt01DzuA', 'https://auth.robokassa.ru/Merchant/Index.aspx', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('11', 'smscoin', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('12', 'wm', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('13', 'yandex', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('14', 'unitpay', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('15', 'paypal', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('16', 'debug', '0', '', '', '', '', '', '', '');
+INSERT INTO `eboard_billing`(`id`, `uri`, `status`, `key1`, `key2`, `key3`, `key4`, `key5`, `text1`, `text2`) VALUES ('17', 'interkassa20', '1', '5a7e8c643c1eaf3c548b4568', 'qJwGm6X0zZhwB0aH', '', '', '', '', '');
+
+
+DROP TABLE IF EXISTS `eboard_blacklist`;
+CREATE TABLE `eboard_blacklist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `k` varchar(1) NOT NULL,
+  `v` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_blocks_db`;
+CREATE TABLE `eboard_blocks_db` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` text,
+  `html` text,
+  `parent` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('30', 'XML feeds', 'echo \"
+<center>
+<a href=\'\".PATH.\"rss.xml\'><img src=\'\".PATH.\"images/rss20.gif\' width=\'88\' height=\'15\' alt=\'Лента RSS\' border=\'0\'></a>
+<br /><br />
+<a href=\'\".PATH.\"sitemap.xml\'><img src=\'\".PATH.\"images/sitemap.gif\' width=\'88\' height=\'15\' alt=\'Лента RSS\' border=\'0\'></a>
+</center>
+\";', 'php');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('4', 'Личный кабинет', '%block_user%', 'html');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('7', 'Навигация', '%block_nav%', '');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('9', 'Облако тегов', '%block_tags%', '');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('10', 'Статистика', '%block_counter%', '');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('38', '', '<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/562-f97c38637b17f6f7ef6d0ec957e5e80f.png\" style=\"width: 100%;height: 100px;max-width: 1000px;\" /></p>
+', 'html');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('36', 'VIP объявления', '<p>%block_promo%</p>
+', 'html');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('37', 'Поиск объявлений', '%block_search%', 'html');
+INSERT INTO `eboard_blocks_db`(`id`, `name`, `html`, `parent`) VALUES ('39', '', '<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/977-e640ad5229715852fe5370487c1d8b0c.jpg\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"text-align: center; width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+
+<p style=\"text-align: center;\"><img alt=\"\" src=\"/uploads/images/951-2002ad8a9f4761100dfe6434fbbd4e76.gif\" style=\"width: 250px; height: 100px;\" /></p>
+', 'html');
+
+
+DROP TABLE IF EXISTS `eboard_blocks_places`;
+CREATE TABLE `eboard_blocks_places` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `place` varchar(1) DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
+  `from` int(11) DEFAULT '0',
+  `to` int(11) DEFAULT '0',
+  `link` int(11) DEFAULT NULL,
+  `reg` int(1) DEFAULT '1',
+  `cat` varchar(200) DEFAULT '0',
+  `region` int(11) NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('1', 'r', '0', '0', '0', '7', '1', '0', '0', '1');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('2', 'r', '0', '0', '0', '9', '1', '0', '0', '3');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('3', 'r', '0', '0', '0', '10', '1', '0', '0', '4');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('5', 'r', '1', '0', '0', '4', '1', 'users', '0', '1');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('20', 'r', '0', '0', '0', '30', '1', '0', '0', '2');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('24', 'l', '0', '0', '0', '33', '1', '0', '0', '3');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('25', 'l', '0', '0', '0', '34', '1', '0', '0', '4');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('27', 'r', '1', '0', '0', '36', '1', '769', '0', '20');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('28', 'l', '0', '0', '0', '37', '1', '0', '0', '2');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('29', 'b', '1', '0', '0', '37', '1', '%cat', '0', '100000');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('30', 't', '1', '0', '0', '36', '1', '%ind', '0', '100000');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('31', 'h', '0', '0', '0', '38', '1', '0', '0', '100000');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('32', 'f', '1', '0', '0', '38', '1', '0', '0', '100000');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('33', 'r', '1', '0', '0', '39', '1', '0', '0', '100000');
+INSERT INTO `eboard_blocks_places`(`id`, `place`, `status`, `from`, `to`, `link`, `reg`, `cat`, `region`, `sort`) VALUES ('34', 'r', '1', '0', '0', '40', '1', '0', '0', '100000');
+
+
+DROP TABLE IF EXISTS `eboard_cat`;
+CREATE TABLE `eboard_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uri` varchar(50) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `img` varchar(500) NOT NULL,
+  `parent` int(10) NOT NULL,
+  `sort` int(10) DEFAULT '10000000',
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=765 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('243', 'Dacia', 'Dacia', '', '168', '33', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('242', 'Citroen', 'Citroen', '', '168', '32', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('241', 'Chrysler', 'Chrysler', '', '168', '31', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('239', 'Chery', 'Chery', '', '168', '29', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('240', 'Chevrolet', 'Chevrolet', '', '168', '30', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('238', 'ChangFeng', 'ChangFeng', '', '168', '28', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('237', 'Changan', 'Changan', '', '168', '27', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('235', 'Cadillac', 'Cadillac', '', '168', '25', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('236', 'Caterham', 'Caterham', '', '168', '26', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('234', 'BYD', 'BYD', '', '168', '24', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('232', 'Bugatti', 'Bugatti', '', '168', '22', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('233', 'Buick', 'Buick', '', '168', '23', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('231', 'Bufori', 'Bufori', '', '168', '21', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('229', 'BMW', 'BMW', '', '168', '19', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('230', 'Brilliance', 'Brilliance', '', '168', '20', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('227', 'BAW', 'BAW', '', '168', '17', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('228', 'Bentley', 'Bentley', '', '168', '18', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('225', 'Aston-Martin', 'Aston Martin', '', '168', '15', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('226', 'Audi', 'Audi', '', '168', '16', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('224', 'Asia', 'Asia', '', '168', '14', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('223', 'Aro', 'Aro', '', '168', '13', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('222', 'Alpina', 'Alpina', '', '168', '12', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('221', 'Alfa-Romeo', 'Alfa Romeo', '', '168', '11', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('220', 'Acura', 'Acura', '', '168', '10', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('219', 'AC', 'AC', '', '168', '9', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('155', 'Transport', 'Транспорт', 'icon3.png', '0', '7', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('158', 'Nedvizhimost', 'Недвижимость', 'icon4.png', '0', '0', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('179', 'Garazhi-i-mashinomesta', 'Гараж, сарай', 'garuavto.png', '158', '5', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('178', 'Doma-dachi-kottedzhi', 'Дома', 'domdacha.png', '158', '3', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('177', 'Zemelnye-uchastki', 'Земельные участки', 'zemuch.png', '158', '4', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('176', 'Kommercheskaya-nedvizhimost', 'Коммерческая недвижимость', 'komnedvig.png', '158', '6', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('175', 'Komnaty', 'Комнаты', 'komnata.png', '158', '1', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('173', 'Novye-avtomobili', 'Новые автомобили', 'newavto.png', '155', '195', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('172', 'Motocikly-i-mototehnika', 'Мотоциклы и мототехника', 'moto_avto.png', '155', '187', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('171', 'Gruzoviki-i-spectehnika', 'Грузовики и спецтехника', 'gruspc.png', '155', '149', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('170', 'Vodnyi-transport', 'Прочее', 'vodnd.png', '155', '274', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('169', 'Zapchasti-i-aksessuary', 'Запчасти и аксессуары', 'zapchasti_avto.png', '155', '165', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('168', '-Avtomobili-s-probegom', 'Автомобили с пробегом', 'avto.png', '155', '8', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('244', 'Dadi', 'Dadi', '', '168', '34', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('245', 'Daewoo', 'Daewoo', '', '168', '35', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('246', 'Daihatsu', 'Daihatsu', '', '168', '36', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('247', 'Daimler', 'Daimler', '', '168', '37', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('248', 'Datsun', 'Datsun', '', '168', '38', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('249', 'Derways', 'Derways', '', '168', '39', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('250', 'Dodge', 'Dodge', '', '168', '40', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('251', 'Dong-Feng', 'Dong Feng', '', '168', '41', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('252', 'Doninvest', 'Doninvest', '', '168', '42', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('253', 'Eagle', 'Eagle', '', '168', '43', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('254', 'Ecomotors', 'Ecomotors', '', '168', '44', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('255', 'FAW', 'FAW', '', '168', '45', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('256', 'Ferrari', 'Ferrari', '', '168', '46', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('257', 'FIAT', 'FIAT', '', '168', '47', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('258', 'Ford', 'Ford', '', '168', '48', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('259', 'Geely', 'Geely', '', '168', '49', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('260', 'Geo', 'Geo', '', '168', '50', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('261', 'GMC', 'GMC', '', '168', '51', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('262', 'Great-Wall', 'Great Wall', '', '168', '52', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('263', 'Hafei', 'Hafei', '', '168', '53', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('264', 'Haima', 'Haima', '', '168', '54', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('265', 'Haval', 'Haval', '', '168', '55', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('266', 'Hawtai', 'Hawtai', '', '168', '56', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('267', 'Honda', 'Honda', '', '168', '57', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('268', 'Huanghai', 'Huanghai', '', '168', '58', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('269', 'Hummer', 'Hummer', '', '168', '59', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('270', 'Hurtan', 'Hurtan', '', '168', '60', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('271', 'Hyundai', 'Hyundai', '', '168', '61', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('272', 'Infiniti', 'Infiniti', '', '168', '62', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('273', 'Iran-Khodro', 'Iran Khodro', '', '168', '63', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('274', 'Isuzu', 'Isuzu', '', '168', '64', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('275', 'Iveco', 'Iveco', '', '168', '65', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('276', 'JAC', 'JAC', '', '168', '66', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('277', 'Jaguar', 'Jaguar', '', '168', '67', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('278', 'Jeep', 'Jeep', '', '168', '68', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('279', 'Jinbei', 'Jinbei', '', '168', '69', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('280', 'JMC', 'JMC', '', '168', '70', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('281', 'KIA', 'KIA', '', '168', '71', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('282', 'Lamborghini', 'Lamborghini', '', '168', '72', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('283', 'Lancia', 'Lancia', '', '168', '73', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('284', 'Land-Rover', 'Land Rover', '', '168', '74', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('285', 'Landwind', 'Landwind', '', '168', '75', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('286', 'LDV', 'LDV', '', '168', '76', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('287', 'Lexus', 'Lexus', '', '168', '77', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('288', 'LIFAN', 'LIFAN', '', '168', '78', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('289', 'Lincoln', 'Lincoln', '', '168', '79', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('290', 'Lotus', 'Lotus', '', '168', '80', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('291', 'Luxgen', 'Luxgen', '', '168', '81', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('292', 'Mahindra', 'Mahindra', '', '168', '82', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('293', 'Marussia', 'Marussia', '', '168', '83', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('294', 'Maserati', 'Maserati', '', '168', '84', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('295', 'Maybach', 'Maybach', '', '168', '85', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('296', 'Mazda', 'Mazda', '', '168', '86', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('297', 'Mercedes-Benz', 'Mercedes-Benz', '', '168', '87', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('298', 'Mercury', 'Mercury', '', '168', '88', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('299', 'Metrocab', 'Metrocab', '', '168', '89', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('300', 'MG', 'MG', '', '168', '90', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('301', 'MINI', 'MINI', '', '168', '91', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('302', 'Mitsubishi', 'Mitsubishi', '', '168', '92', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('303', 'Mitsuoka', 'Mitsuoka', '', '168', '93', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('304', 'Morgan', 'Morgan', '', '168', '94', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('305', 'Morris', 'Morris', '', '168', '95', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('306', 'Nissan', 'Nissan', '', '168', '96', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('307', 'Noble', 'Noble', '', '168', '97', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('308', 'Oldsmobile', 'Oldsmobile', '', '168', '98', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('309', 'Opel', 'Opel', '', '168', '99', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('310', 'Pagani', 'Pagani', '', '168', '100', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('311', 'Peugeot', 'Peugeot', '', '168', '101', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('312', 'Plymouth', 'Plymouth', '', '168', '102', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('313', 'Pontiac', 'Pontiac', '', '168', '103', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('314', 'Porsche', 'Porsche', '', '168', '104', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('315', 'Proton', 'Proton', '', '168', '105', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('316', 'Renault', 'Renault', '', '168', '106', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('317', 'Rolls-Royce', 'Rolls-Royce', '', '168', '107', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('318', 'Ronart', 'Ronart', '', '168', '108', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('319', 'Rover', 'Rover', '', '168', '109', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('320', 'Saab', 'Saab', '', '168', '110', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('321', 'Saleen', 'Saleen', '', '168', '111', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('322', 'Saturn', 'Saturn', '', '168', '112', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('323', 'Scion', 'Scion', '', '168', '113', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('324', 'SEAT', 'SEAT', '', '168', '114', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('325', 'Shuanghuan', 'Shuanghuan', '', '168', '115', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('326', 'Skoda', 'Skoda', '', '168', '116', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('327', 'SMA', 'SMA', '', '168', '117', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('328', 'Smart', 'Smart', '', '168', '118', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('329', 'Spyker', 'Spyker', '', '168', '119', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('330', 'SsangYong', 'SsangYong', '', '168', '120', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('331', 'Subaru', 'Subaru', '', '168', '121', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('332', 'Suzuki', 'Suzuki', '', '168', '122', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('333', 'Talbot', 'Talbot', '', '168', '123', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('334', 'Tata', 'Tata', '', '168', '124', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('335', 'Tesla', 'Tesla', '', '168', '125', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('336', 'Tianma', 'Tianma', '', '168', '126', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('337', 'Tianye', 'Tianye', '', '168', '127', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('338', 'Toyota', 'Toyota', '', '168', '128', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('339', 'Trabant', 'Trabant', '', '168', '129', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('340', 'Volkswagen', 'Volkswagen', '', '168', '130', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('341', 'Volvo', 'Volvo', '', '168', '131', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('342', 'Vortex', 'Vortex', '', '168', '132', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('343', 'Wartburg', 'Wartburg', '', '168', '133', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('344', 'Wiesmann', 'Wiesmann', '', '168', '134', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('345', 'Xin-Kai', 'Xin Kai', '', '168', '135', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('346', 'ZX', 'ZX', '', '168', '136', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('347', 'VAZ-(LADA)', 'ВАЗ (LADA)', '', '168', '137', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('348', 'VIS', 'ВИС', '', '168', '138', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('349', 'GAZ', 'ГАЗ', '', '168', '139', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('350', 'Drugaya', 'Другая', '', '168', '140', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('351', 'ZAZ', 'ЗАЗ', '', '168', '141', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('352', 'ZIL', 'ЗИЛ', '', '168', '142', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('353', 'IZh', 'ИЖ', '', '168', '143', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('354', 'LuAZ', 'ЛуАЗ', '', '168', '144', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('355', 'Moskvich', 'Москвич', '', '168', '145', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('356', 'RAF', 'РАФ', '', '168', '146', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('357', 'TagAZ', 'ТагАЗ', '', '168', '147', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('358', 'UAZ', 'УАЗ', '', '168', '148', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('359', 'Acura', 'Acura', '', '173', '196', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('360', 'Alfa-Romeo', 'Alfa Romeo', '', '173', '197', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('361', 'Alpina', 'Alpina', '', '173', '198', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('362', 'Aston-Martin', 'Aston Martin', '', '173', '199', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('363', 'Audi', 'Audi', '', '173', '200', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('364', 'BAW', 'BAW', '', '173', '201', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('365', 'Bentley', 'Bentley', '', '173', '202', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('366', 'BMW', 'BMW', '', '173', '203', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('367', 'Brilliance', 'Brilliance', '', '173', '204', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('368', 'Bugatti', 'Bugatti', '', '173', '205', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('369', 'BYD', 'BYD', '', '173', '206', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('370', 'Cadillac', 'Cadillac', '', '173', '207', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('371', 'Changan', 'Changan', '', '173', '208', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('372', 'Chery', 'Chery', '', '173', '209', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('373', 'Chevrolet', 'Chevrolet', '', '173', '210', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('374', 'Chrysler', 'Chrysler', '', '173', '211', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('375', 'Citroen', 'Citroen', '', '173', '212', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('376', 'Dacia', 'Dacia', '', '173', '213', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('377', 'Daewoo', 'Daewoo', '', '173', '214', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('378', 'Datsun', 'Datsun', '', '173', '215', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('379', 'Dodge', 'Dodge', '', '173', '216', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('380', 'Dong-Feng', 'Dong Feng', '', '173', '217', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('381', 'Ecomotors', 'Ecomotors', '', '173', '218', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('382', 'FAW', 'FAW', '', '173', '219', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('383', 'Ferrari', 'Ferrari', '', '173', '220', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('384', 'FIAT', 'FIAT', '', '173', '221', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('385', 'Ford', 'Ford', '', '173', '222', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('386', 'Geely', 'Geely', '', '173', '223', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('387', 'GMC', 'GMC', '', '173', '224', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('388', 'Great-Wall', 'Great Wall', '', '173', '225', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('389', 'Haima', 'Haima', '', '173', '226', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('390', 'Haval', 'Haval', '', '173', '227', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('391', 'Hawtai', 'Hawtai', '', '173', '228', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('392', 'Honda', 'Honda', '', '173', '229', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('393', 'Hyundai', 'Hyundai', '', '173', '230', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('394', 'Infiniti', 'Infiniti', '', '173', '231', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('395', 'Iveco', 'Iveco', '', '173', '232', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('396', 'JAC', 'JAC', '', '173', '233', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('397', 'Jaguar', 'Jaguar', '', '173', '234', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('398', 'Jeep', 'Jeep', '', '173', '235', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('399', 'KIA', 'KIA', '', '173', '236', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('400', 'LADA', 'LADA', '', '173', '237', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('401', 'Lamborghini', 'Lamborghini', '', '173', '238', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('402', 'Land-Rover', 'Land Rover', '', '173', '239', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('403', 'Lexus', 'Lexus', '', '173', '240', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('404', 'LIFAN', 'LIFAN', '', '173', '241', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('405', 'Lincoln', 'Lincoln', '', '173', '242', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('406', 'Lotus', 'Lotus', '', '173', '243', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('407', 'Luxgen', 'Luxgen', '', '173', '244', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('408', 'Marussia', 'Marussia', '', '173', '245', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('409', 'Maserati', 'Maserati', '', '173', '246', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('410', 'Mazda', 'Mazda', '', '173', '247', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('411', 'Mercedes-Benz', 'Mercedes-Benz', '', '173', '248', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('412', 'MINI', 'MINI', '', '173', '249', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('413', 'Mitsubishi', 'Mitsubishi', '', '173', '250', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('414', 'Nissan', 'Nissan', '', '173', '251', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('415', 'Opel', 'Opel', '', '173', '252', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('416', 'Peugeot', 'Peugeot', '', '173', '253', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('417', 'Porsche', 'Porsche', '', '173', '254', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('418', 'Renault', 'Renault', '', '173', '255', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('419', 'Rolls-Royce', 'Rolls-Royce', '', '173', '256', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('420', 'SEAT', 'SEAT', '', '173', '257', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('421', 'Skoda', 'Skoda', '', '173', '258', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('422', 'Smart', 'Smart', '', '173', '259', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('423', 'SsangYong', 'SsangYong', '', '173', '260', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('424', 'Subaru', 'Subaru', '', '173', '261', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('425', 'Suzuki', 'Suzuki', '', '173', '262', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('426', 'Tesla', 'Tesla', '', '173', '263', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('427', 'Toyota', 'Toyota', '', '173', '264', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('428', 'Volkswagen', 'Volkswagen', '', '173', '265', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('429', 'Volvo', 'Volvo', '', '173', '266', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('430', 'Vortex', 'Vortex', '', '173', '267', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('431', 'VIS', 'ВИС', '', '173', '268', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('432', 'GAZ', 'ГАЗ', '', '173', '269', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('433', 'Drugaya', 'Другая', '', '173', '270', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('434', 'ZAZ', 'ЗАЗ', '', '173', '271', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('435', 'TagAZ', 'ТагАЗ', '', '173', '272', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('436', 'UAZ', 'УАЗ', '', '173', '273', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('437', 'Baggi', 'Багги', '', '172', '188', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('438', 'Vezdehody', 'Вездеходы', '', '172', '189', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('439', 'Karting', 'Картинг', '', '172', '190', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('440', 'Kvadrocikly', 'Квадроциклы', '', '172', '191', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('441', 'Mopedy-i-skutery', 'Мопеды и скутеры', '', '172', '192', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('442', 'Motocikly', 'Мотоциклы', '', '172', '193', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('443', 'Snegohody', 'Снегоходы', '', '172', '194', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('464', 'Zapchasti', 'Запчасти', '', '169', '166', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('465', 'Aksessuary', 'Аксессуары', '', '169', '171', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('466', 'GPS-navigatory', 'GPS-навигаторы', '', '169', '172', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('467', 'Avtokosmetika-i-avtohimiya', 'Автокосметика и автохимия', '', '169', '173', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('468', 'Audio--i-videotehnika', 'Аудио- и видеотехника', '', '169', '174', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('469', 'Bagazhniki-i-farkopy', 'Багажники и фаркопы', '', '169', '175', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('470', 'Instrumenty', 'Инструменты', '', '169', '176', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('471', 'Pricepy', 'Прицепы', '', '169', '177', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('472', 'Protivougonnye-ustroistva', 'Противоугонные устройства', '', '169', '178', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('473', 'Tyuning', 'Тюнинг', '', '169', '179', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('474', 'Shiny-diski-i-kolesa', 'Шины, диски и колёса', '', '169', '180', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('475', 'Ekipirovka', 'Экипировка', '', '169', '186', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('736', 'Avtokrany', 'Автокраны', '', '171', '150', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('737', 'Buldozery', 'Бульдозеры', '', '171', '151', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('738', 'Gruzoviki', 'Грузовики', '', '171', '152', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('739', 'Kommunalnaya-tehnika', 'Коммунальная техника', '', '171', '153', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('740', 'Legkii-transport', 'Лёгкий транспорт', '', '171', '154', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('741', 'Pogruzchiki', 'Погрузчики', '', '171', '155', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('742', 'Pricepy', 'Прицепы', '', '171', '156', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('735', 'Avtodoma', 'Автодома', '', '171', '157', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('734', 'Avtobusy', 'Автобусы', '', '171', '158', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('755', 'Drugoe', 'Другое', '', '170', '275', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('754', 'Naduvnye-lodki', 'Надувные лодки', '', '170', '276', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('753', 'Motornye-lodki', 'Моторные лодки', '', '170', '277', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('752', 'Kayaki-i-kanoe', 'Каяки и каноэ', '', '170', '278', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('751', 'Katera-i-yahty', 'Катера и яхты', '', '170', '279', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('750', 'Gidrocikly', 'Гидроциклы', '', '170', '280', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('749', 'Veselnye-lodki', 'Вёсельные лодки', '', '170', '281', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('748', 'Drugoe', 'Другое', '', '171', '159', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('746', 'Tyagachi', 'Тягачи', '', '171', '160', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('747', 'Ekskavatory', 'Экскаваторы', '', '171', '161', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('743', 'Selhoztehnika', 'Сельхозтехника', '', '171', '162', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('744', 'Stroitelnaya-tehnika', 'Строительная техника', '', '171', '163', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('745', 'Tehnika-dlya-lesozagotovki', 'Техника для лесозаготовки', '', '171', '164', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('729', 'Kolpaki', 'Колпаки', '', '474', '181', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('728', 'Kolesa', 'Колёса', '', '474', '182', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('727', 'Diski', 'Диски', '', '474', '183', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('721', 'Dlya-avtomobilei', 'Для автомобилей', '', '464', '167', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('722', 'Dlya-mototehniki', 'Для мототехники', '', '464', '168', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('723', 'Dlya-spectehniki', 'Для спецтехники', '', '464', '169', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('724', 'Dlya-vodnogo-transporta', 'Для водного транспорта', '', '464', '170', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('725', 'Shiny', 'Шины', '', '474', '184', '');
+INSERT INTO `eboard_cat`(`id`, `uri`, `name`, `img`, `parent`, `sort`, `description`) VALUES ('726', 'Motoshiny', 'Мотошины', '', '474', '185', '');
+
+
+DROP TABLE IF EXISTS `eboard_comments`;
+CREATE TABLE `eboard_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` int(11) NOT NULL,
+  `message_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_name` varchar(30) NOT NULL,
+  `user_email` varchar(30) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_counter_cat`;
+CREATE TABLE `eboard_counter_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat` int(11) NOT NULL,
+  `val` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_counter_cr`;
+CREATE TABLE `eboard_counter_cr` (
+  `region` int(11) DEFAULT '0',
+  `cat` int(11) DEFAULT '0',
+  `counter` int(11) DEFAULT '0',
+  KEY `region_cat` (`region`,`cat`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_counter_ip`;
+CREATE TABLE `eboard_counter_ip` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(20) DEFAULT NULL,
+  `forvard` varchar(20) NOT NULL,
+  `referer` varchar(500) NOT NULL,
+  `time` int(11) DEFAULT NULL,
+  `page_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_counter_ip`(`id`, `ip`, `forvard`, `referer`, `time`, `page_id`) VALUES ('1', '145.255.21.186', '', '', '0', '0');
+INSERT INTO `eboard_counter_ip`(`id`, `ip`, `forvard`, `referer`, `time`, `page_id`) VALUES ('2', '136.169.248.52', '', '', '0', '0');
+
+
+DROP TABLE IF EXISTS `eboard_counter_pages`;
+CREATE TABLE `eboard_counter_pages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page` varchar(300) DEFAULT NULL,
+  `counter` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_counter_vars`;
+CREATE TABLE `eboard_counter_vars` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `var` varchar(10) DEFAULT NULL,
+  `value` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_counter_vars`(`id`, `var`, `value`) VALUES ('1', 'hits_all', '2424');
+INSERT INTO `eboard_counter_vars`(`id`, `var`, `value`) VALUES ('2', 'hosts_all', '350');
+INSERT INTO `eboard_counter_vars`(`id`, `var`, `value`) VALUES ('3', 'day', '16042018');
+INSERT INTO `eboard_counter_vars`(`id`, `var`, `value`) VALUES ('4', 'hits_today', '72');
+
+
+DROP TABLE IF EXISTS `eboard_cron`;
+CREATE TABLE `eboard_cron` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) NOT NULL,
+  `period` int(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_cron`(`id`, `name`, `period`) VALUES ('1', 'cron_del', '1523871109');
+INSERT INTO `eboard_cron`(`id`, `name`, `period`) VALUES ('2', 'cron_mail', '1523873649');
+INSERT INTO `eboard_cron`(`id`, `name`, `period`) VALUES ('3', 'cron_order', '1523873649');
+INSERT INTO `eboard_cron`(`id`, `name`, `period`) VALUES ('12', 'cron_cssjs', '1523873719');
+INSERT INTO `eboard_cron`(`id`, `name`, `period`) VALUES ('13', 'cron_upd', '1523862456');
+
+
+DROP TABLE IF EXISTS `eboard_cron_files`;
+CREATE TABLE `eboard_cron_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `file` varchar(20) NOT NULL,
+  `mtime` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('1', 'lightbox.js', '1260130298');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('2', 'dynamic.js', '1328602266');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('10', 'dynamic_eco.js', '1490366882');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('11', 'dynamic_expresso.js', '1493378200');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('12', 'dynamic_geo.js', '1514493712');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('13', 'dynamic_flame.js', '1492532826');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('14', 'dynamic_aqua.js', '1492525320');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('15', 'dynamic_stika.js', '1514493711');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('16', 'dynamic_stika_karta.', '1514493711');
+INSERT INTO `eboard_cron_files`(`id`, `file`, `mtime`) VALUES ('17', 'dynamic_stika_karta.', '1514493711');
+
+
+DROP TABLE IF EXISTS `eboard_db`;
+CREATE TABLE `eboard_db` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL,
+  `uid` varchar(100) NOT NULL,
+  `cat` int(5) DEFAULT NULL,
+  `region` int(5) DEFAULT NULL,
+  `date_add` int(11) DEFAULT NULL,
+  `date_del` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
+  `sendmail` int(1) NOT NULL,
+  `approved` int(1) NOT NULL DEFAULT '0',
+  `sort` int(10) DEFAULT '10000000',
+  `email` varchar(100) DEFAULT NULL,
+  `user` varchar(200) NOT NULL,
+  `title` varchar(300) DEFAULT NULL,
+  `text` text,
+  `marked` int(1) NOT NULL DEFAULT '0',
+  `raised` int(1) NOT NULL DEFAULT '0',
+  `date_raised` timestamp NULL DEFAULT NULL,
+  `block` int(1) NOT NULL DEFAULT '0',
+  `active` int(1) NOT NULL DEFAULT '0',
+  `counter` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `date_raised` (`date_raised`),
+  KEY `date_add` (`date_add`),
+  KEY `date_del` (`date_del`),
+  KEY `status` (`status`),
+  KEY `date_raised_raised` (`date_raised`,`raised`),
+  KEY `cat` (`cat`),
+  KEY `region` (`region`),
+  FULLTEXT KEY `title_text` (`title`,`text`)
+) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('1', '95.215.45.75', '699e0e48e9ba4a103c83c57d8db00c32', '760', '120', '1516954500', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+1-к квартира  33.4 м²  на 5 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Прекрасный вариант 1-комнатной квартиры улучшенной планировки для для небольшой семьи. </p> <p>Квартира находится в благоустроенном микрорайоне, по адресу ул. Огородная, 31 на 5 этаже 9 этажного панельного дома.</p> <p>Общая площадь квартиры -33,4 кв.м., жилая 17,4 кв.м., кухня 8 кв.м. </p> <p> </p> <p>• Квартира с хорошим ремонтом (пластиковые окна, надежная металлическая дверь, дорогой линолеум). Очень теплая и светлая; </p> <p>• Просторная комната с застекленной лоджией; </p> <p>• Кухня, где вся семья может сесть и обедать вместе;</p> <p>• Пластиковые окна защищают покой хозяев от постороннего шума, и сохраняют постоянное тепло в помещении.</p> <p>• Аккуратная лоджия, качественно отделанная деревом ; </p> <p>• Раздельный санузел, выложенный кафелем; </p> <p>• В санузле установлены приборы учета, новые трубы что сократит ваши расходы</p> <p>• Большой коридор </p> <p>• Чистый подъезд и доброжелательные соседи; </p> <p>• Имеются места для парковки автомобиля; </p> <p>• Семье с детьми будет интересно наличие детских садов, стадиона, профилактория, ж/д больницы, школ и гимназии. Все это находится рядом домом; </p> <p>• Магазины, рынок в шаговой доступности. </p>       
+
+<p>   900 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('2', '95.215.45.75', 'b48fa9684a4fb452a3b50e6a6e6b7d49', '760', '120', '1516870860', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Анна', 'Продам квартиру     
+1-к квартира  34.6 м²  на 2 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>г. Орск, Советский район, улица Экологическая, д.1, кв 18, однокомнатная квартира с застекленным балконом, с двумя окнами, светлая и солнечная. Расположена на втором этаже кирпичного дома. Торцевая, но теплая. Достаточно большой коридор. Дом отделен от дороги. Очень хорошее расположение, остановки городского транспорта, супермаркет, рынок, в шаговой доступности. Квартира в отличном состоянии.  С/у совмещенный. Окна - пластиковые, батареи - алюминевые. Частично мебелированная. Полностью готовая для проживания, без вложений. Срочная продажа, один взрослый собственник. ТОРГ.</p>       
+
+<p>   820 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('3', '95.215.45.75', '264a72df19f457753f427226d7d9f849', '760', '120', '1516780020', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+1-к квартира  33.6 м²  на 1 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p> </p> <p>1-комнатная квартира улучшенной планировки в пяти шагах от важнейших транспортных развязок! Очень интересная цена! </p> <p>Однокомнатная квартира общей площадью 33,2 кв.м (жилая площадь 17,5 кв.м.), находящаяся на 1 этаже 9 этажного панельного дома по адресу: ул. Олимпийская, 30.</p> <p>Преимущества квартиры:</p> <p>• 1 этаж - не надо высоко подниматься, при этом высокий цоколь;</p> <p>• Светлая просторная комната, говорящая «Добро пожаловать домой!» обеспечит спокойный и приятный отдых после рабочего дня или подарит романтическое настроение;</p> <p>• Просторная кухня – 7 кв.м. позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие.</p> <p>• Удобная широкая лоджия – дополнительное место для отдыха;</p> <p>• Наличие раздельного санузла привносит дополнительные удобства по утрам без очередей, стрессов и суматохи. </p> <p>• Герметично поставленные окна защищают покой хозяев от постороннего шума, и сохраняют постоянное тепло в помещении.</p> <p>• Квартира теплая и светлая, готова к ремонту по вашему вкусу; </p> <p>• Спальный район с развитой инфраструктурой, магазины, школы, детские сады, больницы в шаговой доступности;</p> <p>• Подходит под ипотеку, материнский капитал, жилищные сертификаты;</p> <p>• Идеальное решение для приобретения при соотношении цены и качества;</p> <p>Не упускайте выгодную возможность, звоните прямо сейчас. </p> <p> </p>       
+
+<p>   660 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('4', '95.215.45.75', '66238ceb1b98f129a6536b80be896efb', '760', '120', '1516682880', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Лена', 'Продам квартиру     
+1-к квартира  33 м²  на 7 этаже  10-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продаю без посредников, документы готовы. Евроремонт.счетчики.пластиковые трубы пластиковые окна..натяжные потолки...новые :железная входная дверь, межкомн.двери... кафель , ванна,люстры..новая кухня с встроеной техникой..прихожая..модульная мебель в зале.. , машинка стиральная.новая сантехника..</p>       
+
+<p>   1 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('5', '95.215.45.75', 'd171cc50baf7bbbff28b6f1789d66806', '760', '120', '1516463760', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Наталья', 'Продам квартиру     
+1-к квартира  31 м²  на 3 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Я-СОБСТВЕННИК! ЕДИНСТВЕННЫЙ И РЕАЛЬНЫЙ. <br />ОСТАЛЬНЫЕ ОБЪЯВЛЕНИЯ НА ЭТОМ САЙТЕ С ТАКИМИ ЖЕ ФОТОГРАФИЯМИ-РАЗМЕЩЕНЫ АГЕНТСТВАМИ.</p>       
+
+<p>   655 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('6', '95.215.45.75', '802f0426adf47ceb4461f8a773558eae', '760', '120', '1518078360', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Жанна', 'Продам квартиру     
+1-к квартира  29 м²  на 6 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1к.кв. в хорошем состоянии, 6/9эт., мжк. Ул.Ялтинская, р-н 240кв., в хорошем состоянии заезжай и живи, пластиковые окна, стояки трубы поменяны, счетчики на воду стоят  ванной и в кухне, квартира теплая, в шаговой доступности дет. Сады, школы, гимназия , во дворе игровая площадка,  парковка, транспорт. маршрут. 37, 55, 36,21,16, трамвай1, мебель вывезена, документы готовы к продажи.</p>       
+
+<p>   650 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '15');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('7', '95.215.45.75', '60c8f74da5b0a563db601449375210fb', '760', '120', '1518075900', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+1-к квартира  30.9 м²  на 5 этаже  5-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продается 1 комнатная квартира в самом востребованном районе города!</p> <p>Квартира находится по адресу ул. Макаренко, 10 на 5 этаже 5 этажного панельного дома.</p> <p>Общая площадь квартиры - 30,9 кв.м. Жилая площадь – 18,4 кв.м. Кухня – 6 кв.м.</p> <p>• Уютная, теплая и светлая квартира</p> <p>• Совмещенный санузел, в котором поместится все.</p> <p>• В квартире выполнен частичный ремонт - приборы учёта на газ и воду, пластиковый водопровод, входная металлическая дверь; </p> <p>• Пластиковые окна защитят Ваш покой от шума улиц.</p> <p>• Имеется застекленный балкон (это всегда имеет значение для практичных хозяев)</p> <p>• Тихий зеленый двор, доброжелательные соседи;</p> <p>• Расположение дома вас тоже порадует. В шаговой доступности и магазины, и аптеки и парикмахерские. Также близко детский сад и школа, находящиеся прямо во дворе, что убережет ваших детей от перехода проезжей части. Внутри дворовая территория озеленена, оборудована парковками и детскими площадками. </p> <p>• Удобная транспортная развязка, в любой район города можно легко и быстро доехать как на общественном, так и на личном транспорте.</p> <p>Обременений и долгов нет.</p> <p> </p>       
+
+<p>   680 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('8', '95.215.45.75', '4e2e8003811b7fdd31d1abe4908e0cd3', '760', '120', '1518027660', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'лариса', 'Продам квартиру     
+1-к квартира  31 м²  на 7 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Теплая квартира с хорошим видом из окон, частично меблированная, кухонный гарнитур, остается новый холодильник и стиральная машинка, натяжные потолки по всей квартире, застекленная лоджия.</p>       
+
+<p>   900 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('9', '95.215.45.75', '52bf045fcf23348205585beec08cc745', '760', '120', '1517945700', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Настя', 'Продам квартиру     
+1-к квартира  30.1 м²  на 1 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам уютную однокомнатную квартиру. Находится на 1 этаже 5-и этажного панельного дома ( есть большой цоколь и квартира находится на уровне 2-го этажа) Квартира не угловая, очень тёплая. Сделан косметический ремонт, установлены пластиковые окна, новая входная дверь. Все что нужно есть рядом: магазины, школы, почта, остановка общественного транспорта, детские сады. Квартира в собственности более 3-х лет. Можем оставить всю мебель и технику.  Собственник. Торг</p>       
+
+<p>   770 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('10', '95.215.45.75', 'b3296f66b2b35f7521efc39b3a949003', '760', '120', '1517934900', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Мирамгуль Сатубалдина', 'Продам квартиру     
+1-к квартира  31 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 1-ую кв, в районе рынка \"Авангард\", в шаговой доступности вся инфроструктура, квартира очень теплая, солнечная сторона, уютная,  при продаже оставляем встроенную гардеробную и кухонный гарнитур, ремонт. Пластиковые окна, пластиковый водопровод, счетчики на воду.</p>       
+
+<p>   780 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('11', '95.215.45.75', '28fedc9a1a7a7773003492865fd7abe2', '760', '120', '1517840400', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Зоя', 'Продам квартиру     
+1-к квартира  36 м²  на 2 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Срочно !!!  в Орске ул. Комарова 1, ост. Ялтинская;  240 квар.; 2/9 эт.;  Хозяин  ПРОДАЕТ - 1ком.кв. ул/пл - 35,4/18/8,4 из кухни выход на лоджию;  газ, гор. хол. вода ; вся инфраструктура рядом; Документы в порядке.Состояние жилое. Реальному покупателю торг уместен.</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('12', '95.215.45.75', 'ca5653d3afdfd2530dc95d55dbdf893f', '760', '120', '1517835120', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Силкин Виктор', 'Продам квартиру  в новостройке     
+1-к квартира  34 м²  на 8 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1 квартиру в новом доме на остановке Сорокина общей площадью 34 кв.м., пластиковые окна, балкон, ремонт от застройщика.</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('13', '95.215.45.75', '46797c38a78f5eb130b94d5ccc841fe1', '760', '120', '1517834040', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Горбачева Наталья', 'Продам квартиру     
+1-к квартира  34 м²  на 4 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1 комн. квартиру в кирпичном доме. Квартира очень теплая, светлая, просторная- 34м2! <br />В квартире установлены пластиковые трубы, счетчики на воду. Собственники квартир освобождены от уплаты взносов за капитальный ремонт! В пяти минутах ходьбы магазины, остановки общественного транспорта, детский сад, школа, аптеки, поликлиника.</p>       
+
+<p>   680 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('14', '95.215.45.75', '1ba75f1179a4bea04542aca4d8df5b72', '760', '120', '1517832900', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Искаренко Ольга', 'Продам квартиру     
+1-к квартира  31.7 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1 к.кв. в кирпичном доме в Центре! Квартира теплая, уютная, очень светлая. Заменены пластиковые окна, трубы, установлены счетчики ХВС, ГВС, санузел раздельный, балкон застеклен. Отличный район, удобная транспортная развязка.</p>       
+
+<p>   780 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('15', '95.215.45.75', '9c8bec27b68c354acc138aaddd8afbdc', '760', '120', '1517821260', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Дмитрий', 'Продам квартиру     
+1-к квартира  33.4 м²  на 6 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 1 комнатную квартиру ,квартира в которой возможно сделать ремонт по вашему вкусу !стены все ровные !теплая.<br />Школа ,детский сад ,остановка ,магазины ,все в шаговой доступности !</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('16', '95.215.45.75', 'e4e5859600619de1cd7112b9a0bbdd1a', '760', '120', '1517727660', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ольга', 'Продам квартиру     
+1-к квартира  32 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>1 комнатная квартира в центре города, Васнецова. 4/5. Школа, садик, магазины-всё рядом. Окна-пластик, балкон застеклен,  остаётся всё, что есть на фото-кухонный гарнитур, шкафы в прихожей и на балконе, диван,  стиральная машина, кондиционер, холодильник.</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('17', '95.215.45.75', 'eb393ae22a074f07cd27a99ca68144e6', '760', '120', '1517649420', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'виталий', 'Продам квартиру     
+1-к квартира  32 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 1ую квартиру. Хороший район, рядом школа, д. Сады ,магазины. Возможен хороший торг реальным покупателям при осмотре!</p>       
+
+<p>   670 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('18', '95.215.45.75', '86089df15827228431c1a7cc2efaf204', '760', '120', '1517587680', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Серёжка Таратынов', 'Продам квартиру     
+1-к квартира  29 м²  на 1 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Собственник.<br />Срочно продам 1 комнатную квартиру по ул. Станиславского д.1б на 1 этаже 9 этажного дома ( дом кирпичный)В подъезде и квартире установлены металические двери.На окнах пластиковые стеклопакеты,межкомнатные двери заменены,размер кухни Вас тоже порадует.Балкон застеклен. В квартире сделан ремонт ( перепланировка узаконена)Вся инфраструктура развита и в шаговой доступности. На воду установлены счётчики. Есть все для комфортного проживания( заходи и живи). Фото соответствует действительности.Мебель и бытовая техника все остаётся в виду переезда в другой город.<br />Реальному покупателю небольшой торг . <br />Приходите на просмотр</p>       
+
+<p>   870 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('19', '95.215.45.75', '05f61c8cec19f57d77cc616461f7385f', '760', '120', '1517520660', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алексей', 'Продам квартиру     
+1-к квартира  27 м²  на 3 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам однокомнатную квартиру в п.Первомайский в ДОСах.Квартира 27кв.м, переделанная в студию, перепланировка узаконена.Квартира с капитальным евро-ремонтом,делали всё для себя начиная с замены полностью электропроводки,водопровода,системы отопления, стяжки пола и штукатурки стен,двери из натурального дерева,полностью остеклён балкон из алюминиевого профиля,стеклопакеты 3 камерные,электро полы.После ремонта никто не жил квартира новая.Только ремонт обошёлся в 500000.Продаём с большим сожалением,но живём давно уже в другом городе.<br />Возможна продажа гаража.</p>       
+
+<p>   680 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('20', '95.215.45.75', '754965c75ff32176439a9d96fde94527', '760', '120', '1517477040', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'кристина', 'Продам квартиру     
+1-к квартира  33 м²  на 1 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается одникомнатная  квартира.В районе мясокоибината.  В нормальном состоянии. Пластиковые окна и водопровод. Красивые кованные решетки. С/у раздельный. Остается вся мебель и бытовая техника. Большой двухкамерный холодильник, хорошая газовая плита, стиральная машинка автомат. Два дивана, большая стенка в зале, деревянный кухонный гарнитур.Без торга т.к. остается вся мебель и бытовая техника.  Остальные вопросы по телефону.</p>       
+
+<p>   600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('21', '95.215.45.75', 'd65c9e43a46adc2d6d638cf529d17a5b', '760', '120', '1517400960', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Яна', 'Продам квартиру     
+1-к квартира  31 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Теплая, светлая квартира в экологически-чистом районе, ОЗТП. Кирпичный дом, 2 этаж, дружелюбные соседи. Застекленный балкон, пластиковые окна, пластиковые трубы, счетчики на воду. Хороший ремонт, заходи и живи. Рядом остановки 55, 23а, 18, 36 маршруток, детский сад, школа, спортивный клуб, магазины, аптека. Никто не прописан, один собственник, документы готовы к сделке.</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('22', '95.215.45.75', '1554b2e8a28d9438541020a7eb98d604', '760', '120', '1517378940', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Равиль', 'Продам квартиру     
+1-к квартира  33 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Срочно!!! Продам 1-комнатную квартиру. Тихий район. Чистый подъезд, отзывчивые и тихие соседи. 100% не течёт и никогда не текла крыша. Пластиковые трубы водоснабжения и канализации. Квартира пустая, документы готовы к сделке. Рассмотрим все варианты оплаты. Торг.</p>       
+
+<p>   630 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('23', '95.215.45.75', 'b02637b22f9eb567c7b907f256412601', '760', '120', '1517297700', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ирина', 'Продам квартиру     
+1-к квартира  35 м²  на 8 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Собственник. Продам уютную, теплую однокомнатную квартиру, 8/9, 35 кв.м, жилая 18 кв.м., улучш. планировка, балкон застеклен,счетчики на воду и э/э,  трубы п/пропилен, в т.ч. стояковые, окна пластиковые, двойная входная дверь-железная и утепленная деревянная, общая с соседями дверь-железная. Лифт работает круглосуточно. Продажа в связи с переездом в другой город.Все выписаны. Один взрослый собственник более 3 лет. Вайбер, Вотсап, Телеграмм.</p>       
+
+<p>   820 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('24', '95.215.45.75', '6e8a39f58d14dc7393fcc652cadd6b19', '760', '120', '1517240520', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Виктория', 'Продам квартиру     
+1-к квартира  32 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>СРОЧНО ПРОДАМ ОДНОКОМНАТНУЮ КВАРТИРУ В СВЯЗИ С ПЕРЕЕЗДОМ , В РАЙОНЕ ШЕВЧЕНКО 15 МИН.ПЕШКОМ ОТ ЦЕНТРА ГОРОДА . СВЕТЛУЮ , ТЕПЛУЮ , УЮТНУЮ . ВСЕ В ШАГОВОЙ ДОСТУПНОСТИ МАГАЗИНЫ - 5, МАГНИТ И Т.Д В 3 МИН ХОДЬБЫ. ДЕТ. САДИК НАПРОТИВ ДОМА . ШКОЛА В 5-10 МИН ХОДЬБЫ. СОСЕДИ ТИХИЕ . ДОКУМЕНТЫ ГОТОВЫ . РАССМОТРЮ ВАРИАНТЫ ОПЛАТЫ . МОЖНО МАТКАП . ЛЮБЫЕ ПОДРОБНОСТИ ПО ТЕЛ . СОБСТВЕННИК</p>       
+
+<p>   610 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('25', '95.215.45.75', '288e98bd58530b341f945e15ed334bae', '760', '120', '1517233920', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ирина', 'Продам квартиру     
+1-к квартира  30 м²  на 2 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам квартиру!</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('26', '95.215.45.75', '73cb8dda53ac1ee0717b8dc0dd98b6dc', '760', '120', '1517221620', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+1-к квартира  30.1 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Вы устали от шумных соседей? Тогда эта квартира для вас, она находится по адресу: ул. Комарова, 24.<br /><br />Однокомнатная квартира: общая площадь 30,1 кв.м., жилая 17,1 кв.м., кухня 6 кв.м., расположена на 3 этаже 5 этажного панельного дома.<br /><br />Квартира в которой возможно сделать ремонт по вашему личному вкусу, обеспечит спокойный и приятный отдых после рабочего дня и подарит хорошее настроение.<br />• На кухне газовая плита, <br />• Имеется балкон (это всегда имеет значение для практичных хозяев), <br />• Совмещенный санузел в кафеле, установлены приборы учета, новые трубы что сократит ваши расходы;<br />• Чистый подъезд и доброжелательные соседи;<br />• Развитая инфраструктура, рядом хорошая транспортная развязка, магазины, школа, детский сад, все в шаговой доступности.<br />Подходит под материнский капитал, ипотеку и все виды жилищных сертификатов.</p>       
+
+<p>   730 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('27', '95.215.45.75', '89b84e6d7376afcc1f043df9614f3967', '760', '120', '1517173020', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Марина', 'Продам квартиру     
+1-к квартира  34 м²  на 3 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам однокомнатную квартиру возле медицинского колледжа, по адресу: г. Орск, ул. Медногорская, д. 15Б. Уютная, теплая, балкон в кухне.</p>       
+
+<p>   750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('28', '95.215.45.75', '5df450eacfaf5a6a6e3e56a48c8835b1', '760', '120', '1517167560', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Светлана', 'Продам квартиру     
+1-к квартира  30 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1 комнатную квартиру ост. Тагильская (маг. Строительный БУМ), 2 этаж в 5 этажном кирпичном доме, не угловая. Пластиковые окна, пластиковые трубы, счётчики. Санузел совмещённый. Балкона нет. Квартира светлая, теплая, хорошая шумоизоляция. Возможность оставить мебель. Все в шаговой доступности. Собственник один.</p>       
+
+<p>   720 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('29', '95.215.45.75', 'e9e52b903e8eec0dba1151e9255e5a38', '760', '120', '1517065080', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Елена Суворова', 'Продам квартиру     
+1-к квартира  33 м²  на 5 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>1-я квартира улучшенной планировки, евроремонт, без мебели, во дворе благоустроенная детская площадка, отличная парковка, в шаговой доступности магазины, аптеки, поликлиника, остановки общественного транспорта</p>       
+
+<p>   965 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('30', '95.215.45.75', 'f294a2505292e86040b7be71eb2f8d90', '760', '120', '1516982640', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Анютка Ермакова', 'Продам квартиру     
+1-к квартира  30 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 1 комн квартиру на 2 ом участке Васнецова на 5 этаже в теплом кирпичном доме.состояние хорошее. остается кондиционер. окна и трубы пластик. торг при осмотре . цена 690000 р</p>       
+
+<p>   690 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('31', '95.215.45.75', 'f1c4cc046d6e0104ab7d9e8df360865c', '761', '120', '1517910840', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Елизавета', 'Продам квартиру     
+2-к квартира  46 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>2х- комнатная квартира по ул.Короленко 142А. Состояние отличное,евроремонт,кондиционнер,частично мебелированная.Планировка \"трамвай\".Рядом остановка,школа,садики,гиперМагнит,СтС,спортклуб и многое другое</p>       
+
+<p>   1 190 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('32', '95.215.45.75', '59bb788e6fe80532e44970f5f8d01367', '761', '120', '1517909520', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Борисова Евгения', 'Продам квартиру     
+2-к квартира  44 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Срочно продам 2 комнатную квартиру в центре города, теплый кирпичный дом, окна пластиковые, поменяны двери, трубы, установлены водяные счетчики, в ванной  поменяна сантехника, выложен пол кафельной плиткой. Во дворе дома детский сад, рядом 1 школа, школа №27, остановка, магазины.</p>       
+
+<p>   870 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('33', '95.215.45.75', 'da7e27c72a5634e8d36750476a0cd1cc', '761', '120', '1517901720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  59 м²  на 4 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Для деловых энергичных и современных людей продается отличная двухкомнатная квартира в центре города! </p> <p>Квартира находится по адресу: пр. Ленина, 42 на 4 этаже 5-этажного кирпичного дома. </p> <p>• Огромная площадь квартиры – 59 кв.м., жилая - 32 кв.м., кухня – 11 кв.м.</p> <p>• Квартира теплая и светлая, готова к ремонту по вашему вкусу</p> <p>• Комнаты квартиры наполнены солнечным светом из окон, застекленных пластиковыми стеклопакетами. </p> <p>• Просторные комнаты выходят на 2 стороны дома. </p> <p>• Просторная кухня – 11 кв.м. позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие.</p> <p>• Раздельный санузел - огромный плюс для большой семьи.</p> <p>• Установлены приборы учета, новые трубы что сократит ваши расходы.</p> <p>• Прочные кирпичные стены дома и герметично поставленные окна защищают покой хозяев от постороннего шума, и сохраняют постоянное тепло в помещении. Надежная металлическая дверь.</p> <p>• Очень чистый подъезд. </p> <p>• В этом районе очень развита социальная и культурная инфраструктура. Школа №2 и детский сад №65 в шаговой доступности! </p> <p>Центральная площадь Орска, а так же культурно-развлекательные мероприятия – в 3 минутах прогулочной ходьбы от дома. Вы сможете быть в центре самых красочных праздничных мероприятий.</p>       
+
+<p>   1 600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('34', '95.215.45.75', 'd29dff497583fc63a7b98ec8f4f4c6bc', '761', '120', '1517901720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  43.7 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p> Вы всегда выбираете лучшее для себя и своей семьи? </p> <p>Тогда наше предложение для Вас! </p> <p>Продается замечательная 2 комн. квартира по адресу: ул. Васнецова, 14 на 5 этаже 5-этажного дома.</p> <p>Общая площадь квартиры 43,7 кв. метра, жилая 30,3 кв. метров, кухня 6 кв. метров. </p> <p>- Все устройство этой квартиры обеспечивает абсолютный комфорт её владельцам.</p> <p>- Просторная кухня, в которой есть рабочая и обеденная зона. Готовить семейный ужин на такой кухне одно удовольствие.</p> <p>- Раздельный санузел выложен кафелем. </p> <p>- Окна квартиры выходят на обе стороны дома, а с просторного застекленного балкона открывается красивый вид на город. </p> <p>- Вам не придётся заниматься ремонтом, всё уже готово, просто купите и наслаждайтесь! Отличный кухонный гарнитур остается для вашего удобства! </p> <p>- Во дворе дома находится большая детская площадка.</p> <p>- Удобно и то, что рядом с домом находятся магазины, парикмахерские, аптеки, гаражные кооперативы, а также остановки общественного транспорта. </p> <p>Район с развитой инфраструктурой. Вам будет, где отдохнуть семьей или с друзьями, или устроить шопинг.</p> <p> </p>       
+
+<p>   1 030 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('35', '95.215.45.75', '17c252cf6285d3987a7f0cfd0f49def5', '761', '120', '1517841360', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алексей', 'Продам квартиру     
+2-к квартира  48.8 м²  на 4 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается уютная и светлая 2 комн. квартира по адресу: г. Орск, ул. Станционная, 12 (район ЖД вокзала) на 4 этаже 5-этажного кирпичного дома. Кадастровый номер квартиры № 56:43:0309039:265. <br />Показывает квартиру родственник Алексей (номер в объявлении). <br />Продает собственник без посредников. Собственник с 2006 г. по приватизации. Агентов без покупателя просьба не беспокоить. </p><p>В октябре 2015 года проведен капитальный ремонт кровли дома на сумму 1,7 млн.руб. (информация на сайте Администрации города Орска). <br />В рамках реализации федерального приоритетного проекта «Комфортная городская среда» осенью 2017 года выполнено благоустройство двора и детской площадки около дома (информация на сайте Администрации города Орска в разделе «современная городская среда»).</p><p>Рядом с квартирой: детский сад – 300 м.; школа-гимназия № 1 – 350 м.; поликлиника – 700 м.; управление ржд – 600 м.; привокзальный рынок (магазин Магнит) – 550 м.; почта – 200 м.; ЖД-вокзал - 700 м.; Парк – 500 м., магазин «Купец» - 100 м., Пятерочка - 440 м.; Сбербанк – 150 м.   </p><p>• Общая полезная площадь квартиры 48,8 кв.м., жилая площадь 29,6 кв.м. </p><p>• В октябре 2015 года проведен капитальный ремонт кровли дома на сумму 1,7 млн.руб. (информация о капитальном ремонте на сайте Администрации города Орска)</p><p>• Вся мебель, которую видно на фото, остается покупателю бесплатно. </p><p>• Полы исправные (красили в 2014 г.), демонтажа не требуют и могут быть закрыты покупателем линолеумом или ламинатом на подложке.   </p><p>• Санузел раздельный.</p><p>• В квартире установлены приборы учёта горячей, холодной воды.</p><p>• Имеется застекленный балкон, выходящий во двор с новой детской площадкой (2017 г.)</p><p>• Рядом с домом находятся детский сад № 115, детский сад № 147 «Теремок», дом культуры «Железнодорожников»,  Сбербанк, школа-гимназия № 1, почта. </p><p>• Удобное расположение для железнодорожников. В шаговой доступности Вагонное депо, Локомотивное депо, Управление РЖД, ЖД-вокзал.</p>       
+
+<p>   1 050 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('36', '95.215.45.75', '1f32996e16ad0162e5edf42a0e2fe082', '761', '120', '1517840640', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ольга', 'Продам квартиру     
+2-к квартира  60 м²  на 1 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам двухкомнатную квартиру 59,9 кв.м. первый этаж. Квартира в хорошем состоянии, высокие потолки,комнаты большие, раздельные, в сухом чистом подвале имеется кладовая, закрывается на замок. Дом \"Сталинский\", капитальный, в подъезде 8 квартир, очень хорошие соседи. Рядом первая школа. Один собственник. Цена 1 950 000  руб. Торг в пределах разумного.</p>       
+
+<p>   1 950 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('37', '95.215.45.75', '01c3543ea304fafaa3edc5f1883d8950', '761', '120', '1517834340', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Горбачева Наталья', 'Продам квартиру     
+2-к квартира  43 м²  на 2 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 2х комн квартиру старого типа с раздельными комнатами . Высота потолков 2,75см! Квартира готова для продажи!</p>       
+
+<p>   945 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('38', '95.215.45.75', 'c24e86855e0bc05d449247e0f22363f1', '761', '120', '1517833980', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Падалко Мария', 'Продам квартиру     
+2-к квартира  43 м²  на 2 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 2 ком.кв.с раздельными комнатами.Хороший ремонт,застекленный балкон.Во дворе хорошая детская площадка,школа,дет.сад,магазины и остановка в шаговой доступности.</p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('39', '95.215.45.75', '251edb7e1f4248b18a21ce08f27086dd', '761', '120', '1517833680', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Дмитрий Самсонов', 'Продам квартиру     
+2-к квартира  50.8 м²  на 7 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам двух комнатную квартиру, в экологически чистом районе города .<br />Всё в шаговой доступности , магазин во дворе , до остановки три минуты ходьбы . До школы 5 минут ходьбы . Садик во дворе . Торг .</p>       
+
+<p>   1 050 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('40', '95.215.45.75', 'f2fb2c18fac459bd47875a4b594061bd', '761', '120', '1517833380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Маркина Ирина', 'Продам квартиру     
+2-к квартира  43 м²  на 2 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается отличная двухкомнатная квартира, с ремонтом! </p><p>• Квартира расположена на 2-м этаже 9-ти этажного панельного дома, по улице Пацаева 15. </p><p>• Общая площадь квартиры 43 кв.м. </p><p>• Очень светлая солнечная квартира, а в зимнее время очень теплая. </p><p>• Раздельные комнаты обеспечат спокойный и приятный отдых после рабочего дня. </p><p>• Шикарная кухня с качественным, современным кухонным гарнитуром оценит любая хозяйка. <br />Красивая и просторная ванная комната. в которой приятно принимать водные процедуры. <br />Огромную лоджия с качественными стеклопакетами можно оборудовать под полноценную <br />комнату. <br />• Дом находится в районе с развитой инфраструктурой! </p><p>• Отличная транспортная развязка. </p><p>• В шаговой доступности детский сад, школа, супермаркет, остановка. </p><p>В подарок новым жильцам : кондиционер, Мягкая мебель,  кресло кровать,. кухонный гарнитур и зеркальный шкаф в прихожей.</p>       
+
+<p>   1 400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('41', '95.215.45.75', '7b479994352b66ac66144624e237f0be', '761', '120', '1517833320', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ирина', 'Продам квартиру     
+2-к квартира  50.6 м²  на 6 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 2-к кв. полностью с мебелью для комфортного проживания. Качественный дорогой ремонт освободит нового хозяина от дополнительных вложений после переезда . Все комнаты изолированные Уютная спальня. раздельный санузел и дорогая сантехника. Большой коридор . Чистый подъезд и хорошие соседи.</p>       
+
+<p>   1 650 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('42', '95.215.45.75', 'c2e03ac14d12ca5b886a430c826d692a', '762', '120', '1518092400', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  60.7 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается отличная трехкомнатная квартира, с ремонтом! <br /><br /> • Квартира расположена на 4-м этаже 5-ти этажного панельного дома, по улице Шалина, 7а. 4 этаж позволит насладиться всей красотой нашего города, без лишней пыли и шума!!!<br /><br /> • Общая площадь квартиры 60,7 кв.м.<br /><br /> • Множество полезного пространства квартиры – есть где разгуляться вашей фантазии.<br /><br /> • Очень светлая солнечная квартира, позволит начинать день с хорошего настроения!!! <br /><br /> • Раздельные комнаты квартиры обеспечат спокойный и приятный отдых после рабочего дня.<br /><br /> • Шикарная кухня с качественным, современным кухонным гарнитуром и столовой зоной, который оценит любая хозяйка!<br /><br /> • Раздельный санузел – удобства без очередей. Новая сантехника, наличие счетчиков существенно сэкономят ваши средства и нервы при покупке данной квартиры. <br /><br /> • Дом находится в районе с развитой инфраструктурой!<br /><br /> • Отличная транспортная развязка.<br /><br /> • В шаговой доступности детский сад, школа, супермаркет, остановка.<br /><br /> • Если вы обожаете индивидуальность и цените качество своей жизни - усильте ее покупкой этой квартиры!</p>       
+
+<p>   1 400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '18');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('43', '95.215.45.75', 'f7cc9e938376c6db38f89b0febcb48cc', '762', '120', '1518092340', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  60.3 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Отличный вариант 4-комнатной квартиры по привлекательной цене! <br />Квартира находится по адресу: переулок Нежинский, 13 на 5 этаже 5 этажного кирпичного дома. <br />Общая площадь квартиры – 60 кв.м., жилая площадь – 46 кв.м., кухня – 5 кв.м. <br />• Квартира готова к ремонту по вашему вкусу; <br />• Имеется балкон (это всегда имеет значение для практичных хозяев) <br />• Раздельный санузел - огромный плюс для большой семьи <br />• Просторный зал; <br />• Хорошая транспортная доступность на все виды общественного городского транспорта; <br />• Все необходимые магазины в шаговой доступности; <br />Семье с детьми будет интересно наличие детских садов и школ. Все это находится рядом с домом.</p>       
+
+<p>   750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '15');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('44', '95.215.45.75', 'ccaa72b76692e411f805993b560c38f3', '762', '120', '1518092220', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  70.6 м²  на 1 этаже  3-этажного блочного дома', '<p>Квартиры </p>
+  <p>3 комнатная квартира за Материнский капитал!</p> <p>Квартира находится по адресу: ул. Достоевского, 14 на 1 этаже 3 этажного блочного дома.</p> <p>Общая площадь квартиры - 70,6 кв.м., жилая площадь – 47 кв.м., кухня – 8,2 кв.м.</p> <p>• Квартира без ремонта</p> <p>• 3 отдельные комнаты;</p> <p>• Раздельный санузел;</p> <p>• Тихий зеленый двор, доброжелательные соседи;</p> <p>• Дом уютно расположен, нет шума и газов от дорог;</p> <p>• Хорошая транспортная доступность; </p> <p>• В шаговой доступности Поликлиника, магазины, остановка общественного транспорта</p> <p>Семье с детьми будет интересно наличие детских садов,школы. Все это находится рядом с домом.</p> <p>Подходит под материнский капитал, ипотеку и все виды жилищных сертификатов.</p>       
+
+<p>   480 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '11');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('45', '95.215.45.75', '46a018f8949023eec101439cef781ea3', '762', '120', '1518028800', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Юлия', 'Продам квартиру     
+3-к квартира  63 м²  на 6 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам трёхкомнатную квартиру в 6 микрорайоне, рядом школа ,садик , остановка, ЖД больница. Остаётся кухонный гарнитур.<br />Торг уместен.</p>       
+
+<p>   1 600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('46', '95.215.45.75', '974e8334843fd542aa3b1d6c83adeadb', '762', '120', '1518028740', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Юлия', 'Продам квартиру     
+3-к квартира  57.7 м²  на 1 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продаётся трёхкомнатная квартира по улице Домбаровская 30 в районе ЖД. Вокзала.<br />Район с развитой инфраструктурой, д/сад находится рядом с домом, школа, рынок, магазины, в пяти минутах ходьбы.<br />В квартире  хороший качественный ремонт, пристроенная лоджия 4,5 кв.м. с приведенным отоплением, перепланировка  официально узаконена.<br />В квартире при продаже останется: <br />_ кухонный гарнитур <br />_ шкаф на лоджии.<br />От собственника.<br />Торг уместен.</p>       
+
+<p>   1 850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('47', '95.215.45.75', '19bbe76e0be5a56d71997f5fd282bddf', '762', '120', '1518010620', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Деменьтева Марина', 'Продам квартиру     
+3-к квартира  104 м²  на 1 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 3к.кв. \"старого типа\" в центре города, в р-не 1 школы для большой дружной семьи. В квартире выполнен капитальный ремонт- замена пола, установлены кирпичные перегородки,проведена медная проводка, деревянные стеклопакеты,мраморные подоконники.Комнаты раздельные, большая кухня. Остается кухонный гарнитур. Уютный зеленый двор с детской площадкой. Стоимость снижена на 100 000!!!!</p>       
+
+<p>   3 050 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('48', '95.215.45.75', 'e04c2a86097ff4d621e70bfda691a45b', '762', '120', '1518010620', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Деменьтева Марина', 'Продам квартиру     
+3-к квартира  65 м²  на 3 этаже  4-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам 3к.кв.в самом центре города, пр.Ленина 46 (краеведческий музей) ост.ДК \"НЕФТЕХИМИКОВ\". Окна в квартире выходят во двор, что позволит комфортно проживать в тишине от городской суеты. В квартире произведен современный капитальный ремонт. Квартира продается с мебелью и техникой!</p>       
+
+<p>   2 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '12');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('49', '95.215.45.75', 'c92d4e10b0d79b975e6e4535843551c5', '762', '120', '1517996280', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  62 м²  на 7 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается 3-комнатная квартира в самом тихом районе города!</p> <p>Квартира находится по адресу: ул. Беляева 2а на 7 этаже 9-ти этажного панельного дома. </p> <p>Общая площадь квартиры - 62 м2, жилая площадь – 38 м2, кухня – 8 м2 </p> <p>- Уютная, теплая и светлая квартира с отличным ремонтом (пластиковые окна, стены, потолки, полы выровнены, на полу - кафель в коридоре и кухне, ламинат в комнатах, установлены счетчики на воду); </p> <p>- Не требуется дополнительных вложений в квартиру, заходи и живи;</p> <p>- Квартира удобной планировки; </p> <p>- Просторный коридор; </p> <p>- Лоджия застеклена;</p> <p>- Санузел раздельный, в современном кафеле и хорошей сантехникой; </p> <p>- Просторная кухня, в которой приятно готовить. </p> <p>Всё делалось для себя с любовью и заботой. Вам и Вашей семье будет комфортно жить в этой квартире!</p> <p>- Чистый подъезд;</p> <p>- Тихий двор с детской площадкой, доброжелательные соседи;</p> <p>- Хорошая транспортная доступность.</p> <p>Семье с детьми будет интересно наличие детскиго сада № 121, школы № 38. Магазины в шаговой доступности. Чистая продажа.</p>       
+
+<p>   1 850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '11');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('50', '95.215.45.75', '5d7a7592683ae2abe815e767de270039', '762', '120', '1517918280', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Валентина', 'Продам квартиру     
+3-к квартира  60 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продаётся 3-х комн. Квартира. Огородная 29. <br />Дом из кирпича, улучшенная планировка, 2 этаж. Общая площадь 60м2. Комнаты большие и раздельные. С/у раздельной.  Большая лоджия.<br />С реальным покупателем торг.</p>       
+
+<p>   1 250 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '12');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('51', '95.215.45.75', '92258b5eadb5554b1ca11990551052c0', '762', '120', '1517911500', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Борисова Евгения', 'Продам квартиру     
+3-к квартира  61 м²  на 1 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 3 комнатную квартиру , на уровне 2 этажа( по документам 1 этаж), без балкона, все комнаты раздельные, окна пластиковые, новые двери. На 1 этаже детский клуб. Рассмотрю ипотеку и материнский капитал. Документы готовы, собственник 1.</p>       
+
+<p>   1 330 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('52', '95.215.45.75', '3fd68aa9e2c4e1a9867fa92548bc7c6d', '762', '120', '1517911080', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Холомова Анастасия', 'Продам квартиру     
+3-к квартира  63 м²  на 7 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам шикарную трехкомнатную квартиру. В квартире сделан евроремонт (пластиковые окна, дорогие обои, ламинат,). Санузел раздельный выложен кафелем. Все комнаты раздельные, светлые и солнечные. Трубы пластик , счетчики на воду. Большая прихожая. Удобная большая кухня, остается кухонный гарнитур. Тихий двор с новой детской площадкой. Две минуты ходьбы до детского сада, почты, магазинов , сбербанка и остановки.</p>       
+
+<p>   1 750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('53', '95.215.45.75', '38f54abe5a62b44c48784c32c573468c', '762', '120', '1517901720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  57.8 м²  на 8 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Вам нужна квартира, в которую не надо вкладывать деньги на ремонт, заходи и живи?! Заканчивайте свои поиски, для Вас есть отличный вариант 3 комн. квартиры! <br /> Прекрасное местоположение, удобная транспортная развязка, магазины, детский сад во дворе, торговые центры - в шаговой доступности! <br /> Квартира находится по адресу: пр. Ленина, 105 на 8 этаже 9 этажного кирпичного дома. <br /> Квартира обладает рядом преимуществ: <br /> · У вас всегда будет солнечно! Окна комнат выходят на 2 стороны. <br /> · В квартире общей площадью 58 кв.м. будет достаточно места каждому члену вашей семьи. <br /> · Просторная кухня – 7,2 кв.м. позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие. <br /> · В квартире сделан качественный ремонт: ровные стены, линолеум, пластиковые окна, плитка на кухне и кафель в ванной комнате сэкономят ваши финансовые средства при покупке данной квартиры.<br /> · Наличие раздельного и очень просторного санузла привносит дополнительные удобства по утрам без очередей, стрессов и суматохи. <br /> · Неоспоримым преимуществом является 8 этаж, на который вас поднимет чистый лифт. <br /> · Имеется застекленный балкон, выходящий во двор, где вы можете наблюдать за прогулкой Ваших детей. Так же во дворе имеется достаточное количество парковочных мест, где Вы можете парковать свой автомобиль прямо под окнами Вашей квартиры. <br /> · Кухонный гарнитур и бытовая техника остается в подарок новым жильцам.<br /> · Во дворе современная детская площадка. <br /> · В непосредственной близости от дома (1 минута ходьбы) – остановка, продуктовые мини-маркеты, аптека. Вам не придется тратить много времени на решение семейных вопросов, вопросов о здоровье и о развитии детей. <br /> Все документы готовы – можно оформить сделку в кратчайшие сроки!<br /> Фотографии вряд ли могут передать все преимущества и уют этой замечательной квартиры. Приходите и убедитесь в этом сами!</p>       
+
+<p>   1 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('54', '95.215.45.75', '186ab137d6cfc34d311eed318056c765', '762', '120', '1517849340', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Артур', 'Продам квартиру     
+3-к квартира  78 м²  на 4 этаже  4-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам квартиру. Дом старого типа.</p>       
+
+<p>   2 850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('55', '95.215.45.75', '8bbbf4de75fd02a36d399e2f4174b19c', '762', '120', '1517834820', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Горбачева Наталья', 'Продам квартиру     
+3-к квартира  90 м²  на 2 этаже  3-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам 3х комн квартиру \"сталинка\" на втором этаже трехэтажного дома (с железобетонными перекрытиями). В квартире сделан капитальный ремонт, все комнаты очень просторные. Квартира готова для продажи!</p>       
+
+<p>   2 850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('56', '95.215.45.75', '116972fe4d9fe6e13c4770c5e9f3c979', '762', '120', '1517788020', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Анастасия', 'Продам квартиру     
+3-к квартира  66 м²  на 1 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам уютную 3-х комнатную квартиру в новом кирпичном доме по проспекту Ленина 126.Раздельный сан узел,раздельные комнаты.Установлены счетчики на воду и газ.Пластиковые окна,большая лоджия.В шаговой доступности дет.сад,школа,магазины,транспортная остановка.в собственности более 5 лет,подойдёт под ипотеку!</p>       
+
+<p>   1 900 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('57', '95.215.45.75', '7a0622e33a283a4c536b5b9a1a99c388', '762', '120', '1517770260', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Александр', 'Продам квартиру     
+3-к квартира  69 м²  на 2 этаже  2-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается отличная 3 комн кв старого типа в р-не ст Орск,большие комнаты, высокий потолок ,в кв сделан ремонт, во дворе сарай с погребом ,  в стоимость кв.  Дом с бетонными перекрытиями, квартира теплая, вода постоянно. Закрытый двор, спокойные соседи, рядом рынок, магазины, поликлиника, школа, детский сад. Документы готовы. Торг уместен.</p>       
+
+<p>   1 400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('58', '95.215.45.75', 'b46f4b93332626fa30a660c9a58a18dc', '762', '120', '1517659380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Эльвира', 'Продам квартиру     
+3-к квартира  48 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>ОЗТП. 7-ой микр., 3-х комнатная, 48 кв.м. Срочная Продажа!<br />Все новое: ламинат, натяжной потолок, кафель, входная дверь итд. Раздельный санузел. Все чистое. Балкон застеклен. Пластиковые окна.<br />Совершенно все документы готовы, рассмотрим любой вид оплаты, мебель вывезли. Поможем с оформлением.</p>       
+
+<p>   1 000 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('59', '95.215.45.75', 'e35abf3d92318ba07ca4aa429eef65c6', '762', '120', '1517657880', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Юлия', 'Продам квартиру     
+3-к квартира  62 м²  на 1 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам просторную 3-х комнатную квартиру с развитой инфраструктурой (школа, детский сад, магазины в шаговой доступности) в пос.Степной. Пластиковый водопровод, пластиковые окна, решетки. Реальному покупателю- хороший торг.</p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('60', '95.215.45.75', 'd1e00d071dbc15ba905ff79654790f4f', '762', '120', '1517602500', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алексей Блиферниц', 'Продам квартиру     
+3-к квартира  78 м²  на 2 этаже  4-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам квартиру в хорошем состоянии</p>       
+
+<p>   2 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('61', '95.215.45.75', '6bf3b929c1c3861248f57d7b41356b12', '762', '120', '1517515500', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'мария', 'Продам квартиру     
+3-к квартира  42 м²  на 1 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается 3-х комнатная квартира в г. Орске, 42 кв. метра на первом этаже пятиэтажного дома. Окна выходят на две улицы пр. Ленина и ул. Макаренко. Торг уместен</p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('62', '95.215.45.75', '66d735a6070cdf3011d1ed75e3621105', '762', '120', '1517478600', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  74.6 м²  на 3 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Вы мечтаете переехать в 3-комнатную квартиру. Тогда это горячее предложение для Вас! </p> <p>В экологически чистом районе г.Орска по адресу: пер. Бажова, 24 расположена отличная 3-х комнатная квартира на 3 этаже 3 этажного кирпичного дома.</p> <p>• В квартире общей площадью 74,6 кв.м. будет достаточно места каждому члену вашей семьи.</p> <p>• Окна квартиры выходят на две стороны дома. Вы всегда будете видеть во дворе своего играющего ребенка. </p> <p>• Просторная кухня – 10,2 кв.м. позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие.</p> <p>• 3 отдельные комнаты дают возможность каждому члену семьи заниматься любимым делом не мешая при этом остальным. Плюсом данной квартиры является утеплённый балкон.</p> <p>• Пластиковые окна оградят Вас от шума и пыли с улицы. </p> <p>• Санузел раздельный, новая сантехника, пластиковые трубы.</p> <p>• Вас будут окружать дружелюбные и приветливые соседи с множеством новых друзей для ваших детей.</p> <p>• близко к дому находятся детский сад №31, а если ваши дети учатся в школе, то рядом есть общеобразовательная школа №26. </p> <p>Подходит под материнский капитал, ипотеку и все виды жилищных сертификатов. Приезжайте на осмотр первыми. Добро пожаловать! </p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('63', '95.215.45.75', '9f5395e82765591220ff438c6dd270f3', '762', '120', '1517406120', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Татьяна', 'Продам квартиру     
+3-к квартира  91 м²  на 3 этаже  4-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 3-х комнатную квартиру ст. типа в центре города.<br />Ост. ДК Нефтянников. <br />3/4 этаж.(91 кв.м.)Евроремонт(использовались дорогие качественные ст. материалы),трехкамер. стеклопакет.Пол-ламинат.Телефон,каб. тел.,интернет.<br />Продажа в связи с переездом в другой город.<br />Покупателю кухонный гарнитур в подарок!<br />Цена:2 750 000 рублей.Без торга.<br />Собственник.</p>       
+
+<p>   2 750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('64', '95.215.45.75', 'ef86c4f6bbecfc19285725e7d536df87', '762', '120', '1517311440', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Диана', 'Продам квартиру     
+3-к квартира  56 м²  на 3 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Квартира на 3 этаже,не угловая.теплая.стоят пластиковые стеклопакеты,горячее водоснабжение центральное,колонки нет.домофон.кабельное телевидение,интернет.развитая инфраструктура(поликлиника,Аптека,магазины,детсад,школа).квартира не требует вложений.</p>       
+
+<p>   990 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('65', '95.215.45.75', '719a2585853e1691bcd2233db727212c', '762', '120', '1517307960', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  57.8 м²  на 3 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается замечательная 3-комнатная квартира, которая придется по вкусу каждому. </p> <p>По улице Вяземская, 36а расположена отличная 3-х комнатная квартира на 3 этаже 5-ти этажного панельного дома. </p> <p>• Отличный средний этаж; </p> <p>• В квартире 1 общая комната и 2 отдельные дают возможность каждому члену семьи заниматься любимым делом, не мешая при этом остальным. </p> <p>• Окна выходят в тихий дворик, а следовательно шум дорог не доставит Вам дискомфорта. </p> <p>• В квартире общей площадью 58 кв.м. будет достаточно места каждому члену вашей семьи. </p> <p>• Просторная кухня позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие. </p> <p>• Кухонный гарнитур и встроенная в него бытовая техника с вытяжкой остается в подарок новым жильцам.</p> <p>• Имеется балкон (это всегда имеет значение для практичных хозяев).</p> <p>• Совмещенный санузел, в котором поместится все.</p> <p>• Наличие счетчиков на воду, новые трубы и новые электросчетчики сократят ваши расходы.</p> <p>• Пластиковые окна защитят вашу квартиру от осенних непогод. </p> <p>• В шаговой доступности находятся продуктовые супермаркеты, школы и детские сады. </p> <p>• Очень удобная транспортная развязка. </p> <p>Семье с детьми будет интересно наличие детского сада и школы. Все это находится рядом с домом. </p> <p>Спешите принять решение и не упустите свой шанс! </p>       
+
+<p>   1 450 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('66', '95.215.45.75', 'b4414e05b9082f234ec33bfbdeec3b18', '762', '120', '1517307900', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  59.8 м²  на 3 этаже  6-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Вы мечтаете переехать в трехкомнатную квартиру? </p> <p>Продается отличная 3 комн. квартира по адресу: ул. Радостева 13, на 3 этаже 6-этажного кирпичного дома. </p> <p>В квартире общей площадью 59,8 кв.м. будет достаточно места каждому члену вашей семьи.</p> <p>Квартира обладает массой преимуществ: </p> <p>• Кирпичные стены помогают регулировать уровень влажности в доме, что способствует созданию внутри помещений комфортных условий для жизни.</p> <p>• 3 этаж - отличный средний этаж;</p> <p>• все комнаты изолированные, что позволяет членам вашей семьи иметь личное пространство; </p> <p>• квартира в хорошем состоянии: частичное пластиковое остекление и новые межкомнатные двери, установлена надежная металлическая дверь; </p> <p>• уютная кухня – 6,3 кв.м. позволит наслаждаться трапезой всей семье. Да и готовить на ней - одно удовольствие.</p> <p>• раздельный санузел, отделан современным кафелем - что создает дополнительные удобства; </p> <p>• подъезд чистый; </p> <p>• вас будут окружать приветливые соседи; </p> <p>• во дворе есть прекрасная детская площадка и много места для прогулок; </p> <p>• близко к дому находятся: детские сады, а если ваши дети учатся в школе, то рядом есть общеобразовательные школы; </p> <p>• прекрасное расположение дома позволяет быстро решить любые бытовые и хозяйственные вопросы, т.к. в шаговой доступности, супермаркеты, аптеки, банки.</p> <p>Эта замечательная квартира – Ваш шанс обеспечить своей семье удобство и комфорт! Не упустите этот шанс… Звоните немедленно!</p>       
+
+<p>   1 100 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('67', '95.215.45.75', 'c30224da6a4bf9569765e010ac3bdcf9', '762', '120', '1517253240', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Нина Алексеевна', 'Продам квартиру  в новостройке     
+3-к квартира  110 м²  на 3 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам квартиру 110 м.кв. в новом доме по ул.Кутузова 17А. 4800000 руб.</p>       
+
+<p>   4 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('68', '95.215.45.75', 'f24a10a39e1cb504a54d7ffc29ee0978', '762', '120', '1517252820', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Нина Алексеевна', 'Продам квартиру  в новостройке     
+3-к квартира  120 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам квартиру 120 м.кв. в новом доме по ул.Кутузова 17А. 3500000 руб.</p>       
+
+<p>   3 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('69', '95.215.45.75', '5d04dadd8336e84b14974469ac832e76', '762', '120', '1517220780', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+3-к квартира  62 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Срочно продается 3-комнатная квартира в тихом и зеленом районе города!<br />Квартира в отличном состоянии находится по адресу: ул. Стасова 4 на 5-м этаже 5-ти этажного панельного дома.<br />Общая площадь квартиры - 62 кв.м. Жилая площадь – 45 кв.м.Кухня – 6 кв.м.<br />Качественный ремонт в квартире оградит нового хозяина от дополнительных вложений, потраченных сил и времени в предстоящий ремонт после переезда, т.к. вся черновая работа уже выполнена (пластиковые окна, новые трубы, металлическая входная дверь);<br />- Надежная металлическая дверь;<br />- Изолированные комнаты, просторные кухня и коридор;<br />- Раздельный санузел с новой сантехникой;<br />- Окна выходят во двор на детскую площадку;<br />- 2 балкона, выходящие на обе сторона дома;<br />- Замечательные соседи, чистый подъезд;<br />- Хорошая транспортная доступность на все виды общественного городского транспорта.<br />Прекрасное расположение дома позволяет быстро решить любые бытовые и хозяйственные вопросы.<br />Семье с детьми будет интересно наличие детских садов, школ, стадиона. Все это находится рядом с домом. Магазины в шаговой доступности.<br />Без обременений. Чистая продажа.</p>       
+
+<p>   1 250 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('70', '95.215.45.75', 'c00620a78809d0ff1de6c51df41aceaa', '762', '120', '1517130060', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Александр', 'Продам квартиру     
+3-к квартира  45 м²  на 3 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продаётся хорошая , уютная трёх комнатная квартира. В центре города всё в шаговой доступности!! Школы, дет. сады , магазины и остановка! Квартира без долгов и обременений один взрослый собственник!! Торг реальному покупателю!!!</p>       
+
+<p>   1 250 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('71', '95.215.45.75', 'eafb4d46267a26501d08b0bece206426', '761', '120', '1518164880', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  44 м²  на 1 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Вас не покидает мысль о небольшой, уютной и главное, СВОЕЙ двухкомнатной квартире? Заканчивайте свои поиски, для Вас есть отличный вариант! </p> <p>• Квартира находится по адресу: ул. Короленко 144а на 1-м этаже 5 – этажного панельного дома </p> <p>• Дом имеет высокий цоколь, поэтому даже на 1-ый этаж не является недостатком. </p> <p>• Квартира в которой возможно сделать ремонт по вашему личному вкусу, обеспечит спокойный и приятный отдых после рабочего дня и подарит хорошее настроение. </p> <p>• Общая площадь квартиры 44 кв.м., жилая 30,7 кв.м., кухня 6 кв.м. </p> <p>• Квартира имеет очень удобную планировку. Окна выходят на две стороны, благодаря чему квартира наполнена светом и очень быстро проветривается</p> <p>• Наличие раздельного санузла привносит дополнительные удобства, установлены приборы учета, новые трубы что сократит ваши расходы.</p> <p>• в непосредственной близости от дома ( 5 минуты ходьбы) – остановка, продуктовые магазины, аптека, детский сад, школа. Вам не придется тратить много времени на решение семейных вопросов, вопросов о здоровье и о развитии детей. </p> <p>• Все документы готовы – можно оформить сделку в краткие сроки.</p>       
+
+<p>   850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '21');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('72', '95.215.45.75', 'b891b8aabd066e884c4d8e7bd8591e48', '761', '120', '1518092280', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  43 м²  на 2 этаже  2-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается уютная 2 комнатная квартира. Хорошая цена!</p> <p>Квартира находится по адресу: ул. Клубная, 8 (п. Крыловка) на 2 этаже 2 этажного кирпичного дома. </p> <p>Общая площадь квартиры – 43 кв.м., жилая – 27 кв.м., кухня – 6 кв.м. </p> <p>• Квартира теплая и светлая, готова к ремонту по вашему вкусу</p> <p>• Имеется балкон (это всегда имеет значение для практичных хозяев)</p> <p>• В санузле установлены приборы учета, новые трубы что сократит ваши расходы.</p> <p>• Индивидуальное отопление, что значительно помогает экономить на коммунальных платежах. </p> <p>• Прочные кирпичные стены дома сохраняют постоянное тепло в помещении. Надежная металлическая дверь</p> <p>• Развитая инфраструктура – школа, спортивная школа, детский сад, мед.пункт, продуктовые магазины и магазины бытовых нужд находятся в шаговой доступности</p> <p>• Всего 15 минут езды до города</p> <p>Подходит под материнский капитал, ипотеку и все виды жилищных сертификатов.</p> <p>Спешите принять решение в ближайшее время. Звоните сейчас! </p>       
+
+<p>   400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '20');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('73', '95.215.45.75', '4c15bb40ebac7574f057016c92541ca4', '761', '120', '1518092160', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  47 м²  на 4 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Отличный вариант 2-комнатной квартиры в 5 минутах от Центра города по привлекательной цене! </p> <p>Квартира находится по адресу: ул. Короленко, 140а на 4-м этаже 5-ти этажного кирпичного дома. Дом с чердачным помещением, что позволит забыть о топающих соседях.</p> <p>Общая площадь квартиры - 47 кв.м., жилая площадь – 33,5 кв.м., кухня – 6 кв.м. </p> <p>• Квартира теплая и светлая, готова к ремонту по вашему вкусу; </p> <p>• Окна квартиры на две стороны (восток-запад); </p> <p>• Раздельный санузел; </p> <p>• Просторный зал с выходом на балкон; </p> <p>• Чистый подъезд и доброжелательные соседи; </p> <p>• Удобное расположение дома позволяет быстро решить хозяйственные и бытовые вопросы, т.к. все необходимые магазины находятся в шаговой доступности; </p> <p>• Хорошая транспортная доступность на все виды общественного городского транспорта. </p> <p>Семье с детьми будет интересно наличие детского сада и школы. Все это находится рядом с домом.</p>       
+
+<p>   800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '15');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('74', '95.215.45.75', '2d5e6183c3aa86a1ab7233c20a9f1591', '761', '120', '1518089280', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Андрей', 'Продам квартиру     
+2-к квартира  44 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается 2-хкомнатная квартира современным ремонтом и мебелью!<br />Квартира находится по адресу: ул. Гомельская, 78 \"А\", на 4-м этаже 5-тиэтажного панельного дома.<br />- Не требует дополнительных вложений в квартиру - \"заходи и живи\"!!!;<br />- Во всей квартире современный ремонт с приятной цветовой гаммой;<br />- Санузел совмещен в современном кафеле и хорошей сантехникой;<br />- Установлена сплитсистема;<br />- Школа и дет. сад располагаются в радиусе 100 метров от дома;<br />- Отличная транспортная доступность;</p>       
+
+<p>   1 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('75', '95.215.45.75', 'ccb2dc38416dc93207bf4f51fae3778a', '761', '120', '1518086400', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Максим', 'Продам квартиру     
+2-к квартира  56 м²  на 2 этаже  4-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продается 2 комн. кв. старого типа, р-н рынка Авангард. В квартире сделан ремонт, электропроводка вся новая, трубы водоснабжения и водоотведения новые. Во всех комнатах сделаны натяжные потолки с точечными светильниками на пульте управления. <br />Квартира на втором этаже, очень теплая и светлая. Две большие комнаты (18 м2) по два окна в каждой.<br />По документам квартира чистая, не в ипотеке, дети не прописаны!</p>       
+
+<p>   1 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('76', '95.215.45.75', '7195fb4a0f53c88e05a52bb12f72d23f', '761', '120', '1518027420', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'лариса', 'Продам квартиру     
+2-к квартира  51 м²  на 3 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Хорошая квартира с новым ремонтом, все новое. В квартире все остается в связи с переездом. (СОБСТВЕННИК)</p>       
+
+<p>   1 700 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('77', '95.215.45.75', '8e5a9101225660616d6b738107b51cec', '761', '120', '1518013860', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  44.6 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается просторная 2 комнатная квартира с современном ремонтом и мебелью! <br />Квартира находится по адресу: ул. Станиславского 91а на 4 этаже 5 этажного панельного дома. Общая площадь квартиры - 44,6 кв.м. Жилая площадь – 30,5 кв.м. Кухня – 6 кв.м. <br />- Не требуется дополнительных вложений в квартиру, заходи и живи; <br />- Во всей квартире современный ремонт с приятной цветовой гаммой, хорошая планировка;<br />- Окна квартиры выходят во двор, из зала выход на балкон; <br />- Санузел совмещен в современном в кафеле и хорошей сантехникой; <br />- Просторная кухня, в которой остаются функциональный современный кухонный гарнитур с варочной панелью и вытяжкой; <br />- Просторная гостиная совмещена с кухонной зоной, в гостинной остается кондиционер; <br />- Новые межкомнатные двери; <br />- Балкон застеклен пластиком, имеются встроенные шкафы; <br />- Большой двор с детской площадкой, достойные соседи; <br />- Хорошая транспортная доступность. <br />Семье с детьми будет интересно наличие детских садов, школ все это находится рядом с домом. Магазины, банки в шаговой доступности. <br />Спешите принять решение и не упустите свой шанс!</p>       
+
+<p>   1 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '14');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('78', '95.215.45.75', 'dc83c44baab5769c6a6a7ed8ab5aa326', '761', '120', '1518011940', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Агентство недвижимости &quot;ТИТАН&quot;', 'Продам квартиру     
+2-к квартира  44 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 2 ком . квартиру от собственника в г.Орске по ул.Кутузова .В квартире установлены счетчики на газ и воду.Развитая инфраструктура. Рядом школа,детский сад,остановка, магазины.Торг уместен.</p>       
+
+<p>   1 050 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('79', '95.215.45.75', '7e26a6989bc5603dd4bed2996724106f', '761', '120', '1518010140', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Вероника', 'Продам квартиру     
+2-к квартира  43.7 м²  на 3 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>В связи с переездом в другой город, продам квартиру. Косметический ремонт есть. Рядом трамвайная остановка, школа, садик. магазины. Район тихий, очень хороший.</p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '15');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('80', '95.215.45.75', '35e98987eb499fd9f76c911c50ca31d9', '761', '120', '1518005580', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  42 м²  на 2 этаже  3-этажного блочного дома', '<p>Квартиры </p>
+  <p>Отличный вариант 2-комнатной квартиры в 5 минутах от Центра города по привлекательной цене! <br />Квартира находится по адресу: ул. Медногорская, 26 на 2 этаже 3 этажного блочного дома. <br />Общая площадь квартиры - 44 кв. м, жилая площадь – 28 кв. м, кухня – 6 кв.м. <br />• Квартира теплая и светлая, готова к ремонту по вашему вкусу; <br />• У вас всегда будет солнечно! <br />• В санузле установлены приборы учета, новые трубы что сократит ваши расходы. <br />• Балкон застеклен, это важно для практичных хозяев. <br />• Чистый подъезд и доброжелательные соседи. <br />• Удобное расположение дома позволяет быстро решить хозяйственные и бытовые вопросы, т.к. все необходимые магазины находятся в шаговой доступности. <br />• Хорошая транспортная доступность на все виды общественного городского транспорта. <br />Семье с детьми будет интересно наличие детского сада и школы. Все это находится рядом с домом. <br />Все документы в сборе, что позволит совершить сделку в самые кратчайшие сроки.</p>       
+
+<p>   980 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '11');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('81', '95.215.45.75', 'bf0e3305cc5ab84a6c179c505fd1ce19', '761', '120', '1517991720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Плотникова Мария', 'Продам квартиру     
+2-к квартира  45 м²  на 3 этаже  5-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам  двухкомнатную квартиру   распашонку. На  третьем этаже  пластиковые трубы  в зале натяжной потолок  на полу ламинат  ванная в кафеле  сан узел раздельный   балкон застеклен  рядом детская площадка  магазины  в двух шагах  школа №25</p>       
+
+<p>   1 020 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('82', '95.215.45.75', 'b2feb29aa9873fe725ca603cccb1f0c0', '761', '120', '1517991720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Плотникова Мария', 'Продам квартиру     
+2-к квартира  45 м²  на 5 этаже  5-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам  трех комнатную квартиру маломерку  ул. Новосибирская 40 А   В кв. поменина  проводка  на полу новый ленолеум  стены выровнены,потолки натяжные   балкон застеклен   куханый  гарниту  оставляет, ванна в кафеле.</p>       
+
+<p>   950 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('83', '95.215.45.75', '1a81243e00712aecbe8b12ec864c243f', '761', '120', '1517991720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Плотникова Мария', 'Продам квартиру     
+2-к квартира  42 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам!! Двухкомнатную кв. 5/5 пр. Ленина дом 56 комнаты раздельные  пластиковые окна пластиковые трубы  рядам остановка  кино театр мир</p>       
+
+<p>   810 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('84', '95.215.45.75', '9d5c0fadc75b5212e79dcdb5b80aa1e7', '761', '120', '1517991060', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ольга', 'Продам квартиру     
+2-к квартира  44.9 м²  на 2 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>2-Х.КОМН.КВ. .  ЦЕНТР. 2/5 ЭТАЖ.  ОСТ.МАГАЗИН \" ЛУЧ\" . РЕМОНТ, ПОЛЫ ЛАМИНАТ, В ВАННОЙ КОМНАТЕ КАФЕЛЬ, ОКНА ПЛАСТИК, БАЛКОН ЗАСТЕКЛЕН . КОНДИЦИОНЕР ! ОДИН СОБСТВЕННИК. БЕЗ ОБРЕМЕНЕНИЙ. ДОКУМЕНТЫ ГОТОВЫ К ПРОДАЖЕ! ЦЕНА 1350000 т. руб..</p>       
+
+<p>   1 350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('85', '95.215.45.75', '25dbda00bacb51ed4b0f78fcc85e2e85', '761', '120', '1517989080', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+2-к квартира  40.2 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продаётся отличная 2 комнатная квартира в кирпичном доме площадью 40 кв.м.</p> <p>Квартира находится по проспекту Ленина 75 (ост. Луч).</p> <p>- Квартира очень светлая, что обеспечит Вам комфортное проживание и всегда хорошее настроение </p> <p>- в квартире отличная звукоизоляция, широкие подоконники </p> <p>- просторные изолированные комнаты </p> <p>- балкон застеклен </p> <p>- раздельный санузел, с замененным водопроводом и приборами учета, что сэкономит средства при покупке данной квартиры</p> <p>- во всех комнатах качественные, непродуваемые стеклопакеты </p> <p>- хорошие соседи. </p> <p> </p> <p>Семье с детьми будет интересно наличие детского сада, среднеобразовательной школы №35 и №11. Все это находится рядом с домом.</p> <p>Магазины, торговые центры в шаговой доступности. </p> <p>Хорошая транспортная доступность в этом районе позволит без промедления быстро доехать в любую точку города всеми видами общественного городского транспорта.</p>       
+
+<p>   890 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('86', '95.215.45.75', '54121c456f29054c6d5dac8103ff571e', '761', '120', '1517952420', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Виолетта Рифовна', 'Продам квартиру     
+2-к квартира  43.7 м²  на 2 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продажа от собственника-без посредников и агентств! Продам долгую счастливую жизнь в замечательной двухкомнатной квартире в престижном районе!<br />Преимущества квартиры:<br />-самое \"сердце\" города - площадь Васнецова. Изображена на всех рекламных буклетах, посвящённых нашему городу<br />-евроремонт. Заезжай - живи и радуйся. Ибо теперь Ваша жизнь - полная чаша!<br />- самый удобный этаж! По всем опросам, именно второй этаж является наиболее удобным и даже престижным.<br />-замечательные душевные соседи - полны гостеприимства и щедрости. Они совсем не заметны, пока в этом нет необходимости. Но если Вы будете нуждаться в них - тут же проявят себя с самой лучшей человеческой стороны.<br />-дом находится в управлении одной из лучших УК города. Двор благоустроен, подъезд чистый и тёплый, хорошо освещён.<br />-вся цивилизация в шаговой доступности: остановка, магазины (Магнит, Пятерочка, Семья, Восход, К&Б, Желен, ОНОС и т.д.), кинотеатр, детская площадка, детская поликлиника, садик, школы (две), церковь, Универмаг, кафе, речка, парковая аллея, сквер.... <br />-до остановки общественного транспорта - всего 2 минуты<br />-кухонный гарнитур встроен и прекрасно послужит Вам долгие годы, также как и духовой электрический шкаф Ariston, варочная поверхность Cata, вытяжка<br />-в спальне остается кровать-тахта (с вместительным внутренним \"шифоньером\"</p><p>Вам не нужно вкладываться в ремонт. Потратьте сэкономленные деньги на себя!</p><p>Это тот самый случай, когда покупка недвижимости есть исполнение Вашей прекрасной мечты!<br />Реальному покупателю за наличный расчет уместный торг при осмотре квартиры (без посредников и агентств) !!!</p>       
+
+<p>   1 250 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('87', '95.215.45.75', 'eb1730601444dacd5f7004c747ca3a06', '761', '120', '1517941980', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Станислав', 'Продам квартиру     
+2-к квартира  51.7 м²  на 5 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Удобства <br />Балкон, Телефон, Раздельные комнаты, Раздельный с/у, Газ<br /> <br />Продам 2-х комнатную квартиру улучшенной планировки от собственника. Квартира очень уютная и тёплая, металлическая входная дверь, на окнах новый немецкий стеклопакет, балкон застеклен. Вся инфраструктура в шаговой доступности, детский сад, оздоровительный комплекс,сбербанк, магазины. Подъезд тихий, соседи хорошие, что немаловажно.</p><p>Требуется ремонт</p>       
+
+<p>   1 230 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('88', '95.215.45.75', 'eab2e98a88a8784595bea2f5373cb00b', '761', '120', '1517928720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Татьяна', 'Продам квартиру     
+2-к квартира  49 м²  на 4 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 2 ух комнатную квартиру в 6 ом микрорайоне по ул. Попова 5А. В квартире пластиковые окна, застекленная просторная и чистая лоджия, на кухне и в спальне заменены радиаторы, в квартире остается встроенный шкаф в коридоре. Квартира светлая, чистая. Рядом два парка (Пищевик и ЖД), рынок привокзальный, ТЗБ, остановки маршруток 12, 25, 36, 18.</p>       
+
+<p>   1 550 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('89', '95.215.45.75', '37a9306114ab1b8e0d7e00886cfcb777', '761', '120', '1517914080', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Мария', 'Продам квартиру     
+2-к квартира  45 м²  на 4 этаже  5-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам 2 ком.кв. в теплом крупноблочном доме.С торца дома школа,дет.садик,рынок,детская и взрослая поликлиника,остановка.</p>       
+
+<p>   950 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('90', '95.215.45.75', '9cdf85c2e23e62cbbf55d7ff6f94eb10', '762', '120', '1517121240', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Людмила', 'Продам квартиру     
+3-к квартира  55.6 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам 3-х комнатную квартиру требующую ремонта. Район остановки \"Луч\" Обращаться c 18-20</p>       
+
+<p>   1 200 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('91', '95.215.45.75', '369772db578697b08c167c232061cdb2', '763', '120', '1518085380', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', '_______', 'Продам квартиру     
+4-к квартира  73.6 м²  на 5 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>4-x комнатную квартиру на 5-ом этаже в 9-ти этажном кирпичном доме Ленинградской планировки. Большая лоджия с кладовкой и видом во двор. Квартира светлая, тёплая в отличном состоянии. Установлен водонагреватель на 80л. и кондиционер, окна пластиковые (профиль и фурнитура немецкие), пластиковый водопровод, на кухне под окном шкаф-холодильник, вода без перебоев, лифт работает круглосуточно. Рядом магазины, д/сады, школы, огромный парк Строителей с озером. Реальному покупателю торг. Возможен ОБМЕН на ДОМ с нашей доплатой.</p>       
+
+<p>   2 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('92', '95.215.45.75', '154ab39a033e6009eda6559ddf1806d2', '763', '120', '1518022140', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ирина', 'Продам квартиру     
+4-к квартира  102 м²  на 3 этаже  3-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Все комнаты раздельные. 2 балкона. Стеклопакеты. Газовая колонка. Все коммуникации заменены, требуется косметический ремонт. Рядом школа, детский сад. Остановка в шаговой доступности.</p>       
+
+<p>   3 600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('93', '95.215.45.75', '623bc3ba8858dda454512d35b40f3ebc', '763', '120', '1517870580', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Марина', 'Продам квартиру     
+4-к квартира  101 м²  на 3 этаже  9-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам блок квартир (3+1) 3/9,101 м^2, евроремонт, пластиковые окна, встроенная мебель, 3 кондиционера, 2 с/у. возможен обмен</p>       
+
+<p>   2 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('94', '95.215.45.75', '20868665e0944f13b67938acc7a05ffb', '763', '120', '1517722200', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Автомабили с пробегом', 'Продам квартиру     
+4-к квартира  63 м²  на 5 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам 4 комн. квартиру,в 7 микрорайоне!Квартира в хорошем состоянии,везде пластиковые окна,поменяны все двери,в зале и двух комнатах натяжной потолок,на кухне,в ванне,туалете панели.Туалет,ванна,кухня-кафель.Пластиковый водопровод,счетчики на воду и газ.Интернет,кабельное.Квартира теплая,никогда не заливалась!Отличный вариант для большой семьи!</p>       
+
+<p>   1 350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('95', '95.215.45.75', 'f609ba70507d982f2be998f25a03c7e0', '763', '120', '1517379840', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам квартиру     
+4-к квартира  60.5 м²  на 4 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Идеальное горячее предложение для ВСЕХ кто желает жить в кирпичном доме! По очень доступной цене можно купить с привлечением материнского капитала или под ипотеку, 4х-комнатную квартиру в самом тихом районе города!</p> <p>Квартира находится по адресу: ул.Добровольского 17 (ост. Добровольского) на 4 этаже 5 этажного кирпичного дома.</p> <p>Общая площадь квартиры - 60,5 кв.м., жилая площадь – 44,2 кв.м., кухня – 6 кв.м.</p> <p>• Квартира с качественным ремонтом, очень теплая и светлая (пластиковые окна, линолеум, хорошая металлическая дверь). Всё делалось для себя с любовью и заботой. Вам и Вашей семье будет комфортно жить в этой квартире!</p> <p>• Удобная планировка: гостинная комната и 3 отдельные комнаты;</p> <p>• Окна квартиры на две стороны;</p> <p>• Балкон застеклен, утеплён и облагорожена внутри.</p> <p>• Раздельный санузел, установлены пластиковый водопровод и счетчики учета вода, что сократит Ваши расходы.</p> <p>• Просторный коридор;</p> <p>• Кухонный гарнитур - остается новому хозяину в ПОДАРОК!</p> <p>• Тихий двор, доброжелательные соседи;</p> <p>• во дворе есть прекрасная детская площадка и много парковочных мест;</p> <p>• Хорошая транспортная доступность на все виды общественного городского транспорта;</p> <p>• Магазины - у дома;</p> <p>Семье с детьми будет интересно наличие школ №29, 32; детские сады.</p> <p> </p> <p>Эта замечательная квартира – Ваш шанс обеспечить своей семье удобство и комфорт! Не упустите его… Звоните немедленно!</p>       
+
+<p>   1 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('96', '95.215.45.75', '8012ef33a2de2994f784c38e82526e57', '763', '120', '1517226180', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Марина', 'Продам квартиру     
+4-к квартира  60 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продается 4-х комн. квартира 60кв.м. Сделан отличный ремонт: заменена вся сан.техника, трубы и отопительные системы, душевая кабина.  Полы ламинат. Заменены все двери-входная и межкомнатные. Потолки подвесные. Мебель новая во всех комнатах и в кухне. Квартира  продается с мебелью. 2 сплит системы. Балкон застеклен. Заезжай и живи, ничего делать не надо.</p>       
+
+<p>   1 600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('97', '95.215.45.75', 'b5c612ffcff8ca8a78070df6e413aaaa', '763', '120', '1517167920', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Сергей', 'Продам квартиру     
+4-к квартира  77 м²  на 4 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам квартиру в отличном состоянии, пластиковые окна, евроремонт, лоджия застеклена.</p>       
+
+<p>   2 100 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('98', '95.215.45.75', '7f17d1d814ef1467896a4e0ed3fba7b8', '763', '120', '1517074620', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Светлана', 'Продам квартиру     
+4-к квартира  72 м²  на 3 этаже  5-этажного блочного дома', '<p>Квартиры </p>
+  <p>Продам квартиру пер.Владивостокский 6, 3 этаж 5 этажного крупноблочного дома, обьединенную 1комн. +2 комн., 2 сан.узла, 2 балкона, гостиная + кухня (студия), все комнаты раздельные, евро ремонт. Частично остается мебель. Отличный район, 6 школа , садик, магазины, аптеки все в шаговой доступности.</p>       
+
+<p>   2 150 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('99', '95.215.45.75', 'fa4f265b2f07fb692ae6e3742fd20145', '763', '120', '1516994280', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Анастасия', 'Продам квартиру     
+4-к квартира  60.7 м²  на 5 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продам отличную светлую  4-х комнатную квартиру.Детская,гардеробная и кухню оставляю,люстры тоже в подарок.В удобном  районе,всё в шаговой доступности,стоянки,магазины,аптеки.<br />Во дворе замечательная детская площадка.<br />Соседи все порядочные люди ,подъезд тихий спокойный,после ремонта.Коммуникации все поменяны.<br />Более подробная инфо.по телефону.Торг.уместен</p>       
+
+<p>   1 750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('100', '95.215.45.75', '7e0b1a07c5b3ccc70202345028843213', '763', '120', '1516873320', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алена', 'Продам квартиру     
+4-к квартира  73 м²  на 9 этаже  9-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продам или обменяю 4х комнатную квартиру улучшенной планировки с евроремонтом! Сверху технический этаж.В квартире установлены качественные пластиковые окна, евробалкон, натяжные потолки, выровнены стены, пол, заменена эл. проводка. Во дворе хорошая детская площадка. Квартира не требует вложений, заходи и живи! Реальному покупателю-торг!</p>       
+
+<p>   2 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('101', '95.215.45.75', 'dd83f942e8f3080b489088678270babf', '763', '120', '1516272540', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'ООО &quot;Полтина&quot;', 'Продам квартиру     
+4-к квартира  87.6 м²  на 2 этаже  5-этажного кирпичного дома', '<p>Квартиры </p>
+  <p>Продается 4-комнатная квартира, расположенная на 2 этаже 5-этажного кирпичного дома 1983 г.п. Площадь - 87,6/12,3+17,4+11,5+11,8/11,6 кв м., лоджия. В шаговой доступности находятся: продуктовый магазин, спортивная площадка, Московская финансово-юридическая академия (Орский филиал). Свободна, возможна ипотека.</p>       
+
+<p>   1 600 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('102', '95.215.45.75', '06c465350b1f04f9a84f5b7e5f21556c', '763', '120', '1516198380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Андрей', 'Продам квартиру     
+4-к квартира  63 м²  на 4 этаже  5-этажного панельного дома', '<p>Квартиры </p>
+  <p>Продаем квартиру с частично с мебелью, заезжайте и живите, спасибо.</p>       
+
+<p>   1 350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('103', '95.215.45.75', '2e34f5669005b167464a475b2ff41ff0', '763', '120', '1515954240', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Ru', 'Продам квартиру     
+4-к квартира  92 м²  на 2 этаже  4-этажного блочного дома', '<p>Квартиры </p>
+  <p>ПРОДАЕТСЯ БОЛЬШАЯ ОЧЕНЬ УЮТНАЯ 4-х комн.КВАРТИРА. СОВРЕМЕННОЙ ПЛАНИРОВКИ! Сталинский дом! Раздельный СУ. Большая кухня!!!  В ОТЛИЧНОМ СОСТОЯНИИ - мебель делалась по индивидуальному дизайну, на кухне каменная столешница встроенная бытовая техника, посудомоечная машина, новый ламинат, евроремонт,новая медная эл.проводка, скрытая проводка для интернета и кабельного телевидения в каждой комнате. В квартире установлена газовая колонка, всегда в наличии горячая вода. Счётчики газ вода.   В шаговой доступности школа, дет сад, магазины Магнит Пятёрочка, остановка общественного транспорта. Тихий район в центре города.Любая форма расчета. Торг!!!</p>       
+
+<p>   2 700 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('104', '95.215.45.75', 'b095124b184fb7082354c66fcaedaa3b', '175', '120', '1518092340', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам комнату     
+Комната 22.2 м²  в 5-к квартире  на 5 этаже  5-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Продаются ДВЕ комнаты в общежитии секционного типа (11,3 кв.м.и 10,9 кв.м.) на 5 этаже 5-ного кирпичного дома.<br />Большие светлые комнаты. На в секции - туалет, душ, кухня.<br />Район хороший. Во дворе благоустроенная детская площадка, рядом аптека<br />Рассматриваем расчет материнским капиталом. Возможна продажа по отдельности.</p>       
+
+<p>   450 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '20');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('105', '95.215.45.75', 'efda7383c26801ccf1135296f9833e4e', '175', '120', '1517787900', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алексей', 'Продам комнату     
+Комната 20 м²  в 4-к квартире  на 2 этаже  2-этажного блочного дома', '<p>Комнаты </p>
+  <p>Продам комнату 20 м² в коммунальной квартире на 2 этаже.</p>       
+
+<p>   350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('106', '95.215.45.75', '7b0800706a48377956608ab7ca94472e', '175', '120', '1517659260', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Руслан', 'Сдам комнату     
+Комната 18 м²  в 1-к квартире  на 2 этаже  5-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Соседи семейные! Чистота и порядок!</p>       
+
+<p>   2 500&nbsp;руб. в месяц   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('107', '95.215.45.75', '9cc4fff403073367db5a3b3732dae0b2', '175', '120', '1517643240', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Наталья', 'Продам комнату     
+Комната 11 м²  в 1-к квартире  на 4 этаже  9-этажного панельного дома', '<p>Комнаты </p>
+  <p>Продам 2 комнаты в общежитии. по отдельности или вместе. или обменяю на 1 к. кв. + наша доплата. Отдельный туалет,пластиковые окна. Школы и садики, все магазины, больницы и рынок рядом.</p>       
+
+<p>   280 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('108', '95.215.45.75', '7b25ae7206cabd1d359d3c5d2212aa7f', '175', '120', '1517425200', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', '.', 'Сдам комнату     
+Комната 15 м²  в 3-к квартире  на 2 этаже  2-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Сдаётся комната в 3-х комнатной квартире по ул . Петровского 12 . Проживание с соседями . Предоплата .</p>       
+
+<p>   100&nbsp;руб. в месяц   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('109', '95.215.45.75', '5bd2d011a18a4e44b9429761e8286468', '175', '120', '1517330040', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Кристина', 'Продам комнату     
+Комната 25 м²  в 1-к квартире  на 2 этаже  5-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>От СОБСТВЕННИКА в связи с переездом продается большая и светлая комната. Свежий современный ремонт, пластиковое окно, счетчик электричества, батарея, частично меблирована, возможность провести воду. На этаже имеется туалет и душ. Так же в шаговой доступности остановка общественного транспорта, школа, детские сады, парк, стадион, магазины, аптеки, поликлиники и больницы. Удобная транспортная развязка во все направления города. Возможна оплата мат капиталом!!! ТОРГ.</p>       
+
+<p>   499 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('110', '95.215.45.75', '94d5038ef3e0267c9e489e5ce481b807', '175', '120', '1516863720', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам комнату     
+Комната 17.4 м²  в 3-к квартире  на 3 этаже  5-этажного панельного дома', '<p>Комнаты </p>
+  <p>Продается замечательная комната в 3 комн. квартире коммунального заселения, по адресу: ул. Стартовая, 7а (240 квартал), комната 17,4 кв.м. расположена на 3 этаже 5 этажного панельного дома! Комната очень комфортная, светлая тёплая в комнате присутствует достаточно света, состояние комнаты и общей кухни - хорошее! К тому же из комнаты есть выход на просторную балкон.</p> <p>В раздельном санузле установлены пластиковые трубы, приборы учета. </p> <p>Доброжелательные соседи.</p> <p>Прекрасная транспортная доступность на все виды общественного городского транспорта.</p> <p>Район с развитой инфраструктурой. Рядом с домом находится школа, детский сад.</p> <p>Торопитесь! Это отличный вариант по доступной цене!</p>       
+
+<p>   400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('111', '95.215.45.75', 'be0cd40bdbaa3e5a9a1df98504b52337', '175', '120', '1516630080', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам комнату     
+Комната 13 м²  в 4-к квартире  на 5 этаже  5-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Вам надоело снимать жилье в аренду и хочется иметь свой собственный уютный уголок? Ваше желание осуществимо прямо сейчас! Только у нас специально для Вас есть новое эксклюзивное предложение – комната вашей мечты! </p> <p>Продается комната общей площадью 13 кв.м в общежитии секционного типа, 5/5 этаж, кирпичного дом по адресу: ул. Московская, 17 (ДК Нефтяников\").</p> <p>Инфраструктура достаточно развита для удовлетворения всех жизненных потребностей. В шаговой доступности детский сад и школа, магазины. В самой комнате присутствует достаточно света, она чистая. </p> <p>В секции душ и туалет. Доброжелательные соседи. Места общего пользования ухоженные.</p>       
+
+<p>   230 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('112', '95.215.45.75', '06455b95b268bfeb84c9efcb31b6bf66', '175', '120', '1516358520', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Светлана', 'Продам комнату     
+Комната 21.2 м²  в 1-к квартире  на 8 этаже  9-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Продаю комнату в общежитии. Общая площадь 42. Комната расположена не в секции, а отдельно в холле. Имеется отдельные комнаты. В одной расположен туалет и умывальник, а во второй кладовая, из которой можно сделать ванную комнату. Сама комната просторная, тёплая. Проведено кабельное ТВ, дверь железная, соседи хорошие. От остановки \"Сорокино\" идти буквально 3-4 мин. Рядом находятся садик, несколько школ, на 1 этаже имеется продуктовый магазин. Напротив здания сделана аллея, где можно отлично проводить время.</p>       
+
+<p>   390 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('113', '95.215.45.75', '91967c22f844c00e891f43faed7745ab', '175', '120', '1516311060', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Александр Королевич', 'Сдам комнату     
+Комната 18 м²  в 2-к квартире  на 6 этаже  9-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Сдам комнату женщине,от 40лет.оплата только комуналка и помощь в приготовлении пищи пенсионеру.</p>       
+
+<p>   1&nbsp;руб. в месяц   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('114', '95.215.45.75', 'e18d960b25fc22cfbc20f1d079b1ece0', '175', '120', '1515966600', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Урал', 'Продам комнату     
+Комната 17 м²  в 1-к квартире  на 7 этаже  9-этажного панельного дома', '<p>Комнаты </p>
+  <p>Срочно!!! Торг!!! Можно под материнский капитал!!!</p>       
+
+<p>   320 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('115', '95.215.45.75', '1d7b9af34f2c269bdd1c24233df84a77', '175', '120', '1515651000', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам комнату     
+Комната 13 м²  в 5-к квартире  на 7 этаже  9-этажного кирпичного дома', '<p>Комнаты </p>
+  <p>Продам комнату в 4 комн. квартире. Площадь комнаты 13 м2, типовой ремонт, кухня - 10 м2. Квартира на 7 этаже 9 этажного дома, есть лоджия. Окна выходят во двор. Кирпичный дом. В квартире раздельный санузел. Рядом с домом есть магазин. Свободная продажа. Возможна продажа под материнский капитал.</p>       
+
+<p>   330 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('116', '95.215.45.75', '0599679490237f4fbb1e87be07f8e13d', '175', '120', '1515637920', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Алексей', 'Сдам комнату     
+Комната 20 м²  в 2-к квартире  на 5 этаже  5-этажного панельного дома', '<p>Комнаты </p>
+  <p>Сдам комнату в двухкомнатной квартире, во второй комнате проживает парень студент, спрашивать Татьяну Алексеевну</p>       
+<p> Комфорт        Балкон / лоджия        </p>
+<p>   1&nbsp;руб. в месяц   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('117', '95.215.45.75', 'd06c40c9cd7438cbaea11a98d3f354ef', '178', '120', '1517833380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Маркина Ирина', 'Продам  дом     
+1-этажный дом 86.3 м²  ( брус )  на участке 4.18 га  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом в хорошем состоянии. 3комнаты .Вода и туалет в доме Дом в черте города . Остановка рядом. На дворные постройки -сарай..</p>       
+
+<p>   1 750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('118', '95.215.45.75', 'ffbc4e8f2ce0ced05eb8a7edad4eee71', '178', '120', '1517833140', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Силкин Виктор', 'Продам  дом     
+2-этажный дом 340 м²  ( кирпич )  на участке 7.4 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам Дом -340 кв. земли 7,4сот. всё в собственности, внутренняя отделка из экологического материала, комнаты просторные высота 2.70м. есть балкон, баня с бассейном, все коммуникации центральные, два гаража один в доме, насаждения абрикос, яблони и т.д... , тихий спокойный р-он рядом остановка, магазины, школа, садик, оставим почти всю мебель. ТОРГ.</p>       
+
+<p>   6 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('119', '95.215.45.75', 'fa1e40255a35040ba3845d39ad094973', '178', '120', '1517832240', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Дмитриева Ирина', 'Продам  дом     
+1-этажный дом 82.6 м²  ( брус )  на участке 6 сот.  , 1 км до города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом уютный светлый,гараж 3-6 бетонный . 2-сарая,баня.</p>       
+
+<p>   1 060 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('120', '95.215.45.75', 'e41bbc2a38d3890aa7ecf289e2030150', '178', '120', '1517767200', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'ЕКатерина Горлова', 'Продам  дом     
+1-этажный дом 90 м²  ( бревно )  на участке 6 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается дом в хорошем состоянии 90кв м.шпальный обложен кирпичем,железные ворота.В собственности.земельный участок 6 сот. приватизирован.Центральная канализация,гор/хол вода ,газ.4 раздельные жилые комнаты,одна смежная.ванная+туалет.кабельное  телевидение Уфанет + интернет.в доме(2) и на дворовом участке имеется погреба(бетонные)широкий большой двор под постройку бани,гаража и т.д Рядом с домом расположенны 2 дет. сада ,школа,магазины,остановка.Остальные подробности о продаже можно обсудить при личной встрече.</p>       
+
+<p>   2 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('121', '95.215.45.75', 'a17eaa4b20ac729d2d88f483e782edf0', '178', '120', '1517765100', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Елена', 'Продам  дом     
+1-этажный дом 68 м²  ( кирпич )  на участке 8 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>ПРОДАЕТСЯ ДОМ! в связи с переездом!.Ремонт во всех помещениях,стены (не саманные)шлакоблочно-кирпичные,толщина 80см,снаружи обложен кирпичом,высота потолков(двухуровневые) - 2,7м, веранда с ремонтом,железная крепкая дверь, 4 комнаты,кухня-10кв.м,большой совмещенный санузел.Полы кафельные в с\\узле,на веранде,в прихожей,на кухне.В остальных помещениях-ламинат. Есть все удобства - вода (холодная-горячая),новый котел отопления, канализация.Кухонный гарнитур оставляем! <br />На участке есть сарай,беседка с мангалом,бассейн,место для чаепития в саду,есть все насаждения(яблони,груша,вишня,слива,абрикос,виноград)...отведено место для сезонных посадок(огурцы,помидоры,клубника и т.д.много цветов,газон)Имеется система водоотведения.Очень много места для строительства. <br />Есть капельный полив! <br />ЦЕНТР ГОРОДА! - по Тагильской вниз-частный сектор. Вдали от проезжей части(чистый воздух), соседи все замечательные! Улица хорошо освещена,зимой регулярно чистится! <br />ЗЕМЛЯ и ДОМ в СОБСТВЕННОСТИ,собственник один! Юридически готовы к разным видам оплаты (военный сертификат,материнский капитал,ипотека...) Звоните!!!</p>       
+
+<p>   2 350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('122', '95.215.45.75', '7ee7bf4daa606ca788d1bb7befb6fccf', '178', '120', '1517740380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Сергей', 'Продам  дом     
+1-этажный дом 140 м²  ( пеноблоки )  на участке 15 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>По поводу вопроса \"Сколько вкладывать\" - не много, есть смета , позвоните. Дом по оригинальному проекту, который вы можете себе позволить! Газовый котёл запущен. Канализация и освещение по дому проведены. Полы готовы. Стены отделаны гипсокартоном на 2\\3. Исключительно качественные материалы. Газ, вода, канализация, электричество -центральные.Есть смета на оставшиеся работы. Есть бригада , которая сделает не дорого и качественно. Участок 15 соток, заезд с двух сторон.<br />До остановки 5 мин. Зимой дорогу не заметает.</p>       
+
+<p>   2 400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '4');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('123', '95.215.45.75', 'fdc72cb915e10e76d232915c59fad833', '178', '120', '1517736420', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Софья', 'Продам  дом     
+1-этажный дом 102 м²  ( кирпич )  на участке 6 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается современный дом в центре города. 10 минут пешком до центра. В отличном состояни. Дом и земля в собственности. 4 комнат, все изолированные. Встроенная кухня, прихожая и кабинет входят в стоимость. Санузел совмещен. Установлен газовый котел на горячую воду и отопление. Холодная вода из собственной скважены.<br />Имеется:</p><p>Оборудованный гараж с полками под инструменты и всякую ерунду, так же в гараже имеется большой и вместительный оборудованный погреб. </p><p>Баня. рабочая. с комнатой отдыха.</p><p>Сарай.</p><p>Крытый вольер для собак.</p><p>Участок оборудован беседкой, мангальной зоной, пруд и фонтан. Так же на участке вырот и залит бетоном резервуар для бассейна осталось тользо положить изоляцию.</p><p>Продаем в связи с переездом. Имеем возможность оставить любую понравившуюся Вам мебель без доп. платы. </p><p>За доп. плату возможно так же оставить сплит системы.</p><p>Возможен торг</p>       
+
+<p>   4 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '6');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('124', '95.215.45.75', '17951e96904f9709f1d83cba809087a2', '178', '120', '1518173280', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам  дом     
+2-этажный дом 320 м²  ( кирпич )  на участке 9 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается 2 этажный дом, расположенный за центральным парком. Готов под отделку! Высота потолков 3м. <br /> Участок 9 соток в собственности. На участке большой гараж 8, 5*6, 5. <br /> Дом газифицирован, вода - скважина.</p>       
+
+<p>   3 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '53');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('125', '95.215.45.75', '543529a977dcb53ae753f229035be9b0', '178', '120', '1518173220', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам  дом     
+1-этажный дом 102 м²  ( кирпич )  на участке 7 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается дом ост. \"Тагильская\", рассматриваем расчет по сертификатам!<br /> Одноэтажный дом общей площадью 102 кв. м. <br /> Баня в доме. Центральная канализация, центр. вода холодная новая газовая колонка. <br /> Гараж, сарай. Туалет в доме.<br /> Земли 6, 5 соток в собственности.<br /> Отличный вариант для семьи!<br /> Документы готовы!</p>       
+
+<p>   1 350 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '11');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('126', '95.215.45.75', 'bfc1cc873e911557d54b5061241fc49b', '178', '120', '1518172920', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам  дом     
+1-этажный дом 66 м²  ( брус )  на участке 9 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>1 этажный жилой дом. 3 комнаты, газ, электричество. Газовое отопление. Стены самон, перекрытия – деревянные. Пристрой – шлакоблочный, крыша – шифер. На участке скважина, в доме воды нет. 2 сарая, отдельно стоящий погреб</p>       
+
+<p>   850 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('127', '95.215.45.75', '2ca7bc6b05761c24ad2efc98576c8398', '178', '120', '1518172860', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам  дом     
+2-этажный дом 349 м²  ( кирпич )  на участке 10 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Специальное предложение для ценителей английского комфорта, немецкого уюта и русского простора!<br /> Спешите купить коттедж с шикарной планировкой, блестящим современным ремонтом в черте города!<br /> 2 этажный коттедж с мансардой общей площадью 349, 2 кв. м (жилая 149, 6 кв. м. , кухня 19, 2 кв. м) построен на участке размером 10 соток на ул. В. Буканова (район Елшанки). <br /> Дом, построенный в 2011 году по европейской планировке, словно специально спроектирован для любителей изысканного дизайна. <br /> В этом комфортабельном теплом доме очень много света за счет больших пластиковых французских окон и зеркальных натяжных потолков высотой 3 м. <br /> На 1 этаже просторная гостиная площадью 40 кв. м с панорамным окном имеет дополнительный выход внутрь двора. Ее пространство позволяет с удобством принимать достаточно большое количество гостей. Совмещённая с каминным залом гостиная включает в себя дополнительную зону для семейных посиделок или торжеств. Особый шарм интерьеру придают декоративные керамические предметы, художественные произведения и шикарная кожаная мебель. Пол выложен керамической плиткой в сочетании с ламинатом.<br /> Стилизованная кухня – 19, 2 кв. м. с большой обеденной зоной плавно переходит в зону гостиной.<br /> На 2 этаже 5 раздельных комнат с основательным ремонтом из дорогих материалов. Отдельная комната под кабинет позволит Вам организовать рабочее пространство.<br /> На каждом этаже санузлы, оборудованные современной сантехникой. Стены и полы санузлов отделаны кафельной плиткой.<br /> В доме оборудована отдельная котельная с современным отопительным оборудованием, необходимыми счетчиками и регулятором температуры.<br /> В подвале оборудован спортзал площадью 63 кв. м. , Вам больше не нужно тратиться на абонемент, ведь у Вас появится свой собственный зал! Так же имеется 2 подсобных помещения (42 и 6 кв. м. ) и кладовая.<br /> Построен большой отапливаемый гараж на 2 автомобильных места. Дорожки на территории из каменной плитки.<br /> За дом построена беседка для пользования летом!<br /> Как неотъемлемая часть дома в русских традициях – построена модная баня, которая снимает усталость и выгонит из тела любую хворь.<br /> Купите большой и стильный загородный дом и получите дорогостоящую мебель в подарок.</p>       
+
+<p>   7 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '21');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('128', '95.215.45.75', '623ef9f86c60bfb5f1cecf5d0470a233', '178', '120', '1518168480', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Татьяна', 'Продам  дом     
+1-этажный дом 110 м²  ( экспериментальные материалы )  на участке 8 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продаётся дом,ОЗТП.<br />За рынком \"Восточный\". Дом и земля в собственности. Газ и вода центральные.<br />Удобства в доме. Комнаты раздельные. Крыша и фундамент новые. Есть летняя вода. Имеются насаждения: яблони,абрикосы,сливы,груша, виноград,малина,клубника....<br />Развита инфраструктура. Всё в шаговой доступности. До остановки и рынка 5 минут ходьбы.<br />Улица тихая,спокойная...</p>       
+
+<p>   1 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '23');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('129', '95.215.45.75', '49f0f644fb1b4b4df0693f3655113b7c', '178', '120', '1518166800', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Анастасия Белая', 'Продам  дом     
+2-этажный дом 215 м²  ( кирпич )  на участке 8 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Дом в г. Орск, п. Первомайский, год постройки - 2008.<br />Общая площадь - 215 кв.м.: <br />1-й этаж - 99,8 кв.м. (веранда, коридор, 2 комнаты, гостиная, кухня, с/у)<br />2-й мансардный этаж - 41.7 кв.м. (2 комнаты, коридор, чердак) <br />цокольный этаж - 73,7 кв.м. (оборудовано место для хранения заготовок на зиму, часть помещения свободна - можно сделать спортзал и игровую комнату)<br />ЦЕНТРАЛЬНЫЕ КОММУНИКАЦИИ: газ, вода, канализация, электричество. Интернет, городской телефон, Тв-триколор. <br />Отличный свежий ремонт. Комнаты частично остаются с мебелью, встроенная прихожая, кухня с необходимой бытовой техникой, камин на дровах, теплые полы в с/у. Дом полностью готов к проживанию.<br />На участке 7,5 соток имеется зона барбекю, газон, плодоносящий сад (яблони, груша, ирга, сливы, вишня, смородина, крыжовник, клубника, малина, ежевика, ежемалина, боярышник, жимолость), ухоженный огород с разведенной системой полива, кирпичный гараж, хоз. блок, баня на дровах, ливневая канализация. Участок ровный, грунтовые воды отсутствуют. <br />Двор полностью выложен плиткой. Дом и все постройки находятся на охранной сигнализации. <br />Отличное месторасположение! Вся инфраструктура в пешей доступности: детский сад и школа - 50 м, магазин Магнит - 150 м, автобусная остановка - 200 м, сбербанк, торговый центр, магазин Пятерочка, почта - 600 м, лес - 200 м, река Урал - 700 м.<br />В собственности более 3-х лет, один собственник. <br />Просмотр в любое время. Доп. фото вышлю по запросу</p>       
+
+<p>   4 150 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '17');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('130', '95.215.45.75', '26c8057bf9921c9d56f7ee9beeaeb34c', '178', '120', '1518161700', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Александр', 'Продам  дом     
+1-этажный дом 60 м²  ( бревно )  на участке 6 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продаётся светлый тёплый  уютный дом жилой площадью 60.1 м², участок 6 сот., капитальный гараж на 2 авто, размером 6х8. В доме свет, АГВ, газ, городской телефон, центральное водоснабжение и канализация,. Дом угловой, одноэтажный, 3 комнаты, обложен белым кирпичом. Все коммуникации установлены и оформлены. Участок ровный широкий прямоугольный. Будущим хозяевам при желание можно ещё приватизировать прилегающую территорию площадью около 5 сот. Идеальное место под магазин или автосервис. <br />Дом расположен п.Мяокомбинат с <br />развитой инфраструктурой. В шаговой доступности все необходимое: школа, садики, продовольственные магазины, аптека, почта. Собственник. Об осмотре дома договариваемся заранее по телефону. Торг умеренный.</p>       
+
+<p>   1 800 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('131', '95.215.45.75', '34981c3ee39d9f9f221680aa0fe7e839', '178', '120', '1518118080', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Владимир', 'Продам  дом     
+2-этажный дом 150 м²  ( кирпич )  на участке 8 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам уютный , тёплый дом . Дом находится в хорошем , тихом районе .  В доме 100кв.м жилой площади , 5 комнат , 2 сан.узла , кухня 20 кв.м с тёплым полом, имеется подвал , светлый гараж в доме . На участке имеются садовые насождения , баня , летняя кухня с барбекю . Вода и канализация центральные , возле дома асфальт и центральное освещение улицы .</p>       
+
+<p>   6 700 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '10');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('132', '95.215.45.75', '6cc64289807d6701723ec80078d27ccf', '178', '120', '1518092280', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Димона, агентство недвижимости', 'Продам  дом     
+1-этажный дом 72 м²  ( кирпич )  на участке 5 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается уютный дом площадью 72 кв.м. Дом находится по адресу: ул. Новосибирская (ост. Клую Глухонемых).<br />· Прочные кирпичные стены дома и герметично поставленные окна защищают покой хозяев от постороннего шума, и сохраняют постоянное тепло в доме. <br />· В доме 4 жилые комнаты, из нах 2 отдельные комнаты дают возможность каждому члену семьи заниматься любимым делом, не мешая при этом остальным.<br />· Просторная кухня 10 кв.м. – мечта дружной и общительной семьи.<br />· Большой совмещенный санузел - дополнительное удобство для семьи.<br />· В доме проведены: газовое отопление, центральный водопровод, центральная канализация.<br />· Как неотъемлемая часть частного дома в русских традициях – есть баня на дровах с парилкой, душевой и комнатой отдыха, которая снимает усталость и выгонит из тела любую хворь. <br />· Земельный участок 5 соток позволит реализовать и мечты садовода и любые архитектурно-ландшафтные фантазии. <br />· На участке возведен гараж из цементных блоков 33 кв.м. со смотровой ямой.<br />· Семье с детьми будет интересно наличие детских садов и школ. Все это находится рядом с домом.</p>       
+
+<p>   2 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '12');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('133', '95.215.45.75', '77028ce3f56bee9d05461b8f80356a6d', '178', '120', '1518083520', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Олег', 'Продам  дом     
+2-этажный дом 300 м²  ( кирпич )  на участке 20 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам красивый, благоустроенный дом в центре города с баней. 2 этажа, подвал, современный дизайн, второй свет. Интересный ландшафтный дизайн, отдельно стоящий гараж на 2 машины, зона барбекю. Участок на 2 хозяина.</p>       
+
+<p>   15 000 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '11');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('134', '95.215.45.75', 'b73aa2666a64f72c7e514c03cfb02b29', '178', '120', '1518077100', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Ольга', 'Продам  дом     
+2-этажный дом 525 м²  ( пеноблоки )  на участке 9 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом в г. Орске (с мебелью). Год постройки 2009. Участок 9 соток. Все в собственности (один собственник). Центральная канализация, скважина на воду. Дом находится под охраной. Двор выложен плиткой. Во дворе мангал, беседка, большой бассейн, плодовые деревья. 1-й этаж: зал с камином, кабинет, столовая, кухня, большая веранда, с/у (теплый пол). 2-й этаж: 2 детские, гостевая, спальня, гардеробная с балконом, с/у (теплый пол). В подвале оборудован спорт зал с комнатой отдыха. Есть гараж для большого автомобиля, сауна с комнатой отдыха и бассейном. Остается комплект НТВ+ и комплект подключения к интернету. Торг.</p>       
+
+<p>   9 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('135', '95.215.45.75', '193109edceb0f1e11d02aaa7dccc2485', '178', '120', '1518034320', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Екатерина', 'Продам  дом     
+1-этажный дом 120 м²  ( кирпич )  на участке 7 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>продам дом мансардного типа 2005 года постройки , дом шпальный  обложен кирпичем,в хорошем районе где все в шаговой доступности , в доме все коммуникации, имеется гараж не отапливаемый . продажа срочная в связи с переездом .</p>       
+
+<p>   2 550 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('136', '95.215.45.75', 'a66867e2b1ea7252030b3440121ea4f5', '178', '120', '1518027900', '1526464326', '0', '1', '1', '1', '10000000', 'i@board.ural56.ru', 'Людмила', 'Продам  дом     
+2-этажный дом 260 м²  ( кирпич )  на участке 7 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Срочно продам дом, полностью или частично мебелированный, евроремонт. Дом расположен в тихом районе, рядом детские сады, школы, магазины, отличная транспортная развязка, до остановки 2 минуты ходьбы. В доме два больших гаража (вмещают 3 авто). Кухня со встроенной мебелью, столешница из натурального камня. В доме газовое отопление, кондиционеры,проведены пожарная и охранная сигнализация, видеонаблюдение, интернет (оптика), телефония. Дом полностью готов к проживанию, ремонта не требует. Фото реальные, продажа от собственника. Цена указана с учетом только встроенной мебели.</p>       
+
+<p>   7 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('137', '95.215.45.75', 'd1c1049f477c22d9403aed275469547b', '178', '120', '1517991780', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Елена', 'Продам  дом     
+1-этажный дом 48 м²  ( брус )  на участке 3 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продается брусовой дом: 4 комнаты+кухня. Косметический ремонт, установлены новые: электросчетчик, газовый счетчик, газовый котел. Установлен септик, канализационные трубы уже выведены в дом, скважина в коридоре. Имеется телефон. Новые ворота. незатопляемая зона, хорошие соседи. Рядом остановка, магазины. Школа и дет.сад недалеко (примерно 300-400 метров). Все документы готовы. Чистая продажа, обмен НЕ ПРЕДЛАГАТЬ. Реальному покупателю торг.</p>       
+
+<p>   950 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '13');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('138', '95.215.45.75', '9ee503ab847143a2ea8f44106f1da7a8', '178', '120', '1517942160', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Александр', 'Продам  дом     
+1-этажный дом 131 м²  ( брус )  на участке 5 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продаётся жилой  дом. документы август 2017:в хорошем состоянии с мебелью,имеется стационарный телефон,интернет,заезжай и живи! общая площадь 131 кВ.м,  участок земли- 5 соток.  На территории дома и в доме установлена сигнализация ( охраняемся вневедомственной  охраной) имеется видеонаблюдение. В доме имеются: -гостиная -23 м.кв::3 спальные комнаты ::просторная кухня -11.4 м.кв.::просторная ванная комната-8.6 м.кв.:: На территории дома расположены: -баня -пристройка(сарай) для хранения вещей ( велосипеды, старая мебель, колеса, запчасти и т.д) - : Гараж. - 35.6 м.кв.летний навес Отопление дома-газ газовый котёл.  подача горячей воды  осуществляется через газовую калонку. Подача воды- центральная ,также имеется в подвале дома скважина для полива. При желании новые хозяева могут организовать дополнительно жилую зону на крыше ( площадь позволяет вместить  ещё 1-2  небольшие комнаты).  Рядом с домом расположены в пешей доступности автобусная остановка, магазины, детские сад. школы.церковь.мечеть.  Звоните!! ТОРГ приветствуется ;) Продажа в связи с переездом, в другой город .</p>       
+
+<p>   3 700 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('139', '95.215.45.75', 'b350e15e0c770e21da0b46b1e02710ed', '178', '120', '1517940360', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'юлия', 'Продам  дом     
+1-этажный дом 100 м²  ( бревно )  на участке 9 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам недостроенный дом с большим гаражом.район 240 кв</p>       
+
+<p>   1 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '9');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('140', '95.215.45.75', 'b6450c775d3c032d3529f210e8b07833', '178', '120', '1517914380', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Мария', 'Продам  дом     
+1-этажный дом 79 м²  ( пеноблоки )  на участке 5 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам большой теплый дом в р-не Тбилиской. Хороший ремонт, просторные комнаты,2-х этажный гараж, облагороженный двор и участок. Все коммуникации проведены.Школа, садик, остановка, магазины, рынок в шаговой доступности.</p>       
+
+<p>   2 500 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('141', '95.215.45.75', 'e89a7acdd27c5b0b2809c78289151745', '178', '120', '1517911500', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Холомова Анастасия', 'Продам  дом     
+1-этажный дом 47 м²  ( экспериментальные материалы )  на участке 7 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом в старом городе. Дом набивной. Две комнаты, коридор, кухня. Шпальный пристрой. Большой участок. Все в собственности. Прописанных нет. Вся инфраструктура в шаговой доступности. </p><p>Так же можем предложить соседний дом с ремонтом 43 кв.м. Цена 1 300 000.</p>       
+
+<p>   750 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('142', '95.215.45.75', '6f5f4c63294c890ef64cb89ec443be55', '178', '120', '1517911440', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Холомова Анастасия', 'Продам  дом     
+1-этажный дом 50 м²  ( экспериментальные материалы )  на участке 4 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом в советском районе (ост. школа. ) В доме 3 комнаты, большая кухня, санузел в доме, вода центральная, отопление газ, электричество. Установлены приборы учета. Во дворе есть гараж, сарай.</p>       
+
+<p>   1 050 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('143', '95.215.45.75', 'c6c433154e96379e4d99cc2a1f4d2666', '178', '120', '1517911140', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Падалко Мария', 'Продам  дом     
+1-этажный дом 60 м²  ( экспериментальные материалы )  на участке 2 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом мансардного типа в р-не Женского монастыря.Все коммуникации проведены.Просторная и светлая комната,просторный с/у в красивом кафеле,кухня Мечта-Хозяйки 16кв.м..На втором этаже есть возможность обустроить комнату либо спорт зал.Остановка,магазины в шаговой доступности.</p>       
+
+<p>   830 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('144', '95.215.45.75', 'cd1943696676798cf4b9a346a297d357', '178', '120', '1517824440', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Оксана', 'Продам  дом     
+1-этажный дом 42.6 м²  ( брус )  на участке 17 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продаётся жилой  дом в центре города , тёплый и  уютный . Новый ремонт . Дом отделан и утеплён  . Дом состоит из 3 комнат жилая 38 . Крыша новая . Проведена холодная вода и  горячая есть . В доме все коммуникации  проведены . Есть в доме сан узел , сделан слив под стиральную машину . ОГВ отопление . Продам частично с мебелью . А также большой земельный участок 1730,0кв.м . Есть рядом с домом крытая парковка  под легковой автомобиль . А так же есть летняя кухня в которой проведён газ . ТОРГ УМЕСТЕН .</p>       
+
+<p>   1 400 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '8');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('145', '95.215.45.75', '8d29e9d46b89d8fd2845c6ff7c49e0cf', '178', '120', '1517911020', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', 'Падалко Мария', 'Продам  дом     
+1-этажный дом 63 м²  ( пеноблоки )  на участке 5 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>Продам дом в р-не Тагильской. Большой двор, облагороженный участок, хороший гараж. Все коммуникации проведены(скважина, местная канализация)Остановка, школа, магазины в шаговой доступности.</p>       
+
+<p>   1 650 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '7');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('146', '95.215.45.75', '9180a95957ce6d197494021d646ef61d', '178', '120', '1517846160', '1523602098', '0', '2', '1', '1', '10000000', 'i@board.ural56.ru', '-', 'Продам  дом     
+1-этажный дом 112 м²  ( бревно )  на участке 10 сот.  , в черте города', '<p>Дома, дачи, коттеджи </p>
+  <p>СРОЧНО! ТОРГ! Дом разделен на две половины, что позволяет комфортно проживать двум семьям (принадлежит одному хозяину).  В доме 2 входа, 2 кухни, 4 жилых комнаты, небольшой тренажерный зал, кладовая. Во дворе замечательная баня на дровах, парная сухая и жаркая, помещение для водных процедур отдельно, большой предбанник с зоной отдыха. На приусадебном участке находятся плодоносящие деревья: груши, яблони,  абрикосы с рекордными урожаями, плантация клубники, малины, винограда  и т.д.  Капитальная теплица.  На территории дома имеется 2 гаража, один для легкового автомобиля, второй большой капитальный гараж на две машины. В шаговой доступности детский сад, школа с современным стадионом, рынок, филиал сбербанка, магазины.</p>       
+
+<p>   3 300 000&nbsp;руб.   </p>', '0', '0', '', '0', '0', '5');
+INSERT INTO `eboard_db`(`id`, `ip`, `uid`, `cat`, `region`, `date_add`, `date_del`, `user_id`, `status`, `sendmail`, `approved`, `sort`, `email`, `user`, `title`, `text`, `marked`, `raised`, `date_raised`, `block`, `active`, `counter`) VALUES ('151', '145.255.16.140', '15b02facae3c9aa43594a454e5d06856', '760', '120', '1519886278', '1526464326', '0', '1', '1', '1', '10000000', 'ainur.karpiev@yandex.ru', 'Айнур Азатович', '89328570063', '<p>жьтджлтжтжлитлоидлидори</p>', '0', '0', '', '0', '0', '10');
+
+
+DROP TABLE IF EXISTS `eboard_db_disabled`;
+CREATE TABLE `eboard_db_disabled` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` int(11) NOT NULL,
+  `message` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_db_fields`;
+CREATE TABLE `eboard_db_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` int(11) NOT NULL,
+  `field` int(11) NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ind` (`message`,`field`),
+  FULLTEXT KEY `txt` (`value`)
+) ENGINE=MyISAM AUTO_INCREMENT=1339 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1', '1', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('2', '1', '477', 'ул Огородная, 31');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('3', '1', '481', '900000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('8', '2', '475', '+7 937 202-64-56');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('9', '2', '477', 'Орск, улица Экологическая, д.6, кв.18.');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('10', '2', '481', '820000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('20', '3', '475', '+7 905 882-70-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('21', '3', '477', 'ул Олимпийская, 30');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('22', '3', '481', '660000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('27', '4', '475', '+7 919 858-12-15');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('28', '4', '477', 'Крамоторская 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('29', '4', '481', '1300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('40', '5', '475', '+7 909 975-02-09');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('41', '5', '477', 'ул Омская, 73');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('42', '5', '481', '655000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('47', '6', '475', '+7 906 830-42-92');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('48', '6', '477', 'ул.Ялтинская74');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('49', '6', '481', '650000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('56', '7', '475', '+7 905 882-70-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('57', '7', '477', 'ул Макаренко, 10');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('58', '7', '481', '680000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('64', '8', '475', '+7 905 813-65-72');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('65', '8', '477', 'ул Пацаева, 12А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('66', '8', '481', '900000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('72', '9', '475', '+7 987 550-50-15');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('73', '9', '477', 'ул Добровольского, 8А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('74', '9', '481', '770000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('85', '10', '475', '+7 909 611-13-08');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('86', '10', '477', 'Квартальный проезд 14');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('87', '10', '481', '780000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('98', '11', '475', '+7 905 473-62-41');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('99', '11', '477', 'ул. Комарова д.1');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('100', '11', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('106', '12', '475', '+7 905 846-15-45');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('107', '12', '477', 'Ленина пр-кт, 116');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('108', '12', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('118', '13', '475', '+7 905 897-34-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('119', '13', '477', 'ул Омская, 63');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('120', '13', '481', '680000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('124', '14', '475', '+7 905 896-40-43');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('125', '14', '477', 'Театральный пер, 13');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('126', '14', '481', '780000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('133', '15', '475', '+7 987 840-71-90');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('134', '15', '477', 'ул Пацаева, 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('135', '15', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('146', '16', '475', '+7 905 897-95-90');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('147', '16', '477', 'ул Ломоносова, 2А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('148', '16', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('159', '17', '475', '+7 987 345-03-16');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('160', '17', '477', 'ул Вяземская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('161', '17', '481', '670000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('166', '18', '475', '+7 906 849-29-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('167', '18', '477', 'ул Станиславского');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('168', '18', '481', '870000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('178', '19', '475', '+7 911 125-78-28');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('179', '19', '477', 'Кубанская ул');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('180', '19', '481', '680000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('191', '20', '475', '+7 987 883-89-14');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('192', '20', '477', 'Кишиневский пер');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('193', '20', '481', '600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('197', '21', '475', '+7 902 248-18-92');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('198', '21', '477', 'Сарматский пер, 5');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('199', '21', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('210', '22', '475', '+7 952 510-95-02');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('211', '22', '477', 'Россия, Оренбургская область, Орск, микрорайон Новый город, Новосибирская улица, 40');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('212', '22', '481', '630000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('220', '23', '475', '+7 982 704-30-90');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('221', '23', '477', 'Оренбургская область, Орск, Крайняя улица, 44А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('222', '23', '481', '820000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('229', '24', '475', '+7 906 848-41-46');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('230', '24', '477', 'челябинская 10 а');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('231', '24', '481', '610000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('236', '25', '475', '+7 987 347-31-63');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('237', '25', '477', 'ул Добровольского, 21');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('238', '25', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('247', '26', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('248', '26', '477', 'ул Комарова, 24');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('249', '26', '481', '730000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('253', '27', '475', '+7 919 853-52-18');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('254', '27', '477', 'ул Медногорская, 15Б');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('255', '27', '481', '750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('261', '28', '475', '+7 909 606-47-79');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('262', '28', '477', 'Ленина пр-кт, 84');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('263', '28', '481', '720000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('271', '29', '475', '+7 950 188-11-95');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('272', '29', '477', 'ул Беляева, 2');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('273', '29', '481', '965000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('277', '30', '475', '+7 961 921-44-69');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('278', '30', '477', 'ул Пржевальского 1 А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('279', '30', '481', '690000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('286', '31', '475', '+7 961 906-96-32');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('287', '31', '477', 'ул Короленко, 142А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('288', '31', '481', '1190000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('296', '32', '475', '+7 905 897-39-65');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('297', '32', '477', 'проспект Ленина, 2');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('298', '32', '481', '870000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('299', '33', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('300', '33', '477', 'Ленина пр-кт, 42');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('301', '33', '481', '1600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('307', '34', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('308', '34', '477', 'ул Васнецова, 14');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('309', '34', '481', '1030000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('316', '35', '475', '+7 922 544-45-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('317', '35', '477', 'ул Станционная, 12');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('318', '35', '481', '1050000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('329', '36', '475', '+7 999 735-13-52');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('330', '36', '477', 'ул Макаренко д. 9');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('331', '36', '481', '1950000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('341', '37', '475', '+7 905 897-34-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('342', '37', '477', 'ул Медногорская, 20');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('343', '37', '481', '945000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('345', '38', '475', '+7 905 897-33-91');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('346', '38', '477', 'Вяземская 38А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('347', '38', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('353', '39', '475', '+7 906 839-36-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('354', '39', '477', 'Орский пр-кт, 35');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('355', '39', '481', '1050000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('366', '40', '475', '+7 905 896-04-33');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('367', '40', '477', 'ул Пацаева, 15');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('368', '40', '481', '1400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('379', '41', '475', '+7 905 896-04-33');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('380', '41', '477', 'ул Ферганская, 6');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('381', '41', '481', '1650000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('392', '42', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('393', '42', '477', 'ул Шалина, 7А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('394', '42', '481', '1400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('403', '43', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('404', '43', '477', 'Нежинский пер, 13');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('405', '43', '481', '750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('407', '44', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('408', '44', '477', 'ул Достоевского, 14');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('409', '44', '481', '480000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('411', '45', '475', '+7 922 536-28-81');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('412', '45', '477', 'ул Попова, 4А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('413', '45', '481', '1600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('424', '46', '475', '+7 922 621-41-65');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('425', '46', '477', 'Домбаровская 30');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('426', '46', '481', '1850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('437', '47', '475', '+7 903 365-17-51');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('438', '47', '477', 'ул Макаренко, 5А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('439', '47', '481', '3050000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('449', '48', '475', '+7 903 365-17-51');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('450', '48', '477', 'Ленина пр-кт, 46');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('451', '48', '481', '2800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('460', '49', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('461', '49', '477', 'Оренбургская область, Орск, микрорайон Новый город, улица Беляева, 2А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('462', '49', '481', '1850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('467', '50', '475', '+7 919 857-26-37');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('468', '50', '477', 'ул Огородная, 29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('469', '50', '481', '1250000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('476', '51', '475', '+7 905 897-39-65');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('477', '51', '477', 'Тагильская улица, 13А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('478', '51', '481', '1330000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('485', '52', '475', '+7 905 896-04-87');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('486', '52', '477', 'ул Крайняя, 44');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('487', '52', '481', '1750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('495', '53', '475', '+7 961 923-23-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('496', '53', '477', 'Ленина пр-кт, 105');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('497', '53', '481', '1800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('504', '54', '475', '+7 953 453-11-20');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('505', '54', '477', 'Пр Мира 7 24');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('506', '54', '481', '2850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('517', '55', '475', '+7 905 897-34-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('518', '55', '477', 'ул Нефтяников, 2');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('519', '55', '481', '2850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('525', '56', '475', '+7 909 605-46-15');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('526', '56', '477', 'Ленина пр-кт, 126');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('527', '56', '481', '1900000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('536', '57', '475', '+7 965 813-36-39');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('537', '57', '477', 'ул Шелухина, 22');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('538', '57', '481', '1400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('549', '58', '475', '+7 900 001-60-15');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('550', '58', '477', 'Сарматский 5 а');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('551', '58', '481', '1000000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('562', '59', '475', '+7 919 844-56-85');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('563', '59', '477', 'ул Багратиона, 18А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('564', '59', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('565', '60', '475', '+7 987 204-66-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('566', '60', '477', 'Музыкальный пер, 5');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('567', '60', '481', '2500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('578', '61', '475', '+7 905 880-01-78');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('579', '61', '477', 'ул Макаренко, 11');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('580', '61', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('591', '62', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('592', '62', '477', 'Бажова пер, 24');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('593', '62', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('600', '63', '475', '+7 967 775-00-55');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('601', '63', '477', 'Ленина пр-кт, 39');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('602', '63', '481', '2750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('613', '64', '475', '+7 905 892-98-80');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('614', '64', '477', 'ул Багратиона, 16А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('615', '64', '481', '990000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('626', '65', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('627', '65', '477', 'ул Вяземская, 36А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('628', '65', '481', '1450000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('634', '66', '475', '+7 961 923-23-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('635', '66', '477', 'ул Радостева, 13');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('636', '66', '481', '1100000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('641', '67', '475', '+7 950 188-00-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('642', '67', '477', 'Кутузова ул, 17А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('643', '67', '481', '4800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1333', '151', '493', '0');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1334', '151', '324', '0');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1335', '151', '439', '53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('645', '68', '475', '+7 950 188-00-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('646', '68', '477', 'Кутузова ул, 17А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('647', '68', '481', '3500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1336', '151', '475', '+7(906)999-99-99');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1337', '151', '481', '700000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1338', '151', '482', '0');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('651', '69', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('652', '69', '477', 'ул Стасова, 4');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('653', '69', '481', '1250000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('655', '70', '475', '+7 961 924-96-63');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('656', '70', '477', 'Ленина пр-кт, 16');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('657', '70', '481', '1250000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('666', '71', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('667', '71', '477', 'ул Короленко, 144А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('668', '71', '481', '850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('673', '72', '475', '+7 905 882-70-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('674', '72', '477', 'с. Крыловка, ул Клубная, 8');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('675', '72', '481', '400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('679', '73', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('680', '73', '477', 'ул Короленко, 140А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('681', '73', '481', '800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('683', '74', '475', '+7 932 535-43-43');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('684', '74', '477', 'Оренбургская область, Орск, микрорайон Новый город, Гомельская улица, 78А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('685', '74', '481', '1300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('696', '75', '475', '+7 911 901-50-55');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('697', '75', '477', 'Станиславского, 61');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('698', '75', '481', '1800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('704', '76', '475', '+7 905 813-65-72');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('705', '76', '477', 'ул Маршала Жукова, 7А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('706', '76', '481', '1700000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('717', '77', '475', '+7 961 923-23-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('718', '77', '477', 'ул Станиславского, 91А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('719', '77', '481', '1300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('724', '78', '475', '+7 922 893-75-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('725', '78', '477', 'Ул. Кутузова  д.58 а');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('726', '78', '481', '1050000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('735', '79', '475', '+7 967 978-99-51');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('736', '79', '477', 'ул Щорса, 4');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('737', '79', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('744', '80', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('745', '80', '477', 'ул Медногорская, 26');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('746', '80', '481', '980000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('751', '81', '475', '+7 922 850-70-76');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('752', '81', '477', 'ул Щорса д 2');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('753', '81', '481', '1020000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('754', '82', '475', '+7 922 850-70-76');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('755', '82', '477', 'ул Новосибирская д,40 А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('756', '82', '481', '950000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('757', '83', '475', '+7 922 850-70-76');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('758', '83', '477', 'Ленина пр-кт, 56');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('759', '83', '481', '810000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('760', '84', '475', '+7 988 316-64-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('761', '84', '477', 'пр. Ленина 60');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('762', '84', '481', '1350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('767', '85', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('768', '85', '477', 'Ленина пр-кт, 75');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('769', '85', '481', '890000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('773', '86', '475', '+7 906 846-74-76');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('774', '86', '477', 'Оренбургская область, Орск, микрорайон Новый город, Краматорская улица, 10А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('775', '86', '481', '1250000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('786', '87', '475', '+7 905 845-40-64');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('787', '87', '477', 'Маршала жукова 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('788', '87', '481', '1230000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('789', '88', '475', '+7 905 845-02-60');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('790', '88', '477', 'ул Попова, 5А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('791', '88', '481', '1550000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('802', '89', '475', '+7 986 794-06-59');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('803', '89', '477', 'ул Макаренко, 14');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('804', '89', '481', '950000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('809', '90', '475', '+7 905 847-43-62');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('810', '90', '477', 'Горького ул, 46А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('811', '90', '481', '1200000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('812', '91', '475', '+7 906 830-68-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('813', '91', '477', 'ул Докучаева, 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('814', '91', '481', '2300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('825', '92', '475', '+7 905 845-16-77');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('826', '92', '477', 'Россия, Оренбургская область, Орск, микрорайон Новый город, Синегорский переулок, 5');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('827', '92', '481', '3600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('828', '93', '475', '+7 905 896-41-37');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('829', '93', '477', 'ул Ялтинская, 99');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('830', '93', '481', '2800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('841', '94', '475', '+7 961 901-91-90');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('842', '94', '477', 'Сарматский пер, 5');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('843', '94', '481', '1350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('850', '95', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('851', '95', '477', 'ул Добровольского, 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('852', '95', '481', '1500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('860', '96', '475', '+7 989 165-00-41');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('861', '96', '477', 'ул Станиславского, 6');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('862', '96', '481', '1600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('873', '97', '475', '+7 912 685-58-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('874', '97', '477', 'ул Докучаева');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('875', '97', '481', '2100000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('883', '98', '475', '+7 905 896-84-94');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('884', '98', '477', 'Владивостокский пер.');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('885', '98', '481', '2150000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('888', '99', '475', '+7 912 351-71-37');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('889', '99', '477', 'ул Станиславского, 99');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('890', '99', '481', '1750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('895', '100', '475', '+7 905 898-98-12');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('896', '100', '477', 'ул Ялтинская, 76');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('897', '100', '481', '2300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('906', '101', '475', '+7 987 795-52-31');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('907', '101', '477', 'пер. Белогорский, д.17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('908', '101', '481', '1600000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('919', '102', '475', '+7 917 551-86-82');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('920', '102', '477', 'Оренбургская область, Орск, микрорайон Новый город, Краматорская улица, 9Б');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('921', '102', '481', '1350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('932', '103', '475', '+7 905 847-68-83');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('933', '103', '477', 'ул Краматорская, 50');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('934', '103', '481', '2700000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('945', '104', '475', '+7 961 923-23-53');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('946', '104', '477', 'ул Перегонная, 6А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('947', '104', '481', '450000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('950', '105', '475', '+7 906 225-53-33');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('951', '105', '477', 'ул.Просвещения д.50');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('952', '105', '481', '350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('954', '106', '475', '+7 905 896-86-38');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('955', '106', '477', 'улица станиславского д.71б');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('956', '106', '481', '2500');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('957', '107', '475', '+7 922 876-75-09');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('958', '107', '477', 'микрорайон Новый город, Орск, Оренбургская область, улица Горького, 153А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('959', '107', '481', '280000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('965', '108', '475', '+7 987 787-13-52');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('966', '108', '477', 'ул Петровского, 12');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('967', '108', '481', '100');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('968', '109', '475', '+7 906 839-00-51');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('969', '109', '477', 'ул Просвещения, 57');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('970', '109', '481', '499000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('981', '110', '475', '+7 987 884-70-17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('982', '110', '477', 'ул Стартовая, 7А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('983', '110', '481', '400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('987', '111', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('988', '111', '477', 'ул Московская, 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('989', '111', '481', '230000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('990', '112', '475', '+7 919 868-25-36');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('991', '112', '477', 'ул Горького, 153А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('992', '112', '481', '390000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1000', '113', '475', '+7 913 497-53-81');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1001', '113', '477', 'Ленина пр-кт, 87');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1002', '113', '481', '1');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1003', '114', '475', '+7 911 010-63-57');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1004', '114', '477', 'Ленина пр-кт, 62');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1005', '114', '481', '320000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1006', '115', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1007', '115', '477', 'Ленина пр-кт, 126');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1008', '115', '481', '330000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1018', '117', '481', '1750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1016', '117', '475', '+7 905 896-04-33');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1017', '117', '477', 'уд.Бебеля');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1013', '116', '475', '+7 987 875-08-65');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1014', '116', '477', 'ул Кутузова, 58А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1015', '116', '481', '1');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1025', '118', '475', '+7 905 846-15-45');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1026', '118', '477', 'Запорожский пер, 6');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1027', '118', '481', '6300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1038', '119', '475', '+7 905 898-26-42');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1039', '119', '477', 'ул Маршака');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1040', '119', '481', '1060000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1049', '120', '475', '+7 906 833-15-23');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1050', '120', '477', 'ул Байкальская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1051', '120', '481', '2300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1055', '121', '477', 'ул Мамина-Сибиряка');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1056', '121', '481', '2350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1067', '122', '475', '+7 901 097-90-97');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1068', '122', '477', 'ул.Андреева,17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1069', '122', '481', '2400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1079', '123', '475', '+7 905 899-65-37');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1080', '123', '477', 'ул Покровская, 16');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1081', '123', '481', '4300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1092', '124', '475', '+7 905 882-70-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1093', '124', '477', 'ул Швейников');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1094', '124', '481', '3300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1099', '125', '475', '+7 919 864-27-29');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1100', '125', '477', 'ул Ковыльная');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1101', '125', '481', '1350000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1103', '126', '475', '+7 905 882-70-27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1104', '126', '477', 'ул Энергетиков');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1105', '126', '481', '850000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1108', '127', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1109', '127', '477', 'ул Буканова');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1110', '127', '481', '7800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1121', '128', '475', '+7 961 911-60-08');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1122', '128', '477', 'Баумана пер');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1123', '128', '481', '1800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1126', '129', '475', '+7 926 433-48-84');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1127', '129', '477', 'ул Южно-Уральская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1128', '129', '481', '4150000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1139', '130', '475', '+7 905 896-71-58');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1140', '130', '477', 'ул Балакирева, 40');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1141', '130', '481', '1800000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1151', '131', '475', '+7 987 772-12-56');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1152', '131', '477', 'Белореченский проезд д.13');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1153', '131', '481', '6700000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1163', '132', '475', '+7 987 845-78-98');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1164', '132', '477', 'ул Новосибирская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1165', '132', '481', '2300000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1174', '133', '475', '+7 906 679-27-16');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1175', '133', '477', 'ул Кутузова, 19А');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1176', '133', '481', '15000000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1183', '134', '475', '+7 961 949-73-30');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1184', '134', '477', 'ул Якутская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1185', '134', '481', '9500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1196', '135', '475', '+7 906 844-97-62');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1197', '135', '477', 'ул Садовая');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1198', '135', '481', '2550000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1206', '136', '475', '+7 932 841-67-61');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1207', '136', '477', 'ул Ялтинская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1208', '136', '481', '7500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1219', '137', '475', '+7 903 393-36-00');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1220', '137', '477', 'ул Краснощекова, 45');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1221', '137', '481', '950000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1232', '138', '475', '+7 906 831-60-23');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1233', '138', '477', 'ул Луначарского д. 27');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1234', '138', '481', '3700000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1245', '139', '475', '+7 986 783-85-37');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1246', '139', '477', 'ул Тбилисская86');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1247', '139', '481', '1500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1254', '140', '475', '+7 986 794-06-59');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1255', '140', '477', 'ул Черногорская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1256', '140', '481', '2500000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1262', '141', '475', '+7 905 896-04-87');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1263', '141', '477', 'ул Бестужева, 20');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1264', '141', '481', '750000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1268', '142', '475', '+7 905 896-04-87');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1269', '142', '477', 'ул Шелухина, 17');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1270', '142', '481', '1050000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1272', '143', '475', '+7 905 897-33-91');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1273', '143', '477', 'ул Малишевского');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1274', '143', '481', '830000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1282', '144', '475', '+7 905 898-75-77');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1283', '144', '477', 'ул Дунайская');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1284', '144', '481', '1400000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1292', '145', '475', '+7 905 897-33-91');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1293', '145', '477', 'Никитина б-р, 3');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1294', '145', '481', '1650000');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1305', '146', '475', '+7 922 622-54-70');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1306', '146', '477', 'ул 18 лет Октября 133');
+INSERT INTO `eboard_db_fields`(`id`, `message`, `field`, `value`) VALUES ('1307', '146', '481', '3300000');
+
+
+DROP TABLE IF EXISTS `eboard_db_tags`;
+CREATE TABLE `eboard_db_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` int(11) NOT NULL,
+  `tag` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ind` (`message`,`tag`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_fields`;
+CREATE TABLE `eboard_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat` int(11) DEFAULT '0',
+  `name` varchar(1000) NOT NULL,
+  `comment` varchar(2000) DEFAULT NULL,
+  `values` mediumtext,
+  `max` int(11) DEFAULT NULL,
+  `type` varchar(1) DEFAULT NULL,
+  `type_string` varchar(1) DEFAULT NULL,
+  `req` int(1) NOT NULL DEFAULT '2',
+  `hide` int(1) DEFAULT '0',
+  `block` int(1) NOT NULL,
+  `sort` int(10) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=494 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('366', '540', 'Размер', '', '40–42 (XS)
+42–44 (S)
+44–46 (M)
+46–48 (L)
+48–50 (XL)
+&gt; 50 (XXL)
+Без размера', '100', 's', '', '1', '0', '1', '16');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('46', '541', 'Предмет одежды', '', 'Брюки
+Верхняя одежда
+Джинсы
+Пиджаки и костюмы
+Рубашки
+Трикотаж и футболки
+Другое', '100', 's', '', '1', '0', '1', '15');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('45', '540', 'Предмет одежды', '', 'Брюки
+Верхняя одежда
+Джинсы
+Купальники
+Нижнее бельё
+Пиджаки и костюмы
+Платья и юбки
+Рубашки и блузки
+Свадебные платья
+Топы и футболки
+Трикотаж
+Другое', '100', 's', '', '1', '0', '1', '14');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('62', '566', 'Тип товара', '', 'Вытяжки
+Мелкая кухонная техника
+Микроволновые печи
+Плиты
+Посудомоечные машины
+Холодильники и морозильные камеры', '100', 's', '', '1', '0', '1', '13');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('61', '565', 'Тип товара', '', 'Бритвы и триммеры
+Машинки для стрижки
+Фены и приборы для укладки
+Эпиляторы', '100', 's', '', '1', '0', '1', '12');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('43', '191', 'Вид товара', '', 'Посуда
+Товары для кухни', '100', 's', '', '1', '0', '1', '11');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('42', '188', 'Вид товара', '', 'Компьютерные столы и кресла
+Кровати, диваны и кресла
+Кухонные гарнитуры
+Освещение
+Подставки и тумбы
+Предметы интерьера, 
+искусство
+Столы и стулья
+Текстиль и ковры
+Шкафы и комоды
+Другое', '100', 's', '', '1', '0', '1', '10');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('41', '564', 'Тип товара', '', 'Пылесосы
+Стиральные машины
+Утюги
+Швейные машины', '100', 's', '', '1', '0', '1', '9');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('72', '228', 'Модель', '', 'Arnage
+Azure
+Brooklands
+Continental
+Continental Flying Spur
+Continental GT
+Continental GTC
+Continental Supersports
+Mulsanne
+Turbo R
+Другая', '100', 's', '', '1', '0', '1', '8');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('79', '235', 'Модель', '', 'Allante
+ATS
+BLS
+Brougham
+Catera
+CTS
+CTS-V
+DE Ville
+DTS
+Eldorado
+Escalade
+Evoq
+Fleetwood
+LSE
+Seville
+SRX
+STS
+Victoria
+XLR
+Другая', '100', 's', '', '1', '0', '1', '7');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('78', '234', 'Модель', '', 'ET
+F0
+F2
+F3
+F6
+Flyer
+S8
+Другая', '100', 's', '', '1', '0', '1', '6');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('77', '233', 'Модель', '', 'Allure
+Century
+Electra
+Enclave
+Excelle
+GL8
+HRV
+LaCrosse
+LeSabre
+Lucerne
+Park Avenue
+Rainer
+Reatta
+Regal
+Rendezvous
+Riviera
+Roadmaster
+Royaum
+Sedan
+Skylark
+Terraza
+Другая', '100', 's', '', '1', '0', '1', '5');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('76', '232', 'Модель', '', 'EB
+Galibier
+Veyron
+Другая', '100', 's', '', '1', '0', '1', '4');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('75', '231', 'Модель', '', 'La Joya
+Другая', '100', 's', '', '1', '0', '1', '3');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('74', '230', 'Модель', '', 'A1
+BS2
+BS4
+BS6
+H530
+M1
+M2
+M3
+V5
+Другая', '100', 's', '', '1', '0', '1', '2');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('73', '229', 'Модель', '', '1
+2
+3
+3 GT
+4
+5
+5 GT
+6
+7
+8
+ActiveHybrid 7
+i8
+M3
+M5
+M6
+X1
+X3
+X4
+X5
+X5M
+X6
+X6M
+Z1
+Z3
+Z3M
+Z4
+Z4M
+Z8
+Другая', '100', 's', '', '1', '0', '1', '1');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('367', '541', 'Размер', '', '44–46 (S)
+46–48 (M)
+48–50 (L)
+50–52 (XL)
+52–54 (XXL)
+&gt; 54 (XXXL)
+Без размера', '100', 's', '', '1', '0', '1', '17');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('370', '732', 'Предмет одежды', '', 'Брюки
+Верхняя одежда
+Комбинезоны и боди
+Пижамы
+Трикотаж
+Шапки, варежки, шарфы
+Другое', '100', 's', '', '1', '0', '1', '18');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('50', '183', 'Вид товара', '', 'Автомобильные кресла
+Велосипеды и самокаты
+Детская мебель
+Детские коляски
+Игрушки
+Постельные принадлежности
+Товары для кормления
+Товары для купания
+Товары для школы', '100', 's', '', '1', '0', '1', '19');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('51', '185', 'Вид товара', '', 'Бижутерия
+Часы
+Ювелирные изделия', '100', 's', '', '1', '0', '1', '20');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('52', '184', 'Вид товара', '', 'Косметика
+Парфюмерия
+Приборы и аксессуары
+Средства гигиены
+Средства для волос
+Средства для похудения', '100', 's', '', '1', '0', '1', '21');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('53', '196', 'Вид товара', '', 'MP3-плееры
+Акустика, колонки, сабвуферы
+Видео, DVD и Blu-ray плееры
+Видеокамеры
+Кабели и адаптеры
+Микрофоны
+Музыка и фильмы
+Музыкальные центры, 
+магнитолы
+Наушники
+Телевизоры и проекторы
+Усилители и ресиверы
+Аксессуары', '100', 's', '', '1', '0', '1', '22');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('54', '199', 'Вид товара', '', 'Игры для приставок
+Игровые приставки
+Компьютерные игры
+Программы', '100', 's', '', '1', '0', '1', '23');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('55', '617', 'Вид товара', '', 'Блоки питания и батареи
+Болванки
+Бумага
+Кабели и адаптеры
+Картриджи', '100', 's', '', '1', '0', '1', '24');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('56', '643', 'Вид товара', '', 'Аккумуляторы
+Гарнитуры и наушники
+Зарядные устройства
+Кабели и адаптеры
+Модемы и роутеры
+Запчасти
+Чехлы и плёнки', '100', 's', '', '1', '0', '1', '25');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('57', '651', 'Тип товара', '', 'CD, DVD и Blu-ray приводы
+Блоки питания
+Видеокарты
+Жёсткие диски
+Звуковые карты
+Контроллеры
+Корпусы
+Материнские платы
+Оперативная память
+Процессоры
+Системы охлаждения', '100', 's', '', '1', '0', '1', '26');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('58', '198', 'Вид товара', '', 'Компактные фотоаппараты
+Зеркальные фотоаппараты
+Плёночные фотоаппараты
+Бинокли и телескопы
+Объективы
+Оборудование и аксессуары', '100', 's', '', '1', '0', '1', '27');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('59', '219', 'Модель', '', 'Ace
+Aceca
+Cobra
+Другая', '100', 's', '', '1', '0', '1', '28');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('60', '189', 'Вид товара', '', 'Двери
+Инструменты
+Камины и обогреватели
+Окна и балконы
+Потолки
+Садовая техника
+Сантехника и сауна
+Стройматериалы', '100', 's', '', '1', '0', '1', '29');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('63', '567', 'Тип товара', '', 'Вентиляторы
+Кондиционеры
+Обогреватели
+Очистители воздуха
+Термометры и метеостанции', '100', 's', '', '1', '0', '1', '30');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('64', '220', 'Модель', '', 'CL
+CSX
+EL
+Integra
+MDX
+NSX
+RDX
+RL
+RSX
+SLX
+TL
+TLX
+TSX
+ZDX
+Другая', '100', 's', '', '1', '0', '1', '31');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('65', '221', 'Модель', '', '145
+146
+147
+155
+156
+159
+164
+166
+33
+4C
+75
+8C
+90
+Arna
+Brera
+Giulietta
+GT
+GTV
+MiTo
+RZ
+Spider
+SZ
+Другая', '100', 's', '', '1', '0', '1', '32');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('66', '222', 'Модель', '', 'A1
+A2
+A4
+B10
+B11
+B12
+B3
+B5
+B6
+B7
+B8
+B9
+C1
+C2
+D10
+D3
+D5
+XD3
+Другая', '100', 's', '', '1', '0', '1', '33');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('67', '223', 'Модель', '', '10
+24
+Spartana
+Другая', '100', 's', '', '1', '0', '1', '34');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('68', '224', 'Модель', '', 'Hi-topic
+Retona
+Rocstra
+Другая', '100', 's', '', '1', '0', '1', '35');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('69', '225', 'Модель', '', 'Cygnet
+DB7
+DB9
+DBS
+Lagonda
+One-77
+Rapide
+Rapide S
+V12 Vantage
+V12 Vantage S
+V8 Vantage
+V8 Vantage S
+Vanquish
+Virage
+Другая', '100', 's', '', '1', '0', '1', '36');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('70', '226', 'Модель', '', '100
+200
+50
+60
+80
+90
+A1
+A2
+A3
+A4
+A5
+A6
+A7
+A8
+Allroad
+Cabriolet
+Coupe
+Q3
+Q5
+Q7
+Quattro
+R8
+RS1
+RS2
+RS3
+RS4
+RS5
+RS6
+RS7
+RS8
+RS Q3
+S1
+S2
+S3
+S4
+S5
+S6
+S7
+S8
+SQ5
+TT
+TT RS
+TTS
+V8
+Другая', '100', 's', '', '1', '0', '1', '37');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('71', '227', 'Модель', '', 'Fenix
+Tonik
+Другая', '100', 's', '', '1', '0', '1', '38');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('80', '236', 'Модель', '', 'Academy
+Classic
+Roadsport
+Superlight
+Другая', '100', 's', '', '1', '0', '1', '39');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('81', '237', 'Модель', '', 'CS35
+Eado
+Raeton
+SM-8
+Z-Chine
+Другая', '100', 's', '', '1', '0', '1', '40');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('82', '238', 'Модель', '', 'Flying PickUp
+Flying SUV
+Другая', '100', 's', '', '1', '0', '1', '41');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('83', '239', 'Модель', '', 'A3
+A5
+Amulet
+Arizzo 3
+Arizzo 7
+Bonus
+Bonus 3
+CrossEastar
+Fora
+Indis
+Kimo
+M11
+Oriental Son
+QQ
+QQ6
+Tiggo
+Tiggo 5
+Very
+Другая', '100', 's', '', '1', '0', '1', '42');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('84', '240', 'Модель', '', 'Alero
+Astra
+Astro
+Avalanche
+Aveo
+Bel Air
+Beretta
+Blazer
+C10
+Camaro
+Caprice
+Captiva
+Cavalier
+Celebrity
+Celta
+Chevette
+Classic
+Cobalt
+Colorado
+Corsa
+Corsica
+Corvette
+Cruze
+Epica
+Equinox
+Evanda
+Express
+Geo Storm
+HHR
+Impala
+Lacetti
+Lanos
+Lumina
+LUV D-MAX
+Malibu
+Metro
+Monte Carlo
+Monza
+MW
+Niva
+Nubira
+Omega
+Orlando
+Prizm
+Rezzo
+S10
+Sail
+Silverado
+Sonic
+Spark
+SSR
+Starcraft
+Suburban
+Tahoe
+Tavera
+Tracker
+TrailBlazer
+Trans Sport
+Traverse
+Uplander
+Van
+Vectra
+Venture
+Viva
+Volt
+Zafira
+Другая', '100', 's', '', '1', '0', '1', '43');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('85', '241', 'Модель', '', '200
+300C
+300M
+Aspen
+Cirrus
+Concorde
+Crossfire
+Daytona Shelby
+Dynasty
+Fifth Avenue
+Grand Voyager
+Imperial
+Intrepid
+LeBaron
+LHS
+Nassau
+Neon
+New Yorker
+Pacifica
+Prowler
+PT Cruiser
+Saratoga
+Sebring
+Stratus
+Town &amp;amp; Country
+Viper
+Vision
+Voyager
+Другая', '100', 's', '', '1', '0', '1', '44');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('86', '242', 'Модель', '', '2 CV
+Acadiane
+Ami
+AX
+Berlingo
+BX
+C1
+C15
+C2
+C25
+C3
+C35
+C3 Picasso
+C4
+C4 Aircross
+C4 Picasso
+C5
+C6
+C8
+C-Crosser
+C-Elysee
+CX
+C-Zero
+DS2
+DS3
+DS4
+DS5
+DS9
+Dyane
+Evasion
+Express
+FAF
+Grand C4 Picasso
+GS
+GSA
+GT
+Jumper
+Jumpy
+LN
+LNA
+Mehari
+Nemo
+Saxo
+Synergie
+Visa
+Xantia
+XM
+Xsara
+Xsara Picasso
+ZX
+Другая', '100', 's', '', '1', '0', '1', '45');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('87', '243', 'Модель', '', '1304
+1310
+1325
+1410
+Dokker
+Duster
+Lodgy
+Logan
+Nova
+Sandero
+Другая', '100', 's', '', '1', '0', '1', '46');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('88', '244', 'Модель', '', 'City Leading
+Shuttle
+Smoothing
+Другая', '100', 's', '', '1', '0', '1', '47');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('89', '245', 'Модель', '', 'Arcadia
+Brougham
+Charman
+Damas
+Espero
+Evanda
+G2X
+Gentra
+Istana
+Kalos
+Korando
+Labo
+Lacetti
+Lanos
+Leganza
+LeMans
+Magnus
+Matiz
+Musso
+Nexia
+Nubira
+Prince
+Racer
+Rezzo
+Sens
+Statesman
+Super Salon
+Tacuma
+Tico
+Tosca
+Winstorm
+Другая', '100', 's', '', '1', '0', '1', '48');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('90', '246', 'Модель', '', 'Altis
+Applause
+Atrai
+Be-go
+Boon
+Ceria
+Charade
+Charmant
+Coo
+Copen
+Cuore
+Delta
+Esse
+Feroza
+Hijet
+Leeza
+Materia
+MAX
+Mira
+Move
+Naked
+Opti
+Perodua Viva
+Pyzar
+Rocky
+Sirion
+Sonica
+Storia
+Taft
+Tanto
+Terios
+Trevis
+Wildcat
+Xenia
+YRV
+Другая', '100', 's', '', '1', '0', '1', '49');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('91', '247', 'Модель', '', 'Coupe
+Landaulette
+Limousine
+Super Eight
+XJ
+Другая', '100', 's', '', '1', '0', '1', '50');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('92', '248', 'Модель', '', 'mi-DO
+on-DO
+Другая', '100', 's', '', '1', '0', '1', '51');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('93', '249', 'Модель', '', 'Antelope
+Aurora
+Cowboy
+Land Crown
+Plutus
+Saladin
+Shuttle
+Другая', '100', 's', '', '1', '0', '1', '52');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('94', '250', 'Модель', '', 'Avenger
+Caliber
+Caravan
+Challenger
+Charger
+Dakota
+Daytona
+Durango
+Dynasty
+Grand Caravan
+Intrepid
+Journey
+Magnum
+Monaco
+Neon
+Nitro
+Ram
+Shadow
+Spirit
+Stealth
+Stratus
+Viper
+Другая', '100', 's', '', '1', '0', '1', '53');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('95', '251', 'Модель', '', 'EQ 1030
+H30 Cross
+MPV
+Oting
+Rich
+S30
+ZND
+Другая', '100', 's', '', '1', '0', '1', '54');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('96', '252', 'Модель', '', 'EQ 1030
+H30 Cross
+MPV
+Oting
+Rich
+S30
+ZND
+Другая', '100', 's', '', '1', '0', '1', '55');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('97', '253', 'Модель', '', 'Premier
+SS
+Summit
+Talon
+Vision
+Другая', '100', 's', '', '1', '0', '1', '56');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('98', '254', 'Модель', '', 'Estrima Biro
+Другая', '100', 's', '', '1', '0', '1', '57');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('99', '255', 'Модель', '', 'Admiral
+Besturn
+Besturn B50
+Besturn B70
+Bora
+City Golf
+Jetta
+Jinn
+Landmark
+V2
+V5
+Vela
+Vita
+Vizi
+Другая', '100', 's', '', '1', '0', '1', '58');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('100', '256', 'Модель', '', '208
+308
+328
+348
+355
+360 Modena
+360 Spider
+412
+430
+456 GT
+458 Italia
+458 Spider
+512
+550 Barchetta
+550 Maranello
+575 Maranello
+599 GTB Fiorano
+612 Scaglietti
+California
+Dino
+Enzo
+F12 berlinetta
+F355
+F40
+F430
+F430 Scuderia
+F430 Spider
+F50
+FF
+FXX
+Mondial
+Testarossa
+Другая', '100', 's', '', '1', '0', '1', '59');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('101', '257', 'Модель', '', '124
+126
+127
+131
+500
+600
+Albea
+Barchetta
+Brava
+Bravo
+Cinquecento
+Coupe
+Croma
+Doblo
+Ducato
+Duna
+Fiorino
+Freemont
+Idea
+Linea
+Marea
+Multipla
+New 500
+Palio
+Panda
+Punto
+Regata
+Ritmo
+Scudo
+Sedici
+Seicento
+Siena
+Stilo
+Strada
+Tempra
+Tipo
+Ulysse
+Uno
+X1/9
+Другая', '100', 's', '', '1', '0', '1', '60');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('102', '258', 'Модель', '', 'Aerostar
+Aspire
+Bronco
+Capri
+C-MAX
+Consul
+Contour
+Cougar
+Courier
+Crown Victoria
+Econoline
+Econovan
+EcoSport
+Edge
+Escape
+Escort
+Everest
+Excursion
+Expedition
+Explorer
+F150
+F250
+F350
+Festiva
+Fiesta
+Five Hundred
+Flex
+Focus
+Focus RS
+Focus ST
+Freestar
+Freestyle
+Fusion
+Fusion Hybrid
+Galaxy
+Granada
+Grand C-MAX
+GT
+Ka
+Kuga
+Laser
+Maverick
+Mondeo
+Mustang
+Orion
+Probe
+Puma
+Ranger
+Scorpio
+Shelby
+Sierra
+S-MAX
+Taunus
+Taurus
+Tempo
+Thunderbird
+Tourneo
+Tourneo Connect
+Transit
+Windstar
+Другая', '100', 's', '', '1', '0', '1', '61');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('103', '259', 'Модель', '', 'CK
+Emgrand
+Emgrand X7
+GC6
+Merrie
+MK
+MK Cross
+Otaka
+Vision
+Другая', '100', 's', '', '1', '0', '1', '62');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('104', '260', 'Модель', '', 'Metro
+Prizm
+Spectrum
+Storm
+Tracker
+Другая', '100', 's', '', '1', '0', '1', '63');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('105', '261', 'Модель', '', 'Acadia
+Aventra
+Berlina
+Calais
+Canyon
+Caprice
+Commodore
+Cruze
+Envoy
+Jimmy
+Safari
+Savana
+Sierra
+Statesman
+Suburban
+Typhoon
+Vandura
+Yukon
+Другая', '100', 's', '', '1', '0', '1', '64');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('106', '262', 'Модель', '', 'Coolbear
+Cowry
+Deer
+Florid
+Hover
+Pegasus
+Peri
+Safe
+Sailor
+Sokol
+Wingle
+Другая', '100', 's', '', '1', '0', '1', '65');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('107', '263', 'Модель', '', 'Brio
+Princip
+Saibao
+Sigma
+Simbo
+Другая', '100', 's', '', '1', '0', '1', '66');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('108', '264', 'Модель', '', '2
+3
+7
+Другая', '100', 's', '', '1', '0', '1', '67');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('109', '265', 'Модель', '', 'H1
+H2
+H6
+H7
+H8
+H9
+Другая', '100', 's', '', '1', '0', '1', '68');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('110', '266', 'Модель', '', 'Boliger
+Другая', '100', 's', '', '1', '0', '1', '69');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('111', '267', 'Модель', '', 'Accord
+Airwave
+Ascot
+Avancier
+Beat
+Capa
+City
+Civic
+Concerto
+Crossroad
+Crosstour
+CR-V
+CRX
+CR-Z
+Domani
+Edix
+Element
+Elysion
+FCX Clarity
+Fit
+Fit Aria
+FR-V
+HR-V
+Insight
+Inspire
+Integra
+Jazz
+Lagreat
+Legend
+Life
+Logo
+MDX
+Mobilio
+NSX
+Odyssey
+Orthia
+Partner
+Passport
+Pilot
+Prelude
+Quintet
+Rafaga
+Ridgeline
+S2000
+Saber
+Shuttle
+SM-X
+Stepwgn
+Stream
+That S
+Today
+Torneo
+Vamos
+Vigor
+Z
+Zest
+Другая', '100', 's', '', '1', '0', '1', '70');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('112', '268', 'Модель', '', 'Antelope
+Landscape
+Major
+Plutus
+Другая', '100', 's', '', '1', '0', '1', '71');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('113', '269', 'Модель', '', 'H1
+H2
+H3
+Другая', '100', 's', '', '1', '0', '1', '72');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('114', '270', 'Модель', '', 'Albaycin
+Grand Albaycin
+Другая', '100', 's', '', '1', '0', '1', '73');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('115', '271', 'Модель', '', 'Accent
+Atos
+Avante
+Centennial
+Coupe
+Dynasty
+Elantra
+Equus
+Excel
+Galloper
+Genesis
+Getz
+Grandeur
+H-1 (Grand Starex)
+i10
+i20
+i30
+i40
+ix20
+ix35
+ix55
+Lantra
+Lavita
+Marcia
+Matrix
+NF
+Pony
+Porter
+Santa Fe
+Santamo
+S-Coupe
+Solaris
+Sonata
+Starex
+Stellar
+Terracan
+Tiburon
+Trajet
+Tucson
+Tuscani
+Veloster
+Veracruz
+Verna
+XG
+Другая', '100', 's', '', '1', '0', '1', '74');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('116', '272', 'Модель', '', 'EX25
+EX35
+EX37
+FX30
+FX35
+FX37
+FX45
+FX50
+FX56
+G20
+G25
+G35
+G37
+I30
+I35
+J30
+JX
+M25
+M30
+M35
+M37
+M45
+M56
+Q45
+Q50
+Q60
+Q70
+QX4
+QX50
+QX56
+QX60
+QX70
+QX80
+Другая', '100', 's', '', '1', '0', '1', '75');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('117', '273', 'Модель', '', 'Pars
+Samand
+Soren
+Другая', '100', 's', '', '1', '0', '1', '76');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('118', '274', 'Модель', '', 'Amigo
+Ascender
+Aska
+Axiom
+Bighorn
+Campo
+D-Max
+Faster
+Filly
+Gemini
+Giga
+I-Mark
+Impulse
+MU
+Piazza
+Rodeo
+Trooper
+Vehi Cross
+Wizard
+Другая', '100', 's', '', '1', '0', '1', '77');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('119', '275', 'Модель', '', 'Daily
+Другая', '100', 's', '', '1', '0', '1', '78');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('120', '276', 'Модель', '', 'Refine
+Rein
+Другая', '100', 's', '', '1', '0', '1', '79');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('121', '277', 'Модель', '', 'E-type
+F-Type
+S-type
+XF
+XFR
+XJ
+XJ220
+XJR
+XJS
+XK
+XKR
+XKR-S
+X-type
+Другая', '100', 's', '', '1', '0', '1', '80');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('122', '278', 'Модель', '', 'Cherokee
+Commander
+Compass
+Grand Cherokee
+Liberty
+Patriot
+Wrangler
+Другая', '100', 's', '', '1', '0', '1', '81');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('123', '279', 'Модель', '', 'Haise
+Другая', '100', 's', '', '1', '0', '1', '82');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('124', '280', 'Модель', '', 'Baodian
+Другая', '100', 's', '', '1', '0', '1', '83');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('125', '281', 'Модель', '', 'Avella
+Besta
+Cadenza
+Capital
+Carens
+Carnival
+cee\\\'d
+Cerato
+Clarus
+Concord
+Cosmos
+Elan
+Enterprise
+GrandBird
+Joice
+K
+Magentis
+Mohave
+Opirus
+Optima
+Picanto
+Potentia
+Pregio
+Pride
+Quoris
+Retona
+Rio
+Sedona
+Sephia
+Shuma
+Sorento
+Soul
+Spectra
+Sportage
+Venga
+Visto
+X-Trek
+Другая', '100', 's', '', '1', '0', '1', '84');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('126', '282', 'Модель', '', 'Aventador
+Countach
+Diablo
+Espada
+Gallardo
+Jalpa
+LM002
+Murcielago
+Reventon
+Другая', '100', 's', '', '1', '0', '1', '85');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('127', '283', 'Модель', '', 'Dedra
+Delta
+Fulvia
+Kappa
+Lybra
+Musa
+Phedra
+Prisma
+Thema
+Thesis
+Trevi
+Ypsilon
+Zeta
+Другая', '100', 's', '', '1', '0', '1', '86');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('128', '284', 'Модель', '', 'Defender
+Discovery
+Freelander
+Range Rover
+Range Rover Evoque
+Range Rover Sport
+Series I
+Другая', '100', 's', '', '1', '0', '1', '87');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('129', '285', 'Модель', '', 'SUV
+X6
+Другая', '100', 's', '', '1', '0', '1', '88');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('130', '286', 'Модель', '', 'Maxus
+Другая', '100', 's', '', '1', '0', '1', '89');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('131', '287', 'Модель', '', 'CT
+ES
+GS
+GX
+HS
+IS
+IS F
+LFA
+LS
+LX
+NX
+RX
+SC
+Другая', '100', 's', '', '1', '0', '1', '90');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('132', '405', 'Модель', '', 'Aviator
+Blackwood
+Continental
+LS
+Mark
+Mark LT
+MKX
+MKZ
+Navigator
+Town Car
+Zephyr
+Другая', '100', 's', '', '1', '0', '1', '91');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('133', '290', 'Модель', '', 'Eclat
+Elan
+Elise
+Elise S
+Elite
+Esprit
+Europa
+Evora
+Evora S
+Excel
+Exige
+Exige S
+Другая', '100', 's', '', '1', '0', '1', '92');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('134', '291', 'Модель', '', '5 Sedan
+7 MPV
+7 SUV
+Другая', '100', 's', '', '1', '0', '1', '93');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('135', '292', 'Модель', '', 'Armada
+CJ
+Commander
+Marshal
+Другая', '100', 's', '', '1', '0', '1', '94');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('136', '293', 'Модель', '', 'B1
+B2
+Другая', '100', 's', '', '1', '0', '1', '95');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('137', '294', 'Модель', '', '228
+3200 GT
+4300 GT Coupe
+Barchetta Stradale
+Biturbo
+Bora
+Chubasco
+Coupe
+Ghibli
+GranCabrio
+GranSport
+GranTurismo
+Indy
+Karif
+Khamsin
+Kyalami
+MC12
+Merak
+Mexico
+Quattroporte
+Royale
+Shamal
+Spyder
+Другая', '100', 's', '', '1', '0', '1', '96');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('138', '295', 'Модель', '', '57
+57S
+62
+62S
+Другая', '100', 'v', '', '1', '0', '1', '97');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('139', '296', 'Модель', '', '1000
+121
+1300
+2
+3
+323
+3 MPS
+5
+6
+616
+626
+6 MPS
+818
+929
+Atenza
+Axela
+AZ-Wagon
+Biante
+Bongo
+B-Series
+BT-50
+Business
+Capella
+Carol
+Clef
+Cronos
+CX-5
+CX-7
+CX-9
+Demio
+Efini
+Eunos
+Eunos Cosmo
+Familia
+Lantis
+Laputa
+Levante
+Luce
+Millenia
+MPV
+MX-3
+MX-5
+MX-6
+Navajo
+Premacy
+Proceed
+Protege
+Revue
+Roadster
+Rustler
+RX-7
+RX-8
+Scrum
+Sentia
+Spiano
+Tribute
+Vantrend
+Verisa
+Xedos 6
+Xedos 9
+Другая', '100', 's', '', '1', '0', '1', '98');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('140', '297', 'Модель', '', 'A-класс
+A-класс AMG
+B-класс
+Citan
+CLA-класс
+CLA-класс AMG
+CLC-класс
+CLK-класс
+CLR-класс
+CLS-класс
+CLS-класс AMG
+CL-класс
+CL-класс AMG
+C-класс
+C-класс AMG
+E-класс
+E-класс AMG
+GLA-класс
+GLK-класс
+GL-класс
+GL-класс AMG
+G-класс
+G-класс AMG
+ML-класс AMG
+M-класс
+Pullman
+R-класс
+R-класс AMG
+SLK-класс
+SLK-класс AMG
+SLR McLaren
+SLS-класс
+SLS-класс AMG
+SL-класс
+SL-класс AMG
+Sprinter
+Sprinter Classic
+S-класс
+S-класс AMG
+Vaneo
+Vario
+Viano
+Vito
+V-класс
+W123
+W124
+Другая', '100', 's', '', '1', '0', '1', '99');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('141', '298', 'Модель', '', 'Capri
+Cougar
+Grand Marquis
+Marauder
+Mariner
+Marquis
+Milan
+Montego
+Monterey
+Mountaineer
+Mystique
+Sable
+Topaz
+Tracer
+Villager
+Другая', '100', 's', '', '1', '0', '1', '100');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('142', '299', 'Модель', '', 'Taxi
+Другая', '100', 's', '', '1', '0', '1', '101');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('143', '300', 'Модель', '', 'F
+TF
+XPower SV
+ZR
+ZS
+ZT
+Другая', '100', 's', '', '1', '0', '1', '102');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('144', '301', 'Модель', '', 'Cooper
+Cooper Clubman
+Cooper Clubvan
+Cooper Countryman
+Cooper Paceman
+Cooper S
+Cooper S Clubman
+Cooper S Countryman
+Cooper S Paceman
+John Cooper Works
+John Cooper Works Clubman
+John Cooper Works Countryman
+John Cooper Works Paceman
+One
+One Clubman
+One Clubvan
+One Countryman
+Другая', '100', 's', '', '1', '0', '1', '103');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('145', '302', 'Модель', '', '3000 GT
+Airtrek
+Aspire
+ASX
+Carisma
+Celeste
+Challenger
+Chariot
+Colt
+Cordia
+Debonair
+Delica
+Diamante
+Dingo
+Dion
+Eclipse
+EK Wagon
+Emeraude
+Endeavor
+Eterna
+Expo LRV
+FTO
+Fuso Canter
+Galant
+Grandis
+GTO
+i-MiEV
+Jeep
+L200
+Lancer
+Lancer Evolution
+Legnum
+Libero
+Minica
+Mirage
+Montero
+Outlander
+Pajero
+Pajero Mini
+Pajero Sport
+Pistachio
+Proudia
+Raider
+RVR
+Santamo
+Sapporo
+Sigma
+Space Gear
+Space Runner
+Space Star
+Space Wagon
+Starion
+Toppo
+Town BOX
+Tredia
+Другая', '100', 's', '', '1', '0', '1', '104');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('146', '303', 'Модель', '', 'Galue
+Le-Seyde
+Nouera
+Ryoga
+Другая', '100', 's', '', '1', '0', '1', '105');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('147', '304', 'Модель', '', 'Aero
+Plus 4
+Plus 8
+V6
+Другая', '100', 's', '', '1', '0', '1', '106');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('148', '305', 'Модель', '', 'Marina
+Другая', '100', 's', '', '1', '0', '1', '107');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('149', '306', 'Модель', '', '100NX
+180SX
+200SX
+240SX
+280 ZX
+300ZX
+350Z
+370Z
+AD
+Almera
+Almera Classic
+Altima
+Armada
+Avenir
+Bassara
+Bluebird
+Cedric
+Cefiro
+Cherry
+Cima
+Clipper
+Crew
+Cube
+Datsun
+Elgrand
+Expert
+Fairlady
+Figaro
+Frontier
+Fuga
+Gloria
+GT-R
+Juke
+King Cab
+Kix
+Lafesta
+Langley
+Largo
+Laurel
+Leaf
+Leopard
+Liberty
+Lucino
+March
+Maxima
+Micra
+Mistral
+Moco
+Murano
+Navara
+Note
+NP300
+NX Coupe
+Otti
+Pathfinder
+Patrol
+Pick UP
+Prairie
+Presage
+Presea
+President
+Primera
+Pulsar
+Qashqai
+Qashqai+2
+Quest
+Rasheen
+R Nessa
+Rogue
+Safari
+Sentra
+Serena
+Silvia
+Skyline
+Stagea
+Stanza
+Sunny
+Teana
+Terrano
+Tiida
+Tino
+Titan
+Vanette
+Versa
+Wingroad
+X-Terra
+X-Trail
+Другая', '100', 's', '', '1', '0', '1', '108');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('150', '307', 'Модель', '', 'M10
+M12
+M14
+M15
+M400
+M600
+Другая', '100', 's', '', '1', '0', '1', '109');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('151', '308', 'Модель', '', 'Achieva
+Alero
+Aurora
+Bravada
+Cutlass
+Eighty-Eight
+Intrigue
+Ninety-Eight
+Silhouette
+Другая', '100', 's', '', '1', '0', '1', '110');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('152', '309', 'Модель', '', 'Admiral
+Agila
+Antara
+Ascona
+Astra
+Astra GTC
+Astra OPC
+Calibra
+Campo
+Combo
+Commodore
+Corsa
+Corsa OPC
+Diplomat
+Frontera
+GT
+Insignia
+Insignia OPC
+Kadett
+Manta
+Meriva
+Mokka
+Monterey
+Monza
+Movano
+Omega
+Rekord
+Senator
+Signum
+Sintra
+Speedster
+Tigra
+Vectra
+Vita
+Vivaro
+Zafira
+Другая', '100', 's', '', '1', '0', '1', '111');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('153', '310', 'Модель', '', 'Huayra
+Zonda
+Другая', '100', 's', '', '1', '0', '1', '112');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('154', '311', 'Модель', '', '1007
+104
+106
+107
+2008
+204
+205
+206
+207
+208
+3008
+301
+304
+305
+306
+307
+308
+309
+4007
+4008
+405
+406
+407
+408
+5008
+504
+505
+508
+604
+605
+607
+806
+807
+Bipper
+Boxer
+Expert
+Partner
+RCZ
+Другая', '100', 's', '', '1', '0', '1', '113');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('155', '312', 'Модель', '', 'Acclaim
+Breeze
+Caravelle
+Grand Voyager
+Laser
+Neon
+Prowler
+Sundance
+Voyager
+Другая', '100', 's', '', '1', '0', '1', '114');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('156', '313', 'Модель', '', '6000
+Aztec
+Bonneville
+Fiero
+Firebird
+G4
+G5
+G6
+G8
+Grand AM
+Grand Prix
+GTO
+LeMans
+Montana
+Parisienne
+Phoenix
+Solstice
+Sunbird
+Sunfire
+Tempest
+Torrent
+Trans Sport
+Vibe
+Другая', '100', 's', '', '1', '0', '1', '115');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('157', '314', 'Модель', '', '356
+911 Carrera
+911 Carrera 4
+911 Carrera 4S
+911 Carrera S
+911 GT2
+911 GT2 RS
+911 GT3
+911 GT3 RS
+911 GT3 RS 4.0
+911 Targa 4
+911 Targa 4S
+911 Turbo
+911 Turbo S
+918 Spyder
+924
+928
+944
+959
+968
+Boxster
+Boxster S
+Boxster Spyder
+Carrera GT
+Cayenne
+Cayenne GTS
+Cayenne S
+Cayenne Turbo
+Cayenne Turbo S
+Cayman
+Cayman S
+Macan S
+Macan Turbo
+Panamera
+Panamera 4
+Panamera 4S
+Panamera GTS
+Panamera S
+Panamera Turbo
+Другая', '100', 's', '', '1', '0', '1', '116');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('158', '315', 'Модель', '', 'Juara
+Perdana
+Persona
+Saga
+Saloon
+Waja
+Другая', '100', 's', '', '1', '0', '1', '117');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('159', '316', 'Модель', '', '11
+12
+14
+15
+16
+17
+18
+19
+20
+21
+25
+30
+4
+5
+6
+9
+Avantime
+Clio
+Clio RS
+Duster
+Espace
+Estafette
+Fluence
+Fuego
+Grand Scenic
+Kangoo
+Koleos
+Laguna
+Latitude
+Logan
+Master
+Medallion
+Megane
+Megane RS
+Modus
+Rapid
+Rodeo
+Safrane
+Sandero
+Sandero Stepway
+Scenic
+Sport Spider
+Super 5
+Symbol
+Trafic
+Twingo
+Twizy
+Vel Satis
+Wind
+Другая', '100', 's', '', '1', '0', '1', '118');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('160', '317', 'Модель', '', 'Corniche Cabrio
+Ghost
+Park Ward
+Phantom
+Silver Seraph
+Silver Spur
+Wraith
+Другая', '100', 's', '', '1', '0', '1', '119');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('161', '318', 'Модель', '', 'Lightning
+Другая', '100', 's', '', '1', '0', '1', '120');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('162', '319', 'Модель', '', '100
+200
+25
+400
+45
+600
+75
+800
+Maestro
+MGF
+Mini MK
+Montego
+Streetwise
+Другая', '100', 's', '', '1', '0', '1', '121');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('163', '320', 'Модель', '', '90
+900
+9000
+9-2X
+9-3
+9-4
+95
+9-5
+96
+9-7X
+99
+Другая', '100', 's', '', '1', '0', '1', '122');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('164', '321', 'Модель', '', 'S7
+Другая', '100', 's', '', '1', '0', '1', '123');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('165', '322', 'Модель', '', 'Astra
+Aura
+ION
+LS
+LW
+Outlook
+Relay
+SC
+Sky
+SL
+SW
+VUE
+Другая', '100', 's', '', '1', '0', '1', '124');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('166', '323', 'Модель', '', 'tC
+xA
+xB
+xD
+Другая', '100', 's', '', '1', '0', '1', '125');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('167', '324', 'Модель', '', 'Alhambra
+Altea
+Altea Freetrack
+Altea XL
+Arosa
+Cordoba
+Exeo
+Fura
+Ibiza
+Ibiza FR
+Leon
+Leon FR
+Malaga
+Marbella
+Mii
+Ronda
+Terra
+Toledo
+Другая', '100', 's', '', '1', '0', '1', '126');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('168', '325', 'Модель', '', 'Sceo
+Другая', '100', 's', '', '1', '0', '1', '127');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('169', '326', 'Модель', '', 'Citigo
+Fabia
+Fabia RS
+Fabia Scout
+Favorit
+Felicia
+Octavia
+Octavia RS
+Praktik
+Rapid
+Roomster
+Superb
+Yeti
+Другая', '100', 's', '', '1', '0', '1', '128');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('170', '327', 'Модель', '', 'C32
+C51
+C52
+C61
+C81
+Другая', '100', 's', '', '1', '0', '1', '129');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('171', '328', 'Модель', '', 'Crossblade
+Forfour
+Fortwo
+Roadster
+Другая', '100', 'v', '', '1', '0', '1', '130');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('172', '329', 'Модель', '', 'C8
+Другая', '100', 's', '', '1', '0', '1', '131');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('173', '330', 'Модель', '', 'Actyon
+Chairman
+Family
+Istana
+Kallista
+Korando
+Kyron
+Musso
+Rexton
+Rodius
+Stavic
+Tager
+Другая', '100', 's', '', '1', '0', '1', '132');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('174', '331', 'Модель', '', 'Alcyone
+Baja
+Bistro
+BRZ
+Dex
+Dias
+Domingo
+Exiga
+Forester
+Impreza
+Justy
+Legacy
+Leone
+Libero
+Lucra
+Outback
+Pleo
+R1
+R2
+Sambar
+Stella
+SVX
+Traviq
+Trezia
+Tribeca
+Vivio
+WRX
+WRX STI
+XT
+XV
+Другая', '100', 's', '', '1', '0', '1', '133');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('175', '332', 'Модель', '', 'Aerio
+Alto
+Baleno
+Cappuccino
+Cervo
+Cultus Wagon
+Escudo
+Every
+Every Landy
+Forenza
+Grand Escudo
+Grand Vitara
+Ignis
+Jimny
+Kei
+Kizashi
+Liana
+MR Wagon
+Reno
+Samurai
+Sidekick
+Splash
+Swift
+SX4
+Verona
+Vitara
+Wagon R
+X-90
+XL7
+Другая', '100', 's', '', '1', '0', '1', '134');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('176', '333', 'Модель', '', 'Alpine
+Avenger
+Express
+Horizon
+Matra Bagheera
+Minx
+Murena
+Rancho
+Rapier
+Samba
+Simca
+Solara
+Tagora
+Другая', '100', 's', '', '1', '0', '1', '135');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('177', '334', 'Модель', '', 'Aria
+Estate
+Indica
+Indigo
+Mint
+Safari
+Sierra
+Sumo
+Другая', '100', 's', '', '1', '0', '1', '136');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('178', '335', 'Модель', '', 'Model S
+Model X
+Roadster
+Другая', '100', 's', '', '1', '0', '1', '137');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('179', '336', 'Модель', '', 'Century
+Другая', '100', 's', '', '1', '0', '1', '138');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('180', '337', 'Модель', '', 'Admiral
+Другая', '100', 's', '', '1', '0', '1', '139');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('181', '338', 'Модель', '', '4runner
+Allex
+Allion
+Alphard
+Altezza
+Aristo
+Aurion
+Auris
+Avalon
+Avensis
+Aygo
+BB
+Belta
+Blade
+Blizzard
+Brevis
+Caldina
+Cami
+Camry
+Carib
+Carina
+Cavalier
+Celica
+Celsior
+Century
+Chaser
+Corolla
+Corona
+Corsa
+Cressida
+Cresta
+Crown
+Curren
+Cynos
+Duet
+Echo
+Estima
+FJ Cruiser
+Fortuner
+Funcargo
+Gaia
+Grand Hiace
+Granvia
+GT 86
+Harrier
+Hiace
+Highlander
+Hilux
+Innova
+Ipsum
+iQ
+Isis
+Ist
+Kluger
+Land Cruiser
+Land Cruiser Prado
+Lite Ace
+Mark II
+Mark X
+MasterAce
+Matrix
+Mega Cruiser
+MR 2
+MR-S
+Nadia
+Noah
+Opa
+Origin
+Paseo
+Passo
+Passo Sette
+Picnic
+Platz
+Porte
+Premio
+Previa
+Prius
+Probox
+Progres
+Pronard
+Ractis
+Raum
+RAV4
+Regius
+Rush
+Scepter
+Sequoia
+Sera
+Sienna
+Sienta
+Soarer
+Solara
+Soluna
+Sparky
+Sprinter
+Starlet
+Succeed
+Supra
+Tacoma
+Tercel
+Town Ace
+Tundra
+Urban Cruiser
+Vellfire
+Venza
+Verossa
+Verso
+Vios
+Vista
+Vitz
+Voltz
+Voxy
+Will
+Windom
+Wish
+Yaris
+Другая', '100', 's', '', '1', '0', '1', '140');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('182', '339', 'Модель', '', '1.1
+P601
+Другая', '100', 's', '', '1', '0', '1', '141');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('183', '340', 'Модель', '', 'Amarok
+Beetle
+Bora
+Caddy
+California
+Caravelle
+Corrado
+Crafter
+CrossPolo
+Derby
+Eos
+Fox
+Golf
+Golf GTI
+Golf Plus
+Golf R
+Iltis
+Jetta
+Kaefer
+Lupo
+Multivan
+New Beetle
+Passat
+Passat CC
+Phaeton
+Pointer
+Polo
+Routan
+Santana
+Scirocco
+Sharan
+Taro
+Tiguan
+Touareg
+Touran
+Transporter
+Up
+Vento
+W12
+Другая', '100', 's', '', '1', '0', '1', '142');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('184', '341', 'Модель', '', '140
+164
+240
+260
+340
+360
+440
+460
+480
+66
+740
+760
+780
+850
+940
+960
+C30
+C70
+Laplander
+S40
+S60
+S70
+S80
+S90
+V40
+V40 Cross Country
+V50
+V60
+V70
+V90
+XC60
+XC70
+XC90
+Другая', '100', 's', '', '1', '0', '1', '143');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('185', '342', 'Модель', '', 'Corda
+Estina
+Tingo
+Другая', '100', 's', '', '1', '0', '1', '144');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('186', '343', 'Модель', '', '353
+Другая', '100', 's', '', '1', '0', '1', '145');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('187', '344', 'Модель', '', 'GT
+Roadster
+Другая', '100', 's', '', '1', '0', '1', '146');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('188', '345', 'Модель', '', 'Pickup X3
+SR-V X3
+SUV X3
+Другая', '100', 's', '', '1', '0', '1', '147');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('189', '346', 'Модель', '', 'Admiral
+GrandTiger
+Landmark
+Другая', '100', 's', '', '1', '0', '1', '148');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('190', '347', 'Модель', '', '1111 Ока
+2101
+2102
+2103
+2104
+2105
+2106
+2107
+2108
+2109
+21099
+2110
+2111
+2112
+2113 Samara
+2114 Samara
+2115 Samara
+2120 Надежда
+2123
+2129
+2328
+2329
+4x4 (Нива)
+Granta
+Kalina
+Largus
+Priora
+Другая', '100', 's', '', '1', '0', '1', '149');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('191', '348', 'Модель', '', '1705
+1706
+2345
+2346
+2347
+2349
+Другая', '100', 's', '', '1', '0', '1', '150');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('192', '349', 'Модель', '', '12 ЗИМ
+13 Чайка
+14 Чайка
+20 Победа
+21 Волга
+22
+24 Волга
+3101 Волга
+310221 Волга
+31029 Волга
+3102 Волга
+31105 Волга
+3110 Волга
+3111 Волга
+Volga Siber
+ГАЗель
+ГАЗель 2705
+ГАЗель 3221
+ГАЗель 3302
+ГАЗель 33023
+ГАЗель 33025
+ГАЗель Next
+ГАЗель Бизнес
+Другая
+Соболь
+Соболь 2217
+Соболь 2310
+Соболь 2752', '100', 's', '', '1', '0', '1', '151');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('193', '351', 'Модель', '', '1102 Таврия
+1103 Славута
+1105 Дана
+1125
+1140
+965
+966 Запорожец
+968 Запорожец
+Chance
+Forza
+Sens
+Vida
+Другая', '100', 's', '', '1', '0', '1', '152');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('194', '352', 'Модель', '', '101
+110
+111
+114
+117
+4104
+4105
+4107
+Другая', '100', 's', '', '1', '0', '1', '153');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('195', '353', 'Модель', '', '2125
+2126
+2715
+2717
+Другая', '100', 's', '', '1', '0', '1', '154');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('196', '354', 'Модель', '', '967
+969
+Другая', '100', 's', '', '1', '0', '1', '155');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('197', '355', 'Модель', '', '2136
+2137
+2138
+2140
+2141
+2335
+2733
+2734
+400
+401
+402
+403
+407
+408
+410
+411
+412
+420
+422
+423
+424
+426
+427
+430
+432
+433
+434
+Дуэт
+Иван Калита
+Князь Владимир
+Святогор
+Юрий Долгорукий
+Другая', '100', 's', '', '1', '0', '1', '156');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('198', '356', 'Модель', '', '2203
+977
+Другая', '100', 's', '', '1', '0', '1', '157');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('199', '357', 'Модель', '', 'Aquila
+C10
+C190
+Hyundai Accent
+Hyundai Santa Fe Classic
+Hyundai Sonata
+Road Partner
+Tager
+Tiggo
+Vega
+Vortex Corda
+Vortex Estina
+Vortex Tingo
+С10
+С30
+Другая', '100', 's', '', '1', '0', '1', '158');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('200', '358', 'Модель', '', '2206
+3151
+31512
+31514
+31519
+3153
+3159
+3160
+452 Буханка
+469
+Hunter
+Patriot
+Pickup
+Симбир
+Другая', '100', 's', '', '1', '0', '1', '159');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('201', '168', 'Год выпуска', '', '2015
+2014
+2013
+2012
+2011
+2010
+2009
+2008
+2007
+2006
+2005
+2004
+2003
+2002
+2001
+2000
+1999
+1998
+1997
+1996
+1995
+1994
+1993
+1992
+1991
+1990
+1989
+1988
+1987
+1986
+1985
+1984
+1983
+1982
+1981
+1980
+1979
+1978
+1977
+1976
+1975
+1974
+1973
+1972
+1971
+1970
+1969
+1968
+1967
+1966
+1965
+1964
+1963
+1962
+1961
+1960
+до 1960', '100', 's', '', '1', '0', '1', '160');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('202', '168', 'Пробег, км', '', '0 - 4 999
+5 000 - 9 999
+10 000 - 14 999
+15 000 - 19 999
+20 000 - 24 999
+25 000 - 29 999
+30 000 - 34 999
+35 000 - 39 999
+40 000 - 44 999
+45 000 - 49 999
+50 000 - 54 999
+55 000 - 59 999
+60 000 - 64 999
+65 000 - 69 999
+70 000 - 74 999
+75 000 - 79 999
+80 000 - 84 999
+85 000 - 89 999
+90 000 - 94 999
+95 000 - 99 999
+100 000 - 109 999
+110 000 - 119 999
+120 000 - 129 999
+130 000 - 139 999
+140 000 - 149 999
+150 000 - 159 999
+160 000 - 169 999
+170 000 - 179 999
+180 000 - 189 999
+190 000 - 199 999
+200 000 - 209 999
+210 000 - 219 999
+220 000 - 229 999
+230 000 - 239 999
+240 000 - 249 999
+250 000 - 259 999
+260 000 - 269 999
+270 000 - 279 999
+280 000 - 289 999
+290 000 - 299 999
+300 000 - 309 999
+310 000 - 319 999
+320 000 - 329 999
+330 000 - 339 999
+340 000 - 349 999
+350 000 - 359 999
+360 000 - 369 999
+370 000 - 379 999
+380 000 - 389 999
+390 000 - 399 999
+400 000 - 409 999
+410 000 - 419 999
+420 000 - 429 999
+430 000 - 439 999
+440 000 - 449 999
+450 000 - 459 999
+460 000 - 469 999
+470 000 - 479 999
+480 000 - 489 999
+490 000 - 499 999
+&gt; 500 000', '100', 's', '', '1', '0', '1', '161');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('203', '168', 'Тип кузова', '', 'Седан
+Хетчбэк
+Универсал
+Внедорожник
+Кабриолет
+Кроссовер
+Купе
+Лимузин
+Минивэн
+Пикап
+Фургон
+Микроавтобус', '100', 's', '', '1', '0', '1', '162');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('204', '168', 'Цвет', '', 'Бежевый
+Белый
+Голубой
+Жёлтый
+Зелёный
+Золотой
+Коричневый
+Красный
+Оранжевый
+Пурпурный
+Розовый
+Серебряный
+Серый
+Синий
+Фиолетовый
+Чёрный', '100', 's', '', '1', '0', '1', '163');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('205', '168', 'Объём двигателя, л', '', '0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+1.9
+2.0
+2.1
+2.2
+2.3
+2.4
+2.5
+2.6
+2.7
+2.8
+2.9
+3.0
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+3.8
+3.9
+4.0
+4.1
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+5.0
+5.1
+5.2
+5.3
+5.4
+5.5
+5.6
+5.7
+5.8
+5.9
+6.0
+6.0+', '100', 's', '', '1', '0', '1', '164');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('206', '168', 'Коробка передач', '', 'Автоматическая
+Механическая', '100', 's', '', '1', '0', '1', '165');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('207', '168', 'Тип двигателя', '', 'Бензиновый
+Дизельный
+Гибридный', '100', 's', '', '1', '0', '1', '166');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('208', '168', 'Привод', '', 'Передний
+Задний
+Полный', '100', 's', '', '1', '0', '1', '167');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('209', '168', 'Руль', '', 'Левый
+Правый', '100', 's', '', '1', '0', '1', '168');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('210', '168', 'Состояние', '', 'Не битый
+Битый', '100', 's', '', '1', '0', '1', '169');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('490', '0', 'Фото 8', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '396');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('491', '0', 'Фото 9', 'Вы можете загрузить <br />фотографию', 'jpg
+GIF
+gif
+JPG
+PNG
+png', '1000', 'i', '', '2', '0', '1', '397');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('489', '0', 'Фото 7', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '395');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('487', '0', 'Фото 5', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '393');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('488', '0', 'Фото 6', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '394');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('213', '721', 'Вид запчасти', '', 'Автосвет
+Аккумуляторы
+Двигатель
+Запчасти для ТО
+Кузов
+Подвеска
+Рулевое управление
+Салон
+Стекла
+Топливная и выхлопная 
+системы
+Тормозная система
+Трансмиссия и привод
+Электрооборудование', '100', 's', '', '1', '0', '1', '170');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('214', '472', 'Вид устройства', '', 'Автосигнализации
+Иммобилайзеры
+Механические блокираторы
+Спутниковые системы', '100', 's', '', '1', '0', '1', '171');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('215', '725', 'Диаметр, дюймов', '', '12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30', '100', 's', '', '1', '0', '1', '172');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('216', '725', 'Сезонность', '', 'Всесезонные
+Зимние нешипованные
+Зимние шипованные
+Летние', '100', 's', '', '1', '0', '1', '173');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('217', '725', 'Ширина профиля, мм', '', '125
+135
+145
+155
+165
+175
+185
+195
+205
+215
+225
+235
+245
+255
+265
+275
+285
+295
+305
+315
+325
+335
+345
+355
+365
+375
+385
+395', '100', 's', '', '1', '0', '1', '174');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('218', '725', 'Высота профиля', '', '25
+30
+35
+40
+45
+50
+55
+60
+65
+70
+75
+80
+85
+90
+95', '100', 's', '', '1', '0', '1', '175');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('219', '726', 'Ширина профиля, мм', '', '60
+70
+80
+90
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+210
+220
+230
+240
+250
+260
+270
+280
+290
+300
+310
+320
+330
+340
+350
+360
+370
+380
+390', '100', 's', '', '1', '0', '1', '176');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('220', '726', 'Высота профиля', '', '25
+30
+35
+40
+45
+50
+55
+60
+65
+70
+75
+80
+85
+90
+95
+100
+105
+110', '100', 's', '', '1', '0', '1', '177');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('221', '726', 'Диаметр, дюймов', '', '7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24', '100', 's', '', '1', '0', '1', '178');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('222', '726', 'Ось', '', 'Задняя
+Любая
+Передняя', '100', 's', '', '1', '0', '1', '179');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('223', '727', 'Тип диска', '', 'Кованые
+Литые
+Штампованные
+Спицованные
+Сборные', '100', 's', '', '1', '0', '1', '180');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('224', '727', 'Диаметр, дюймов', '', '7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30', '100', 's', '', '1', '0', '1', '181');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('225', '727', 'Ширина обода, дюймов', '', '4
+4.5
+5
+5.5
+6
+6.5
+7
+7.5
+8
+8.5
+9
+9.5
+10
+10.5
+11
+11.5
+12
+13', '100', 's', '', '1', '0', '1', '182');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('226', '727', 'Количество отверстий', '', '3
+4
+5
+6
+8
+9
+10', '100', 's', '', '1', '0', '1', '183');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('227', '727', 'Диаметр расположения отверстий, мм', '', '98
+100
+105
+108
+110
+112
+114.3
+115
+118
+120
+125
+127
+130
+135
+139
+139.7
+140
+150
+160
+165
+165.1
+170
+180
+200
+205
+256', '100', 's', '', '1', '0', '1', '184');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('228', '727', 'Вылет (ET), мм', '', '-65
+-50
+-44
+-40
+-36
+-35
+-32
+-30
+-28
+-25
+-24
+-22
+-20
+-16
+-15
+-14
+-13
+-12
+-10
+-8
+-7
+-6
+-5
+-2
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+23.5
+24
+25
+26
+27
+28
+29
+30
+31
+31.5
+32
+33
+34
+35
+36
+36.5
+37
+37.5
+38
+39
+39.5
+40
+40.5
+41
+41.3
+41.5
+42
+43
+43.5
+43.8
+44
+45
+45.5
+46
+47
+47.5
+48
+49
+49.5
+50
+50.5
+50.8
+51
+52
+52.2
+52.5
+53
+54
+55
+56
+57
+58
+59
+60
+62
+63
+65
+66
+67
+68
+70
+75
+83
+100
+102
+105
+105.5
+106
+107
+108
+110
+111
+115
+116
+118
+120
+123
+124
+125
+126
+127
+128
+129
+130
+132
+133
+134
+135
+136
+138
+140
+142
+143
+144
+145
+147
+148
+152
+156
+157
+161
+163
+165
+167
+168
+172
+175
+185', '100', 's', '', '1', '0', '1', '185');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('229', '728', 'Диаметр, дюймов', '', 'Запчасти
+Аксессуары
+GPS-навигаторы
+Автокосметика и автохимия
+Аудио- и видеотехника
+Багажники и фаркопы
+Инструменты
+Прицепы
+Противоугонные устройства
+Тюнинг
+Шины, диски и колёса
+Экипировка', '100', 's', '', '1', '0', '1', '186');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('230', '728', 'Тип диска', '', 'Кованые
+Литые
+Штампованные', '100', 's', '', '1', '0', '1', '187');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('231', '728', 'Сезонность', '', 'Всесезонные
+Летние
+Зимние шипованные
+Зимние нешипованные', '100', 's', '', '1', '0', '1', '188');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('232', '728', 'Ширина профиля, мм', '', '125
+135
+145
+155
+165
+175
+185
+195
+205
+215
+225
+235
+245
+255
+265
+275
+285
+295
+305
+315
+325
+335
+345
+355
+365
+375
+385
+395', '100', 's', '', '1', '0', '1', '189');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('233', '728', 'Высота профиля', '', '25
+30
+35
+40
+45
+50
+55
+60
+65
+70
+75
+80
+85
+90
+95', '100', 's', '', '1', '0', '1', '190');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('234', '728', 'Ширина обода, дюймов', '', '4
+4.5
+5
+5.5
+6
+6.5
+7
+7.5
+8
+8.5
+9
+9.5
+10
+10.5
+11
+11.5
+12
+13', '100', 's', '', '1', '0', '1', '191');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('235', '728', 'Количество отверстий', '', '3
+4
+5
+6
+8
+9
+10', '100', 's', '', '1', '0', '1', '192');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('236', '728', 'Диаметр расположения отверстий, мм', '', '98
+100
+105
+108
+110
+112
+114.3
+115
+118
+120
+125
+127
+130
+135
+139
+139.7
+140
+150
+160
+165
+165.1
+170
+180
+200
+205
+256', '100', 's', '', '1', '0', '1', '193');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('237', '728', 'Вылет (ET), мм', '', '-65
+-50
+-44
+-40
+-36
+-35
+-32
+-30
+-28
+-25
+-24
+-22
+-20
+-16
+-15
+-14
+-13
+-12
+-10
+-8
+-7
+-6
+-5
+-2
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+23.5
+24
+25
+26
+27
+28
+29
+30
+31
+31.5
+32
+33
+34
+35
+36
+36.5
+37
+37.5
+38
+39
+39.5
+40
+40.5
+41
+41.3
+41.5
+42
+43
+43.5
+43.8
+44
+45
+45.5
+46
+47
+47.5
+48
+49
+49.5
+50
+50.5
+50.8
+51
+52
+52.2
+52.5
+53
+54
+55
+56
+57
+58
+59
+60
+62
+63
+65
+66
+67
+68
+70
+75
+83
+100
+102
+105
+105.5
+106
+107
+108
+110
+111
+115
+116
+118
+120
+123
+124
+125
+126
+127
+128
+129
+130
+132
+133
+134
+135
+136
+138
+140
+142
+143
+144
+145
+147
+148
+152
+156
+157
+161
+163
+165
+167
+168
+172
+175
+185', '100', 's', '', '1', '0', '1', '194');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('238', '729', 'Диаметр, дюймов', '', '12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30', '100', 's', '', '2', '0', '1', '195');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('239', '442', 'Вид мотоцикла', '', 'Дорожные
+Кастом-байки
+Кросс и эндуро
+Спортивные
+Чопперы', '100', 's', '', '1', '0', '1', '196');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('240', '359', 'Модель', '', 'MDX
+RDX
+RL
+TL
+TLX
+TSX
+ZDX
+Другая', '100', 's', '', '1', '0', '1', '197');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('241', '360', 'Модель', '', '159
+4C
+Giulietta
+MiTo
+Другая', '100', 's', '', '1', '0', '1', '198');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('242', '361', 'Модель', '', 'B3
+B5
+B6
+B7
+D5
+XD3
+Другая', '100', 's', '', '1', '0', '1', '199');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('243', '362', 'Модель', '', 'DB9
+DBS
+Rapide
+Rapide S
+V12 Vantage
+V12 Vantage S
+V8 Vantage
+V8 Vantage S
+Vanquish
+Virage
+Другая', '100', 's', '', '1', '0', '1', '200');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('244', '363', 'Модель', '', 'A1
+A3
+A4
+A5
+A6
+A7
+A8
+Q3
+Q5
+Q7
+R8
+RS3
+RS4
+RS5
+RS6
+RS7
+RS8
+RS Q3
+S3
+S4
+S5
+S6
+S7
+S8
+SQ5
+TT
+TT RS
+TTS
+Другая', '100', 's', '', '1', '0', '1', '201');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('245', '364', 'Модель', '', 'Fenix
+Tonik
+Другая', '100', 's', '', '1', '0', '1', '202');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('246', '365', 'Модель', '', 'Continental Flying Spur
+Continental GT
+Continental GTC
+Continental Supersports
+Mulsanne
+Другая', '100', 's', '', '1', '0', '1', '203');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('247', '366', 'Модель', '', '1
+2
+3
+3 GT
+4
+5
+5 GT
+6
+7
+ActiveHybrid 7
+i3
+i8
+M3
+M5
+M6
+X1
+X3
+X4
+X5
+X5M
+X6
+X6M
+Z4
+Другая', '100', 's', '', '1', '0', '1', '204');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('248', '367', 'Модель', '', 'H530
+M2
+V5
+Другая', '100', 's', '', '1', '0', '1', '205');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('249', '368', 'Модель', '', 'Veyron
+Другая', '100', 's', '', '1', '0', '1', '206');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('250', '369', 'Модель', '', 'F3
+Другая', '100', 's', '', '1', '0', '1', '207');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('251', '370', 'Модель', '', 'ATS
+CTS
+CTS-V
+Escalade
+SRX
+Другая', '100', 's', '', '1', '0', '1', '208');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('252', '371', 'Модель', '', 'CS35
+Eado
+Raeton
+SM-8
+Z-Chine
+Другая', '100', 's', '', '1', '0', '1', '209');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('253', '372', 'Модель', '', 'Arizzo 7
+Bonus
+Bonus 3
+CrossEastar
+Indis
+Kimo
+M11
+Tiggo
+Tiggo 5
+Very
+Другая', '100', 's', '', '1', '0', '1', '210');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('254', '373', 'Модель', '', 'Avalanche
+Aveo
+Camaro
+Captiva
+Cobalt
+Colorado
+Corvette
+Cruze
+Epica
+Equinox
+Express
+Impala
+Lacetti
+Malibu
+Niva
+Orlando
+Silverado
+Sonic
+Spark
+Suburban
+Tahoe
+Tracker
+TrailBlazer
+Traverse
+Volt
+Другая', '100', 's', '', '1', '0', '1', '211');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('255', '374', 'Модель', '', '200
+300C
+Grand Voyager
+Другая', '100', 's', '', '1', '0', '1', '212');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('256', '375', 'Модель', '', 'Berlingo
+C1
+C3
+C3 Picasso
+C4
+C4 Aircross
+C4 Picasso
+C5
+C6
+C-Crosser
+C-Elysee
+DS3
+DS4
+DS5
+Grand C4 Picasso
+Jumper
+Другая', '100', 's', '', '1', '0', '1', '213');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('257', '376', 'Модель', '', 'Dokker
+Duster
+Lodgy
+Logan
+Sandero
+Другая', '100', 's', '', '1', '0', '1', '214');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('258', '377', 'Модель', '', 'Gentra
+Matiz
+Nexia
+Другая', '100', 's', '', '1', '0', '1', '215');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('259', '378', 'Модель', '', 'mi-DO
+on-DO
+Другая', '100', 's', '', '1', '0', '1', '216');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('260', '379', 'Модель', '', 'Avenger
+Caliber
+Challenger
+Charger
+Durango
+Grand Caravan
+Journey
+RAM
+Другая', '100', 's', '', '1', '0', '1', '217');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('261', '380', 'Модель', '', 'H30 Cross
+S30
+Другая', '100', 's', '', '1', '0', '1', '218');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('262', '381', 'Модель', '', 'Estrima Biro
+Другая', '100', 's', '', '1', '0', '1', '219');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('263', '382', 'Модель', '', 'Besturn B50
+Besturn B70
+V2
+V5
+Другая', '100', 's', '', '1', '0', '1', '220');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('264', '383', 'Модель', '', '458 Italia
+458 Spider
+599 GTB Fiorano
+California
+F12 berlinetta
+FF
+Другая', '100', 's', '', '1', '0', '1', '221');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('265', '384', 'Модель', '', '500
+Albea
+Bravo
+Croma
+Doblo
+Ducato
+Freemont
+Linea
+Panda
+Punto
+Scudo
+Sedici
+Другая', '100', 's', '', '1', '0', '1', '222');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('266', '385', 'Модель', '', 'C-MAX
+EcoSport
+Edge
+Escape
+Expedition
+Explorer
+Fiesta
+Flex
+Focus
+Focus RS
+Focus ST
+Fusion
+Fusion Hybrid
+Galaxy
+Grand C-MAX
+Kuga
+Mondeo
+Mustang
+Ranger
+S-MAX
+Taurus
+Tourneo
+Tourneo Connect
+Transit
+Другая', '100', 's', '', '1', '0', '1', '223');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('267', '386', 'Модель', '', 'Emgrand
+Emgrand X7
+GC6
+MK
+MK Cross
+Vision
+Другая', '100', 's', '', '1', '0', '1', '224');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('268', '387', 'Модель', '', 'Savana
+Другая', '100', 's', '', '1', '0', '1', '225');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('269', '388', 'Модель', '', 'CoolBear
+Hover
+Peri
+Wingle
+Другая', '100', 's', '', '1', '0', '1', '226');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('270', '389', 'Модель', '', '3
+7
+Другая', '100', 's', '', '1', '0', '1', '227');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('271', '390', 'Модель', '', 'H6
+H8
+Другая', '100', 's', '', '1', '0', '1', '228');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('272', '391', 'Модель', '', 'Boliger
+Другая', '100', 's', '', '1', '0', '1', '229');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('273', '392', 'Модель', '', 'Accord
+Civic
+Crosstour
+CR-V
+Jazz
+Odyssey
+Pilot
+Ridgeline
+Другая', '100', 's', '', '1', '0', '1', '230');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('274', '393', 'Модель', '', 'Accent
+Elantra
+Equus
+Genesis
+Grandeur
+H-1 (Grand Starex)
+i10
+i30
+i40
+ix20
+ix35
+ix55
+Porter
+Santa Fe
+Solaris
+Sonata
+Veloster
+Другая', '100', 's', '', '1', '0', '1', '231');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('275', '394', 'Модель', '', 'EX
+FX
+G
+JX
+M
+Q50
+Q60
+Q70
+QX
+QX50
+QX60
+QX70
+Другая', '100', 's', '', '1', '0', '1', '232');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('276', '395', 'Модель', '', 'Daily
+Другая', '100', 's', '', '1', '0', '1', '233');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('277', '396', 'Модель', '', 'Rein
+Другая', '100', 's', '', '1', '0', '1', '234');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('278', '397', 'Модель', '', 'F-Type
+XF
+XFR
+XJ
+XK
+XKR
+XKR-S
+Другая', '100', 's', '', '1', '0', '1', '235');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('279', '398', 'Модель', '', 'Cherokee
+Compass
+Grand Cherokee
+Liberty
+Wrangler
+Другая', '100', 's', '', '1', '0', '1', '236');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('280', '399', 'Модель', '', 'Carens
+cee\\\'d
+Cerato
+Mohave
+Optima
+Picanto
+Quoris
+Rio
+Sorento
+Soul
+Sportage
+Venga
+Другая', '100', 's', '', '1', '0', '1', '237');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('281', '400', 'Модель', '', '2104
+2107
+4x4
+Granta
+Kalina
+Largus
+Priora
+Samara (2113)
+Samara (2114)
+Samara (2115)
+Богдан
+Другая', '100', 's', '', '1', '0', '1', '238');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('282', '401', 'Модель', '', 'Aventador
+Gallardo
+Другая', '100', 's', '', '1', '0', '1', '239');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('283', '402', 'Модель', '', 'Defender
+Discovery
+Freelander
+Range Rover
+Range Rover Evoque
+Range Rover Sport
+Другая', '100', 's', '', '1', '0', '1', '240');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('284', '403', 'Модель', '', 'CT
+ES
+GS
+GX
+IS
+IS F
+LS
+LX
+NX
+RX
+Другая', '100', 's', '', '1', '0', '1', '241');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('285', '404', 'Модель', '', 'Breez
+Cebrium
+Celliya
+Smily
+Solano
+X60
+Другая', '100', 's', '', '1', '0', '1', '242');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('286', '405', 'Модель', '', 'Navigator
+Другая', '100', 's', '', '1', '0', '1', '243');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('287', '406', 'Модель', '', 'Elise
+Elise S
+Evora
+Evora S
+Exige
+Exige S
+Другая', '100', 's', '', '1', '0', '1', '244');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('288', '407', 'Модель', '', '5 Sedan
+7 MPV
+7 SUV
+Другая', '100', 's', '', '1', '0', '1', '245');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('289', '408', 'Модель', '', 'B1
+B2
+Другая', '100', 's', '', '1', '0', '1', '246');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('290', '409', 'Модель', '', 'Ghibli
+GranCabrio
+GranTurismo
+Quattroporte
+Другая', '100', 's', '', '1', '0', '1', '247');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('291', '410', 'Модель', '', '2
+3
+3 MPS
+5
+6
+BT-50
+CX-5
+CX-7
+CX-9
+MX-5
+RX-8
+Другая', '100', 's', '', '1', '0', '1', '248');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('292', '411', 'Модель', '', 'A-класс
+A-класс AMG
+B-класс
+Citan
+CLA-класс
+CLA-класс AMG
+CLS-класс
+CLS-класс AMG
+CL-класс
+CL-класс AMG
+C-класс
+C-класс AMG
+E-класс
+E-класс AMG
+GLA-класс
+GLK-класс
+GL-класс
+GL-класс AMG
+G-класс
+G-класс AMG
+M-класс
+M-класс AMG
+R-класс
+SLK-класс
+SLK-класс AMG
+SLS-класс AMG
+SL-класс
+SL-класс AMG
+Sprinter
+Sprinter Classic
+S-класс
+S-класс AMG
+Viano
+Vito
+V-класс
+Другая', '100', 's', '', '1', '0', '1', '249');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('293', '412', 'Модель', '', 'Cooper
+Cooper Clubman
+Cooper Clubvan
+Cooper Countryman
+Cooper Paceman
+Cooper S
+Cooper S Clubman
+Cooper S Countryman
+Cooper S Paceman
+John Cooper Works
+John Cooper Works Clubman
+John Cooper Works Countryman
+John Cooper Works Paceman
+One
+One Clubman
+One Clubvan
+One Countryman
+Другая', '100', 's', '', '1', '0', '1', '250');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('294', '413', 'Модель', '', 'ASX
+Colt
+Eclipse
+i-MiEV
+L200
+Lancer
+Lancer Evolution
+Outlander
+Pajero
+Pajero Sport
+Другая', '100', 's', '', '1', '0', '1', '251');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('295', '414', 'Модель', '', 'Almera
+Almera Classic
+GT-R
+Juke
+Murano
+Navara
+Note
+NP300
+Pathfinder
+Patrol
+Qashqai
+Qashqai+2
+Sentra
+Teana
+Terrano
+Tiida
+X-Trail
+Другая', '100', 's', '', '1', '0', '1', '252');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('296', '415', 'Модель', '', 'Antara
+Astra
+Astra GTC
+Astra OPC
+Corsa
+Corsa OPC
+Insignia
+Insignia OPC
+Meriva
+Mokka
+Zafira
+Другая', '100', 's', '', '1', '0', '1', '253');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('297', '416', 'Модель', '', '107
+2008
+207
+208
+3008
+301
+308
+4007
+4008
+408
+508
+Bipper
+Boxer
+Expert
+Partner
+RCZ
+Другая', '100', 's', '', '1', '0', '1', '254');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('298', '417', 'Модель', '', '911 Carrera
+911 Carrera 4
+911 Carrera 4S
+911 Carrera S
+911 GT3
+911 Turbo
+911 Turbo S
+918 Spyder
+Boxster
+Boxster S
+Cayenne
+Cayenne GTS
+Cayenne S
+Cayenne Turbo
+Cayenne Turbo S
+Cayman
+Cayman S
+Macan S
+Macan Turbo
+Panamera
+Panamera 4
+Panamera 4S
+Panamera GTS
+Panamera S
+Panamera Turbo
+Другая', '100', 's', '', '1', '0', '1', '255');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('299', '418', 'Модель', '', 'Clio
+Clio RS
+Duster
+Fluence
+Kangoo
+Koleos
+Laguna
+Latitude
+Logan
+Master
+Megane
+Megane RS
+Sandero
+Sandero Stepway
+Scenic
+Symbol
+Trafic
+Другая', '100', 's', '', '1', '0', '1', '256');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('300', '419', 'Модель', '', 'Ghost
+Phantom
+Wraith
+Другая', '100', 's', '', '1', '0', '1', '257');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('301', '324', 'Модель', '', 'Alhambra
+Altea
+Altea Freetrack
+Altea XL
+Exeo
+Ibiza
+Ibiza FR
+Leon
+Leon FR
+Mii
+Toledo
+Другая', '100', 's', '', '1', '0', '1', '258');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('302', '421', 'Модель', '', 'Citigo
+Fabia
+Fabia RS
+Fabia Scout
+Octavia
+Octavia RS
+Praktik
+Rapid
+Roomster
+Superb
+Yeti
+Другая', '100', 's', '', '1', '0', '1', '259');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('303', '422', 'Модель', '', 'Fortwo
+Другая', '100', 's', '', '1', '0', '1', '260');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('304', '423', 'Модель', '', 'Actyon
+Kyron
+Rexton
+Stavic
+Другая', '100', 's', '', '1', '0', '1', '261');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('305', '424', 'Модель', '', 'BRZ
+Forester
+Impreza
+Legacy
+Outback
+Sambar
+Tribeca
+WRX
+WRX STI
+XV
+Другая', '100', 's', '', '1', '0', '1', '262');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('306', '425', 'Модель', '', 'Grand Vitara
+Ignis
+Jimny
+Kizashi
+Splash
+Swift
+SX4
+Другая', '100', 's', '', '1', '0', '1', '263');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('307', '426', 'Модель', '', 'Model S
+Model X
+Другая', '100', 's', '', '1', '0', '1', '264');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('308', '427', 'Модель', '', '4runner
+Allex
+Allion
+Alphard
+Altezza
+Aristo
+Aurion
+Auris
+Avalon
+Avensis
+Aygo
+BB
+Belta
+Blade
+Blizzard
+Brevis
+Caldina
+Cami
+Camry
+Carib
+Carina
+Cavalier
+Celica
+Celsior
+Century
+Chaser
+Corolla
+Corona
+Corsa
+Cressida
+Cresta
+Crown
+Curren
+Cynos
+Duet
+Echo
+Estima
+FJ Cruiser
+Fortuner
+Funcargo
+Gaia
+Grand Hiace
+Granvia
+GT 86
+Harrier
+Hiace
+Highlander
+Hilux
+Innova
+Ipsum
+iQ
+Isis
+Ist
+Kluger
+Land Cruiser
+Land Cruiser Prado
+Lite Ace
+Mark II
+Mark X
+MasterAce
+Matrix
+Mega Cruiser
+MR 2
+MR-S
+Nadia
+Noah
+Opa
+Origin
+Paseo
+Passo
+Passo Sette
+Picnic
+Platz
+Porte
+Premio
+Previa
+Prius
+Probox
+Progres
+Pronard
+Ractis
+Raum
+RAV4
+Regius
+Rush
+Scepter
+Sequoia
+Sera
+Sienna
+Sienta
+Soarer
+Solara
+Soluna
+Sparky
+Sprinter
+Starlet
+Succeed
+Supra
+Tacoma
+Tercel
+Town Ace
+Toyota SAI
+Tundra
+Urban Cruiser
+Vellfire
+Venza
+Verossa
+Verso
+Vios
+Vista
+Vitz
+Voltz
+Voxy
+Will
+Windom
+Wish
+Yaris
+Другая', '100', 's', '', '1', '0', '1', '265');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('309', '428', 'Модель', '', 'Amarok
+Beetle
+Caddy
+California
+Caravelle
+Crafter
+CrossPolo
+Golf
+Golf GTI
+Golf Plus
+Golf R
+Jetta
+Multivan
+Passat
+Passat CC
+Phaeton
+Polo
+Scirocco
+Tiguan
+Touareg
+Touran
+Transporter
+Up
+Другая', '100', 's', '', '1', '0', '1', '266');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('310', '429', 'Модель', '', 'C30
+C70
+S40
+S60
+S80
+V40 Cross Country
+V60
+XC60
+XC70
+XC90
+Другая', '100', 's', '', '1', '0', '1', '267');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('311', '430', 'Модель', '', 'Corda
+Estina
+Tingo
+Другая', '100', 's', '', '1', '0', '1', '268');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('312', '431', 'Модель', '', '1705
+1706
+2345
+2346
+2347
+2349
+Другая', '100', 's', '', '1', '0', '1', '269');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('313', '432', 'Модель', '', 'Валдай 3310
+Валдай 331063
+ГАЗель
+ГАЗель 2705
+ГАЗель 3221
+ГАЗель 3302
+ГАЗель 33023
+ГАЗель 33025
+ГАЗель Next
+ГАЗель Бизнес
+Соболь 2217
+Соболь 2310
+Соболь 2752
+Другая', '100', 's', '', '1', '0', '1', '270');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('314', '434', 'Модель', '', 'Chance
+Vida
+Другая', '100', 's', '', '1', '0', '1', '271');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('315', '435', 'Модель', '', 'Aquila
+C190
+Hyundai Accent
+Hyundai Santa Fe Classic
+Hyundai Sonata
+Road Partner
+Tager
+Tiggo
+Vega
+Vortex Corda
+Vortex Estina
+Vortex Tingo
+С10
+С30
+Другая', '100', 's', '', '1', '0', '1', '272');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('316', '436', 'Модель', '', '452 Буханка
+469
+Hunter
+Patriot
+Pickup
+Другая', '100', 's', '', '1', '0', '1', '273');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('317', '173', 'Тип кузова', '', 'Седан
+Хетчбэк
+Универсал
+Внедорожник
+Кабриолет
+Кроссовер
+Купе
+Лимузин
+Минивэн
+Пикап
+Фургон
+Микроавтобус', '100', 's', '', '1', '0', '1', '274');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('318', '173', 'Объём двигателя, л', '', '0.6
+0.7
+0.8
+0.9
+1.0
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+1.9
+2.0
+2.1
+2.2
+2.3
+2.4
+2.5
+2.6
+2.7
+2.8
+2.9
+3.0
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+3.8
+3.9
+4.0
+4.1
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+5.0
+5.1
+5.2
+5.3
+5.4
+5.5
+5.6
+5.7
+5.8
+5.9
+6.0
+6.0+', '100', 's', '', '1', '0', '1', '275');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('319', '173', 'Коробка передач', '', 'Автоматическая
+Механическая', '100', 's', '', '1', '0', '1', '276');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('320', '173', 'Тип двигателя', '', 'Бензиновый
+Дизельный
+Гибридный', '100', 's', '', '1', '0', '1', '277');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('321', '173', 'Привод', '', 'Передний
+Задний
+Полный', '100', 's', '', '1', '0', '1', '278');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('322', '476', 'Количество комнат', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '279');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('323', '476', 'Вид объекта', '', 'Вторичка
+Новостройка', '100', 's', '', '1', '0', '1', '280');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('324', '476', 'Этаж', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '281');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('325', '476', 'Этажей в доме', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99', '100', 's', '', '1', '0', '1', '282');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('326', '476', 'Тип дома', '', 'Кирпичный
+Панельный
+Блочный
+Монолитный
+Деревянный', '100', 's', '', '1', '0', '1', '283');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('327', '477', 'Количество комнат', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '284');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('328', '477', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '285');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('329', '477', 'Этаж', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '286');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('330', '477', 'Этажей в доме', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '287');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('331', '477', 'Тип дома', '', 'Кирпичный
+Панельный
+Блочный
+Монолитный
+Деревянный', '100', 's', '', '1', '0', '1', '288');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('332', '478', 'Количество комнат', '', 'Любое
+Студия
+1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '289');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('333', '479', 'Количество комнат', '', 'Любое
+Студия
+1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '290');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('334', '479', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '291');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('335', '492', 'Вид объекта', '', 'Дом
+Дача
+Коттедж
+Таунхаус', '100', 's', '', '1', '0', '1', '292');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('336', '492', 'Этажей в доме', '', '1
+2
+3
+4
+&gt;4', '100', 's', '', '1', '0', '1', '293');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('337', '492', 'Материал стен', '', 'Кирпич
+Брус
+Бревно
+Металл
+Пеноблоки
+Сэндвич-панели
+Ж/б панели
+Экспериментальные материалы', '100', 's', '', '1', '0', '1', '294');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('338', '492', 'Расстояние до города, км', '', '0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160', '100', 's', '', '1', '0', '1', '295');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('339', '493', 'Вид объекта', '', 'Дом
+Дача
+Коттедж
+Таунхаус', '100', 's', '', '1', '0', '1', '296');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('340', '493', 'Этажей в доме', '', '1
+2
+3
+4
+&gt;4', '100', 's', '', '1', '0', '1', '297');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('341', '493', 'Материал стен', '', 'Кирпич
+Брус
+Бревно
+Металл
+Пеноблоки
+Сэндвич-панели
+Ж/б панели
+Экспериментальные материалы', '100', 's', '', '1', '0', '1', '298');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('342', '493', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '299');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('343', '493', 'Расстояние до города, км', '', '0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160', '100', 's', '', '1', '0', '1', '300');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('344', '494', 'Вид объекта', '', 'Дом
+Дача
+Коттедж
+Таунхаус', '100', 's', '', '1', '0', '1', '301');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('345', '494', 'Местонахождение', '', 'В черте города
+За городом', '100', 's', '', '1', '0', '1', '302');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('346', '495', 'Вид объекта', '', 'Дом
+Дача
+Коттедж
+Таунхаус', '100', 's', '', '1', '0', '1', '303');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('347', '495', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '304');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('348', '495', 'Местонахождение', '', 'В черте города
+За городом', '100', 's', '', '1', '0', '1', '305');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('349', '177', 'Категория земель', '', 'Поселений (ИЖС)
+Сельхозназначения (СНТ, ДНП)
+Промназначения', '100', 's', '', '1', '0', '1', '306');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('350', '488', 'Расстояние до города, км', '', '0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160', '100', 's', '', '1', '0', '1', '307');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('351', '489', 'Расстояние до города, км', '', '0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160', '100', 's', '', '1', '0', '1', '308');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('352', '490', 'Местонахождение', '', 'В черте города
+За городом', '100', 's', '', '1', '0', '1', '309');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('353', '491', 'Местонахождение', '', 'В черте города
+За городом', '100', 's', '', '1', '0', '1', '310');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('354', '179', 'Вид объекта', '', 'Гараж
+Машиноместо', '100', 's', '', '1', '0', '1', '311');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('355', '496', 'Площадь, м²', '', '10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+&gt;30', '100', 's', '', '1', '0', '1', '312');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('356', '496', 'Охрана', '', 'Да
+Нет', '100', 's', '', '1', '0', '1', '313');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('357', '497', 'Площадь, м²', '', '10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+&gt;30', '100', 's', '', '1', '0', '1', '314');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('358', '497', 'Охрана', '', 'Да
+Нет', '100', 's', '', '1', '0', '1', '315');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('361', '176', 'Вид объекта', '', 'Гостиница
+Офисное помещение
+Помещение свободного назначения
+Производственное помещение
+Складское помещение
+Торговое помещение', '100', 's', '', '1', '0', '1', '316');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('362', '180', 'Вид объекта', '', 'Квартира, апартаменты
+Дом, вилла
+Земельный участок
+Гараж, машиноместо
+Коммерческая недвижимость', '100', 's', '', '1', '0', '1', '317');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('363', '180', 'Страна', '', 'Абхазия
+Австралия
+Австрия
+Азербайджан
+Албания
+Андорра
+Армения
+Белоруссия
+Бельгия
+Болгария
+Босния и Герцеговина
+Бразилия
+Великобритания
+Венгрия
+Венесуэла
+Германия
+Гоа
+Греция
+Грузия
+Дания
+Доминикана
+Другая страна
+Египет
+Израиль
+Ирландия
+Испания
+Италия
+Кабо-Верде
+Казахстан
+Камбоджа
+Канада
+Кипр
+Киргизия
+Китай
+Латвия
+Литва
+Люксембург
+Македония
+Мальдивы
+Мальта
+Мексика
+Молдова
+Монако
+Монголия
+Нидерланды
+Новая Зеландия
+Норвегия
+ОАЭ
+Панама
+Польша
+Португалия
+Румыния
+Сейшелы
+Сербия
+Словакия
+Словения
+США
+Таджикистан
+Тайланд
+Тунис
+Туркменистан
+Турция
+Узбекистан
+Украина
+Уругвай
+Финляндия
+Франция
+Хорватия
+Черногория
+Чехия
+Швейцария
+Швеция
+Эстония
+Южная Корея
+Южная Осетия
+Япония', '100', 's', '', '1', '0', '1', '318');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('364', '501', 'Срок аренды', '', 'На длительный срок
+Посуточно', '100', 's', '', '1', '0', '1', '319');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('365', '503', 'Срок аренды', '', 'На длительный срок
+Посуточно', '100', 's', '', '1', '0', '1', '320');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('368', '730', 'Вид одежды', '', 'Женская
+Мужская', '100', 's', '', '1', '0', '1', '321');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('369', '730', 'Размер', '', '34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+&gt;46', '100', 's', '', '1', '0', '1', '322');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('371', '731', 'Предмет одежды', '', 'Брюки
+Верхняя одежда
+Комбинезоны и боди
+Пижамы
+Трикотаж
+Шапки, варежки, шарфы
+Другое', '100', 's', '', '1', '0', '1', '323');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('372', '733', 'Размер', '', 'меньше 19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+&gt;36
+Без размера', '100', 's', '', '1', '0', '1', '324');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('373', '732', 'Размер', '', '50-56 cм (0-2 мес)
+62-68 см (2-6 мес)
+74-80 см (7-12 мес)
+86-92 см (1-2 года)
+98-104 см (2-4 года)
+110-116 см (4-6 лет)
+122-128 см (6-8 лет)
+134-140 см (8-10 лет)
+146-152 см (10-12 лет)
+Без размера', '100', 's', '', '1', '0', '1', '325');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('374', '731', 'Размер', '', '50-56 cм (0-2 мес)
+62-68 см (2-6 мес)
+74-80 см (7-12 мес)
+86-92 см (1-2 года)
+98-104 см (2-4 года)
+110-116 см (4-6 лет)
+122-128 см (6-8 лет)
+134-140 см (8-10 лет)
+146-152 см (10-12 лет)
+Без размера', '100', 's', '', '1', '0', '1', '326');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('375', '197', 'Тип товара', '', 'Планшеты
+Электронные книги
+Аккумуляторы
+Гарнитуры и наушники
+Док-станции
+Зарядные устройства
+Кабели и адаптеры
+Модемы и роутеры
+Стилусы
+Чехлы и плёнки
+Другое', '100', 's', '', '1', '0', '1', '327');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('376', '210', 'Вид товара', '', 'Карты, купоны
+Концерты
+Путешествия
+Спорт
+Театр, опера, балет
+Цирк, кино
+Шоу, мюзикл
+Другое', '100', 's', '', '1', '0', '1', '328');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('377', '206', 'Вид велосипеда', '', 'Горные
+Дорожные
+ВМХ
+Детские
+Запчасти и аксессуары', '100', 's', '', '1', '0', '1', '329');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('378', '204', 'Вид товара', '', 'Журналы, газеты, брошюры
+Книги
+Учебная литература
+Другое', '100', 's', '', '1', '0', '1', '330');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('379', '205', 'Вид товара', '', 'Банкноты
+Билеты
+Вещи знаменитостей, автографы
+Военные вещи
+Грампластинки
+Документы
+Жетоны, медали, значки
+Игры
+Календари
+Картины
+Киндер-сюрприз
+Конверты и почтовые карточки
+Макеты оружия
+Марки
+Модели
+Монеты
+Открытки
+Пепельницы, зажигалки
+Пластиковые карточки
+Спортивные карточки
+Фотографии, письма
+Этикетки, бутылки, пробки
+Другое', '100', 's', '', '1', '0', '1', '331');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('380', '207', 'Вид товара', '', 'Аккордеоны, гармони, баяны
+Гитары и другие струнные
+Духовые
+Пианино и другие клавишные
+Скрипки и другие смычковые
+Ударные
+Для студии и концертов
+Аксессуары
+Другое', '100', 's', '', '1', '0', '1', '332');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('381', '203', 'Вид товара', '', 'Бильярд и боулинг
+Дайвинг и водный спорт
+Единоборства
+Зимние виды спорта
+Игры с мячом
+Настольные игры
+Пейнтбол и страйкбол
+Ролики и скейтбординг
+Теннис, бадминтон, пинг-понг
+Туризм
+Фитнес и тренажёры
+Другое', '100', 's', '', '1', '0', '1', '333');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('382', '209', 'Возраст', '', '18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99', '100', 's', '', '1', '0', '1', '334');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('383', '209', 'С кем хотите познакомиться', '', 'Парень ищет девушку
+Девушка ищет парня', '100', 's', '', '1', '0', '1', '335');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('384', '209', 'Цель знакомства', '', 'Любовь и отношения
+Дружба и общение', '100', 's', '', '1', '0', '1', '336');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('385', '214', 'Порода', '', 'Акита
+Аляскинский маламут
+Американский бульдог
+Английский бульдог
+Басенджи
+Бассет
+Бельгийская овчарка
+Бельгийский гриффон
+Бернский зенненхунд
+Бивер
+Бигль
+Бишон фризе
+Бобтейл
+Боксер
+Болонки
+Бриар
+Брюссельский гриффон
+Бульмастиф
+Бультерьер
+Бурбуль
+Вельштерьер
+Вест хайленд вайт терьер
+Восточноевропейская овчарка
+Далматин
+Джек Рассел терьер
+Доберман
+Дог
+Ирландский терьер
+Йоркширский терьер
+Кавказская овчарка
+Кане Корсо
+Керн терьер
+Китайская хохлатая
+Кокер спаниель
+Колли
+Курцхаар
+Лабрадор
+Лайка
+Левретка
+Леонбергер
+Лхаса Апсо
+Мастиф
+Миттельшнауцер
+Мопс
+Московская сторожевая
+Немецкая овчарка
+Норвич терьер
+Ньюфаундленд
+Овчарка
+Папийон
+Пекинес
+Петербургская орхидея
+Питбуль
+Пойнтер
+Пти брабансон
+Пудель
+Ретривер
+Ризеншнауцер
+Родезийский риджбек
+Ротвейлер
+Русская борзая
+Самоедская лайка
+Сенбернар
+Сеттер
+Сибирская хаски
+Скотч-терьер
+Спаниель
+Среднеазиатская овчарка
+Стаффордширский терьер
+Такса
+Той-пудель
+Той-терьер
+Фландрский бувье
+Фокстерьер
+Французская овчарка
+Французский бульдог
+Цвергпинчер
+Цвергшнауцер
+Чау-чау
+Чихуахуа
+Шар-пей
+Швейцарская овчарка
+Шелти
+Ши-тцу
+Шпиц
+Эрдельтерьер
+Ягдтерьер
+Японский хин
+Другая', '100', 's', '', '1', '0', '1', '337');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('386', '213', 'Порода', '', 'Абиссинская
+Американский кёрл
+Балинез
+Бенгальская
+Британская
+Бурманская
+Девон-рекс
+Донской сфинкс
+Европейская
+Канадский сфинкс
+Корниш-рекс
+Курильский бобтейл
+Ла-перм лаперм
+Манчкин
+Мейн-кун
+Меконгский бобтейл
+Невская маскарадная
+Норвежская лесная
+Ориентальная
+Оцикет
+Персидская
+Петерболд
+Русская голубая
+Селкирк-рекс
+Сиамская
+Сибирская
+Сингапурская
+Сомалийская
+Тайская
+Турецкая ангора
+Уральский рекс
+Шотландская
+Экзотическая
+Японский бобтейл
+Другая', '100', 's', '', '1', '0', '1', '338');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('387', '217', 'Вид животного', '', 'Амфибии
+Грызуны
+Кролики
+Лошади
+Рептилии
+С/х животные
+Хорьки
+Другое', '100', 's', '', '1', '0', '1', '339');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('388', '154', 'Сфера деятельности', '', 'IT, интернет, телеком
+Автомобильный бизнес
+Административная работа
+Банки, инвестиции
+Бухгалтерия, финансы
+Высший менеджмент
+Госслужба, НКО
+ЖКХ, эксплуатация
+Искусство, развлечения
+Консультирование
+Маркетинг, реклама, PR
+Медицина, фармацевтика
+Образование, наука
+Охрана, безопасность
+Продажи
+Производство, сырьё, с/х
+Страхование
+Строительство
+Транспорт, логистика
+Туризм, рестораны
+Управление персоналом
+Фитнес, салоны красоты
+Юриспруденция
+Без опыта, студенты', '100', 's', '', '1', '0', '1', '340');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('389', '154', 'График работы', '', 'Полный день
+Неполный день
+Сменный график
+Удалённая работа
+Любой', '100', 's', '', '1', '0', '1', '341');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('390', '154', 'Опыт работы, лет', '', '0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50', '100', 's', '', '1', '0', '1', '342');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('391', '154', 'Образование', '', 'Высшее
+Незаконченное высшее
+Среднее
+Среднее специальное
+Другое', '100', 's', '', '1', '0', '1', '343');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('392', '154', 'Пол', '', 'Мужской
+Женский', '100', 's', '', '1', '0', '1', '344');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('393', '154', 'Возраст', '', '18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99', '100', 's', '', '1', '0', '1', '345');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('414', '481', 'Тип дома', '', 'Кирпичный
+Панельный
+Блочный
+Монолитный
+Деревянный', '100', 's', '', '1', '0', '1', '346');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('413', '481', 'Этажей в доме', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '347');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('410', '481', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '348');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('411', '481', 'Комнат в квартире', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '349');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('412', '481', 'Этаж', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '350');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('415', '483', 'Срок аренды', '', 'На длительный срок
+Месяц
+Сутки
+Час', '100', 's', '', '1', '0', '1', '351');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('406', '480', 'Комнат в квартире', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+&gt;9', '100', 's', '', '1', '0', '1', '352');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('407', '480', 'Тип дома', '', 'Кирпичный
+Панельный
+Блочный
+Монолитный
+Деревянный', '100', 's', '', '1', '0', '1', '353');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('408', '480', 'Этаж', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '354');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('409', '480', 'Этажей в доме', '', '1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12', '100', 's', '', '1', '0', '1', '355');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('416', '523', 'Тип услуги', '', 'Изготовление ключей
+Мелкий бытовой ремонт
+Пошив и ремонт одежды
+Ремонт и обслуживание 
+техники
+Ремонт часов
+Сборка и ремонт мебели
+Уборка, клининг
+Установка техники
+Химчистка, стирка
+Ювелирные услуги
+Другое', '100', 's', '', '1', '0', '1', '356');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('417', '524', 'Тип услуги', '', 'Бухгалтерия, финансы
+Консультирование
+Курьерские услуги
+Набор и коррекция текста
+Перевод
+Юридические услуги', '100', 's', '', '1', '0', '1', '357');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('418', '528', 'Тип услуги', '', 'Аренда оборудования
+Монтаж и обслуживание оборудования
+Производство, обработка', '100', 's', '', '1', '0', '1', '358');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('419', '533', 'Тип услуги', '', 'Маркетинг, реклама, PR
+Полиграфия, дизайн', '100', 's', '', '1', '0', '1', '359');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('420', '536', 'Тип услуги', '', 'Авто на заказ
+Автосервис
+Аренда спецтехники
+Грузоперевозки
+Прокат авто
+Складские услуги
+Такси', '100', 's', '', '1', '0', '1', '360');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('421', '505', 'Тип услуги', '', 'Изготовление ключей
+Мелкий бытовой ремонт
+Пошив и ремонт одежды
+Ремонт и обслуживание 
+техники
+Ремонт часов
+Сборка и ремонт мебели
+Уборка, клининг
+Установка техники
+Химчистка, стирка
+Ювелирные услуги
+Другие', '100', 's', '', '1', '0', '1', '361');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('422', '506', 'Тип услуги', '', 'Бухгалтерия, финансы
+Консультирование
+Курьерские услуги
+Набор и коррекция текста
+Перевод
+Юридические услуги
+Другие', '100', 's', '', '1', '0', '1', '362');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('423', '510', 'Тип услуги', '', 'Аренда оборудования
+Монтаж и обслуживание оборудования
+Производство, обработка
+Другое', '100', 's', '', '1', '0', '1', '363');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('424', '515', 'Тип услуги', '', 'Маркетинг, реклама, PR
+Полиграфия, дизайн
+Другое', '100', 's', '', '1', '0', '1', '364');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('425', '518', 'Тип услуги', '', 'Авто на заказ
+Автосервис
+Аренда спецтехники
+Грузоперевозки
+Прокат авто
+Складские услуги
+Такси
+Другое', '100', 's', '', '1', '0', '1', '365');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('426', '212', 'Вид бизнеса', '', 'Интернет-магазин
+Общественное питание
+Производство
+Развлечения
+Сельское хозяйство
+Строительство
+Сфера услуг
+Торговля
+Другое', '100', 's', '', '1', '0', '1', '366');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('427', '211', 'Вид оборудования', '', 'Для магазина
+Для офиса
+Для ресторана
+Для салона красоты
+Промышленное
+Другое', '100', 's', '', '1', '0', '1', '367');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('428', '173', 'Мощность, л.с.', '', '', '100', 'v', '', '1', '0', '1', '368');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('429', '476', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '369');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('430', '477', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '370');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('431', '480', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '371');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('432', '481', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '372');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('433', '492', 'Площадь дома, м²', '', '', '100', 'v', '', '1', '0', '1', '373');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('434', '492', 'Площадь участка, соток', '', '', '100', 'v', '', '1', '0', '1', '374');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('435', '493', 'Площадь дома, м²', '', '', '100', 'v', '', '1', '0', '1', '375');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('436', '493', 'Площадь участка, соток', '', '', '100', 'v', '', '1', '0', '1', '376');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('437', '488', 'Площадь, соток', '', '', '100', 'v', '', '1', '0', '1', '377');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('438', '489', 'Площадь, соток', '', '', '100', 'v', '', '1', '0', '1', '378');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('439', '484', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '379');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('440', '485', 'Площадь, м²', '', '', '100', 'v', '', '1', '0', '1', '380');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('441', '167', 'Желаемая должность', '', '', '500', 'v', '', '2', '0', '1', '381');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('486', '0', 'Фото 4', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '392');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('485', '0', 'Фото 3', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '391');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('484', '0', 'Фото 2', 'Вы можете загрузить <br />фотографию', '', '1000', 'i', '', '2', '0', '1', '390');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('475', '0', 'Телефон', '', '', '100', 'v', 't', '1', '0', '0', '383');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('477', '158', 'Адрес', '', '', '200', 'v', '', '1', '0', '0', '384');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('478', '0', 'Адрес сайта', '', '', '100', 'v', 'u', '2', '0', '0', '385');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('480', '0', 'Видео с YouTube', '', '', '100', 'y', '', '2', '0', '1', '386');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('481', '0', 'Цена', '', '', '0', 'p', '', '2', '0', '1', '387');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('482', '0', 'Торг', '', 'торг', '100', 'c', '', '2', '0', '0', '388');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('483', '0', 'Фото 1', 'jpg, png, gif', 'jpg
+GIF
+gif
+JPG
+PNG
+png', '1000', 'i', '', '2', '0', '1', '389');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('454', '168', 'Мощность, л.с.', '', '', '100', 'v', '', '1', '0', '1', '382');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('493', '0', 'Хочу', '', 'Продать
+Купить
+Обменять', '100', 'r', '', '2', '0', '1', '0');
+INSERT INTO `eboard_fields`(`id`, `cat`, `name`, `comment`, `values`, `max`, `type`, `type_string`, `req`, `hide`, `block`, `sort`) VALUES ('492', '0', 'Фото 10', 'Только изображения <br />jpg, png, gif<br />и не более чем 1мб', 'jpg
+GIF
+gif
+JPG
+PNG
+png', '1000', 'i', '', '2', '0', '1', '398');
+
+
+DROP TABLE IF EXISTS `eboard_images`;
+CREATE TABLE `eboard_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(5) NOT NULL,
+  `file` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_ind_cat`;
+CREATE TABLE `eboard_ind_cat` (
+  `message` int(11) NOT NULL,
+  `cat` int(11) NOT NULL,
+  PRIMARY KEY (`message`,`cat`),
+  KEY `cat` (`cat`),
+  KEY `message` (`message`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('6', '760');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('7', '760');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('8', '760');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('42', '762');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('43', '762');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('44', '762');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('45', '762');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('46', '762');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('71', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('72', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('73', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('74', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('75', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('76', '761');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('91', '763');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('104', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('104', '175');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('124', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('124', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('125', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('125', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('126', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('126', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('127', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('127', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('128', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('128', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('129', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('129', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('130', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('130', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('131', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('131', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('132', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('132', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('133', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('133', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('134', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('134', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('135', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('135', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('136', '158');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('136', '178');
+INSERT INTO `eboard_ind_cat`(`message`, `cat`) VALUES ('151', '760');
+
+
+DROP TABLE IF EXISTS `eboard_ind_region`;
+CREATE TABLE `eboard_ind_region` (
+  `message` int(11) NOT NULL,
+  `cat` int(11) NOT NULL,
+  PRIMARY KEY (`message`,`cat`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('6', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('7', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('8', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('42', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('43', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('44', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('45', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('46', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('71', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('72', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('73', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('74', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('75', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('76', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('91', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('104', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('124', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('125', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('126', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('127', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('128', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('129', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('130', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('131', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('132', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('133', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('134', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('135', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('136', '120');
+INSERT INTO `eboard_ind_region`(`message`, `cat`) VALUES ('151', '120');
+
+
+DROP TABLE IF EXISTS `eboard_mailing_db`;
+CREATE TABLE `eboard_mailing_db` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `text` text NOT NULL,
+  `single` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_mailing_db`(`id`, `time`, `title`, `text`, `single`) VALUES ('1', '3', 'Ваше объявление на сайте %title%', '<p>Здравствуйте, %user%,</p>
+<p>Вы добавили объявление %message_title% на сайт %title%,</p>
+<p>спасибо, что воспользовались нашими услугами. Ссылка на Ваше объявление:</p>
+<p>%link%</p>
+<p>Со временем, объявление уходит вниз в общем списке, поэтому Вы можете воспользоваться дополнительными услугами, чтобы увеличить количество просмотров объявления.</p>', '0');
+INSERT INTO `eboard_mailing_db`(`id`, `time`, `title`, `text`, `single`) VALUES ('2', '7', 'Уже неделю у нас размещено объявление &quot;%message_title%&quot;', '<p>Здравствуйте, %user%,</p>
+<p>спасибо, что добавили объявление на сайт %title%.</p>
+<p>Если объявление ещё актуально&nbsp; Вы можете  воспользоваться дополнительными услугами, чтобы увеличить количество  просмотров объявления: поднять объявление в общем списке, выделить цветом или вынести в отдельный рекламны блок.</p>
+<p>Ссылка на Ваше объявление:</p>
+<p>%link%</p>', '0');
+INSERT INTO `eboard_mailing_db`(`id`, `time`, `title`, `text`, `single`) VALUES ('3', '14', 'Прошло 2 недели с момента публикации', '<p>Здравствуйте, %user%,</p>
+<p>уже прошло две денели с момента публикации объявления %message_title% на сайт %title%.</p>
+<p>Если объявление ещё актуально&nbsp; Вы можете  воспользоваться дополнительными услугами, чтобы увеличить количество  просмотров объявления: поднять объявление в общем списке, выделить цветом или вынести в отдельный рекламны блок.</p>
+<p>Ссылка на Ваше объявление:</p>
+<p>%link%</p>', '0');
+INSERT INTO `eboard_mailing_db`(`id`, `time`, `title`, `text`, `single`) VALUES ('4', '30', 'Прошёл месяц с момента публикации &quot;%message_title%&quot;', '<p>Здравствуйте, %user%,</p>
+<p>месяц тому назад Вы опубликовали объявление %message_title% на сайте %title%</p>
+<p>Если объявление ещё актуально&nbsp; Вы можете  воспользоваться дополнительными услугами, чтобы увеличить количество  просмотров объявления: поднять объявление в общем списке, выделить цветом или вынести в отдельный рекламны блок.</p>
+<p>Ссылка на Ваше объявление:</p>
+<p>%link%</p>', '0');
+INSERT INTO `eboard_mailing_db`(`id`, `time`, `title`, `text`, `single`) VALUES ('5', '0', 'Вы зарегистрированы на сайте %title%', '<p>Здравствуйте, %user%,</p>
+<p>Вы зарегистрированы на сайте %title%. Позвольте напомнить, что Вы всё ещё можете воспользоваться услугами нашего сервиса.</p>', '1');
+
+
+DROP TABLE IF EXISTS `eboard_mailing_queue`;
+CREATE TABLE `eboard_mailing_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `db` int(11) NOT NULL,
+  `message` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_mailing_sended`;
+CREATE TABLE `eboard_mailing_sended` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `db` int(11) NOT NULL,
+  `message` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `db` (`db`,`message`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_mailing_unsubscribe`;
+CREATE TABLE `eboard_mailing_unsubscribe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_modules`;
+CREATE TABLE `eboard_modules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat` varchar(100) NOT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `type` varchar(4) DEFAULT NULL,
+  `content` text,
+  `autor` varchar(200) NOT NULL,
+  `keywords` varchar(200) NOT NULL,
+  `copyright` varchar(200) NOT NULL,
+  `description` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_modules`(`id`, `cat`, `title`, `type`, `content`, `autor`, `keywords`, `copyright`, `description`) VALUES ('1', 'rules', 'Политика конфиденциальности', 'html', '<h1 style=\"box-sizing: inherit; font-size: 2.14286rem; margin: 0px 0px 1.78571rem; padding: 0px; font-family: NotoSerif-Bold, Arial, sans-serif; font-weight: bold; color: rgb(0, 0, 0); text-rendering: optimizeLegibility; line-height: 1.4;\">Соглашение</h1>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\"><b style=\"box-sizing: inherit; line-height: inherit;\"><u style=\"box-sizing: inherit;\">Список представленных документов:</u></b></p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<ul style=\"box-sizing: inherit; margin: 0px 0px 1.5rem 1.25rem; padding-right: 0px; padding-left: 0px; line-height: 1.36; list-style-position: outside; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">
+	<li style=\"box-sizing: inherit; margin: 0px; padding: 0px; font-size: inherit;\">Политика конфиденциальности интернет-сайта ural56.ru;</li>
+	<li style=\"box-sizing: inherit; margin: 0px; padding: 0px; font-size: inherit;\">Соглашение об использовании материалов и сервисов интернет-сайта ural56.ru (пользовательское соглашение);</li>
+	<li style=\"box-sizing: inherit; margin: 0px; padding: 0px; font-size: inherit;\">Согласие посетителя сайта ural56.ru на обработку персональных данных.</li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<hr style=\"box-sizing: content-box; height: 0px; max-width: 85.7143rem; border-top: 0px; border-bottom: 1px solid rgb(230, 230, 230); margin: 0px auto; clear: both; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\">&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\"><b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">Политика конфиденциальности</span></b><br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">интернет-сайта ural56.ru</span></b></p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\"><br style=\"box-sizing: inherit;\" />
+г. Орск&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &laquo;01&raquo; мая 2017 г.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+Настоящая&nbsp; Политика&nbsp; конфиденциальности&nbsp; персональных&nbsp; данных&nbsp; (далее - Политика&nbsp;&nbsp; конфиденциальности)&nbsp;&nbsp; действует&nbsp; в&nbsp; отношении&nbsp; всей&nbsp; информации, размещенной&nbsp;&nbsp;&nbsp;&nbsp; на&nbsp;&nbsp;&nbsp;&nbsp; сайте&nbsp;&nbsp;&nbsp;&nbsp; в&nbsp;&nbsp;&nbsp;&nbsp; сети&nbsp;&nbsp;&nbsp;&nbsp; Интернет по адресу:&nbsp;<a href=\"https://www.ural56.ru/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">www.ural56.ru</a>&nbsp;(далее - Сайт), которую посетители, другие пользователи могут&nbsp; получить о&nbsp;&nbsp; Пользователе&nbsp; во&nbsp; время&nbsp; использования&nbsp; Сайта,&nbsp; его&nbsp; сервисов,&nbsp; программ&nbsp; и продуктов.</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">Использование сервисов Сайта означает безоговорочное согласие Пользователя с настоящей Политикой и указанными в ней условиями обработки его персональной информации; в случае несогласия с этими условиями Пользователь должен воздержаться от использования сервисов.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">1. ОБЩИЕ ПОЛОЖЕНИЯ</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+1.1. В рамках настоящей Политики под персональной информацией Пользователя понимаются:<br style=\"box-sizing: inherit;\" />
+1.1.1. Персональная информация, которую Пользователь предоставляет о себе самостоятельно при регистрации (создании учетной записи) или в процессе использования Сервисов, включая персональные данные Пользователя. Обязательная для предоставления Сервисов информация помечена специальным образом. Иная информация предоставляется Пользователем на его усмотрение.<br style=\"box-sizing: inherit;\" />
+1.1.2. Данные, которые автоматически передаются сервисам Сайта в процессе их использования с помощью установленного на устройстве Пользователя программного обеспечения, в том числе IP-адрес, данные файлов cookie, информация о браузере Пользователя (или иной программе, с помощью которой осуществляется доступ к сервисам), технические характеристики оборудования и программного обеспечения, используемых Пользователем, дата и время доступа к сервисам, адреса запрашиваемых страниц и иная подобная информация.<br style=\"box-sizing: inherit;\" />
+1.1.3. Иная информация о Пользователе, обработка которой предусмотрена Соглашением об использовании Сайта.<br style=\"box-sizing: inherit;\" />
+1.1.4. Настоящая Политика конфиденциальности применяется только к Сайту&nbsp;<a href=\"https://www.ural56.ru/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">www.ural56.ru</a>. Сайт&nbsp;<a href=\"https://www.ural56.ru/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">www.ural56.ru</a>&nbsp;не контролирует и не несет ответственности за сайты третьих лиц, на которые Пользователь может перейти по ссылкам, доступным на Сайте&nbsp;<a href=\"https://www.ural56.ru/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">www.ural56.ru</a>.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">2. ЦЕЛИ ОБРАБОТКИ ПЕРСОНАЛЬНОЙ ИНФОРМАЦИИ ПОЛЬЗОВАТЕЛЕЙ</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+2.1. Сайт собирает и хранит только ту персональную информацию, которая необходима для предоставления сервисов или исполнения соглашений и договоров с Пользователем, за исключением случаев, когда законодательством предусмотрено обязательное хранение персональной информации в течение определенного законом срока.<br style=\"box-sizing: inherit;\" />
+2.2. Персональную информацию Пользователя Сайт обрабатывает в следующих целях:<br style=\"box-sizing: inherit;\" />
+2.2.1. Идентификации Пользователя, зарегистрированного на Сайте.<br style=\"box-sizing: inherit;\" />
+2.2.2. Предоставления Пользователю доступа к персонализированным ресурсам Сайта.<br style=\"box-sizing: inherit;\" />
+2.2.3. Установления с Пользователем обратной связи, включая направление уведомлений, запросов, касающихся использования Сайта, оказания услуг, обработку запросов и заявок от Пользователя.<br style=\"box-sizing: inherit;\" />
+2.2.4. Определения места нахождения Пользователя для обеспечения безопасности, предотвращения мошенничества.<br style=\"box-sizing: inherit;\" />
+2.2.5. Подтверждения достоверности и полноты персональных данных, предоставленных Пользователем.<br style=\"box-sizing: inherit;\" />
+2.2.6. Создания учетной записи, если Пользователь дал согласие на создание учетной записи.<br style=\"box-sizing: inherit;\" />
+2.2.7. Уведомления Пользователя Сайта.<br style=\"box-sizing: inherit;\" />
+2.2.8. Предоставления Пользователю эффективной клиентской и технической поддержки при возникновении проблем, связанных с использованием Сайта.<br style=\"box-sizing: inherit;\" />
+2.2.9. Осуществления рекламной деятельности с согласия Пользователя.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">3. УСЛОВИЯ ОБРАБОТКИ ПЕРСОНАЛЬНОЙ ИНФОРМАЦИИ ПОЛЬЗОВАТЕЛЕЙ&nbsp;</b><b style=\"box-sizing: inherit; line-height: inherit;\">И ЕЕ ПЕРЕДАЧИ ТРЕТЬИМ ЛИЦАМ</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+3.1. Сайт хранит персональную информацию Пользователей в соответствии с внутренними регламентами конкретных сервисов.<br style=\"box-sizing: inherit;\" />
+3.2. В отношении персональной информации Пользователя сохраняется ее конфиденциальность, кроме случаев добровольного предоставления Пользователем информации о себе для общего доступа неограниченному кругу лиц. При использовании отдельных сервисов Пользователь соглашается с тем, что определенная часть его персональной информации становится общедоступной.<br style=\"box-sizing: inherit;\" />
+3.3. Сайт вправе передать персональную информацию Пользователя третьим лицам в следующих случаях:<br style=\"box-sizing: inherit;\" />
+3.3.1. Пользователь выразил согласие на такие действия.<br style=\"box-sizing: inherit;\" />
+3.3.2. Передача необходима для использования Пользователем определенного сервиса либо для исполнения определенного соглашения или договора с Пользователем.<br style=\"box-sizing: inherit;\" />
+3.3.4. Передача предусмотрена российским или иным применимым законодательством в рамках установленной законодательством процедуры.<br style=\"box-sizing: inherit;\" />
+3.3.5. В случае продажи Сайта к приобретателю переходят все обязательства по соблюдению условий настоящей Политики применительно к полученной им персональной информации.<br style=\"box-sizing: inherit;\" />
+3.4. Обработка персональных данных Пользователя осуществляется без ограничения срока любым законным способом, в том числе в информационных системах персональных данных с использованием средств автоматизации или без использования таких средств. Обработка персональных данных Пользователей осуществляется в соответствии с Федеральным законом от 27.07.2006 N 152-ФЗ &quot;О персональных данных&quot;.<br style=\"box-sizing: inherit;\" />
+3.5. При утрате или разглашении персональных данных Администрация Сайта информирует Пользователя об утрате или разглашении персональных данных.<br style=\"box-sizing: inherit;\" />
+3.6. Администрация Сайта принимает необходимые организационные и технические меры для защиты персональной информации Пользователя от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, распространения, а также от иных неправомерных действий третьих лиц.<br style=\"box-sizing: inherit;\" />
+3.7. Администрация Сайта совместно с Пользователем принимает все необходимые меры по предотвращению убытков или иных отрицательных последствий, вызванных утратой или разглашением персональных данных Пользователя.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">4. ОБЯЗАТЕЛЬСТВА СТОРОН</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+4.1. Пользователь обязан:<br style=\"box-sizing: inherit;\" />
+4.1.1. Предоставить информацию о персональных данных, необходимую для пользования Сайтом.<br style=\"box-sizing: inherit;\" />
+4.1.2. Обновлять, дополнять предоставленную информацию о персональных данных в случае изменения данной информации.<br style=\"box-sizing: inherit;\" />
+4.2. Администрация Сайта обязана:<br style=\"box-sizing: inherit;\" />
+4.2.1. Использовать полученную информацию исключительно для целей, указанных в настоящей Политике конфиденциальности.<br style=\"box-sizing: inherit;\" />
+4.2.2. Обеспечить хранение конфиденциальной информации в тайне, не разглашать без предварительного письменного разрешения Пользователя, а также не осуществлять продажу, обмен, опубликование либо разглашение иными возможными способами переданных персональных данных Пользователя, за исключением предусмотренных настоящей Политикой конфиденциальности.<br style=\"box-sizing: inherit;\" />
+4.2.3. Принимать меры предосторожности для защиты конфиденциальности персональных данных Пользователя согласно порядку, обычно используемому для защиты такого рода информации в существующем деловом обороте.<br style=\"box-sizing: inherit;\" />
+4.2.4. Осуществить блокирование персональных данных, относящихся к соответствующему Пользователю, с момента обращения или запроса Пользователя или его законного представителя либо уполномоченного органа по защите прав субъектов персональных данных на период проверки в случае выявления недостоверных персональных данных или неправомерных действий.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">5. ОТВЕТСТВЕННОСТЬ СТОРОН</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+5.1. Администрация Сайта, не исполнившая свои обязательства, несет ответственность за убытки, понесенные Пользователем в связи с неправомерным использованием персональных данных, в соответствии с законодательством Российской Федерации.<br style=\"box-sizing: inherit;\" />
+5.2. В случае утраты или разглашения конфиденциальной информации Администрация Сайта не несет ответственности, если данная конфиденциальная информация:<br style=\"box-sizing: inherit;\" />
+5.2.1. Стала публичным достоянием до ее утраты или разглашения.<br style=\"box-sizing: inherit;\" />
+5.2.2. Была получена от третьей стороны до момента ее получения Администрацией Сайта.<br style=\"box-sizing: inherit;\" />
+5.2.3. Была разглашена с согласия Пользователя.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">6. РАЗРЕШЕНИЕ СПОРОВ</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+6.1. До обращения в суд с иском по спорам, возникающим из отношений между Пользователем Сайта и Администрацией Сайта, обязательным является предъявление претензии (письменного предложения о добровольном урегулировании спора).<br style=\"box-sizing: inherit;\" />
+6.2. Получатель претензии в течение 10 календарных дней со дня получения претензии письменно уведомляет заявителя претензии о результатах рассмотрения претензии.<br style=\"box-sizing: inherit;\" />
+6.3. При недостижении соглашения спор будет передан на рассмотрение в суд в соответствии с действующим законодательством Российской Федерации.<br style=\"box-sizing: inherit;\" />
+6.4. К настоящей Политике конфиденциальности и отношениям между Пользователем и Администрацией Сайта применяется действующее законодательство Российской Федерации.<br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\">7. ДОПОЛНИТЕЛЬНЫЕ УСЛОВИЯ</b><br style=\"box-sizing: inherit;\" />
+<br style=\"box-sizing: inherit;\" />
+7.1. Администрация Сайта вправе вносить изменения в настоящую Политику конфиденциальности без согласия Пользователя.<br style=\"box-sizing: inherit;\" />
+7.2. Новая Политика конфиденциальности вступает в силу с момента ее размещения на Сайте, если иное не предусмотрено новой редакцией Политики конфиденциальности.<br style=\"box-sizing: inherit;\" />
+7.3. Все предложения или вопросы по настоящей Политике конфиденциальности следует сообщать&nbsp;<a href=\"mailto:mailto:info@ural56.ru\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">info@ural56.ru</a>.<br style=\"box-sizing: inherit;\" />
+7.4. Действующая Политика конфиденциальности размещена на странице по адресу:&nbsp;<a href=\"https://www.ural56.ru/soglashenie/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\" target=\"_blank\">www.ural56.ru/soglashenie/</a>.<br style=\"box-sizing: inherit;\" />
+&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">&nbsp;</p>
+
+<hr style=\"box-sizing: content-box; height: 0px; max-width: 85.7143rem; border-top: 0px; border-bottom: 1px solid rgb(230, 230, 230); margin: 0px auto; clear: both; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\">&nbsp;</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\"><b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">Соглашение</span></b></p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\"><b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">об использовании материалов и сервисов интернет-сайта ural56.ru</span></b><br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">(пользовательское соглашение)</span></b></p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\">&nbsp;</p>
+
+<p><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">г. Орск</span></p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: right;\">&laquo;01&raquo; мая 2017 года</p>
+
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif;\">Настоящее&nbsp; Соглашение&nbsp; является&nbsp; публичной офертой и определяет условия использования материалов&nbsp; и сервисов, размещенных на сайте в&nbsp; сети Интернет по адресу:&nbsp;<a href=\"http://www.ural56.ru/\" style=\"box-sizing: inherit; background-color: transparent; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer;\">www.ural56.ru</a>, посетителями и пользователями данного интернет-сайта (далее - Сайт).</p>
+
+<p><b style=\"box-sizing: inherit; line-height: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1. Общие условия</b><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.1. Сайт создан в целях информирования населения.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.2. Сайт разработан ООО &laquo;Цетера Лабс&raquo; для ООО &laquo;Твой Дом&raquo; по Договору оказания услуг от &laquo;28&raquo; марта 2016 г. N 2016-40.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.3. Сайт содержит разделы:&nbsp;</span><a href=\"https://www.ural56.ru/news/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Новости&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/chestnaya-kommunalka/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Честная коммуналка&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/fashion/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;MODA&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/hockey/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Хоккей&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/radio_dfm/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;DFM&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/top5/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;ТОП-5&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/longread/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Лонгрид&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/online/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Онлайн&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/webcam/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Web-камеры&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">,&nbsp;</span><a href=\"https://www.ural56.ru/contests/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">&laquo;Конкурсы&raquo;</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">, &laquo;Архив&raquo;, сервис онлайн-радио, Zopim, форма обратной связи с редакцией, комментарии (сервис hypercomments.com).</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.4. Использование материалов и сервисов Сайта регулируется нормами действующего законодательства Российской Федерации.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.5. Для получения доступа к Форме обратной связи с редакцией, сервису Zopim и к форме комментариев hypercomments.com Пользователю необходимо выполнить следующие действия:</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">- заполнить регистрационную форму;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">- оставить комментарий или информацию для Редакции.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.6. Получая доступ к материалам Сайта, Пользователь считается присоединившимся к настоящему Соглашению.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">1.7. Пользователь может использовать материалы Сайта и предоставляемые на Сайте сервисы следующим образом: ознакомления, цитирования, использования текстов, фото и видео с указанием прямой активной ссылки на ресурс&nbsp;</span><a href=\"http://www.ural56.ru/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">www.ural56.ru</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<b style=\"box-sizing: inherit; line-height: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2. Обязательства Пользователя</b><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.1. Пользователь соглашается не предпринимать действий и не оставлять комментарии и записи, которые могут рассматриваться как нарушающие российское законодательство или нормы международного права, в том числе в сфере интеллектуальной собственности, авторских и/или смежных прав, общепринятые нормы морали и нравственности, а также любых действий, которые приводят или могут привести к нарушению нормальной работы Сайта и сервисов Сайта.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.2. Использование материалов Сайта без согласия правообладателей не допускается.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.3. При цитировании материалов Сайта, включая охраняемые авторские произведения, ссылка на Сайт обязательна.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.4. Администрация Сайта не несет ответственности за посещение и использование им внешних ресурсов, ссылки на которые могут содержаться на Сайте.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.5. Администрация Сайта не несет ответственности и не имеет прямых или косвенных обязательств перед Пользователем в связи с любыми возможными или возникшими потерями или убытками, связанными с любым содержанием Сайта, регистрацией авторских прав и сведениями о такой регистрации, товарами или услугами, доступными на или полученными через внешние сайты или ресурсы либо иные контакты Пользователя, в которые он вступил, используя размещенную на Сайте информацию или ссылки на внешние ресурсы.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">2.6. Пользователь согласен с тем, что Администрация Сайта не несет какой-либо ответственности и не имеет каких-либо обязательств в связи с рекламой, которая может быть размещена на Сайте.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<b style=\"box-sizing: inherit; line-height: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3. Прочие условия</b><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3.1. Все возможные споры, вытекающие из настоящего Соглашения или связанные с ним, подлежат разрешению в соответствии с действующим законодательством Российской Федерации.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3.2. Признание судом какого-либо положения Соглашения недействительным или не подлежащим принудительному исполнению не влечет недействительности иных положений Соглашения.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3.3. Бездействие со стороны Администрации Сайта в случае нарушения кем-либо из Пользователей положений Соглашения не лишает Администрацию Сайта права предпринять позднее соответствующие действия в защиту своих интересов и защиту авторских прав на охраняемые в соответствии с законодательством материалы Сайта, в том числе, но не исключительно, в судебном порядке.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3.4. Администрация Сайта вправе в любое время в одностороннем порядке изменять условия настоящего Соглашения. Такие изменения вступают в силу по истечении 2 (двух) дней с момента размещения новой версии Соглашения на сайте. При несогласии Пользователя с внесенными изменениями он обязан отказаться от доступа к Сайту, прекратить использование материалов и сервисов Сайта.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">3.5. Переходя по ссылке&nbsp;</span><a href=\"https://www.ural56.ru/soglashenie/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">www.ural56.ru/soglashenie/</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">, Пользователь подтверждает, что принимает условия настоящего Соглашения, а также Политики конфиденциальности Сайта, являющейся неотъемлемой частью настоящего Соглашения и размещенной на странице по адресу:&nbsp;</span><a href=\"https://www.ural56.ru/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">www.ural56.ru</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<b style=\"box-sizing: inherit; line-height: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4. Согласие на сбор и обработку персональных данных:</b><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.1. Присоединяясь к настоящему Соглашению и оставляя свои данные на Сайте, путем заполнения полей онлайн-заявки (регистрации) Пользователь:&nbsp;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;подтверждает, что указанные им персональные данные принадлежат лично ему;&nbsp;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;признает и подтверждает, что он внимательно и в полном объеме ознакомился с настоящим Соглашением и содержащимися в нем условиями обработки его персональных данных, указываемых им в полях он-лайн заявки (регистрации) на сайте;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;признает и подтверждает, что все положения настоящего Соглашения и условия обработки его персональных данных ему понятны;&nbsp;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;дает согласие на обработку Сайтом предоставляемых персональных данных в целях регистрации Пользователя на Сайте;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;выражает согласие с условиями обработки персональных данных без каких-либо оговорок и ограничений.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.2. Пользователь дает свое согласие на обработку его персональных данных, а именно совершение действий, предусмотренных п. 3 ч. 1 ст. 3 Федерального закона от 27.07.2006 N 152-ФЗ &quot;О персональных данных&quot;, и подтверждает, что, давая такое согласие, он действует свободно, своей волей и в своем интересе.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.3. Согласие Пользователя на обработку персональных данных является конкретным, информированным и сознательным.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.4. Настоящее согласие Пользователя применяется в отношении обработки следующих персональных данных:</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;фамилия, имя, отчество;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;место пребывания (город, область);</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;номера телефонов;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;адресах электронной почты (E-mail).</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.4. Пользователь, предоставляет Сайту&nbsp; осуществлять следующие действия (операции) с персональными данными:</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;сбор и накопление;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;хранение в течение установленных нормативными документами сроков хранения отчетности, но не менее трех лет, с момента даты прекращения пользования услуг Сайта Пользователем;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;уточнение (обновление, изменение);</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;использование в целях регистрации Пользователя на Сайте;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;уничтожение;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;передача по требованию суда, в т.ч. третьим лицам, с соблюдением мер, обеспечивающих защиту персональных данных от несанкционированного доступа.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.5. Указанное согласие действует бессрочно с момента предоставления данных и может быть отозвано Вами путем подачи заявления администрации Сайта с указанием данных, определенных ст. 14 Закона &laquo;О персональных данных&raquo;. Отзыв согласия на обработку персональных данных может быть осуществлен путем направления Пользователем соответствующего распоряжения в простой письменной форме на адрес электронной почты (E-mail)&nbsp;</span><a href=\"mailto:mailto:info@ural56.ru\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">info@ural56.ru</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.6. Сайт не несет ответственности за использование (как правомерное, так и неправомерное) третьими лицами информации, размещенной Пользователем на Сайте, включая её воспроизведение и распространение, осуществленные всеми возможными способами.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.7. Сайт имеет право вносить изменения в настоящее Соглашение. При внесении изменений в актуальной редакции указывается дата последнего обновления. Новая редакция Соглашения вступает в силу с момента ее размещения, если иное не предусмотрено новой редакцией Соглашения.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">Действующая редакция всегда находится на странице по адресу:</span><a href=\"https://www.ural56.ru/soglashenie/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">www.ural56.ru/soglashenie/</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">4.7. К настоящему Соглашению и отношениям между пользователем и Сайтом, возникающим в связи с применением Соглашения подлежит применению материальное и процессуальное право Российской Федерации.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<b style=\"box-sizing: inherit; line-height: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">5. Сбор сведений из социальных сетей (сервисов):</b><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">5.1. В целях оптимизации работы сервиса и взаимодействия с Пользователем Сайт вправе собирать указанные в настоящем разделе данные о Пользователе из социальных сетей.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">5.2. Регистрация Пользователя может осуществляться через социальные сервисы. Данный способ регистрации избирает сам Пользователь путем совершения указанных на Сайте действий в момент регистрации.</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">5.3. При регистрации через социальные сервисы Сайт в целях автоматического заполнения аналогичных данных о Пользователе, а также для оптимизации работы фильтра Сайта по соответствующему критерию собирает следующие сведения о Пользователе из системы facebook.com:</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;имя и фамилия Пользователя, а также его никнейм;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;пол Пользователя;</span><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">&bull;&nbsp;&nbsp; &nbsp;место пребывания (город, населенный пункт) и иные данные, которые содержит социальный сервис.</span></p>
+
+<hr style=\"box-sizing: content-box; height: 0px; max-width: 85.7143rem; border-top: 0px; border-bottom: 1px solid rgb(230, 230, 230); margin: 0px auto; clear: both; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<p style=\"box-sizing: inherit; margin: 0px 0px 15px; padding: 0px; font-size: 14px; line-height: 1.36; text-rendering: optimizeLegibility; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; text-align: center;\"><b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">СОГЛАСИЕ</span></b><br style=\"box-sizing: inherit;\" />
+<b style=\"box-sizing: inherit; line-height: inherit;\"><span style=\"box-sizing: inherit; font-size: 12pt;\">посетителя сайта ural56.ru</span><span style=\"box-sizing: inherit; font-size: 12pt;\">&nbsp;на обработку персональных данных</span></b></p>
+
+<p><br style=\"box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" />
+<span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">Настоящим свободно, своей волей и в своем интересе даю согласие на обработку персональных данных, которое находится по адресу:&nbsp;</span><a href=\"https://www.ural56.ru/soglashenie/\" style=\"box-sizing: inherit; color: rgb(33, 150, 243); text-decoration-line: none; line-height: inherit; cursor: pointer; font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\" target=\"_blank\">www.ural56.ru/soglashenie/</a><span style=\"color: rgb(0, 0, 0); font-family: &quot;PT Sans Caption&quot;, serif; font-size: 14px;\">(далее &ndash; Сайт), на автоматизированную и неавтоматизированную обработку моих персональных данных, в том числе ', '', '', '', '');
+
+
+DROP TABLE IF EXISTS `eboard_msg`;
+CREATE TABLE `eboard_msg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `text` text,
+  `type` varchar(100) DEFAULT NULL,
+  `comments` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('4', '<p align=\"left\">Здравствуйте, %user%!</p>
+<p align=\"left\">Кто-то, возможно Вы, сделал запрос на смену пароля Вашего аккаунта на сайте %title%.</p>
+<p align=\"left\"><em>Для смены пароля пройдите по ссылке:</em></p>
+<p align=\"left\">%link%</p>', 'password_recovery', '376');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('2', '<p align=\"left\">Здравствуйте, %user%! <br />
+Добро пожаловать на сайт %title%!</p>
+<p align=\"left\">Чтобы активировать аккаунт и подтвердить свой адрес электронной почты, нажмите на эту ссылку:</p>
+<p align=\"left\">%link%</p>', 'reg_check', '377');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('5', '<p align=\"left\">Здравствуйте, %user%!</p>
+<p align=\"left\">Истекает срок публикации Вашего объявления %message_title% на сайте %title%.</p>
+<p align=\"left\">Объявление будет удалено через %days% дней.</p>
+<p align=\"left\">Для смены продления срока публикации пройдите по ссылке:</p>
+<p align=\"left\">%link%</p>', 'del_mess', '378');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('6', '<p align=\"left\">Здравствуйте,</p>
+<p align=\"left\">ставим Вас в известность, что на Ваше сообщение &laquo;<a href=\"%message_link%\">%message_title%</a>&raquo; на сайте %title% пришёл ответ.</p>
+<p>&nbsp;</p>
+<p align=\"left\">Отправитель: <b>%name%</b></p>
+<p align=\"left\">E-mail: <b>%email%</b></p>
+<p align=\"center\"><strong>Текст сообщения</strong></p>
+<hr />
+<p>%message%</p>', 'reply', '379');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('7', '<p align=\"left\">Здравствуйте, %user%,</p>
+<p align=\"left\">ставим Вас в известность, что на Вам пришло сообщение с cайта %title%.</p>
+<p>&nbsp;</p>
+<p align=\"left\">Отправитель: <b>%name%</b></p>
+<p align=\"left\">E-mail: <b>%email%</b></p>
+<p align=\"center\"><strong>Текст сообщения</strong></p>
+<hr />
+<p>%message%</p>', 'message2user', '774');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('8', '<p align=\"left\">Здравствуйте, %user%,</p>
+<p align=\"left\">ставим Вас в известность, что на Ваше объявление %message% на сайте %title% одобрено модератором и опубликовано</p>', 'message_allowed', '923');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('9', '<p align=\"left\">Здравствуйте, %user%,</p>
+<p align=\"left\">ставим Вас в известность, что на Ваше объявление %message% на сайте %title% отклонено модератором</p>', 'message_denied', '924');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('10', '<p style=\"text-align: center;\">Автоматическая система биллинга отключена.</p>
+<p style=\"text-align: center;\">Вы можете пополнить баланс личного счёта, уточнив реквизиты у администратора.</p>', 'pay_none', '630');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('11', '
+<p>Здравствуйте, %user%!</p>
+
+<p>Истек срок действия услуги %service% для объявления %message_title% на сайте %title%:</p>
+<p>Для повторного заказа услуги пройдите по ссылке:</p>
+
+<p>%link%</p>
+
+<p>--</p>
+
+<p>%unsubscribe%</p>
+', 'email_update', '1102');
+INSERT INTO `eboard_msg`(`id`, `text`, `type`, `comments`) VALUES ('12', '
+<p>Здравствуйте, %user%!</p>
+
+<p>Истекает срок публикации Ваших объявлений на сайте %title%:</p>
+%messages%
+<p>Для продления срока публикации объявлений пройдите по ссылке:</p>
+
+<p>%link%</p>
+
+<p>--</p>
+
+<p>%unsubscribe%</p>
+', 'del_mess_all', '1090');
+
+
+DROP TABLE IF EXISTS `eboard_nav`;
+CREATE TABLE `eboard_nav` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` int(1) DEFAULT '0',
+  `name` varchar(300) NOT NULL,
+  `url` varchar(300) NOT NULL,
+  `sort` int(11) NOT NULL DEFAULT '1000000',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('6', '9', 'Регистрация', '/users/register/', '4');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('7', '8', 'Личный кабинет', '/users/', '5');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('9', '2', 'Панель администрирования', '/admin/', '7');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('10', '0', 'Добавить объявление', '/add/', '6');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('37', '0', 'Магазины', '/shops/', '3');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('36', '0', 'Статьи', '/articles/', '2');
+INSERT INTO `eboard_nav`(`id`, `status`, `name`, `url`, `sort`) VALUES ('34', '0', 'На главную', '/', '1');
+
+
+DROP TABLE IF EXISTS `eboard_news`;
+CREATE TABLE `eboard_news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `md` varchar(20) DEFAULT NULL,
+  `time` int(11) NOT NULL,
+  `cat` int(11) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `ann` text,
+  `text` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_news_cat`;
+CREATE TABLE `eboard_news_cat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `md` varchar(20) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `uri` varchar(50) DEFAULT NULL,
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_orders`;
+CREATE TABLE `eboard_orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `time_end` int(11) NOT NULL,
+  `days` int(11) NOT NULL,
+  `type` varchar(1) NOT NULL,
+  `message_id` int(11) NOT NULL,
+  `status` int(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_packages`;
+CREATE TABLE `eboard_packages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `days` int(11) NOT NULL,
+  `text` varchar(200) NOT NULL,
+  `service` int(11) NOT NULL,
+  `price` float NOT NULL DEFAULT '0',
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_packages`(`id`, `days`, `text`, `service`, `price`, `sort`) VALUES ('3', '7', 'Неделя', '4', '1.75', '1');
+INSERT INTO `eboard_packages`(`id`, `days`, `text`, `service`, `price`, `sort`) VALUES ('4', '30', 'Месяц', '4', '7.5', '2');
+
+
+DROP TABLE IF EXISTS `eboard_pay`;
+CREATE TABLE `eboard_pay` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  `type` varchar(1) NOT NULL,
+  `pay` float DEFAULT NULL,
+  `rest` float DEFAULT NULL,
+  `comments` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_pay`(`id`, `uid`, `user_id`, `time`, `type`, `pay`, `rest`, `comments`) VALUES ('1', '', '1', '1514283389', 'o', '3000', '27000', 'Продление срока публикации магазина');
+INSERT INTO `eboard_pay`(`id`, `uid`, `user_id`, `time`, `type`, `pay`, `rest`, `comments`) VALUES ('2', '', '1', '1523635444', 'o', '3000', '24000', 'Продление срока публикации магазина');
+
+
+DROP TABLE IF EXISTS `eboard_payments`;
+CREATE TABLE `eboard_payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amount` float DEFAULT NULL,
+  `currency` varchar(5) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `message_id` int(11) NOT NULL,
+  `service_type` varchar(1) NOT NULL,
+  `time` int(11) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `action` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('1', '2900', 'rur', '1', '1', 's', '1514223071', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('2', '100', 'rur', '7', '0', '', '1518042263', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('3', '0.5', 'rur', '0', '6', 'm', '1518107348', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('4', '0.5', 'rur', '0', '6', 'r', '1518107368', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('5', '7.5', 'rur', '0', '6', 'b', '1518107404', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('6', '45', 'rur', '0', '104', 'b', '1518232622', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('7', '10.5', 'rur', '0', '91', 'r', '1518243880', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('8', '10.5', 'rur', '0', '91', 'r', '1518243936', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('9', '31.5', 'rur', '0', '71', 'b', '1518244317', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('10', '3', 'rur', '0', '78', 'r', '1518256721', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('11', '100', 'rur', '8', '0', '', '1518287628', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('12', '100', 'rur', '8', '0', '', '1518287672', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('13', '31.5', 'rur', '0', '143', 'b', '1518295343', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('14', '10.5', 'rur', '0', '124', 'r', '1518296079', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('15', '31.5', 'rur', '0', '71', 'b', '1518329725', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('16', '31.5', 'rur', '0', '42', 'b', '1518633301', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('17', '31.5', 'rur', '0', '42', 'b', '1518633309', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('18', '10.5', 'rur', '0', '42', 'r', '1518633392', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('19', '31.5', 'rur', '0', '42', 'b', '1518633585', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('20', '10.5', 'rur', '0', '128', 'm', '1518810969', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('21', '31.5', 'rur', '0', '7', 'b', '1519686615', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('22', '10.5', 'rur', '0', '124', 'r', '1519720016', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('23', '10.5', 'rur', '0', '79', 'r', '1519755074', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('24', '100', 'rur', '1', '0', '', '1523635304', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('25', '100', 'rur', '1', '0', '', '1523635331', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('26', '1230', 'rur', '77', '0', '', '1523871153', '0', '');
+INSERT INTO `eboard_payments`(`id`, `amount`, `currency`, `user_id`, `message_id`, `service_type`, `time`, `status`, `action`) VALUES ('27', '1230', 'rur', '77', '0', '', '1523871179', '0', '');
+
+
+DROP TABLE IF EXISTS `eboard_rates`;
+CREATE TABLE `eboard_rates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numcode` int(11) NOT NULL,
+  `charcode` varchar(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `text` varchar(150) NOT NULL,
+  `def` int(1) NOT NULL,
+  `value` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_rates`(`id`, `numcode`, `charcode`, `name`, `text`, `def`, `value`) VALUES ('1', '0', 'rur', 'рубли', 'рубль,рубля,рублей', '1', '1');
+
+
+DROP TABLE IF EXISTS `eboard_regions`;
+CREATE TABLE `eboard_regions` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `uri` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `parent` int(5) DEFAULT NULL,
+  `ipgeo_field` varchar(1) NOT NULL,
+  `ipgeo_value` varchar(100) NOT NULL,
+  `sort` int(10) NOT NULL DEFAULT '10000000',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_regions`(`id`, `uri`, `name`, `parent`, `ipgeo_field`, `ipgeo_value`, `sort`) VALUES ('121', 'novotroizk', 'Новотроицк', '0', '', '', '2');
+INSERT INTO `eboard_regions`(`id`, `uri`, `name`, `parent`, `ipgeo_field`, `ipgeo_value`, `sort`) VALUES ('122', 'Orenburg', 'Оренбург', '0', '', '', '3');
+INSERT INTO `eboard_regions`(`id`, `uri`, `name`, `parent`, `ipgeo_field`, `ipgeo_value`, `sort`) VALUES ('123', 'Gai', 'Гай', '0', '', '', '4');
+INSERT INTO `eboard_regions`(`id`, `uri`, `name`, `parent`, `ipgeo_field`, `ipgeo_value`, `sort`) VALUES ('120', 'orsk', 'Орск', '0', '', '', '1');
+
+
+DROP TABLE IF EXISTS `eboard_seo`;
+CREATE TABLE `eboard_seo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL,
+  `title` text NOT NULL,
+  `keywords` text NOT NULL,
+  `description` text NOT NULL,
+  `type` varchar(1) NOT NULL DEFAULT 'n',
+  `redirect_url` varchar(255) NOT NULL,
+  `nonstrict` int(1) NOT NULL,
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_services`;
+CREATE TABLE `eboard_services` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(1) NOT NULL,
+  `price` float DEFAULT NULL,
+  `min` int(11) NOT NULL,
+  `max` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `field` varchar(100) NOT NULL,
+  `tip` varchar(300) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_services`(`id`, `type`, `price`, `min`, `max`, `name`, `field`, `tip`) VALUES ('1', 'm', '1.5', '7', '100', 'Выделение объявления', 'marked', 'Объявление будет выделено цветом');
+INSERT INTO `eboard_services`(`id`, `type`, `price`, `min`, `max`, `name`, `field`, `tip`) VALUES ('2', 'r', '1.5', '2', '100', 'Поднятие объявление', 'raised', 'Объявление будет выводится в списке самым первым');
+INSERT INTO `eboard_services`(`id`, `type`, `price`, `min`, `max`, `name`, `field`, `tip`) VALUES ('3', 'b', '4.5', '7', '150', 'VIP объявление', 'block', 'Объявление будет отображаться в блоке слева и на страницах соответсвующих рубрик');
+INSERT INTO `eboard_services`(`id`, `type`, `price`, `min`, `max`, `name`, `field`, `tip`) VALUES ('4', 'a', '0.25', '3', '1000', 'Публикация объявления', 'active', 'Объявление будет опубликовано в течении заданного срока');
+
+
+DROP TABLE IF EXISTS `eboard_settings`;
+CREATE TABLE `eboard_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `k` varchar(100) NOT NULL,
+  `v` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('50', '', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('2', 'locale', 'russian');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('3', 'title', 'ОБЪЯВЛЕНИЯ');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('4', 'email', 'developer@itgsystem.ru');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('5', 'autor', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('6', 'keywords', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('7', 'copyright', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('8', 'description', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('9', 'onpage', '40');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('10', 'stlb', '2');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('11', 'ind_type', '2');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('12', 'messages_on_ind', '40');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('13', 'raised_on_ind', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('14', 'subscribe', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('15', 'max_subscribe', '3');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('16', 'randtime', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('17', 'max_text', '2000');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('18', 'sendmail_days', '5');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('19', 'del_files', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('20', 'theme', 'aqua');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('21', 'site_address', 'illusionweb.org');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('22', 'patch', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('44', 'admin_password', '6f9c6c82f4a5045934ddb8066134f542');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('24', 'charset', 'utf-8');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('25', 'logo', 'logo.png');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('26', 'middle_block', '5');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('27', 'message_block_position', 'lb');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('28', 'rand', 'es48OpNBB9jsS1QtItvWAm9tqruIeuKyrIQFDmFCDNOvK8xsrndUUXLmVuJXMWkcJeeV0brFu47gzm6qL8BOHJffM8Wlq7fblso');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('29', 'default_user_status', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('30', 'default_message_status', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('31', 'default_order_status', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('32', 'captcha', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('33', 'unreg', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('34', 'make_meta', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('35', 'fckeditor', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('36', 'img_big_width', '800');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('37', 'img_big_height', '600');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('38', 'img_small_width', '400');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('39', 'img_small_height', '300');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('40', 'merchant', 'none');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('41', 'mrh_pass1', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('42', 'mrh_pass2', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('43', 'admin_login', 'ainuradmin');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('45', 'theme_admin', 'aqua');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('46', 'error_reporting', 'E_ALL');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('47', 'caching', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('48', 'deleted_keywords', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('49', 'cortime', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('51', 'license_key', '27B3-CD4D-E9CD-677E-65CB BC61-0D0A-4853-DF1C-BC0D 45FF-0963-B798-8DC6-BB19 0275-F227-E096');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('52', 'default_user_balance', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('53', 'spshopid', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('54', 'spsecretkey', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('55', 'currency', 'rur');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('56', 'block_all', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('57', 'default_block_status', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('58', 'yaapi', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('59', 'randtime2', '100');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('60', 'cron_del', '3600');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('61', 'cron_mail', '300');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('62', 'cron_order', '300');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('63', 'orders_fill', 'ON');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('64', 'onpage_users', '20');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('65', 'rand_block', '10');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('66', 'message_block_type', '2');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('67', 'active_service', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('68', 'prevent_indexing_cat', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('69', 'prevent_indexing_region', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('70', 'prevent_indexing_sort', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('71', 'sms_username', 'developer@itgsystem.ru');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('72', 'sms_password', 'v7C9m4R9p5Fb');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('73', 'sms_sender', 'test');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('74', 'sms_text', 'Код подтверждения: %code%');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('75', 'sms', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('76', 'num_limit', '3');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('77', 'num_limit_on', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('78', 'comment_on', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('79', 'comment_unreg', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('80', 'smtp', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('81', 'smtp_from', 'info@illusionweb.ru');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('82', 'smtp_host', 'smtp.gmail.com');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('83', 'smtp_port', '465');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('84', 'smtp_crypt', 'ssl');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('85', 'smtp_login', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('86', 'smtp_password', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('87', 'smtp_pop', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('90', 'post_filter', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('88', 'ipgeo', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('89', 'cron_cssjs', '60');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('91', 'login', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('92', 'password', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('93', 'pay_funct', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('94', 'uploadtype', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('95', 'approve_text', 'НЕ ПРОВЕРЕНО! Это объявление 
+ещё не проверено модератором 
+сайта. Администрация не 
+несет ответственности за 
+содержание, достоверность и 
+точность материалов, 
+опубликованных 
+пользователями.');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('96', '160526', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('97', 'closed_info', 'Сайт закрыт на обслуживание. Приносим извинения за временные неудобства!');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('98', 'closed_time', '2018/01/10 10:00:00');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('99', 'captcha_type', '3');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('100', 'captcha_complexity', '4');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('101', 'license_text', 'Все материалы, добавляемые на сайт, становятся собственностью сайта и 
+администрация сайта имеет право использовать все тексты и медиа материалы в 
+своих нуждах. Вся ответственность за содержание объявлений в полном объёме возлагается на 
+авторов объявлений. Администрация сайта оставляет за собой право удалять и редактировать 
+объявление без уведомления автора объявления и без объяснения причин.
+Вы согласны получать смс и/или email сообщения от администрации сайта. Вы подтверждаете свое 
+согласие на обработку персональных данных: сбор, систематизацию, накопление, 
+хранение, уточнение (обновление, изменение), использование, передачу, блокирование, обезличивание, 
+уничтожение. Срок действия Вашего согласия является неограниченным.
+
+К публикации запрещается:
+- информация, нарушающая законы Российской Федерации;
+- одинаковые объявления;
+- объявления содержащие заведомо ложную информацию.');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('102', 'license_tpl', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('103', 'cache', '2');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('104', 'memcache_host', '127.0.0.1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('105', 'memcache_port', '11211');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('106', 'update_days', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('107', 'max_title', '50');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('108', 'ulogin', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('109', 'default_comment_status', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('110', 'cache_region_tree', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('111', 'optimized_query', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('112', 'cache_query', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('113', 'update_allow', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('114', 'email_orders', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('115', 'shop', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('116', 'sharing', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('117', 'closed', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('118', 'importcsv', 'a:8:{s:8:\"def_user\";i:0;s:7:\"def_cat\";i:24;s:10:\"def_region\";i:2;s:3:\"pub\";i:365;s:4:\"html\";i:1;s:2:\"br\";i:1;s:8:\"encoding\";s:6:\"CP1251\";s:3:\"sep\";s:1:\";\";}');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('119', 'indexing', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('120', 'recaptcha1', '6LcdSjsUAAAAABLBtESFsNSIb4zCTMKE37t9E-7t');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('121', 'recaptcha2', '6LcdSjsUAAAAAJuWkXAXbPPaNuf_flSer1nhl5k4');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('122', 'maptype', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('123', 'mapkey', '');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('124', 'license_reg_text', 'Предоставляя свои персональные 
+данные пользователь даёт 
+согласие на обработку, 
+хранение и использование своих 
+персональных данных на 
+основании ФЗ № 152-ФЗ «О 
+персональных данных» от 
+27.07.2006 г.');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('125', 'moderation_notifications', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('126', 'cat_type', '2');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('127', 'shop_img_w', '300');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('128', 'shop_img_h', '200');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('129', 'shop_onpage', '50');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('130', 'shop_min_name', '5');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('131', 'shop_max_name', '100');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('132', 'shop_min_description', '200');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('133', 'shop_max_description', '2000');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('134', 'shop_min_addr', '30');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('135', 'shop_max_addr', '100');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('136', 'shop_min_phone1', '5');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('137', 'shop_max_phone1', '20');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('138', 'shop_min_phone2', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('139', 'shop_max_phone2', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('140', 'shop_min_delivery', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('141', 'shop_max_delivery', '0');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('142', 'shop_min_payment', '50');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('143', 'shop_max_payment', '1000');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('144', 'shop_pay', '1');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('145', 'shop_pay_types', 'a:1:{i:1;a:3:{s:4:\"name\";s:10:\"Месяц\";s:4:\"time\";i:2592000;s:5:\"price\";s:4:\"3000\";}}');
+INSERT INTO `eboard_settings`(`id`, `k`, `v`) VALUES ('146', 'shop_status', '0');
+
+
+DROP TABLE IF EXISTS `eboard_smscode`;
+CREATE TABLE `eboard_smscode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `num` varchar(15) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `code` int(4) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_smscode`(`id`, `num`, `ip`, `code`, `status`, `time`) VALUES ('1', '79068441649', '145.255.21.33', '8502', '1', '1514286020');
+
+
+DROP TABLE IF EXISTS `eboard_subscribe`;
+CREATE TABLE `eboard_subscribe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_subscribe`(`id`, `cat`, `user_id`) VALUES ('1', '760', '8');
+INSERT INTO `eboard_subscribe`(`id`, `cat`, `user_id`) VALUES ('2', '760', '1');
+
+
+DROP TABLE IF EXISTS `eboard_tags`;
+CREATE TABLE `eboard_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `counter` int(11) NOT NULL,
+  `word` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_timing`;
+CREATE TABLE `eboard_timing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `days` int(11) NOT NULL,
+  `text` varchar(1000) NOT NULL,
+  `sort` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_timing`(`id`, `days`, `text`, `sort`) VALUES ('9', '365', '1 год', '3');
+INSERT INTO `eboard_timing`(`id`, `days`, `text`, `sort`) VALUES ('10', '30', '1 месяц', '2');
+INSERT INTO `eboard_timing`(`id`, `days`, `text`, `sort`) VALUES ('11', '7', '1 неделя', '1');
+
+
+DROP TABLE IF EXISTS `eboard_users`;
+CREATE TABLE `eboard_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `pass` varchar(32) NOT NULL,
+  `date` int(11) NOT NULL,
+  `status` int(3) NOT NULL,
+  `email_status` int(1) NOT NULL DEFAULT '0',
+  `actions` text NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `balance` float DEFAULT '0',
+  `phone` varchar(15) NOT NULL,
+  `identity` varchar(250) NOT NULL,
+  `network` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_users`(`id`, `email`, `pass`, `date`, `status`, `email_status`, `actions`, `name`, `balance`, `phone`, `identity`, `network`) VALUES ('1', 'ainur.karpiev@yandex.ru', 'f518613843ab362802a80fd557484961', '1514220459', '1', '1', '', 'Айнур', '24000', '', 'http://vk.com/id135578257', 'vkontakte');
+INSERT INTO `eboard_users`(`id`, `email`, `pass`, `date`, `status`, `email_status`, `actions`, `name`, `balance`, `phone`, `identity`, `network`) VALUES ('7', 'ainur_karpiev@mail.ru', '8cf2ca9cbb299183156f0c221f20fd9d', '1518040769', '1', '1', '', 'Айнур', '0', '', 'https://www.facebook.com/app_scoped_user_id/911851185568906/', 'facebook');
+INSERT INTO `eboard_users`(`id`, `email`, `pass`, `date`, `status`, `email_status`, `actions`, `name`, `balance`, `phone`, `identity`, `network`) VALUES ('8', 'developer@itgsystem.ru', 'c19a135c9d2ef812ce93a37d60199ca5', '1518287307', '1', '1', '', 'Ардана', '0', '', 'http://vk.com/id409155368', 'vkontakte');
+INSERT INTO `eboard_users`(`id`, `email`, `pass`, `date`, `status`, `email_status`, `actions`, `name`, `balance`, `phone`, `identity`, `network`) VALUES ('27', 'fortuna332222@yandex.ru', 'b684f66be7bb368d70cf0e398944d544', '1519720742', '1', '1', '', 'Алексей Фёдорович', '0', '', '', '');
+INSERT INTO `eboard_users`(`id`, `email`, `pass`, `date`, `status`, `email_status`, `actions`, `name`, `balance`, `phone`, `identity`, `network`) VALUES ('77', 'mardvin2009@rambler.ru', 'ddc0cde1ec97265ffc3bdc775679ca36', '1523871125', '1', '1', '', 'Алексей', '0', '', 'http://vk.com/id31484064', 'vkontakte');
+
+
+DROP TABLE IF EXISTS `eboard_users_group`;
+CREATE TABLE `eboard_users_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) CHARACTER SET cp1251 NOT NULL,
+  `type` varchar(1) CHARACTER SET cp1251 NOT NULL,
+  `price` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+DROP TABLE IF EXISTS `eboard_users_shop`;
+CREATE TABLE `eboard_users_shop` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(150) NOT NULL DEFAULT '',
+  `description` text NOT NULL,
+  `delivery` text NOT NULL,
+  `payment` text NOT NULL,
+  `phone1` varchar(20) NOT NULL DEFAULT '',
+  `phone2` varchar(20) NOT NULL DEFAULT '',
+  `addr` varchar(150) NOT NULL DEFAULT '',
+  `map` varchar(150) NOT NULL DEFAULT '',
+  `region` int(11) NOT NULL DEFAULT '0',
+  `cat` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status_pay` tinyint(1) NOT NULL DEFAULT '1',
+  `next_pay` date NOT NULL DEFAULT '0000-00-00',
+  `worktime` text NOT NULL,
+  `site` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `alltext` (`name`,`description`,`delivery`,`payment`,`addr`,`site`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_users_shop`(`id`, `user_id`, `name`, `description`, `delivery`, `payment`, `phone1`, `phone2`, `addr`, `map`, `region`, `cat`, `status`, `status_pay`, `next_pay`, `worktime`, `site`) VALUES ('1', '1', 'ИП Карпиев Айнур Азатович', '<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using &#39;Content here, content here&#39;, making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for &#39;lorem ipsum&#39; will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>', '', '', '', '', '', '', '120', '124', '1', '1', '2018-05-13', '', '');
+
+
+DROP TABLE IF EXISTS `eboard_version`;
+CREATE TABLE `eboard_version` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `module` varchar(30) NOT NULL,
+  `version` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `eboard_version`(`id`, `module`, `version`) VALUES ('1', '', '2.3');
+#---------------------------------------------------------------------------------
+

@@ -1,0 +1,94 @@
+YandexMoney
+//separator//
+Оплата через Яндекс Деньги и банковской картой.
+//separator//
+https://money.yandex.ru
+//separator//
+rur/RUB
+//separator//
+
+    
+<script>
+function pay_type(type){
+    document.getElementById("paymentType").value=type;
+    document.getElementById("yaform").submit();
+}
+</script>
+
+<center>
+    <form method="POST" id="yaform" action="https://money.yandex.ru/quickpay/confirm.xml" target="_blank"> 
+        <input type="hidden" name="receiver" value="{%$abilling.key1%}"> 
+        <input type="hidden" name="formcomment" value="{%$settings.title%}"> 
+        <input type="hidden" name="short-dest" value="транзакция {%$pay.order%}"> 
+        <input type="hidden" name="label" value="{%$pay.order%}"> 
+        <input type="hidden" name="quickpay-form" value="small"> 
+        <input type="hidden" name="targets" value="{%$pay.comment%}"> 
+        <input type="hidden" name="sum" value="{%$pay.amount%}"> 
+        <input type="hidden" name="need-fio" value="false"> 
+        <input type="hidden" name="need-email" value="false"> 
+        <input type="hidden" name="need-phone" value="false"> 
+        <input type="hidden" name="need-address" value="false"> 
+        <input type="hidden" name="successURL" value="http://{%$settings.site_address%}{%$settings.path%}pay/yandex/success/"> 
+        <input type="hidden" name="paymentType" id="paymentType" value="PC">
+        <br />
+        <p>
+            <input type="button" value="Оплатить банковской картой" onclick="pay_type('AC'); return false;" />
+            <input type="button" value="Оплатить Яндекс-деньгами"   onclick="pay_type('PC'); return false;" />
+        </p>
+
+    </form>
+</center>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'Номер кошелька',
+				'help' => 'Номер кошелька в системе Яндекс Деньги',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Секрет',
+				'help' => 'Секретное слово для HTTP уведомлений',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+
+$values = implode('&', $_POST);
+$values = '';
+$values .= $_POST['notification_type'].'&';
+$values .= $_POST['operation_id'].'&';
+$values .= $_POST['amount'].'&';
+$values .= $_POST['currency'].'&';
+$values .= $_POST['datetime'].'&';
+$values .= $_POST['sender'].'&';
+$values .= $_POST['codepro'].'&';
+$values .= $abilling['key2'].'&';
+$values .= $_POST['label'];
+$_CRC = sha1($values);
+
+
+
+if($_POST['sha1_hash'] != $_CRC){
+    echo 'error hash';
+    exit();
+}
+
+if(isset($_POST['label'])){
+    if(!check_payment($_POST['label'])){
+        echo 'wrong payment id';
+        exit();
+   	}else{              
+        if(make_order($_POST['label'], 'by YandexMoney, id '.$_POST['operation_id'])){
+        	echo 'OK';
+        	exit();
+       	}
+   	}
+}
+
+
+

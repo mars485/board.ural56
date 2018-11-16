@@ -1,0 +1,233 @@
+
+
+
+{%if $tree|@count > 12%}
+
+	
+	
+<div id="tree_list_width">
+
+
+    {%assign var='parent' value=$categories[$second_cat.id].parent%}
+    {%if $parent == 0%}
+        {%assign var='parent' value=$second_cat.id%}
+    {%else%}
+        {%if $categories[$parent].parent != 0%}
+            {%assign var='parent' value=$categories[$parent].parent%}
+            {%if $categories[$parent].parent != 0%}
+                {%assign var='parent' value=$categories[$parent].parent%}
+                {%if $categories[$parent].parent != 0%}
+                    {%assign var='parent' value=$categories[$parent].parent%}
+                    {%if $categories[$parent].parent != 0%}
+                        {%assign var='parent' value=$categories[$parent].parent%}
+                    {%/if%}
+                {%/if%}
+            {%/if%}
+        {%/if%}
+    {%/if%}
+	{%if $second_cat%}
+<table style="height: 100%; float: left; height: 130px;">
+<tbody>
+<tr>
+<td style="vertical-align: bottom;">
+
+<div id="tree_img_big">
+
+
+ <a href="{%$settings.path%}{%$categories[$parent].uri%}/"><img style="max-height: 69px;" src="{%$settings.path%}images/cat/{%$categories[$parent].img%}"/></a>
+<div id="tree_img_big_cat">
+ <a  style="color: FFF;" href="{%$settings.path%}{%$categories[$parent].uri%}/">{%$categories[$parent].name%}</a>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+{%/if%}
+
+
+<div id="otstup">
+<table style="min-height: 95px; width: 100%;">
+<tbody>
+<tr>
+<td style="vertical-align: middle;">
+<script>
+    $(function(){
+        if($('#tax').length){
+            blok_height = Number($('#tax').css('height').replace('px',''));
+             
+            if(blok_height > 40){
+               $('#tax').css('max-height','102px');
+               $('.read-next').show();  
+            } 
+       }
+    });
+    
+    $('.read-next').live('click', function(){
+        
+        if($('#tax').css('max-height') != 'none'){
+           $('#tax').css('max-height','');
+           $(this).text('Скрыть');
+        } else {
+           $('#tax').css('max-height','102px');     
+           $(this).text('Показать все категории');
+        }
+        
+        return false;
+    });
+</script>
+<div id="tax" style="overflow: auto; max-height: 102px;">
+<ul style="margin-left: 10px;" class="tree_list">
+    {%foreach from=$tree item=el%}
+          <li class="first_level" style="min-width: 95px; padding: 0;">
+           
+            {%assign var="count" value=$el.id|count_msg%}
+			 <a href="{%$uri%}{%$el.uri%}/">
+			
+           {%assign var="uri" value=$settings.region_path%}
+    	   {%$el.name%}&nbsp;<span {%if $count == 0%} class='empty'{%/if%}></span>
+</a>
+        </li>
+    {%/foreach%}
+</ul>
+ </div>
+<a class="read-next" href="#">Посмотреть все категории</a>
+ 
+ 
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+{%else%}
+
+
+{%if $tree == NULL%}
+
+    {%assign var='parent' value=$categories[$second_cat.id].parent%}
+    {%if $parent == 0%}
+        {%assign var='parent' value=$second_cat.id%}
+    {%else%}
+        {%if $categories[$parent].parent != 0%}
+            {%assign var='parent' value=$categories[$parent].parent%}
+            {%if $categories[$parent].parent != 0%}
+                {%assign var='parent' value=$categories[$parent].parent%}
+                {%if $categories[$parent].parent != 0%}
+                    {%assign var='parent' value=$categories[$parent].parent%}
+                    {%if $categories[$parent].parent != 0%}
+                        {%assign var='parent' value=$categories[$parent].parent%}
+                    {%/if%}
+                {%/if%}
+            {%/if%}
+        {%/if%}
+    {%/if%}
+	{%if $second_cat%}
+<div id="tree_img_big" style="margin-bottom: 20px;">
+
+
+ <a href="{%$settings.path%}{%$categories[$parent].uri%}/"><img style="max-height: 69px;" src="{%$settings.path%}images/cat/{%$categories[$parent].img%}"/></a>
+<div id="tree_img_big_cat">
+ <a style="color: FFF;" href="{%$settings.path%}{%$categories[$parent].uri%}/">{%$categories[$parent].name%}</a>
+</div>
+</div>
+
+
+
+{%/if%}
+
+<style>
+#table_sort {
+min-height: 95px;
+}
+#padding-sort {
+padding-left: 175px;
+}
+
+
+</style>
+{%else%}
+
+
+
+
+
+<div id="tree_list_width">
+    {%assign var='parent' value=$categories[$second_cat.id].parent%}
+    {%if $parent == 0%}
+        {%assign var='parent' value=$second_cat.id%}
+    {%else%}
+        {%if $categories[$parent].parent != 0%}
+            {%assign var='parent' value=$categories[$parent].parent%}
+            {%if $categories[$parent].parent != 0%}
+                {%assign var='parent' value=$categories[$parent].parent%}
+                {%if $categories[$parent].parent != 0%}
+                    {%assign var='parent' value=$categories[$parent].parent%}
+                    {%if $categories[$parent].parent != 0%}
+                        {%assign var='parent' value=$categories[$parent].parent%}
+                    {%/if%}
+                {%/if%}
+            {%/if%}
+        {%/if%}
+    {%/if%}
+	{%if $second_cat%}
+<div id="tree_img_big">
+
+
+ <a href="{%$settings.path%}{%$categories[$parent].uri%}/"><img style="max-height: 69px;" src="{%$settings.path%}images/cat/{%$categories[$parent].img%}"/></a>
+<div id="tree_img_big_cat">
+ <a style="color: FFF;" href="{%$settings.path%}{%$categories[$parent].uri%}/">{%$categories[$parent].name%}</a>
+</div>
+</div>
+
+
+
+{%/if%}
+
+
+
+
+<div id="otstup">
+<table style="height: 95px;  width: 100%;">
+<tbody>
+<tr>
+<td style="vertical-align: middle;">
+
+<ul class="tree_list">
+    {%foreach from=$tree item=el%}
+        <li class="first_level">
+           
+            {%assign var="count" value=$el.id|count_msg%}
+			 <a href="{%$uri%}{%$el.uri%}/">
+
+           {%assign var="uri" value=$settings.region_path%}
+    	   {%$el.name%}&nbsp;<span {%if $count == 0%} class='empty'{%/if%}></span>
+</a>
+        </li>
+    {%/foreach%}
+</ul>
+
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+  {%/if%}
+ 
+{%/if%}
+
+			<form name='sform' action='{%$settings.patch%}search/?' method='get'>
+	
+
+                            <input type='hidden' name='add_cat' value='{%$second_cat.id%}'/><input type='hidden' name='add_region' value='{%$second_region.id%}'/>
+    			
+		
+							<div id="top_search_area" style="display: none;"><center><img style=" margin-bottom: 20px;" id="top_search_area_id" src="{%$settings.path%}images/ajax-loader5.gif" width="190" height="19" /></center></div>
+                            
+						</form>
+

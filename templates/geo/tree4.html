@@ -1,0 +1,15 @@
+{%foreach from=$tree item=el%}
+    <div class='maintree'>
+    	<table>
+            <thead>
+            		<tr><td colspan='2'><a href="{%$el.uri%}/">{%$el.name%}</a></td></tr>
+            </thead>
+    		<tbody>
+        		{%foreach from=$el.cat item='el2' name='ind'%}
+                    {%assign var="count" value=$el2.id|count_msg%}
+        			 <tr><td>&raquo; <a href="{%$el.uri%}/{%$el2.uri%}/">{%$el2.name%}</a></td><td width='4'><b class="mcount{%if $count == 0%}null{%/if%}">{%$count%}</b></td></tr>
+                {%/foreach%}
+    		</tbody>
+    	</table>
+    </div>
+{%/foreach%}

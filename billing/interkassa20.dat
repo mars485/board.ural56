@@ -1,0 +1,89 @@
+InterKassa 2.0
+//separator//
+828
+//separator//
+https://interkassa.com/
+//separator//
+rur/RUB|usd/USD|uah/UAH|eur/EUR
+//separator//
+
+<br /><br />
+<div align="center">
+
+<form name="payment" method="post" action="https://sci.interkassa.com/" accept-charset="UTF-8" target="_top">
+<input type="hidden" name="ik_co_id" value="{%$abilling.key1%}" /> 
+<input type="hidden" name="ik_pm_no" value="{%$pay.order%}" /> 
+<input type="hidden" name="ik_am" value="{%$pay.amount%}" /> 
+<input type="hidden" name="ik_cur" value="{%$pay.currency%}" /> 
+<input type="hidden" name="ik_sign" value="{%$abilling.key2%}" />
+<input type="hidden" name="ik_usr" value="{%$settings.user.email%}" />
+
+ 
+  
+<input type="hidden" name="ik_desc" value="{%$pay.comment%}" /> 
+<input type="submit" value="{%$locale.831%}" />
+</form>
+</div>
+
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'Checkout ID',
+				'help' => 'Идентификатор кассы',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'secret_key',
+				'help' => '830',
+				'type' => 'input'
+				);
+
+//separator//
+
+$dataSet = $_POST;
+$ik_sign = $_POST['ik_sign'];
+unset($dataSet['ik_sign']);
+ksort($dataSet, SORT_STRING); // сортируем по ключам в алфавитном порядке элементы масси
+array_push($dataSet, $abilling['key2']); // добавляем в конец массива "секретный ключ" 
+$signString = implode(':', $dataSet); // конкатенируем значения через символ ":" 
+$sign = base64_encode(md5($signString, true));  // берем MD5 хэш в бинарном виде по сформированной строке и кодируем в BASE64 
+
+//$w  = date("d.m.Y H:i:s")." - ik_sign=$ik_sign , POST=".implode(':', $_POST)." \r\n"; 
+//file_put_contents('pay_log', $w, FILE_APPEND);
+
+if($ik_sign == "" || $sign == "")
+	{
+	header("Status: 404 Not Found");
+	exit();
+	}
+if($sign != $ik_sign) 
+	{
+header("Status: 404 Not Found");
+	exit();
+	}
+	
+	
+	
+$dat = dbrows(dbquery("SELECT id FROM ".PREF."payments WHERE id=".$_POST['ik_pm_no']." AND status=2"));
+if($dat > 0)	
+	{
+	echo "1";
+	exit();	
+	}	
+	
+if(make_order($_POST['ik_pm_no'], 'by interkassa, id '.$_POST['ik_inv_id']))
+	{
+	echo "1";
+	exit();
+	}
+else
+	{
+	echo "FAIL\n";
+	exit();
+	}
+
+
+

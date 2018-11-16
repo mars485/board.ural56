@@ -1,0 +1,39 @@
+  
+    {%if $sended%}
+        <div style="text-align: center;">
+            <div class="ok">{%$locale.48%}</div>
+        </div>
+    {%else%}
+    
+    
+        {%if isset($smarty.get.show_notice)%}
+            <div class='error'>
+                <ul><li>{%$locale.1046%}</li></ul>
+            </div>
+        {%/if%}
+        
+        {%if $err%}
+            <div class='error'>
+                <ul>
+                    {%foreach from=$err item='e'%}
+                        <li>{%$e%}</li>
+                    {%/foreach%}
+                </ul>
+            </div>
+        {%/if%}
+        
+        <form method='POST' action=''>
+            <p>{%$locale.26%}</p>
+            <p><input name='email' type='email' value='{%$email%}'  /></p>
+            {%if $settings.captcha == 1%}
+            <p>{%$locale.44%}</p>
+            <p>
+                <input name='captcha' type='text' value=''style="width:80px;" />
+                
+                <br />
+                <img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'/>
+            </p>
+            {%/if%}
+            <input class='btn' type='submit' name='submit' value='{%$locale.55%}' />
+        </form>
+    {%/if%}

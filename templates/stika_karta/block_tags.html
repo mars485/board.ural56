@@ -1,0 +1,5 @@
+<div id="tags" class='tag_block2'>
+	{%foreach from=$settings.tags item='tag'%}
+		<a class="{%$tag.tag_class%}" style="{%$tag.tag_style%}" href="{%$settings.patch_region%}tags/{%$tag.tag_name|urlencode%}/">{%$tag.tag_name%}</a>
+	{%/foreach%}
+</div>

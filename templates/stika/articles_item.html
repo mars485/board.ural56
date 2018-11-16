@@ -1,0 +1,49 @@
+<div class="articless">
+    <h3>{%$article.name%}</h3>
+    <div class="smalldate">{%$locale.1120%} {%$article.pubdate|date_format:"%d.%m.%Y"%}</div>
+<div id="n_text">
+        {%$article.content.full%}
+    </div>
+</div>
+<h3 style=" margin-top: 100px;color: #1C6E8E;">{%$locale.1037%}</h3>
+<script>
+$(function() {
+    $('.jcarousel')
+        .jcarousel({
+            // Core configuration goes here
+        })
+        .jcarouselAutoscroll({
+            interval: 3000,
+            target: '+=1',
+            autostart: true
+        })
+    ;
+});
+</script>
+<script>
+
+$(document).ready(function($) {
+ var loaderImg = "<img src='loader.gif' alt='загрузка...' />"; // картинка до загрузки
+ $("div#thief").html(loaderImg).html(function(){
+ 			var a=loaderImg;
+			$.ajax({ // запрашиваем данные со страницы-донора
+				url:'{%$settings.patch%}articles/',
+				dataType:"html",
+				async:false,
+				success:function(b){a=$(b).find('#victim')},  // извлекаем html из нужного элемента (в примере <div id="victim">)
+				error:function(){alert("Ajax!Ошибка.")}
+				});
+				return a
+ });
+ $("div#thief").fadeIn('fast'); // отображаем блок, если он был скрыт
+ return false;
+});
+</script>
+
+ <link rel="stylesheet" type="text/css" href="{%$smarty.const.PATH%}articles_js/jcarousel.responsive.css">
+
+        <script type="text/javascript" src="{%$smarty.const.PATH%}articles_js/jquery.jcarousel.min.js"></script>
+
+        <script type="text/javascript" src="{%$smarty.const.PATH%}articles_js/jcarousel.responsive.js"></script>
+
+<div id="thief"></div>

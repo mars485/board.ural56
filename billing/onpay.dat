@@ -1,0 +1,117 @@
+OnPay
+//separator//
+646
+//separator//
+https://secure.onpay.ru/signup
+//separator//
+rur/RUR
+//separator//
+<center>
+<form name="payment" method="GET" action="http://secure.onpay.ru/pay/{%$abilling.key2%}" accept-charset="UTF-8" target="_top">
+<input type="hidden" name="pay_mode" value="fix" /> 
+<input type="hidden" name="price" value="{%$pay.amount%}" /> 
+<input type="hidden" name="currency" value="{%$pay.currency%}" /> 
+<input type="hidden" name="pay_for" value="{%$pay.order%}" /> 
+<input type="hidden" name="convert" value="yes" /> 
+<input type="hidden" name="user_email" value="{%$settings.user.email%}" /> 
+<input type="hidden" name="url_success" value="http://{%$settings.site_address%}{%$settings.patch%}pay/onpay/success/" /> 
+<input type="hidden" name="url_fail" value="http://{%$settings.site_address%}{%$settings.patch%}pay/onpay/fail/" />
+<input type="submit" value="{%$locale.668%}" />
+</form>
+
+</center>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key2',
+				'name' => 662,
+				'help' => 663,
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key3',
+				'name' => 649,
+				'help' => 648,
+				'type' => 'input'
+				);
+
+
+//separator//
+
+if($_POST['type'] == 'check')
+	{
+	$_HASH = $_POST['md5'];
+	$_CRC = strtoupper(md5($_POST['type'].';'.$_POST['pay_for'].';'.$_POST['order_amount'].';'.$_POST['order_currency'].';'.$abilling['key3']));
+	//type;pay_for;order_amount;order_currency;secret_key_for_api_in
+
+	if($_HASH != $_CRC)
+		{
+		$code = 2;
+	    $comment = 'error hash';
+		}
+	elseif(!check_payment($_POST['pay_for']))
+		{
+		$code = 2;
+	    $comment = 'no payment id';
+		}
+	else
+		{
+		$code = 0;
+	    $comment = 'OK';
+		}
+
+	$_CRC2 = strtoupper(md5($_POST['type'].';'.$_POST['pay_for'].';'.$_POST['order_amount'].';'.$_POST['order_currency'].';'.$code.';'.$abilling['key3']));
+	//“type;pay_for;order_amount;order_currency;code;secret_key_api_in”
+
+    header("Content-type: text/xml; charset=utf-8");
+
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	echo "<result>\n";
+	echo "<code>".$code."</code>\n";
+	echo "<pay_for>".$_POST['pay_for']."</pay_for>\n";
+	echo "<comment>".$comment."</comment>\n";
+	echo "<md5>".$_CRC2."</md5>\n";
+	echo "</result>";
+	}
+if($_POST['type'] == 'pay')
+    {
+
+	$_HASH = $_POST['md5'];
+	$_CRC = strtoupper(md5($_POST['type'].';'.$_POST['pay_for'].';'.$_POST['onpay_id'].';'.$_POST['order_amount'].';'.$_POST['order_currency'].';'.$abilling['key3']));
+	//type;pay_for;onpay_id;order_amount;order_currency;secret_key_for_api_in
+
+	if($_HASH != $_CRC)
+		{
+		$code = 7;
+	    $comment = 'error hash';
+		}
+	elseif(!check_payment($_POST['pay_for']))
+		{
+		$code = 3;
+	    $comment = 'no payment id';
+		}
+	else
+		{
+		$code = 0;
+		make_order($_POST['pay_for'], 'by OnPay.ru, id '.$_GET['onpay_id']);
+	    $comment = 'OK';
+		}
+
+	$_CRC2 = strtoupper(md5($_POST['type'].';'.$_POST['pay_for'].';'.$_POST['onpay_id'].';'.$_POST['pay_for'].';'.$_POST['order_amount'].';'.$_POST['order_currency'].';'.$code.';'.$abilling['key3']));
+	//type;pay_for;onpay_id;order_id;order_amount;order_currency;code;secret_key_api_in
+
+
+    header("Content-type: text/xml; charset=utf-8");
+
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	echo "<result>\n";
+	echo "<code>".$code."</code>\n";
+	echo "<comment>".$comment."</comment>\n";
+	echo "<onpay_id>".$_POST['onpay_id']."</onpay_id>\n";
+	echo "<pay_for>".$_POST['pay_for']."</pay_for>\n";
+	echo "<order_id>".$_POST['pay_for']."</order_id>\n";
+	echo "<md5>".$_CRC2."</md5>\n";
+	echo "</result>";
+
+    }

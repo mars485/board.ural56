@@ -1,0 +1,42 @@
+{%if $articles_cat.description|strip_tags|trim != ""%}
+    <h4>{%$articles_cat.name%}</h4>
+    <div class="article_description">
+        {%$articles_cat.description%}
+    </div>
+{%/if%}
+
+
+<p><b>{%$locale.2%} {%$articles_count_word%}</b></p>
+
+{%if $pages > 1%}
+	
+	<span>{%$locale.140%}:</span>
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+	{%/section%}
+
+{%/if%}
+
+
+{%foreach from=$articles item='article'%}
+    <div class="article">
+        <h4><span class="glyphicon glyphicon-share-alt"></span> <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$article.name%}</a></h4>
+         <div>
+            {%$article.content.short%}
+            {%if $article.content.more%}
+                <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$locale.15%}</a>
+            {%/if%}
+        </div>
+        <span class="smalldate"><span class="glyphicon glyphicon-calendar"></span> {%$article.pubdate|date_format:"%d.%m.%Y"%}</span>
+    </div>
+{%/foreach%}
+
+
+{%if $pages > 1%}
+	<span>{%$locale.140%}:</span>
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+	{%/section%}
+{%/if%}

@@ -1,0 +1,27 @@
+{%if $settings.comment_on%}
+	<form action='#' method='POST'>
+
+	{%if $settings.user || (!$settings.user && $settings.comment_unreg == 1)%}
+		{%if !$settings.user%}
+			Ваше имя:<br />
+			<input name="comusername" type="text"  value="{%$smarty.post.comusername%}"  ><br /><br />
+			Email:<br />
+			<input name="comuseremail" type="text" value="{%$smarty.post.comuseremail%}" ><br /><br />
+		{%/if%}
+		Текст комментария:<br />
+		<textarea style='width:400px; height:100px;' name='comtext'>{%$smarty.post.comtext%}</textarea>
+		{%if $settings.captcha == 1%}
+			<table border='0' CELLPADDING='0' CELLSPACING='0' width='100%'>
+				<tr>
+					<td align='left'>{%$locale.45%}<br /><img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'></td>
+					<td align='right'><input name='captcha' type='text' value='' size='5'></td>
+				</tr>
+			</table>
+		{%/if%}
+		<div><input type="submit" name="commentsubmit" value="{%$locale.55%}"></div>
+	{%else%}
+		{%$locale.788%}
+	{%/if%}
+
+	</form>
+{%/if%}

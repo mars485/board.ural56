@@ -1,0 +1,47 @@
+Тест
+//separator//
+Тестовая оплата
+//separator//
+https://illusionweb.org
+//separator//
+rur/RUB
+//separator//
+
+    
+
+<center>
+    <a href="{%$settings.path%}pay/debug/result/?id={%$pay.order%}" target="_blank">проверка успешного платежа</a>
+</center>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'Номер кошелька',
+				'help' => 'Номер кошелька в системе Яндекс Деньги',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Секрет',
+				'help' => 'Секретное слово для HTTP уведомлений',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+echo "
+Активируем заказ
+<pre>
+
+";
+
+make_order($_GET['id'], 'by DEBUG'.$settings['time']);
+
+echo "
+
+</pre>
+";
+
+

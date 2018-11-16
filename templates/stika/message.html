@@ -1,0 +1,671 @@
+<meta property="og:image" content="{%$settings.patch%}uploads/images/tb/{%$message.fields.i.0.value%}" />
+<!--Для того чтобы показать правый блок, использована переменная $blocks.l -->
+
+ <script src="{%$settings.path%}js/jquery.rating-2.0.min.js" type="text/javascript"></script>
+  <link href="{%$settings.path%}css/jquery.rating.css" rel="stylesheet">
+
+<style>
+#right {
+display: none;
+}
+</style>
+
+
+<script>
+$(document).ready(function() {   
+    $('a[name=modal]').click(function(e) {
+    e.preventDefault();
+    var id = $(this).attr('href');
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+    $('#mask').css({'width':maskWidth,'height':maskHeight});
+    $('#mask').fadeIn(1000); 
+    $('#mask').fadeTo("slow",0.8); 
+    var winH = $(window).height();
+    var winW = $(window).width();
+    $(id).css('top',  winH/6-$(id).height()/6);
+    $(id).css('left', winW/10-$(id).width()/10);
+    $(id).fadeIn(2000); 
+    });
+    $('.window .closes').click(function (e) { 
+    e.preventDefault();
+    $('#mask, .window').hide();
+    }); 
+    $('#mask').click(function () {
+    $(this).hide();
+    $('.window').hide();
+    }); 
+	
+	$('#rating').rating({
+		fx: 'float',
+		image: '/templates/metro/images/stars.png',
+		loader: '/templates/metro/images/ajax-loader.gif',
+		minimal: 0.5,
+		url: '/rating/ratingAjax.php',
+		callback: function(responce)
+		{
+			this.vote_success.fadeOut(2000);
+			if(responce.msg) alert(responce.msg);
+		}
+	});
+	
+	$('#mapMsgFull').click(function()
+	{
+		iframeFullMap = $('#googleMapMsg').clone();
+		topWindow =  $(window).scrollTop();
+		iframeFullMap.css({
+			'width':'100%',
+			'height':'100%',
+			'position':'fixed',
+			'z-index':'1000',
+			'top':topWindow + 'px',
+			'left':'0px',
+			'top':'0px'
+		});
+		
+
+		
+		$('body').append(iframeFullMap);
+		$('body').append('<div id="closeFullMap">Закрыть</div>');
+		
+	
+	
+		
+		$('body').on('click', '#closeFullMap', function(){
+			iframeFullMap.remove();
+			$(this).remove(); 
+		});
+		
+	});
+	
+});  
+</script>
+
+
+ 
+	
+	
+	
+	
+		
+	 <link rel="stylesheet"  href="{%$settings.path%}massagesfoto/lightGallery.css"/>
+   <script src="{%$settings.path%}massagesfoto/lightGallery.js"></script>
+    <script>
+    	 $(document).ready(function() {
+			$("#lightGallery").lightGallery();
+		});
+    </script>
+		{%if $message.comment_err|@count > 0%}
+	<script>
+//табы
+$(document).ready(function() {
+
+    //Действия по умолчанию
+    $(".tab_content").hide(); //скрыть весь контент
+    $("ul.tabs li.comm").addClass("active").show(); //Активировать первую вкладку
+    $("#tab4").show(); //Показать контент первой вкладки
+    
+    //Событие по клику
+    $("ul.tabs li").click(function() {
+        $("ul.tabs li").removeClass("active"); //Удалить "active" класс
+        $(this).addClass("active"); //Добавить "active" для выбранной вкладки
+        $(".tab_content").hide(); //Скрыть контент вкладки
+        var activeTab = $(this).find("a").attr("href"); //Найти значение атрибута, чтобы определить активный таб + контент
+        $(activeTab).fadeIn(); //Исчезновение активного контента
+        return false;
+    });
+
+});
+</script>
+
+	{%else%}
+	<script>
+//табы
+$(document).ready(function() {
+
+    //Действия по умолчанию
+    $(".tab_content").hide(); //скрыть весь контент
+    $("ul.tabs li:first").addClass("active").show(); //Активировать первую вкладку
+    $(".tab_content:first").show(); //Показать контент первой вкладки
+    
+    //Событие по клику
+    $("ul.tabs li").click(function() {
+        $("ul.tabs li").removeClass("active"); //Удалить "active" класс
+        $(this).addClass("active"); //Добавить "active" для выбранной вкладки
+        $(".tab_content").hide(); //Скрыть контент вкладки
+        var activeTab = $(this).find("a").attr("href"); //Найти значение атрибута, чтобы определить активный таб + контент
+        $(activeTab).fadeIn(); //Исчезновение активного контента
+        return false;
+    });
+
+});
+</script>
+
+	{%/if%}
+
+
+ 
+ 
+ 
+
+
+<!--Правый блок-->
+{%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+<!--Правый блок-->
+
+<div class='message_once'>
+
+<!--H1, Звезда, Кнопки соц сетей-->
+<div style="width: 100%; display: table;">
+<div style="width: 690px; float: left;">
+    <div id="mass_h1">{%$message.title|wordwrap_utf8%}</div>
+<div id="mass_zvezda">
+<a class='fav' id='fav-{%$message.id%}' name='{%$message.id%}' href=''>{%if $message.fav == 1%}<img style="width: 20px;" src="{%$smarty.const.THEME%}images/zvezda.png">{%else%}<img style="width: 20px;" src="{%$smarty.const.THEME%}images/zvezda_active.png">{%/if%}</a>
+</div>
+</div>
+
+<div style="display: table; float: right; margin-top: 10px;">
+<script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script><div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="small" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir" data-yashareTheme="counter"></div>
+</div>
+</div>
+<!--Конец H1, Звезда, Кнопки соц сетей-->
+
+
+
+
+
+<!--Правый блок-->
+<div id="mass_right_body">
+<div id="mass_right">
+<div id="mass_cena">
+<div id="cena_center">
+{%if $message.fields.p == NULL%}
+{%else%}
+{%/if%}
+<div id="cena_hover_masseg">
+{%if $message.fields.p == NULL%}
+{%$locale.1206%}
+{%else%}
+{%foreach  from=$message.fields.p item='v'%}
+{%if $settings.user || (!$settings.user && $v.hide == 0)%}	
+
+							 
+
+{%$v.value.txt|droblenie%} {%$locale.1207%}
+{%assign var='fieldname' value='Срок аренды' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+
+
+{%if $field.value == "Час"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1201%}</span>
+
+   {%/if%}
+   
+{%if $field.value == "Месяц"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1202%}</span>
+
+   {%/if%}
+   
+{%if $field.value == "Сутки"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1203%}</span>
+
+   {%/if%}
+
+{%if $field.value == "На длительный срок"%}
+
+   {%/if%}
+
+
+
+
+{%else%}
+{%$after_registration%}
+{%/if%}					 
+{%/foreach%}
+{%/if%}
+</div>
+<div id="torg_massages"> {%if $message.f_482|@count > 1%}{%foreach from=$message.f_482.value item='val' name='key' %}
+  +{%$val.name%}{%if $smarty.foreach.key.last eq false %}, {%/if%}
+  {%/foreach%}{%/if%}</div>
+</div>
+</div>
+<div id="massages_names"><div id="mass_name_center"><div id="chel_mass">
+<div class="ob_mass">
+<div id="name_mass"><span class="autor_mass">{%$locale.1215%}</span> {%$message.user_id_name%}</div>
+<div id="vse_mass"><a title="{%$locale.1216%}" href="{%$settings.patch%}userinfo/{%$message.user_id%}/">{%$locale.1216%}</a></div>
+</div>
+</div>
+
+</div></div>
+<div id="massages_tel">
+
+<div onmouseover="Tip(this, '{%$locale.1217%}')" onmouseout="UnTip(this)"  id="trubka">{%if $message.f_475.value == NULL%}{%$locale.1218%}{%else%}{%$message.f_475.value%}{%/if%}</div>
+
+
+{%if $message.f_476.value == NULL%}
+{%else%}
+
+<div onmouseover="Tip(this, '{%$locale.1219%}')" onmouseout="UnTip(this)"   id="faks">
+<table style="min-height: 30px;">
+<tbody>
+<tr>
+<td style="vertical-align: inherit; color: #3C8AB3;">
+	
+{%$message.f_476.value%}
+        	
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+{%/if%}
+
+
+{%if $message.f_477.value == NULL%}
+{%else%}
+<div  onmouseover="Tip(this, '{%$locale.1220%}')" onmouseout="UnTip(this)"   id="adres">
+<table style="min-height: 30px;">
+<tbody>
+<tr>
+<td style="vertical-align: inherit; color: #3C8AB3;">
+<a href="#map">{%$message.f_477.value%}</a>
+
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+{%/if%}
+
+
+
+{%if $message.f_478.value == NULL%}
+{%else%}
+<div onmouseover="Tip(this, '{%$locale.1221%}')" onmouseout="UnTip(this)"   id="sait">
+<table style="min-height: 30px;">
+<tbody>
+<tr>
+<td style="vertical-align: inherit; color: #3C8AB3;">
+	
+<a href="{%$settings.patch%}redirect/?go={%$message.f_478.value%}" target='_blank'>{%$message.f_478.value%}</a>
+        	
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+{%/if%}
+</div>
+
+
+
+
+<div id="prodvigenie">
+<div id="plat">{%$locale.1222%}</div>
+     {%if $is_billing %}
+
+
+        		{%foreach from=$services item='serv'%}
+    				{%if $settings.user%}
+    					{%assign var='href' value="`$settings.path`users/order/?service=`$serv.type`&message_id=`$message.id`" %}
+    				{%else%}
+    					{%assign var='href' value="`$settings.path`services.html?service=`$serv.type`&message_id=`$message.id`" %}
+    					{%assign var='iframeclass' value="class='group iframe dashed'" %}
+    				{%/if%}
+<a class="btn btn-xs btn-{%if $serv.type == 'm'%}info{%/if%}{%if $serv.type == 'b'%}block_top{%/if%}{%if $serv.type == 'r'%}success{%/if%} {%if $settings.user%}{%else%}group iframe{%/if%}" href="{%$href%}" title="{%$serv.name%}"><div id="pods_servis"><div id="hvosti"></div>
+<table style="width: 100%; height: 100%; color: #000;">
+<tbody>
+<tr>
+<td style=" vertical-align: inherit; padding: 0;">
+{%$serv.tip%}
+</td>
+</tr>
+</tbody>
+</table></div></a>
+{%/foreach%}
+        {%/if%}
+</div>
+</div>
+
+<noindex>
+<div id="reklama">{%$blocks.r%}</div>
+</noindex>
+</div>
+<!--Конец Правый блок-->
+
+
+
+<div id="mass_left">
+
+
+
+
+
+<!--Начало фото-->
+{%if $message.fields.i != ""%}
+<div id="foto_mass">
+<div id="lightGallery" class="gallery">
+{%foreach  from=$message.fields.i item='image' key='key'%}
+<div data-src="{%$settings.patch%}uploads/images/tb/{%$image.value%}" style="height: 250px;"> 
+<img id="mainimg" src="{%$settings.patch%}uploads/images/tb/{%$image.value%}" alt="{%$message.title%}" border="0" />
+</div>
+{%/foreach%}
+</div>
+</div>
+{%if $message.fields.i|@count > 1%}
+ 
+<div id="foto_mass_mini">
+{%foreach  from=$message.fields.i item='image' key='key'%}
+<div id="miniaturi">
+<div id="tab_img">
+<table style="width:80px; height: 60px; border-spacing: 0px;">
+<tbody>
+<tr>
+<td style="vertical-align: inherit;">
+<a class='message_images2' title="{%$image.title%}" href="{%$settings.patch%}uploads/images/tb/{%$image.value%}">
+<img id="mainimg" style="width: 100%; vertical-align: text-top;" src="{%$settings.patch%}uploads/images/ts/{%$image.value%}" />
+ </a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+{%/foreach%}
+</div>
+{%/if%}
+
+
+{%else%}
+<div id="foto_mass" style="cursor: auto;">
+<div style="height: 250px;"> 
+<img src="{%$smarty.const.THEME%}/images/no-photobig.gif" alt="{%$message.title%}" border="0" />
+</div>
+</div>
+{%/if%}
+<!--КОнец фото-->
+	
+<!--Результат подачи комментария-->
+	{%if $settings.comment_on%}
+	{%if $smarty.post.commentsubmit%}
+		<div>
+			{%if $message.comment_err|@count > 0%}
+			
+			
+				<div class="alert alert-warning">
+					<ul>
+						{%foreach from=$message.comment_err  item='err'%}
+							<li>{%$err%}</li>
+						{%/foreach%}
+					</ul>
+				</div>
+			{%else%}
+				<div class="alert alert-success">{%$locale.1223%}</div>
+			{%/if%}
+		</div>
+	{%/if%}
+	{%/if%}
+	<!--Конец Результат подачи комментария-->
+	
+	
+	
+	<!--ТАбы заголовки-->
+<ul class="tabs">
+{%if $message.comment_err|@count > 0%}
+ <li><a href="#tab1">{%$locale.1224%}</a></li>
+{%else%}
+ <li class="active"><a href="#tab1">{%$locale.1224%}</a></li>
+{%/if%}
+{%if $message.fields.y|@count > 0%}<li class=""><a href="#tab3">{%$locale.1225%}</a></li>{%/if%}
+ <li class="comm"><a href="#tab4">{%$locale.1226%}</a></li>
+ <li><a href="#tab5" onclick="document.getElementById('iframe0').src='{%$regions[$regionscount].uri%}{%$settings.patch%}sendmail/?messageid={%$message.id%}&userid={%$message.user_id%}';">{%$locale.1227%}</a></li>
+</ul>
+	<!--Конец ТАбы заголовки-->
+	  
+	  
+	<!--Контейнер табов-->  
+<div class="tab_container">
+
+
+<!--Информация-->  
+ <div id="tab1" class="tab_content"> 
+ <div class="more_infome">
+ <div id="srok">{%$message.date_add|userdate%} </div><div id="zen">{%$message.counter%}</div> <div id="pip">{%$message.region|linenav:$allregions:'region'%}</div></div>
+ <div id="text_massages_mass">{%$message.text%}<br/>
+ 
+ <ul class="once_list2">
+   	{%foreach  from=$message.fields_sorted item='v'%}
+            {%if    $v.field_type != 'y' && 
+                    $v.field_type != 'j' && 
+                    $v.field_type != 'i' && 
+                    $v.field_type != 'p'%}
+             {%if $v.field_name!='f_482' &&  $v.field_name!='f_475' &&  $v.field_name!='f_477' &&  $v.field_name!='f_478' &&  $v.field_name!='f_476'%}
+        		{%if $v.field_type == 'v'%}
+        			{%if $v.string_type == 'u'%}
+        				<li><span class="imya">-{%$v.name%}</span>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href="{%$settings.patch%}redirect/?go={%$v.value%}" target='_blank'>{%$v.value%}</a>{%else%}{%$locale.1228%}{%/if%}</li>
+        			{%else%}
+        				<li><span class="imya">-{%$v.name%}</span>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value%}{%else%}<span>{%$locale.1228%}</span>{%/if%}</strong></li>
+        			{%/if%}
+					
+        		{%/if%}
+        		{%if $v.field_type == 't'%}
+        			<li class="textarea"><span class="imya">-{%$v.name%}</span>: <span class="textarea2">{%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value%}{%else%}{%$after_registration%}{%/if%}</span></li>
+        		{%/if%}
+				
+				
+	{%if $v.field_type == 's'%}
+        			<li><span class="imya">-{%$v.name%}</span>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?add_cat={%$message.cat%}&add_region={%$second_region.id%}&{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</li>
+        		{%/if%}
+        		{%if $v.field_type == 'r'%}
+        			<li><span class="imya">-{%$v.name%}</span>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?add_cat={%$message.cat%}&add_region={%$second_region.id%}&{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</li>
+        		{%/if%}
+      {%if $v.field_type == 'c'%}
+        			<li><span class="imya">-{%$v.name%}</span>:
+        			{%if $settings.user || (!$settings.user && $v.hide == 0)%}
+        				{%foreach from=$v.value item='val' name='key' %}
+        				<a href='{%$settings.patch%}sort/?{%$v.field_name%}[]={%$val.key%}'>-{%$val.name%}</a>{%if $smarty.foreach.key.last eq false %}, {%/if%}
+        				{%/foreach%}
+        			{%else%}
+        				{%$locale.1229%}
+        			{%/if%}
+        			</li>
+        		{%/if%}
+       
+                {%if $v.field_type == 'f'%}
+                    <li><strong><span class="imya">-{%$v.name%}</span>: <a href="{%$settings.patch%}download/{%$message.id%}/{%$v.field_name|substr:2%}/{%$v.value.filename%}"><img src="{%$v.value.ico%}" width="33" height="22" border="0" class='help'>{%$v.value.filename|strtolower%}</a></strong></li>
+                {%/if%}
+                 {%/if%}
+            {%/if%}
+        {%/foreach%}
+
+	</ul>
+	
+ </div>
+		
+     </div>
+<!--Информация-->   
+	 
+
+
+<!--Видео-->  
+{%if $message.fields.y|@count > 0%}
+<div id="tab3" class="tab_content" style="display: none;"> 
+         
+	{%foreach  from=$message.fields.y item='video' key='key'%}
+         <div class='block_yotube'>
+		{%if $settings.user || (!$settings.user && $video.hide == 0)%}
+         <object width="630" height="500" style="margin-left: 17px;"><param name="movie" value="http://www.youtube.com/v/{%$video.value%}"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/{%$video.value%}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="630" height="500"></embed></object>
+		{%else%}
+         <a href="{%$settings.path%}users/register/"><img src="{%$smarty.const.THEME%}images/video_{%$settings.locale%}.jpg" border="0"></a>
+		{%/if%}
+        </div>
+	{%/foreach%}
+
+</div>
+	 {%/if%}
+<!--Конец Видео-->  
+	 
+	 
+	 
+	 
+	 
+	 
+	  <!--Коменты--> 
+ <div id="tab4" class="tab_content" style="display: none;"> 
+
+<div style="  width: 90%;
+  margin: auto;" class="once_message block_yamap">
+{%if $message.user_id != 0%}
+{%if $settings.comment_on%}
+	
+	{%if $message.comments_count < 1 %}<div>{%else%}<div id="widt_add">{%/if%}{%if $message.comments_count < 1 %}<div id="no_com">Пока нет отзывов</div>{%else%}{%/if%}
+	{%if $message.comments_count > 0%}<a class="bt" id="commentadd">{%$locale.780%}</a>{%/if%}</div>
+	<div id='commentform'	{%if $message.comment_err|@count > 0%} {%else%} {%if $message.comments_count > 0%}style='display:none;'{%/if%}{%/if%}>
+		{%include file='comment_add.html'%}
+	</div>
+	<div class='once_comments'>
+		{%if $message.comments_count > 0 %}
+			{%foreach from=$message.comments  item='comment'%}
+				{%include file="comment.html"%}
+			{%/foreach%}
+		{%/if%}
+	</div>
+{%/if%}
+	{%else%}
+        			
+        				
+{%/if%}
+
+
+
+
+     </div>
+
+
+	</div>
+	  <!--Конец Коменты-->
+	  
+	  
+	  
+	  
+	  
+	  
+	<!--Почта--> 
+ <div id="tab5" class="tab_content" style="display: none;"> 
+ 
+
+<iframe id="iframe0" src=""></iframe>
+</div>
+	<!--Конец Почта--> 
+</div>
+
+	<!--Конец контейнеров табов-->
+
+
+
+
+{%if $message.f_477.value != ""%}
+<div id="map" style="position: relative; height: 500px; width: 665px; margin-top: 30px;">
+
+		{%if $settings.user || (!$settings.user && $yandex.hide == 0)%}
+		{%assign var='last_region' value=$message.array_regions|@count%}
+		{%assign var='last_region' value=`$last_region-1`%}
+		{%assign var='last_region' value=$message.array_regions[$last_region]%}
+		
+		<div id="mapMsgFull">На весь экран</div>
+		<iframe scrolling='no' id="googleMapMsg"
+		src="{%$settings.patch%}googlemaps/?address={%$last_region.name%},  {%$message.f_477.value%}&messageName={%$message.f_477.value%}" style="width:665px; height:500px;" frameborder="0" class='add'>
+		</iframe>
+		{%else%}
+			<a href="{%$settings.path%}users/register/"><img src="{%$smarty.const.THEME%}images/map_{%$settings.locale%}.jpg" border="0"></a>
+		{%/if%}
+
+</div>
+{%else%}
+
+
+{%/if%}
+	 
+
+
+	 
+	 
+	 
+	 {%if $message.simmessages > 0%}
+<div class="mayby">
+{%if $message.simmessages%}	
+  <div class="simmessages">
+	<h4><span class="glyphicon glyphicon-list"></span> {%$locale.875%}: </h4>
+	 <div class="list-group">
+      {%foreach from=$message.simmessages name='simmessage' item='simmessage'%}
+                {%if $smarty.foreach.simmessage.index < 5%}
+	
+	 <div class="mayby_bod">
+	  <a style="display: block;" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$simmessage.link%}">  
+	    <div id="mayby_img">
+             {%if $simmessage.fields.i.0.value != ""%}      
+                <img style="min-height: 100%; min-width: 100%" class="img-thumbnail img-responsive" src="{%$settings.patch%}uploads/images/ts/{%$simmessage.fields.i.0.value%}" alt="{%$simmessage.title|truncate:400:'...'%}"/>                    
+             {%else%}
+               <img style="width: 100%; " class="img-thumbnail img-responsive" src="{%$smarty.const.THEME%}/images/no-foto-mini.png" alt="{%$locale.109%}"/>
+             {%/if%}
+         </div>
+		 
+		 <table style="width: 100%; margin: auto;  line-height: 12px; width: 100%; border-spacing: 0px;
+margin-top: 3px;
+text-align: center;
+display: table;
+height: 65px;">
+		 <tbody>
+		 <tr>
+		 <td style="vertical-align: inherit;">
+	  <div id="mayby_h1">
+
+                   {%$simmessage.title|truncate:70:'...'%} 
+           
+		{%foreach  from=$simmessage.fields.p item='v'%}
+	 {%if $v.value.txt > 1%}<div id="mayby_cena">{%$v.value.txt|droblenie%} {%$locale.1207%}</div>{%/if%}
+             {%/foreach%}
+	  </div>
+	  </td>
+	  </tr>
+	  <tbody>
+	  </table>
+	  	  </a> 
+	 </div>
+
+    {%/if%}
+            {%/foreach%}
+     </div>
+   </div>
+{%/if%}
+</div>
+{%/if%}
+</div>
+
+</div>
+
+
+
+
+
+
+
+<!--Кнопки редактирования, удаления-->
+
+
+	{%if ($message.user_id != "" && $message.user_id == $settings.user.id) || $settings.editable%}
+	<br />	<br />
+		<div class='moder_panel'>
+		<a class='m_edit' href="{%$settings.patch%}edit/{%$message.id%}">{%$locale.200%}</a>
+		<a class='m_delete' name='message_{%$message.id%}' href="{%$settings.patch%}delete/{%$message.id%}"><span>x</span>{%$locale.201%}</a>
+		</div>
+			<br />	<br />
+	{%/if%}
+
+
+
+

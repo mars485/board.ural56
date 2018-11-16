@@ -1,0 +1,69 @@
+PayPal
+//separator//
+646
+//separator//
+https://paypal.com
+//separator//
+rur/RUB|usd/USD|eur/EUR
+//separator//
+<center>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="{%$abilling.key1%}">
+        <input type="hidden" name="item_name" value="{%$pay.order%}">
+        <input type="hidden" name="amount" value="{%$pay.amount%}">
+        <input type="hidden" name="tax" value="0.00">
+        <input type="hidden" name="no_note" value="1">
+        <input type="hidden" name="no_shipping" value="1">
+        <input type="hidden" name="address_override" value="0">
+        <input type="hidden" name="currency_code" value="{%$pay.currency%}">
+        <input type="hidden" name="custom" value="{%$pay.order%}">
+        <input type="hidden" name="return" value="http://{%$settings.site_address%}{%$settings.path%}pay/paypal/success/">
+        <input type="hidden" name="cancel_return" value="http://{%$settings.site_address%}{%$settings.path%}pay/paypal/fail/">
+        <input type="hidden" name="notify_url" value="http://{%$settings.site_address%}{%$settings.path%}pay/paypal/result/">
+        <input type="hidden" name="bn" value="ELITEBOARD">
+        <input type="hidden" name="rm" value="2">
+        <input type="submit" value="{%$locale.668%}" />
+    </form>
+</center>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'PayPal account (e-mail)',
+				'help' => '',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Client ID',
+				'help' => '',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key3',
+				'name' => 'Secret',
+				'help' => '',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+$_DATA = $_GET + $_POST;
+
+if(isset($_DATA['custom'])){
+    if(!check_payment($_DATA['custom'])){
+        echo 'no payment id';
+        exit();
+   	}else{
+   	    
+        if(!(preg_match('~^(?:.+[.])?paypal[.]com$~', gethostbyaddr($_SERVER['REMOTE_ADDR'])) > 0))	exit('Bad sign!'); 
+                
+        if(make_order($_DATA['custom'], 'by PayPal, id '.$_DATA['txn_id'])){
+        	echo 'OK';
+        	exit();
+       	}
+   	}
+}

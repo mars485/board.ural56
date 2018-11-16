@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="{%$settings.charset%}">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta name="author" content="{%$settings.autor%}"/>
+    <meta name="description" content="{%$description%}"/>
+    <meta name="keywords" content="{%$keywords%}"/>
+    <meta name="copyright" content="{%$settings.copyright%}"/>
+    {%if $noindex%}
+    <meta name="robots" content="noindex,nofollow"/>
+    {%/if%}
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="{%$smarty.const.THEME%}assets/ico/fav192.png">
+    <title>
+        {%$locale.1257%}
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="{%$smarty.const.THEME%}assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{%$smarty.const.THEME%}assets/css/style.css?r={%10000|rand:9999999999%}" rel="stylesheet">
+    <script>
+        var TPL_PATH = "{%$smarty.const.PATH%}";
+        var TPL_PATH_THEME = '{%$smarty.const.THEME%}';
+        var TPL_REGION_ID = {%if $second_region.id%}{%$second_region.id%}{%else%}0{%/if%};
+        var TPL_AUTOROTATE = {%if $settings.message_block_type == 2 %}2000{%else%}false{%/if%};
+        var TPL_L_00 = '{%$locale.76%}';
+        var TPL_L_01 = '{%$locale.184%}';
+        var TPL_L_02 = '{%$locale.335%}';
+        var TPL_L_03 = '{%$locale.43%}';
+        var TPL_L_04 = '{%$locale.81%}';
+        var TPL_L_05 = '{%$locale.82%}';
+        var TPL_L_06 = '{%$locale.986%}';
+        var TPL_L_07 = '{%$locale.1194%}';
+        var TPL_L_08 = '{%$locale.1195%}';
+        paceOptions = {
+            elements: true
+        };        
+        var fields = new Array();
+        var yamaps = new Array();
+    </script>
+</head>
+<body>
+<div id="wrapper">
+    <a href="#" class="btn btn-primary" id="search_btn"><i class="icon-menu-1"></i> <span class="hidden-xs">{%$locale.1259%}</span></a>
+    <div class="search_panel">
+        <h2>
+            {%$locale.1259%}
+            <span class="pull-right">
+                <a href="#" class="gotosite" data-original-title="{%$locale.1260%}"  data-placement="left" data-toggle="tooltip">
+                    <i class="fa fa-columns"></i>
+                </a>
+            </span>
+        </h2>
+        {%include file="block_search.html"%}
+    </div>
+	<style>
+    
+        html, body, #map {
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        }
+        #search_btn{
+            position: absolute;
+        	right: 10px;
+        	top: 10px;
+        	z-index: 999999; 
+            
+        }
+        .search_panel {
+        	border: solid 1px #ddd;
+        	width: 300px;
+        	position: absolute;
+        	right: 5px;
+        	top: 60px;
+        	z-index: 999999;
+        	background-color: white;
+        	padding: 5px;
+            overflow-y: auto; 
+            border-radius: 3px;
+        }
+        @media (max-width: 770px) {
+            .search_panel {
+                display: none;
+            }
+        }
+    </style>
+
+
+
+
+        {%if $count_points == 0%}
+            <div class="map_error">
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    {%$locale.1258%}
+                </div>
+            </div>
+        {%/if%}
+
+        <div id="map"></div>
+    
+    
+    
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+        <script>window.jQuery || document.write('<script src="{%$smarty.const.THEME%}assets/js/jquery/3.2.1/jquery.min.js"><\/script>')</script>
+
+        {%if $settings.maptype == 1%}
+            <script src="{%$smarty.const.THEME%}assets/js/markerclusterer.js"></script>
+            <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key={%$settings.mapkey%}&callback=initMap">
+            </script>
+            
+            <script>
+              {%$htmlscript%}
+            
+              function initMap() {
+
+                var myLatLng = {lat: 55.751574, lng: 37.573856};
+                var map = new google.maps.Map(document.getElementById("map"), {
+                  zoom: 9,
+                  center: myLatLng
+                });
+
+                points = {%$points%};
+                var markers = [];
+                var exists_points = new Array();
+                var infowindows = Array();
+                var bounds = new google.maps.LatLngBounds();
+                
+                for(var i = 0, len = points.length; i < len; i++) {
+                    var check_point = points[i]['point'][0]+','+points[i]['point'][1];
+                    if(exists_points.indexOf(check_point) == -1){
+                        var marker = add_marker(points[i]['point'][0], points[i]['point'][1], points[i]['id'], points[i]['type']);
+                        markers.push(marker);  
+                        bounds.extend(marker.getPosition());
+                    }
+                    exists_points.push(check_point);
+                }   
+                  
+                if(i > 0){
+                    map.fitBounds(bounds);
+                    var markerCluster = new MarkerClusterer(
+                        map, 
+                        markers, 
+                        {
+                            imagePath: '{%$smarty.const.THEME%}assets/img/m'
+                        }
+                    );
+                }
+                
+                function add_marker(lat, lng, title, type) {
+                    
+                    var desc = '';
+                    var ico = '';
+                    if(type == 2){
+                        ico = 'https://maps.google.com/mapfiles/kml/pal3/icon18.png';
+                        desc = '{%$locale.1104%} #'+title;
+                    }
+                    if(type == 1){
+                        ico = 'http://maps.google.com/mapfiles/ms/micons/orange-dot.png';
+                        desc = '{%$locale.1312%} #'+title;
+                    }
+                    if(type == 0){
+                        ico = 'http://maps.google.com/mapfiles/ms/micons/red-dot.png';
+                        desc = '{%$locale.183%} #'+title;
+                    }
+                    
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(lat, lng),
+                        map: map,
+                        title: desc
+                    });
+
+                    marker.setIcon(ico);
+                    
+                    
+                    google.maps.event.addListener(marker, 'click', function () {
+                        for(var i = 0, len = infowindows.length; i < len; i++) {
+                            infowindows[i].close();            
+                        }
+                        
+                        $.ajax({
+                        type: "GET",
+                         url: "{%$settings.path%}ajax_data/msg/?id="+title+"&type="+type,
+                         cache: false,
+                         success: function(data){            
+                            var infowindow = new google.maps.InfoWindow({
+                                content: data.body
+                            });
+                            infowindows.push(infowindow);
+                            infowindow.open(map, marker);
+                        }
+                	   });
+                    });
+                    return marker;
+                }
+             }
+             
+             
+               
+            </script>
+        {%else%}
+            <script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+            <script>
+            
+                {%$htmlscript%}
+                
+                ymaps.ready(function () {
+                    msgInfo = [ {%$msgs%} ];
+                    var myMap = new ymaps.Map('map', {
+                            center: [55.751574, 37.573856],
+                            zoom: 9,
+                            behaviors: ['default', 'scrollZoom']
+                        }, {
+                            searchControlProvider: 'yandex#search'
+                        }),
+                        /**
+                         * Создадим кластеризатор, вызвав функцию-конструктор.
+                         * Список всех опций доступен в документации.
+                         * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Clusterer.xml#constructor-summary
+                         */
+                            clusterer = new ymaps.Clusterer({
+                            /**
+                             * Через кластеризатор можно указать только стили кластеров,
+                             * стили для меток нужно назначать каждой метке отдельно.
+                             * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/option.presetStorage.xml
+                             */
+                            preset: 'islands#invertedVioletClusterIcons',
+                            /**
+                             * Ставим true, если хотим кластеризовать только точки с одинаковыми координатами.
+                             */
+                            groupByCoordinates: false,
+                            /**
+                             * Опции кластеров указываем в кластеризаторе с префиксом "cluster".
+                             * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/ClusterPlacemark.xml
+                             */
+                            gridSize: 80,
+                            clusterDisableClickZoom: false,
+                            clusterHideIconOnBalloonOpen: false,
+                            geoObjectHideIconOnBalloonOpen: false
+                        }),
+                        /**
+                         * Функция возвращает объект, содержащий опции метки.
+                         * Все опции, которые поддерживают геообъекты, можно посмотреть в документации.
+                         * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/GeoObject.xml
+                         */
+        
+                        points = {%$points%};
+                        geoObjects = [];
+                        myMap.controls.remove("typeSelector").remove("trafficControl").remove("fullscreenControl").remove("rulerControl");      
+                        
+                        var bmw = 270;
+                        if($("#map").width() > 800){
+                            bmw = 400;
+                        }
+                     
+                        for(var i = 0, len = points.length; i < len; i++) {
+                            var preset = '';
+                            switch(points[i]['type']) {
+                              case 1:
+                                preset = 'islands#violetShoppingIcon';
+                                break;
+                              case 2:
+                                preset = 'islands#orangeShoppingCircleIcon';
+                                break;
+                              default:
+                                preset = 'islands#violetIcon';
+                            }                            
+                            geoObjects[i] = new ymaps.Placemark(points[i]['point'], 
+                                            {balloonContentBody: i}, 
+                                            {preset: preset, balloonMaxWidth: bmw}
+                                        );
+            
+                        }
+                
+                    clusterer.events
+                        // Можно слушать сразу несколько событий, указывая их имена в массиве.
+                        .add(['click'], function (e) {
+                            var target = e.get('target'),
+                                type = e.get('type');
+                            if (typeof target.getGeoObjects != 'undefined') {
+                                // Событие произошло на кластере.
+                                if(target._clusterBounds == null){
+        
+                                    var obj_array = target.properties._data.geoObjects;
+        
+                                    for (index = 0; index < obj_array.length; ++index) {
+                                        var obj = obj_array[index];
+                                        id = obj.properties.get('balloonContentBody');
+                                        if(is_numeric(id)){
+                                            $.ajax({
+                                            type: "GET",
+                                             url: "{%$settings.path%}ajax_data/msg/?point_id="+id+"&id="+points[id]['id']+"&type="+points[id]['type'],
+                                             cache: false,
+                                             success: function(data){
+                                                for (index2 = 0; index2 < obj_array.length; ++index2) {
+                                                    var obj2 = obj_array[index2];
+                                                    id2 = obj2.properties.get('balloonContentBody');
+                                                    if(is_numeric(id2)){
+                                                        if(id2 == data.point_id){
+                                                            obj2.properties.set('balloonContentBody', data.body);
+                                                            obj2.properties.set('clusterCaption', data.title);
+                                                        }
+                                                    }
+                                                }
+        
+                                            }
+                                    	   });
+                                           
+                                        }
+                                    }
+        
+        
+                                }
+        
+                            } else {
+                                // Событие произошло на геообъекте.
+                                var id = target.properties.get('balloonContentBody');  
+                                
+                                if(is_numeric(id)){
+                                    target.properties.set('balloonContentBody', '<img src={%$smarty.const.THEME%}images/loading.gif />');
+                                    $.ajax({
+                                    type: "GET",
+                                     url: "{%$settings.path%}ajax_data/msg/?id="+points[id]['id']+"&type="+points[id]['type'],
+                                     cache: false,
+                                     success: function(data){
+                                        target.properties.set('balloonContentBody', data.body);
+                                    }
+                            	   });
+                                }
+                  
+                            }
+                        });
+                
+                
+                    /**
+                     * В кластеризатор можно добавить javascript-массив меток (не геоколлекцию) или одну метку.
+                     * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/Clusterer.xml#add
+                     */
+                    clusterer.add(geoObjects);
+                    myMap.geoObjects.add(clusterer);
+                
+                
+                
+                    /**
+                     * Спозиционируем карту так, чтобы на ней были видны все объекты.
+                     */
+                
+                    myMap.setBounds(clusterer.getBounds(), {
+                        checkZoomRange: true
+                    });
+                });
+            </script>
+        {%/if%}
+        
+        
+        <script>
+        
+            function is_numeric( mixed_var ) {
+                mixed_var = parseInt(mixed_var);
+            	return !isNaN( mixed_var );
+            }
+            
+            $(document).ready(function () {
+                
+                function resize_panel(){
+                    var win_height = $("#map").height();
+                    $('.search_panel').height(win_height - 100);
+                }
+                
+                resize_panel();
+                $(window).on('resize load', function () {
+                    resize_panel();
+                });
+                
+            });        
+        
+        </script>
+
+</div>
+
+<script src="{%$smarty.const.THEME%}assets/js/main_libs.js"></script>
+<script src="{%$smarty.const.THEME%}assets/js/script.js"></script>
+
+</body>
+</html>

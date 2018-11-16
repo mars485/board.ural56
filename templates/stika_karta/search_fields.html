@@ -1,0 +1,84 @@
+
+<div>
+		<fieldset class='float_field'><legend>{%$locale.199%}</legend>
+			<label><input name='sort_by' type='radio' value='date_add' />&nbsp;&nbsp;{%$locale.13%}</label><br />
+			{%foreach from=$fields item='field'%}
+			{%if  ($field.type == 'v' && $field.type_string == 'n') || $field.type == 'p' %}
+					    <label><input name='sort_by' type='radio' value='f_{%$field.id%}' />&nbsp;&nbsp;{%$field.name%}</label><br />
+				{%/if%}
+			{%/foreach%}
+			<br />
+			<label><input name='desc' type='checkbox' value='yes' />&nbsp;&nbsp;{%$locale.205%}</label>
+		</fieldset>
+
+
+		<fieldset class='float_field'><legend>{%$locale.202%}</legend>
+            <label><input name='must[images]' type='checkbox' value='ON' />&nbsp;&nbsp;{%$locale.874%}</label><br />
+			{%foreach from=$fields key='k' item='field'%}
+				{%if $field.type == 'f' OR  $field.type == 'y' OR  $field.type == 'j'%}
+					    <label><input name='must[{%$k%}]' type='checkbox' value='ON' />&nbsp;&nbsp;{%$field.name%}</label><br />
+				{%/if%}
+			{%/foreach%}
+		</fieldset>
+
+
+		{%foreach from=$fields item='field'%}
+		{%assign var="id" value=`$field.id`%}
+		{%assign var="id" value=f_$id%}
+
+			{%if $field.type != 'i' &&  $field.type != 'f' &&  $field.type != 'y' &&  $field.type != 'j'%}
+				<fieldset class='float_field'><legend>{%$field.name%}</legend>
+
+					{%if $field.type == 'v' || $field.type == 't'%}
+							{%if $field.type_string == 'n' %}
+							{%assign var="sid" value=cond_$id%}
+								<select size='1' name='cond_{%$id%}'>
+    								<option value='eq'>{%$locale.206%}</option>
+    								<option value='over'>{%$locale.207%}</option>
+    								<option value='less'>{%$locale.208%}</option>
+								</select>
+							{%/if%}
+						<input name='{%$id%}' type='text' value='' size='30'>
+					{%/if%}
+
+					{%if $field.type == 's'%}
+						<select size='1' name='{%$id%}' >
+							<option value='' >{%$locale.204%}</option>
+							{%foreach  from=$field.values_array item='vl' key='k'%}
+							     <option value='{%$k%}'>{%$vl%}</option>
+							{%/foreach%}
+						</select>
+					{%/if%}
+
+					{%if $field.type == 'r'%}
+						<label><input name='{%$id%}' type='radio' value='' />&nbsp;{%$locale.204%}</label><br />
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						  <label><input name='{%$id%}' type='radio' value='{%$k%}' />&nbsp;{%$vl%}</label><br />
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'c'%}
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						  <label><input name="{%$id%}[{%$k%}]"  type='checkbox' value='{%$k%}' />&nbsp;{%$vl%}</label><br />
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'p'%}
+						{%$locale.888%}:
+						<input name='{%$id%}[over]' type='text' value='' size='7' style='width: 50px;'/>
+                        &nbsp;&nbsp;{%$locale.889%}:
+						<input name='{%$id%}[less]' type='text' value='' size='7' style='width: 50px;'/>  
+                        <select size='1' name="{%$id%}[rate]">
+            				{%foreach  from=$field.rates item='rates'%}
+            				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+            				{%/foreach%}
+                        </select>     
+					{%/if%}
+				</fieldset>
+			{%/if%}
+		{%/foreach%}
+</div>
+
+    <div style="width:100%; float:left; text-align:center;">
+    	    <input type='submit' value='{%$locale.203%}' style='font-size:14px; font-weight:bold; font-family:Arial,Tahoma; padding:5px; margin:4px 200px 4px 200px; width:200px;' />
+    </div>

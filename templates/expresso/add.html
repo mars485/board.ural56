@@ -1,0 +1,217 @@
+<script type="text/javascript">
+
+function insert_tag(tag)
+  {
+  if(tag == '')
+    {
+    document.getElementById('tagsinput').value = '';
+    }
+  else
+    {
+    if(document.getElementById('tagsinput').value !=  "")
+      {
+      document.getElementById('tagsinput').value = document.getElementById('tagsinput').value + ', ' + tag;
+      }
+    else
+      {
+        document.getElementById('tagsinput').value = tag;
+      }
+    }
+  }
+</script>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+  <h4>{%$locale.69%}</h4>
+
+
+
+  {%if $err|@count > 0%}
+    <div class="alert alert-danger">
+        <button class="close" data-dismiss="alert">×</button>
+      <ol>
+    {%foreach  from=$err item='er'%}
+      <li>{%$er%}</li>
+    {%/foreach%}
+    </ol>
+        </div>
+  {%/if%}
+
+  {%if $redirect%}
+      <div class='alert alert-success'>
+      {%if $editable%}
+            {%$locale.134%}
+            <br />
+            {%if $settings.default_message_status == 0%}
+            {%$locale.135%}
+            {%elseif $settings.default_message_status == 1 && $settings.user%}
+            <br /><br />
+            » <a href="{%$settings.patch%}users/">{%$locale.104%}</a> <br />
+            » <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a>
+                {%else%}
+            » <a href="{%$settings.patch%}messages/{%$check.id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+            » <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a>                
+            {%/if%}
+        {%else%}
+            {%$locale.101%}<br />  
+            <br />
+            {%if $settings.default_message_status == 0%}
+            {%$locale.102%}<br />  
+            {%elseif $settings.default_message_status == 1 && $settings.user%}
+            {%$locale.103%} <br />
+            » <a href="{%$settings.patch%}users/">{%$locale.104%}</a> <br />
+            » <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+                {%else%}
+            » <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+            {%/if%}
+                {%if $RegisteredUser%}
+                    » {%$locale.48%}
+                {%/if%}
+        {%/if%}
+      </div>
+  {%else%}
+
+    <form name='add' action='?' method='post' enctype='multipart/form-data'>
+        <input type='hidden' name='form_id' value='{%$form_id%}'/>
+        <input type='hidden' name='add_cat' value=''/>
+        <input type='hidden' name='add_region' value=''/>
+        
+    <table class="table">
+    
+    {%if $settings.user %}
+      <tr><td align='left'>{%$locale.28%}:{%$req%}</td>
+          <td align='left'>
+             <input type='text' value='{%$settings.user.name%}'  disabled="disabled" class='form-control'  /></td>
+           </tr>
+      <tr><td align='left'>{%$locale.26%}:{%$req%}</td>
+          <td align='left'><input type='text' value='{%$settings.user.email%}'  disabled="disabled" class='form-control'  /></td>
+      </tr>
+    {%else%}
+      <tr><td align='left'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.29%}"></span> {%$locale.28%}{%$req%}</td>
+                <td align='left'><input {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%} name='name' type='text' value='{%$check.user%}' class='form-control'/></td>
+            </tr>
+      <tr><td align='left'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.71%}"></span> {%$locale.26%}{%$req%}</td>
+                <td align='left'><input {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%} name='email' type='text' value='{%$check.email%}' class='form-control'/></td>
+            </tr>
+            {%if !$editable%}
+                <tr><td align='left'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.988%}"></span> {%$locale.22%}{%$req%}{%if $settings.unreg != 1%}{%$req%}{%/if%}</td>
+                    <td align='left'><input name='password1' type='password' value='' class='form-control' id="password1" /></td>
+                </tr>
+                <tr style="display: none;">
+                    <td align='left'>{%$locale.33%}{%if $settings.unreg != 1%}{%$req%}{%/if%}</td>
+                    <td align='left'><input name='password2' type='password' value='' class='form-control' id="password2" /></td>
+                </tr>
+            {%/if%}
+    {%/if%}
+
+    <tr><td align='left'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.73%}"></span> {%$locale.72%}{%$req%}</td>
+            <td align='left'><input name='title' type='text' value='{%$check.title%}' class='form-control'/></td>
+        </tr>
+    {%if !$editable%}
+        <tr><td align='left'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.77%}"></span> {%$locale.78%}{%$req%}</td><td align='left'>
+          {%if $settings.active_service == 1%}
+            {%if !$editable%}
+              <iframe scrolling='no' src="{%$settings.patch%}timing/?days={%$check.active_days%}" style="height:49%;" frameborder="0" class="form-control" id="frame_days"></iframe>
+                <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+                <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+              {%/if%}
+          {%else%}
+            <select size='1' name='timing' class='form-control'>
+              <option value=''>{%$locale.81%}</option>
+              {%foreach  from=$timing item='time'%}
+                 <option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+              {%/foreach%}
+            </select>
+          {%/if%}
+        </td></tr>
+        {%/if%}
+
+    <tr><td align='left' valign='top'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.84%}"></span> {%$locale.83%}{%$req%}</td>
+            <td align='left'><iframe scrolling='no' style="width: 100%;" src="{%$settings.patch%}add/select/region/?i={%$check.region%}" frameborder="0" id="frame_region"></iframe></td>
+        </tr>
+
+    <tr><td align='left' valign='top'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.80%}"></span> {%$locale.79%}{%$req%}</td>
+            <td align='left'>
+            <iframe scrolling='no' style="width: 100%;" src="{%$settings.patch%}add/select/cat/?i={%$check.cat%}" frameborder="0" id="frame_cat"></iframe>
+            </td>
+        </tr>
+       </table>
+
+    <div id='fields'></div>
+
+   <table class="table">
+    <tr>
+    <td align='left' colspan='2'><p><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.75%} {%$settings.max_text%}"></span> {%$locale.74%}{%$req%}</p>
+    {%if $settings.fckeditor == 1%}
+     <textarea class="ckeditor" cols="80" name="content" rows="10" style="visibility: hidden;">{%$check.content%}</textarea>
+    {%else%}
+    <textarea class='form-control' name='content' rows='5'>{%$check.content%}</textarea>
+    {%/if%}
+    </td>
+    </tr>
+
+    <tr><td align='left' valign='top'><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title="{%$locale.106%}"></span> {%$locale.107%}:<br />
+           <img  src="{%$settings.patch%}images/pxl.gif" width="16" height="1" alt="" border="0"/> <font  style='font-size:10px;'>[<a href="javascript:insert_tag('');">{%$locale.108%}</a>]</font>
+        </td>
+            <td align='left'>
+               <input data-toggle="popover" data-content="{%$locale.106%}" name='tagsinput' type='text' value='{%$check.tags%}' id='tagsinput' class='form-control'/>
+             
+                {%foreach from=$settings.tags item='tag'%}
+                  <a class="{%$tag.tag_class%}" href="javascript:insert_tag('{%$tag.tag_name%}');">{%$tag.tag_name%}</a> 
+                {%/foreach%}
+              
+        </td>
+    </tr>
+    	{%if $settings.license_text != ""%}
+            <tr><td colspan="2">
+
+            <div class="checkbox"><label><input type="checkbox" required=""> {%$locale.1263%}</label></div>
+
+            <div class="modal fade" id="license_text" tabindex="-1" role="dialog" aria-labelledby="license_title" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                    class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="license_title">{%$locale.1262%}</h4>
+                        </div>
+                        <div class="modal-body">
+                            {%$settings.license_text|nl2br%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            </td></tr>
+    	{%/if%}
+    {%if $settings.captcha == 1%}
+        {%if $settings.captcha_type == 3%}
+            <tr>
+                <td colspan="2">
+                    <script src="https://www.google.com/recaptcha/api.js"></script>
+                    <div class="g-recaptcha" data-sitekey="{%$settings.recaptcha1%}"></div>
+                </td>
+            </tr>
+        {%else%}
+            <tr><td>
+                    <img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'/>
+                </td>
+                    <td valign='top'>
+                        <input name='captcha' type='text' value='' class='form-control' placeholder="{%$locale.45%}"/>
+                    </td>
+            </tr>
+        {%/if%}
+
+    {%/if%}
+    <tr>
+        <td colspan='2'>
+        <input class='btn btn-warning pull-right' type='submit' name='submit' value='{%$locale.55%}'/>
+        </td>
+    </tr>
+    </table>
+    <input name='post_filter' type='hidden' value='false' />
+    </form>
+  {%/if%}
+
+
+ </div>
+</div>

@@ -1,0 +1,258 @@
+<?php //960
+if(!$exe){
+    if(isset($_GET['disable'])){
+        dbquery("UPDATE ".PREF."settings SET v='0' WHERE k='cms'");
+        $settings['cms'] = 0;
+    }
+}
+if($exe){
+    
+    if(!isset($settings['cms'])){
+            $settings['cms'] = 0;
+        }
+	echo "
+    <h2>".$locale[960]."</h2>
+    ";
+    echo '
+        <script>
+        
+        function hideshow_slow_close (a) {
+        		$(document.getElementById(a)).hide(300);
+          }
+        function hideshow_slow_open (b) {
+        		$(document.getElementById(b)).show(300);
+                hidediv = b;
+          }
+        
+        </script>
+    ';    
+    if($act == ""){
+        
+        echo "
+        <div style='border:1px solid silver; margin:20px; padding:20px;'>
+            ".$locale[961]."
+            <ul>
+            <li>".$locale[962]." ";
+            if($settings['cms'] == '1'){
+                echo "<span style='color:green;'>".$locale[963]."</span> [<a href='#'  onclick=\"if(confirm('".$locale[43]."')){go('?unit=$unit&disable');}\">".$locale[973]."</a>]</li>";
+                echo "<li><a href='?unit=$unit&act=sync'>".$locale[974]."</a></li>";
+                
+            }else{
+                echo "<span style='color:red;'>".$locale[964]."</span> [<a href='?unit=$unit&act=imp&step=1'>".$locale[965]."</a>]</li>";
+            }
+            //cms_syncusers();
+            echo "
+            </ul>
+            
+        </div>
+        ";
+    }elseif($act == 'sync'){
+        if(cms_syncusers()){
+            echo "
+            <center>
+            <div class='ok'>
+            ".$locale[975]."
+            </div>
+            </center>
+            ";
+        }else{
+            echo "
+            <center>
+            <div class='error'>
+            ".$locale[40]."
+            </div>
+            </center>
+            ";            
+        }
+    }elseif($act == 'imp'){
+        $step = $_GET['step'];
+        if($step == 1){
+            
+        
+        echo '
+        <h2>Укажите параметры для подключения к БД 7CMS</h2>
+        <div style="text-align:center">
+             <form name="dbparams" method="POST" action="?unit='.$unit.'&act=imp&step=2">
+             
+                 <label>
+                    <input name="prefix_search" type="radio" value="0" onclick="hideshow_slow_close(\'pref\');" checked /></input> определить самостоятельно
+                 </label>
+                 <label>
+                    <input name="prefix_search" type="radio" value="1" onclick="hideshow_slow_open(\'pref\');" /> указать принудительно
+                 </label>
+      
+             
+             <div id="pref" style="display:none;">    
+                 <table  width="450" class="add_item" align="center">
+                 <tr>
+                 <td>
+                     <p>Адрес сервера:</p>
+                 </td>
+                 <td>
+                     <p><input type="text" name="mysqlhost" value="'.$db_host.'" class="standart" /></p>
+                 </td>
+                 </tr>
+                 <tr>
+                 <td>
+                     <p>Имя БД:</p>
+                 </td>
+                 <td>
+                     <p><input type="text" name="mysqldb" value="'.$db_name.'" class="standart" /></p>
+                 </td>
+                 </tr>
+                 <tr>
+                 <td>
+                     <p>Пользователь БД:</p>
+                 </td>
+                 <td>
+                     <p><input type="text" name="mysqluser" value="'.$db_user.'" class="standart" /></p>
+                 </td>
+                 </tr>
+                 <tr>
+                 <td>
+                     <p>Пароль:</p>
+                 </td>
+                 <td>
+                     <p><input type="password" name="mysqlpass" value="'.$db_pass.'" class="standart" /></p>
+                 </td>
+                 </tr>
+                 </table>
+                 
+                 
+                 
+             </div>
+             <p><input type="submit" value="'.$locale[972].'" class="button"></p>
+             </form>
+      </div>       
+      ';
+      }elseif($step == 2){
+        if(isset($_POST['prefix_search'])){
+            if($_POST['prefix_search'] == 0){    
+                $_POST['mysqlhost'] = $db_host;
+                $_POST['mysqluser'] = $db_user;
+                $_POST['mysqlpass'] = $db_pass;
+                $_POST['mysqldb'] = $db_name;
+                $res = dbquery("SHOW DATABASES");
+                while($dat = dbarray($res)){
+                    $res2 = dbquery("SHOW TABLES FROM ".$dat['Database']);
+                    while($dat2 = dbarray($res2)){
+                        if(substr($dat2['Tables_in_'.$dat['Database']], -18) == 'core_widget_params'){
+                            $_POST['mysqldb'] = $dat['Database'];
+                            break;
+                        }
+                    }
+                }
+            }  
+        }
+        $err = array();
+        $mysql_connect = mysql_connect($_POST['mysqlhost'], $_POST['mysqluser'], $_POST['mysqlpass'], true);
+        if(!$mysql_connect){
+            $err[] = $locale[970];
+        }else{
+            $mysql_select_db = mysql_select_db($_POST['mysqldb'], $mysql_connect);
+            if(!$mysql_select_db){
+                $err[] = $locale[971];
+            }else{
+                mysql_query("SET NAMES UTF8", $mysql_connect);
+                if(!isset($_POST['go'])){
+
+                    
+                    $res = mysql_query("SHOW TABLES", $mysql_connect);
+                    $find = false;
+                    while($dat = mysql_fetch_assoc($res)){
+                        if(substr($dat['Tables_in_'.$_POST['mysqldb']], -10) == 'core_users'){
+                        $res2 = mysql_query("SHOW CREATE TABLE ".$dat['Tables_in_'.$_POST['mysqldb']], $mysql_connect);
+                        $dat2 = mysql_fetch_assoc($res2);
+                        
+                        if(strstr($dat2['Create Table'], '`identity`') &&
+                           strstr($dat2['Create Table'], '`network`') &&
+                           strstr($dat2['Create Table'], '`password`') && 
+                           strstr($dat2['Create Table'], '`name`')){
+                            $find = true;
+                            break;
+                        }
+                            
+                        }
+                    }
+                    if(!$find){
+                        $err[] = $locale[969];
+                    }else{
+                        $count = mysql_num_rows(mysql_query("SELECT id FROM ".$dat2['Table'], $mysql_connect));
+                        
+                            $prefix = str_replace('core_users', '', $dat2['Table']);
+                            $blogname = mysql_fetch_assoc(mysql_query("SELECT value FROM ".$prefix." core_main_params WHERE param='title'", $mysql_connect));
+                            $blogname = $blogname['value'];
+                            echo "
+                            <center>
+                            <div class='ok'>
+                                <form action='' method='POST'>
+                                ".$locale[966]." &laquo;".$blogname."&raquo; <br />
+                                ".$locale[967]." ".$count."
+                                </br>
+                                <input type='button' value='Отмена' class='standart' onclick=\"document.location.href=\"?unit=".$unit.";\" />   
+                                <input type='submit' value='".$locale[968]."' class='standart' />   
+                                <input type='hidden' name='prefix' value='".$prefix."'>
+                                <input type='hidden' name='mysqlhost' value='".$_POST['mysqlhost']."'>
+                                <input type='hidden' name='mysqluser' value='".$_POST['mysqluser']."'>
+                                <input type='hidden' name='mysqlpass' value='".$_POST['mysqlpass']."'>
+                                <input type='hidden' name='mysqldb' value='".$_POST['mysqldb']."'>  
+                                <input type='hidden' name='go' value='true'>  
+                                </form>   
+                                                          
+                            </div>
+                            </center>
+                            ";
+                        
+                    }  
+
+                }else{
+                    $opt = array('mysqlhost', 'mysqluser', 'mysqlpass', 'mysqldb', 'prefix');
+                    mysql_close($mysql_connect);
+                    mysql_connect($db_host, $db_name, $db_pass);
+                    mysql_select_db($db_name);
+                    dbquery("SET NAMES UTF8");
+                    foreach($opt as $v){
+                        if(!isset($settings['cms_'.$v])){
+                            dbquery("INSERT INTO ".PREF."settings SET k = 'cms_".$v."', v='".$_POST[$v]."'");
+                        }else{
+                            dbquery("UPDATE ".PREF."settings SET v = 'cms_".$v."' WHERE k='".$_POST[$v]."'");
+                        }
+                    }
+                    
+                    if(dbarray(dbquery("SELECT id FROM ".PREF."settings WHERE k='cms'"))){
+                        dbquery("UPDATE ".PREF."settings SET v = '1' WHERE k='cms'");
+                    }else{
+                        dbquery("INSERT INTO ".PREF."settings SET k = 'cms', v='1'");
+                    }
+                            echo "
+                            <center>
+                            <div class='ok'>
+                                ".$locale[351]."                   
+                            </div>
+                            </center>
+                            ";                    
+                }
+            }
+        }
+        
+        if(count($err) > 0){
+            echo "
+            <center>
+            <div class='error'>
+            ";
+            foreach($err as $v){
+                echo "<li>$v</li>";
+            }
+            echo "
+            </div>
+            <center>
+            <p align='center'><input value='&larr; ".$locale[324]."' type='button' onclick='document.location.href=\"?unit=".$unit."\";'></p>
+
+            ";
+            
+        }
+
+      }
+    }
+}
+?>

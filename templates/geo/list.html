@@ -1,0 +1,316 @@
+{%*
+
+Array
+(
+    [0] => Array
+        (
+            [id] => 2										идентификатор сообщения
+            [cat] => 5                                      идентификатор рубрики
+            [region] => 6                                   идентификатор региона
+            [date_add] =>                                   unixtimestamp времени добавления объявления
+            [date_del] =>                                   unixtimestamp времени удаления
+            [user_id] => 4                                  идентификатор пользователя
+            [user_id_name] => Вольдемар                     имя пользователя
+            [status] => 1                                   статус сообщения 0 - на модерации / 1 - добавлено / 2 - удалён (но сюда будут приходить только сообщения со статусом 1)
+            [sendmail] => 0                                 состояние уведомления пользователя об окончании срока действия объявления: 0 - уведомление ещё не отправлено / 1 - уведомление уже отправлено
+            [sort] => 10000000                              индекс для сортировки обяъвления
+            [email] => 		                                имейл пользователя, если не задан user_id пользователя
+            [user] =>                                       имя пользователя, если не задан user_id пользователя
+            [title] => 			                            заголовок объявления
+            [text] => 				                        текст объявления
+            [marked] => 0                                   1 - выделенное объявление
+            [raised] => 0                                   2 - поднятое объявление
+            [link] => 2-cuacua.html                         ссылка на объявление на отдельной странице
+            [counter] => 3                         			счётчик просмотров
+            [array_linenav] => Array                        массив с веткой рубрик, в которой находится объявление
+                (
+                    [0] => Array
+                        (
+                            [name] => Основная категория
+                        )
+
+                    [1] => Array
+                        (
+                            [name] => Подкатегория
+                        )
+
+                    [2] => Array
+                        (
+                            [name] => ПодПодкатегория1
+                        )
+
+                )
+
+            [array_regions] => Array                       массив с веткой регионов, в которой находится объявление
+                (
+                    [0] => Array
+                        (
+                            [name] => США
+                        )
+
+                    [1] => Array
+                        (
+                            [name] => Вашингтон
+                        )
+
+                )
+
+            [fields] => Array                               массив с дополнителными полями, те, что определяются администратором. В этом массиве:
+                (
+                    [v] => Array                           ... ключом является тип дополнительного поля v(alue), t(exarea), s(elect), c(heckbox), r(adio), а значением
+                        (
+                            [0] => Array                   ... является массив, в котором перечислены все поля этого типа:
+                                (
+                                    [field_type] => v      тип поля, продублировано значение ключа - v(alue)
+                                    [field_value] => 200   техническое значение поля, которое будет использовано для отбора и сортировки
+                                    [field_name] => f_1    продублировано техническое имя поля, которое будет использовано для отбора и сортировки
+                                    [name] => Цена         название поля
+                                    [value] => 200         значение поля, которое будем выводить пользователю (здесь совпало с техническим)
+                                    [hide] => 0            скрыть поле от незарегистрированного пользователя? 0 - нет, 1 - да
+                                )
+
+                        )
+
+                    [s] => Array                           а здесь также, только для типа поля s(elect)
+                        (
+                            [0] => Array
+                                (
+                                    [field_type] => s
+                                    [field_value] => 0		обращаю внимание, что значение для отбора и сортировки отлично от ...
+                                    [field_name] => f_2
+                                    [name] => Валюта
+                                    [value] => RUB          ... значения, которое выводим пользователю
+                                    [hide] => 0
+                                )
+
+                        )
+                    [c] => Array                                    ещё более жуткий вид имеет тип поля c(hekbox), там может быть
+                        (                                           выбрано несколько значений, поэтому значением этого
+                            [0] => Array                            поля будет ещё один массив!
+                                (
+                                    [field_type] => c
+                                    [field_value] =>
+                                    [field_name] => f_4
+                                    [name] => Выберите что-нибудь
+                                    [value] => Array                ...вот он! В нём содержится:
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [name] => значение1  значение
+                                                    [key] => 1           ключ
+                                                )
+
+                                            [1] => Array
+                                                (
+                                                    [name] => значение2 другое значение
+                                                    [key] => 3          ключ к нему
+                                                )                       ... и так далее
+                                                                        для вывода этих значений придётся опять запускать цикл
+                                        )
+
+                                    [hide] => 0
+                                )
+
+                        )
+
+                )
+            [f_1] => Array                                  а здесь тот же массив с полями представлен иначе,
+                (                                           так проще работать в  шаблоне, когда нужно вывести конкретное
+                    [field_type] => v                       значение в конкретного поля в конкретное место.
+                    [field_value] => 200
+                    [field_name] => f_1
+                    [name] => Цена
+                    [value] => 200                          можно просто использовать $message.f_1.value для вывода значения поля f_1
+                    [hide] => 0
+                )
+
+            [f_2] => Array
+                (
+                    [field_type] => s
+                    [field_value] => 0
+                    [field_name] => f_2
+                    [name] => Валюта
+                    [value] => RUB
+                    [hide] => 0
+                )
+                                                            ... и так далее
+        )
+
+)
+
+*%}
+
+<table width="100%" border="0"></table>
+<div align="center">
+	<div class='count_block'>{%$messages_counter%}</div>
+</div>
+
+
+{%if $smarty.get.cat.0 == 'users'%}
+    <style>
+    .MessagesCheck{
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+    #MessagesAction, #MessagesSelect{
+        margin: 10px;
+    }
+    </style>
+
+    <input id="MessagesAction" type="button" value="{%if $smarty.get.cat.1 != 'deleted'%}{%$locale.983%}{%else%}{%$locale.984%}{%/if%}" />
+    <input id="MessagesSelect" type="button" value="{%$locale.985%}" />
+    
+{%/if%}
+
+
+{%if $pages > 1%}
+	<div align='left' class='pages'>
+	<span>{%$locale.140%}:</span>
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+	{%/section%}
+	</div>
+{%/if%}
+
+
+{%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+{%assign var='count' value=$blocks.m|@count %}
+{%assign var='count' value=`$count-1`%}
+{%if $count < 0%}{%assign var='count' value=0%}{%/if%}
+{%assign var='counter' value=0%}
+{%foreach from=$messages item='message' name='i'%}
+
+
+
+{%if $message.marked == 1%}
+	{%assign var='mark' value=' marked'%}
+{%else%}
+	{%assign var='mark' value=''%}
+{%/if%}
+
+
+<div class="messageblock">
+    <div class='message{%$mark%}' id='message_{%$message.id%}'>
+    	<table>
+    		<tr>
+    			<td class='message_head' width='100%'>
+    				<div>
+    					<h3>{%if $smarty.get.cat.0 == 'users'%}<input class="MessagesCheck" type="checkbox" value="{%$message.id%}" />{%/if%}<a href='{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>{%$message.title|truncate_utf:50:'...'%}</a><span></span></h3>
+    				</div>
+    			</td>
+    			<td class='message_mail' width='2'>
+    				<div>
+    					<a class="user_mail group iframe" title="{%$locale.157%}" href="{%$settings.patch%}sendmail/?messageid={%$message.id%}&userid={%$message.user_id%}">
+        					{%if $message.user_id != 0%}{%$message.user_id_name%}{%else%}{%$message.user%}{%/if%}
+                        </a>
+    					{%if $message.user_id != 0%}
+    						<a class="user_messages" title="{%$locale.559%}" href="{%$settings.patch%}userinfo/{%$message.user_id%}/"><i></i></a>
+    					{%/if%}
+    				</div>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class='message_text' colspan='2'>
+    				{%if $message.fields.i.0.value != ""%}
+    					<div class='message_img'>
+    
+    							<a class="zoom" rel="group{%$message.id%}" title="{%$message.title%}" href="{%$settings.patch%}uploads/images/tb/{%$message.fields.i.0.value%}" >
+    							 <img src="{%$settings.patch%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}" border="0"/>
+    							</a>
+    
+    						{%if $message.fields.i|@count > 1%}
+    							<div>
+    							    {%foreach  from=$message.fields.i item='image' key='key'%}
+    							    	{%if $key != 0%}
+    										<a class="zoom" rel="group{%$message.id%}" title="{%$message.title%}"  href="{%$settings.patch%}uploads/images/tb/{%$image.value%}" ><img src="{%$settings.patch%}uploads/images/ts/{%$image.value%}" width='40' height='27' alt="{%$message.title%}" border="0"></a>
+    									{%/if%}
+    							    {%/foreach%}
+    							 </div>
+    					    {%/if%}
+    					</div>
+    				{%/if%}
+    		{%$message.text|strip_tags|truncate:1500:"... <a href='`$settings.patch_region``$smarty.const.MESSAGES`/`$message.link`'>`$locale.15`</a>"%}
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class='message_area1'>
+    				<ul>
+    					<li>
+    						<strong>{%$locale.17%}</strong>: {%$message.cat|linenav:$categories:'cat'%}
+    					</li>
+    					<li>
+    						<strong>{%$locale.16%}</strong>: {%$message.region|linenav:$allregions:'region'%}
+    					</li>
+    					{%if $message.tags|@count > 0%}
+    						<li><strong>{%$locale.139%}</strong>:
+    						{%foreach  from=$message.tags item='tag' name='i'%}
+    							<a class="tag_link" href="{%$settings.patch_region%}tags/{%$tag.word|urlencode%}/">{%$tag.word%}</a>{%if $smarty.foreach.i.last eq false %}, {%/if%}
+    						{%/foreach%}
+    						</li>
+    					{%/if%}
+    					
+                            {%if $message.comments_count1 > 0%}
+ 						         <li><strong>{%$message.comments_count2%}</strong></li>
+                            {%/if%}
+                            
+                            {%foreach  from=$message.fields.p item='v'%}
+ 						         <li><strong>{%$locale.878%}</strong>: {%$v.value.txt%}</li>
+                            {%/foreach%}
+    					
+
+    
+    				</ul>
+    			</td>
+    			<td class='message_area2'>
+    				<span class='date'><strong>{%$locale.13%}</strong>: {%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}</span>
+    				<span class='date'><strong>{%$locale.14%}</strong>: {%$message.date_del|date_format:"%d.%m.%Y %H:%M"%}</span>
+    				<span class='view'><strong>{%$locale.686%}</strong>: {%$message.counter%}</span>
+    				<span class='fav{%$message.fav%}'><a class='fav' id='fav-{%$message.id%}' name='{%$message.id%}' href=''>{%if $message.fav == 1%}{%$locale.228%}{%else%}{%$locale.695%}{%/if%}</a></span>
+    				<img src="{%$settings.path%}images/pxl.gif" width="250" height="1" alt="" border="0" />
+    			</td>
+    	</tr>
+    	</table>
+    </div>
+    	{%if ($message.user_id != "" && $message.user_id == $settings.user.id) || $settings.editable%}
+    		<div class='moder_panel' style="visibility:hidden;">
+    		    <span class='m_edit'><a href="{%$settings.patch%}edit/{%$message.id%}">{%$locale.200%}</a></span>
+                {%if $message.status != 2%}
+    		      <span class='m_delete'><a name='message_{%$message.id%}' href="{%$settings.patch%}delete/{%$message.id%}">{%$locale.201%}</a></span>
+                {%else%}
+    		      <span class='m_restore'><a name='message_{%$message.id%}' href="{%$settings.patch%}restore/{%$message.id%}">{%$locale.619%}</a></span>
+                {%/if%} 
+                
+                {%if $message.prolong%}
+    		      <span class='m_prolong'><a name='message_{%$message.id%}' href="{%$settings.patch%}prolongation/?message={%$message.id%}&key={%$message.id|cat:$settings.rand|md5%}">{%$locale.145%}</a></span>
+                {%/if%}            
+    		</div>
+    	{%/if%}
+</div>
+
+    <br /><br />
+
+
+
+{%assign var='counter' value=`$counter+1`%}
+
+{%if $counter == $settings.middle_block%}
+	{%assign var='counter' value=0%}
+	{%assign var='rand' value="0"|mt_rand:$count%}
+	{%$blocks.m.$rand%}
+	<br /><br />
+{%/if%}
+
+{%/foreach%}
+
+
+{%if $pages != ""%}
+	<div align='left' class='pages'>
+	{%$locale.140%}:
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+	{%/section%}
+	</div>
+{%/if%}
+

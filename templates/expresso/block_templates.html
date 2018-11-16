@@ -1,0 +1,11 @@
+<form name="" action="{%$settings.path%}change_template/" method="get">
+<p>{%$locale.672%}</p>
+<select size="1" name="template" class="form-control">
+	{%foreach from=$templates item='template'%}
+  	<option value="{%$template%}" {%if $settings.theme == $template%}selected{%/if%}>{%$template%}</option>
+	{%/foreach%}
+</select>
+<br />
+
+<input class="btn btn-warning" type="submit" value="{%$locale.673%}"/>
+</form>

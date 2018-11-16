@@ -1,0 +1,97 @@
+<div id="registration_users">
+<div id="reg_h1">{%$locale.1240%}</div>
+<div align='center'>
+{%if $check.err%}
+<div class='error'>
+<ul>
+{%foreach item=err from=$check.err %}
+<li>{%$err%}</li>
+{%/foreach%}
+</ul>
+</div>
+{%/if%}
+
+<div class="registr_block1">
+    <form name='form' action='?' method='post'>
+    
+    {%if $settings.sms == 1 && !$settings.user%}
+    	<table style="width: 400px;" border='0'>
+    	<tr><td width='150'>{%$locale.806%}</td><td>
+    		<nobr>
+    			<input id='stcode' class='registr' style='width:30px;' name='stcode' maxlength='4' type='text' value='{%if $check.stcode == ""%}+7{%else%}{%$check.stcode%}{%/if%}'> <input id='phone' class='registr' style='width:160px;' name='phone' type='text' value='{%$check.phone%}'>
+    		</nobr>
+    	</td></tr>
+    	</table>
+    	<div id='phonehidden' {%if $smarty.post.submit_registr == ""%}style='display:none;'{%/if%}>
+    		<table style="width: 400px;"' border='0'>
+    			<tr><td colspan='2' align='center'><input type='button' id='sendsms' value='{%$locale.816%}' name='{%$check.stcode%}{%$check.phone%}'></td></tr>
+    			<tr><td>{%$locale.807%}</td><td><input id='phonecode' class='registr' name='code' type='text' value='{%$check.code%}' style='width: 30px'></td></tr>
+    		</table>
+    	</div>
+    {%elseif $settings.user && $settings.user.phone != "" && $settings.sms == 1%}
+    	<div align='center' id='changephonenum'>
+    		{%$locale.825%}: <b>+{%$settings.user.phone%}</b><br />
+    	<input class='registr' type='button' value='{%$locale.837%}' id='changephone'><br /><br />
+    	</div>
+    	<div id='changephoneform' style='display:none;'>
+    		<table style="width: 400px;" border='0'>
+    		<tr><td width='150'>{%$locale.806%}</td><td>
+    			<nobr>
+    				<input id='stcode' class='registr' style='width:30px;' name='stcode' maxlength='4' type='text' value='{%if $check.stcode == ""%}+7{%else%}{%$check.stcode%}{%/if%}'> <input id='phone' class='registr' style='width:160px;' name='phone' type='text' value='{%$check.phone%}'>
+    			</nobr>
+    		</td></tr>
+    		</table>
+    		<div id='phonehidden' {%if $smarty.post.submit_registr == ""%}style='display:none;'{%/if%}>
+    			<table style="width: 400px;" border='0'>
+    				<tr><td colspan='2' align='center'><input type='button' id='sendsms' value='{%$locale.816%}' name='{%$check.stcode%}{%$check.phone%}'></td></tr>
+    				<tr><td>{%$locale.807%}</td><td><input id='phonecode' class='registr' name='code' type='text' value='{%$check.code%}' style='width: 30px'></td></tr>
+    			</table>
+    		</div>
+    	</div>
+    {%elseif  $settings.sms == 1%}
+    	<table style="width: 400px;" border='0'>
+    	<tr><td style='font-weight:bold; color:red; text-align:center;' colspan='2'>{%$locale.824%}</td></tr>
+    	<tr><td width='150'><img class='help' onmouseover="Tip(this, '{%$tip_email%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0">&nbsp;{%$locale.806%}</td><td>
+    		<nobr>
+    			<input id='stcode' class='registr' style='width:30px;' name='stcode' maxlength='4' type='text' value='{%if $check.stcode == ""%}+7{%else%}{%$check.stcode%}{%/if%}'> <input id='phone' class='registr' style='width:160px;' name='phone' type='text' value='{%$check.phone%}'>
+    		</nobr>
+    	</td></tr>
+    	</table>
+    	<div id='phonehidden' {%if $smarty.post.submit_registr == ""%}style='display:none;'{%/if%}>
+    		<table width='350' border='0'>
+    			<tr><td colspan='2' align='center'><input type='button' id='sendsms' value='{%$locale.816%}' name='{%$check.stcode%}{%$check.phone%}'></td></tr>
+    			<tr><td>{%$locale.807%}</td><td><input id='phonecode' class='registr' name='code' type='text' value='{%$check.code%}' style='width: 50px'></td></tr>
+    		</table>
+    	</div>
+    {%/if%}
+    
+    <table style="width: 500px;" border='0'>
+    <tr><td align="right" id="td_right">{%$locale.26%}: </td><td><input class='registr' name='email' type='text' value='{%$check.email%}'></td></tr>
+    
+    <tr><td align="right" id="td_right">{%$locale.28%}: </td><td><input class='registr' name='name' type='text' value='{%$check.name%}'></td></tr>
+    
+    
+    <tr><td align="right" id="td_right">{%$ps2%}: </td><td><input class='registr' name='password' type='password' value='{%$check.password%}'></td></tr>
+    
+    <tr><td align="right" id="td_right">{%$locale.33%}: </td><td><input class='registr' name='password1' type='password' value='{%$check.password1%}'></td></tr>
+    {%if $settings.captcha == 1%}
+    <tr><td align="right" id="td_right">
+<img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40' />
+    </td><td><input name='captcha' type='text' value='' class='registr' /></td></tr>
+    {%/if%}
+    <tr><td colspan='2'>
+    <input id="adds_go" type='submit' name='submit_registr' value='{%$locale.34%}'>
+    </td></tr>
+    </table>
+    </form>
+</div>
+
+    {%if $settings.ulogin == 1%}
+    <div class="registr_block2">
+        <div id="uLogin2" data-ulogin="display=panel;fields=first_name,last_name,email;providers=vkontakte,facebook,odnoklassniki,twitter;hidden=other;redirect_uri=http%3A%2F%2F{%$smarty.server.HTTP_HOST%}{%$smarty.const.PATH%}users/?ulogin"></div>
+    </div>
+    {%/if%}
+
+
+</div>
+</div>

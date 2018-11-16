@@ -1,0 +1,33 @@
+<center>
+
+{%if $settings.user%}
+<table width='98%' align='center' border='0'>
+	<tr class='orders_list_head'>
+		<td>{%$locale.210%}</td>
+		<td>{%$locale.212%}</td>
+		<td>{%$locale.211%}</td>
+		<td>{%$locale.213%}</td>
+	</tr>
+	{%foreach from=$orders item='order'%}
+	<tr class='orders_list'>
+		<td>{%$order.message.date_add|date_format:"%d.%m.%Y %H:%M"%} {%$order.message.title|truncate:50:'...'%}</td>
+		<td>{%$services[$order.type].name%}</td>
+		<td>
+		{%if $order.status == 0%}
+			{%$order.number%}
+		{%else%}
+			{%$order.time_end|date_format:"%d.%m.%Y %H:%M"%}
+		{%/if%}
+		</td>
+		<td>
+		{%if $order.status == 0%}
+			{%$locale.215%}
+		{%else%}
+			{%$locale.214%}
+		{%/if%}
+		</td>
+	</tr>
+	{%/foreach%}
+	</table>
+{%/if%}
+</center>

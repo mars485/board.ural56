@@ -1,0 +1,303 @@
+<style>
+
+/*ЧЕбоксы*/
+input[type=checkbox]:not(old),
+input[type=radio   ]:not(old){
+  width   : 28px;
+  margin  : 0;
+  padding : 0;
+  opacity : 0;
+}
+input[type=checkbox]:not(old) + label,
+input[type=radio   ]:not(old) + label{
+  display      : inline-block;
+  margin-left  : -28px;
+  padding-left : 28px;
+  background   : url('{%$smarty.const.THEME%}images/checks.png') no-repeat 0 0;
+  line-height  : 24px;
+}
+
+
+input[type=checkbox]:not(old):checked + label{
+  background-position : 0 -24px;
+}
+
+input[type=radio]:not(old):checked + label{
+  background-position : 0 -48px;
+}
+
+</style>
+
+    <div id="etap"  style="margin-bottom: 20px;">{%$locale.1231%}</div>
+{%assign var='req' value="<sup style='color: red;  font-size: 17px;
+  margin-left: 3px;'>*</sup>"%}
+
+{%assign var='yandex' value=0%}
+<table  border='0' style="width: 100%;" class='add'>
+	
+	 {%foreach  from=$fields item='field' key='field_key'%}
+		{%assign var='value' value=$check[$field_key]%}
+	{%if $field.name == 'Срок аренды'%}
+	<tr> <td align="right" id="td_right">Cрок аренды<span class="kras">*</span> </td> <td> <div style="float: left;">
+
+				<select size='' name='{%$field_key%}'style="min-width: 100px;" class='add'>
+				<option value='' >{%$locale.217%}</option>
+					{%foreach  from=$field.values_array item='vl' key='k'%}
+					<option value='{%$k%}'>{%$vl%}</option>
+					{%/foreach%}
+				</select>
+				</div>
+				</td> 
+
+
+
+
+</tr><tr><td><div id="add_otstup"></div></td></tr>
+			{%/if%}
+{%/foreach%}
+
+	<tr> <td align="right" id="td_right">Цена </td> <td> <div style="float: left;">
+	 {%foreach  from=$fields item='field' key='field_key'%}
+		{%assign var='value' value=$check[$field_key]%}
+	{%if $field.name == 'Цена'%}
+                <div style="float: left;"><input name='{%$field_key%}' type='text' class='add' value='{%$value%}' size='5' style='min-width:125px;' /></div>
+                    <select style="min-width: 140px; display: none;" size='1' name="{%$field_key%}_rates">
+        				{%foreach  from=$field.rates item='rates'%}
+        				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+        				{%/foreach%}
+                    </select>
+
+<div id="valuta_add">{%$locale.1207%}</div>
+
+		{%/if%}{%/foreach%}
+</div>
+
+		 {%foreach  from=$fields item='field' key='field_key'%}
+		{%assign var='value' value=$check[$field_key]%}
+	{%if $field.name == 'Торг'%}
+	{%foreach  from=$field.values_array item='vl' key='k'%}
+									  <div style="margin-left: 38px; float: left; padding-top: 8px;">
+          <input style="display: none;" id="{%$field_key%}[{%$k%}]" type="checkbox" name="{%$field_key%}[{%$k%}]" value="ON"><label for="{%$field_key%}[{%$k%}]">{%$field.name%}</label>
+        </div>
+			{%/foreach%}
+			{%/if%}{%/foreach%}
+
+
+
+</td> 
+
+
+
+
+</tr><tr><td><div id="add_otstup"></div></td></tr>
+		{%foreach  from=$fields item='field' key='field_key'%}
+		{%assign var='value' value=$check[$field_key]%}{%if $field.type != 'i'%}{%if $field.name !== 'Цена'%}{%if $field.name !== 'Торг'%}	{%if $field.name !== 'Срок аренды'%}
+			<tr><td align='right' {%if $field.type == 'j'%}colspan='2'{%/if%} {%if $field.type == 'i' || $field.type == 'f'%}valign='top'{%/if%} id="td_right">
+			{%$field.name%}{%if $field.req == 1%}{%$req%}{%/if%}{%if $field.type != 'j'%}{%/if%}<br/><span style="font-size: 12px; line-height: 14px; letter-spacing: 0.5; color: red;">{%$field.comment%}</span></td><td align='left' style="width: 80%;">
+			
+		
+
+			{%*v(alue), t(exarea), s(elect), c(heckbox), r(adio) - тип поля*%}
+
+			{%if $field.type == 'v'%}
+				<input name='{%$field_key%}' type='text' class='add' value='{%$value%}'>
+			{%/if%}
+
+			{%if $field.type == 't'%}
+				<textarea name='{%$field_key%}' style='width:100%; height:100px;' wrap='on'  class='add'>{%$value%}</textarea>
+			{%/if%}
+
+			{%if $field.type == 's'%}
+				<select size='' name='{%$field_key%}'  class='add'>
+				<option value='' >{%$locale.217%}</option>
+					{%if $field.req == 2%}
+						<option value='' >{%$locale.217%}</option>
+					{%/if%}
+					{%foreach  from=$field.values_array item='vl' key='k'%}
+					<option value='{%$k%}'>{%$vl%}</option>
+					{%/foreach%}
+				</select>
+			{%/if%}
+
+			{%if $field.type == 'r'%}
+				{%if $field.req == 2%}
+							   <div style="margin-left: 28px;">
+          <input style="display: none;" id="sss" type="radio" name="{%$field_key%}" value=""><label for="sss">{%$locale.217%}</label>
+        </div>
+					
+				{%/if%}
+				{%foreach  from=$field.values_array item='vl' key='k'%}
+							  <div style="margin-left: 28px;">
+          <input style="display: none;" id="{%$field_key%}{%$k%}" type="radio" name="{%$field_key%}" value="{%$k%}"><label for="{%$field_key%}{%$k%}">{%$vl%}</label>
+        </div>
+			
+				{%/foreach%}
+			{%/if%}
+
+			{%if $field.type == 'c'%}
+				{%foreach  from=$field.values_array item='vl' key='k'%}
+									  <div style="margin-left: 28px;">
+          <input style="display: none;" id="{%$field_key%}[{%$k%}]" type="checkbox" name="{%$field_key%}[{%$k%}]" value="ON"><label for="{%$field_key%}[{%$k%}]">{%$vl%}</label>
+        </div>
+			
+				{%/foreach%}
+			{%/if%}
+
+
+			{%if $field.type == 'f'%}
+               {%if $settings.uploadtype == 1%}
+			 
+             <iframe style="height: 100px; width: 100px;
+border: 1px solid #ccc; border-radius: 3px;" class="fileupload" frameborder="0" src="{%$settings.path%}ajaxfileupload/?field_key={%$field_key%}&file={%$field.file%}"></iframe>
+                {%else%}
+                    <script>
+                        $(document).ready(function() {        
+                          $('#{%$field_key%}').uploadify({
+                            'uploader'  : '{%$settings.path%}js/uploadify/uploadify.swf',
+                            'buttonImg' : '{%$settings.path%}imgtext.png',
+                            'height'      : 18,
+                            'weight'      : 200,
+                            'wmode'       : 'transparent',
+                            'script'    : '{%$settings.path%}uploadify/',
+                            'cancelImg' : '{%$settings.path%}js/uploadify/cancel.png',
+                            'fileExt'   : '{%foreach from=$field.values_array item='vl' name='ii'%}*.{%$vl%}{%if $smarty.foreach.ii.last eq false %};{%/if%}{%/foreach%}',
+                            'fileDesc'    : '{%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}',
+                            'multi'     : false,
+                            'auto'      : true,
+                            'sizeLimit'   : {%$field.max%}000,  //in bytes
+                            'scriptData'  : {'field_id':{%$field.id%}, 'form_id':form_id},
+                            'onComplete': function (event, queueID, fileObj, response, data) 
+                                {
+                                    if(response != 'error')
+                                        {
+                                        $('#h1-{%$field_key%}').show('fast');
+                                        $('#i-{%$field_key%}').attr('src', response);                                       
+                                        $('#h2-{%$field_key%}').show('fast');                                       
+                                        }                            
+                                } 
+                          });  
+                         });   
+                    </script>
+					<table width='100%' border="0">
+    					<tr>
+    					    <td>
+            					
+								<input id='{%$field_key%}' name='{%$field_key%}' type='file' value=''  class='add'>
+            					<span class="filetypes">{%$locale.85%}: {%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}</span>
+            					<div id="r-{%$field_key%}"></div>
+                            </td>
+                            <td width='50'>
+        						<div {%if !$field.file%}style='display:none;'{%/if%} id='h1-{%$field_key%}'>
+        							     <img id="i-{%$field_key%}" width="60" height="40" border="0" class='help' src="{%$field.file%}" />
+        						</div>
+        					</td>
+                        </tr>
+					
+    					<tr>
+                            <td colspan='2' align='right' style='font-size:10px; color:red;'>
+                                <a {%if !$field.file%}style='display:none;'{%/if%} href="#" onclick="deletetmpfile('{%$field.id%}', '{%$smarty.get.form_id%}'); return false;" id='h2-{%$field_key%}'><img src="{%$smarty.const.THEME%}images/del.png" /></a>
+        					</td>
+                        </tr>
+					</table>
+                {%/if%}
+			{%/if%}
+
+			{%if $field.type == 'y'%}
+				<input name='{%$field_key%}' type='text' class='add' value='{%$value%}'/>
+			{%/if%}
+
+			{%if $field.type == 'j'%} 
+				<iframe id='frame-{%$field_key%}' scrolling='no' src="{%$settings.path%}yamaps/?field={%$field_key%}" style="width:600px; height:400px;" frameborder="0" class='add'></iframe>
+                <input id="{%$field_key%}" name="{%$field_key%}" type="hidden" value=""/>
+			{%/if%}
+
+			{%if $field.type == 'p'%}
+                <input name='{%$field_key%}' type='text' class='add' value='{%$value%}' size='5' style='width:50px;' />
+                    <select size='1' name="{%$field_key%}_rates">
+        				{%foreach  from=$field.rates item='rates'%}
+        				    <option {%if $rates_default.id == $rates.id%}selected{%/if%} value='{%$rates.id%}'>{%$rates.name%}</option>
+        				{%/foreach%}
+                    </select>
+			{%/if%}
+
+			</td>
+			</tr><tr><td><div id="add_otstup"></div></td></tr>
+{%/if%}{%/if%}{%/if%}{%/if%}{%/foreach%}
+		
+		
+		<tr><td align="right" id="td_right">Фото<br/><span style="font-size: 12px; line-height: 14px; color: red;">{%$field.comment%}</span></td>
+		
+
+		<td>
+		  <div style="margin-left: -10px; width: 630px;">
+{%foreach  from=$fields item='field' key='field_key'%}
+
+	{%if $field.type == 'i'%}
+               {%if $settings.uploadtype == 1%}
+            <iframe id="foto_hover" style="background: url({%$smarty.const.THEME%}images/gif-load_iframe.gif) no-repeat; background-position: center center;" class="fileupload" frameborder="0" src="{%$settings.path%}ajaxfileupload/?field_key={%$field_key%}&file={%$field.file%}"></iframe>
+                {%else%}
+                    <script>
+                        $(document).ready(function() {        
+                          $('#{%$field_key%}').uploadify({
+                            'uploader'  : '{%$settings.path%}js/uploadify/uploadify.swf',
+                            'buttonImg' : '{%$settings.path%}imgtext.png',
+                            'height'      : 18,
+                            'weight'      : 200,
+                            'wmode'       : 'transparent',
+                            'script'    : '{%$settings.path%}uploadify/',
+                            'cancelImg' : '{%$settings.path%}js/uploadify/cancel.png',
+                            'fileExt'   : '{%foreach from=$field.values_array item='vl' name='ii'%}*.{%$vl%}{%if $smarty.foreach.ii.last eq false %};{%/if%}{%/foreach%}',
+                            'fileDesc'    : '{%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}',
+                            'multi'     : false,
+                            'auto'      : true,
+                            'sizeLimit'   : {%$field.max%}000,  //in bytes
+                            'scriptData'  : {'field_id':{%$field.id%}, 'form_id':form_id},
+                            'onComplete': function (event, queueID, fileObj, response, data) 
+                                {
+                                    if(response != 'error')
+                                        {
+                                        $('#h1-{%$field_key%}').show('fast');
+                                        $('#i-{%$field_key%}').attr('src', response);                                       
+                                        $('#h2-{%$field_key%}').show('fast');                                       
+                                        }                            
+                                } 
+                          });  
+                         });   
+                    </script>
+					<table width='100%' border="0">
+    					<tr>
+    					    <td>
+            					
+								<input id='{%$field_key%}' name='{%$field_key%}' type='file' value=''  class='add'>
+            					<span class="filetypes">{%$locale.85%}: {%foreach from=$field.values_array item='vl' name='ii'%}{%$vl%}{%if $smarty.foreach.ii.last eq false %}, {%/if%}{%/foreach%}</span>
+            					<div id="r-{%$field_key%}"></div>
+                            </td>
+                            <td width='50'>
+        						<div {%if !$field.file%}style='display:none;'{%/if%} id='h1-{%$field_key%}'>
+        							     <img id="i-{%$field_key%}" width="60" height="40" border="0" class='help' src="{%$field.file%}" />
+        						</div>
+        					</td>
+                        </tr>
+					
+    					<tr>
+                            <td colspan='2' align='right' style='font-size:10px; color:red;'>
+                                <a {%if !$field.file%}style='display:none;'{%/if%} href="#" onclick="deletetmpfile('{%$field.id%}', '{%$smarty.get.form_id%}'); return false;" id='h2-{%$field_key%}'><img src="{%$smarty.const.THEME%}images/del.png" /></a>
+        					</td>
+                        </tr>
+					</table>
+                {%/if%}
+			{%/if%}
+			{%/foreach%}
+</td>  </div></tr>
+</table>
+
+
+
+	
+	   
+
+
+
+			
+
+    <div id="etap" style="margin-bottom: 20px;">{%$locale.1232%}</div>

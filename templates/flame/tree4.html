@@ -1,0 +1,37 @@
+<div class="row tree4">
+{%foreach from=$tree item=el%}
+    {%assign var="uri" value=$settings.path_rel%}
+    {%assign var="count" value=$el.id|count_msg%}
+    <div class='cat-list maintree'>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <h3><a href='{%$uri%}{%$el.uri%}/'>{%$el.name%}</a></h3>
+                    </th>
+                    <th style="width: 20px;">
+                        <span class="badge {%if $count==0%}empty{%/if%}">{%$count%}</span>
+                    </th>
+                </tr>
+            </thead>
+            
+            {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+            {%foreach from=$el.cat item='el2' name='ind'%}
+                {%assign var="count" value=$el2.id|count_msg%}
+                <tr>
+                    <td>
+                        <a href="{%$uri%}{%$el2.uri%}/">{%$el2.name%}</a>
+                    </td>	
+                    <td>
+                        <span class="{%if $count==0%}empty{%/if%}">{%$count%}</span>
+                    </td>
+                </tr>	
+            {%/foreach%}
+            
+        </table>
+    </div>
+{%/foreach%}
+</div>
+
+
+

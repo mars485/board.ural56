@@ -1,0 +1,39 @@
+<div class="row">
+<div class="col-lg-12 col-sm-12">
+<h4>{%$locale.903%}</h4>
+<p>{%$messages_counter%}</p>
+
+{%foreach from=$allusers item='user' name='i'%}
+   <div class="col-md-6"><a href="{%$settings.path%}userinfo/{%$user.id%}/">{%$user.name%}</a>
+    ( <span {%if $user.messages > 0%}style="color:#f57e20;"{%/if%}> {%$user.messages%}</span> )</div>
+{%/foreach%}
+
+<div class="clearfix"></div> 
+<!-- Постраничная навигация-->
+{%if $pages != ""%}
+    {%assign var='plim' value=10%}{%* Количество номеров страниц, которые будут выводиться за раз *%}
+    {%if $smarty.get.page < 1%}{%assign var='page' value=1%}{%else%}{%assign var='page' value=$smarty.get.page%}{%/if%}
+    {%if $smarty.get.page > $pages%}{%assign var='page' value=$pages%}{%/if%}
+    {%math equation="(ceil(p/l))*l" p=$page l=$plim assign='lastp'%}
+       {%if $lastp > $pages%}{%assign var='lastp' value=$pages%}{%/if%}
+       {%if $page <= $plim || $pages <= $plim%}{%assign var='firstp' value=0%}
+       {%else%}{%assign var='firstp' value=$lastp-$plim%}
+        {%/if%}
+        
+         <ul class="pagination pagination-sm">
+        {%if $page <= $plim%}{%else%}  
+         <li><a href="page1.html{%$get_str%}" title=""> 1 </a></li>
+         <li><a href="page{%$page-$plim%}.html{%$get_str%}" title=""> &laquo; </a></li>
+       {%/if%}
+       {%section name=page loop=$pages start=$firstp max=$plim%}
+          {%assign var="p" value=$smarty.section.page.index+1%}
+          <li {%if $page == $p%}class="active"{%/if%}><a href="page{%$p%}.html{%$get_str%}">{%$p%}</a></li>
+       {%/section%}
+       {%if $page <= $pages-$plim+1%} 
+         <li><a href="page{%$page+$plim%}.html{%$get_str%}" title=""> &raquo; </a></li>
+         <li><a href="page{%$pages%}.html{%$get_str%}" title=""> {%$pages%}</a> </li>
+       {%/if%}
+{%/if%} 
+<!-- Конец Постраничная навигация-->
+</div>
+</div>

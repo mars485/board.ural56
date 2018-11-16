@@ -1,0 +1,48 @@
+<div align='left'>
+<font size='2'>{%$locale.148%} <a href="http://{%$settings.site_address%}"><b>{%$smarty.const.TITLE%}</b></a></font><br />
+<font size='1'>{%$locale.149%}: <a href="http://{%$settings.site_address%}{%$settings.patch%}users/">http://{%$settings.site_address%}{%$settings.patch%}users/</a></font>
+</div>
+<br />
+<table border='0' align='center' cellspacing='1' cellpadding='2' width='98%' bgcolor='#CECFCE'>
+<tr><td width="100%"  bgcolor='#FFE19D'><font size='2'>:: <a href='http://{%$settings.site_address%}{%$settings.patch_region%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>{%$message.title%}</a></font></td>
+	<td width="250" bgcolor='#E7E7E7' align='center' >
+	<font size='2'>
+	{%if $message.user_id != 0%}
+		{%$message.user_id_name%}
+	{%else%}
+		{%$message.user%}
+	{%/if%}
+	</font>
+	</td>
+</tr>
+<tr><td bgcolor='#F4F8FF' height='50' valign='top' colspan='2'><font size='2'>{%$message.text%}</font></td>
+</tr>
+
+<tr><td bgcolor='#F7FBFF'  valign='top' colspan='2'>
+<font size='1'>
+<ul>
+	<li>{%$locale.17%}:
+	{%foreach  from=$message.array_linenav item='linenav' name='i'%}
+	{%$linenav.name%}
+	{%if $smarty.foreach.i.last eq false %} / {%/if%}
+	{%/foreach%}
+	</li>
+	<li>{%$locale.16%}:
+	{%foreach  from=$message.array_regions item='region' name='i'%}
+	{%$region.name%}
+	{%if $smarty.foreach.i.last eq false %} / {%/if%}
+	{%/foreach%}
+	</li>
+	<li>{%$locale.13%}: {%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}</li>
+	<li>{%$locale.14%}: {%$message.date_del|date_format:"%d.%m.%Y %H:%M"%}</li>
+</ul>
+</font>
+</td>
+</tr>
+</table>
+
+<br />
+<div align='center'>
+<font size="2">{%$locale.150%} <b>{%$smarty.const.TITLE%}</b><br />
+<a href='http://{%$settings.site_address%}{%$settings.patch_region%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>http://{%$settings.site_address%}{%$settings.patch_region%}{%$smarty.const.MESSAGES%}/{%$message.link%}</a>
+</font></div>

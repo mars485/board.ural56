@@ -1,0 +1,55 @@
+
+
+
+{%if $settings.user%}
+<style>
+#reg_h1 {
+display: none;
+}
+
+#foot_block {
+display: none;
+}
+</style>
+<div id="hello"><strong style="color: #225F80;font-size: 20px;">{%$locale.1244%}{%$settings.user.name%}!</strong><br/><br/>
+<span STYLE="color: #206F99;">{%$locale.1245%}  <span id="balans" style="{%if $settings.user.balance > 0%}background: rgb(73, 160, 73);{%else%}background: rgb(232, 44, 44);{%/if%}">{%$settings.user.balance%} {%$currency_names[$settings.currency].name2%}</span></span>
+ <a id="add_balance" href="{%$settings.patch%}users/pay/">{%$locale.64%}</a>
+ <a id="offf" href="{%$settings.patch%}users/exit">X {%$locale.1246%}</a>
+ 
+ <div id="us_menu">
+ <ul id="users_panel" style="float: left;">
+<li><a href="{%$settings.patch%}users/"><span class="glyphicon glyphicon-trash"></span>{%$locale.1247%}<span id="chi">{%$usercounter.all%}</span></a></li>
+<li><a href="{%$settings.patch%}users/moderated/"><span class="glyphicon glyphicon-warning-sign"></span>{%$locale.1248%}<span id="chi">{%$usercounter.mod%}</span></a></li>
+<li><a href="{%$settings.patch%}users/deleted/"><span class="glyphicon glyphicon-trash"></span>{%$locale.1249%}<span id="chi">{%$usercounter.del%}</span></a></li>
+
+</ul>
+</div>
+<div id="menu_users">
+<ul>
+
+<li {%if $smarty.get.cat.1 == 'info'%}class="active"{%/if%}><a style="text-decoration:none;" href="{%$settings.patch%}users/info/">{%$locale.126%}</a></li>
+<li {%if $smarty.get.cat.1 == 'subscribe'%}class="active"{%/if%}><a style="text-decoration:none;" href="{%$settings.patch%}users/subscribe/">{%$locale.1250%}</a></li>
+<li {%if $smarty.get.cat.1 == 'orders'%}class="active"{%/if%}><a style="text-decoration:none;" href="{%$settings.patch%}users/orders/">{%$locale.1251%}</a></li>
+<li {%if $smarty.get.cat.1 == 'state'%}class="active"{%/if%}><a style="text-decoration:none;" href="{%$settings.patch%}users/state/">{%$locale.63%}</a></li>
+<li {%if $smarty.get.cat.1 == 'order'%}class="active"{%/if%}><a style="text-decoration:none;" href="{%$settings.patch%}users/order/">{%$locale.1252%}</a></li>
+
+</ul>
+</div>
+</div>
+
+
+
+
+<div id="rig">
+ {%$panel_right%}
+</div>
+
+
+
+
+
+
+{%else%}
+{%include file='users_login.html'%}
+{%/if%}
+

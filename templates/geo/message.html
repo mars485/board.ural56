@@ -1,0 +1,273 @@
+{%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+
+
+<div class='message_once'>
+
+
+
+    <h1>{%$message.title|wordwrap_utf8%}{%if $message.approved == 0%}<span class="notapproved">{%$locale.1056%}</span>{%/if%}</h1>
+
+        {%if $message.approved == 0%}
+            <div class="notapproved_text">
+             {%$settings.approve_text|nl2br%}
+            </div>
+        {%/if%}
+
+	{%if $message.fields.i|@count > 0%}
+		<div class='message_images'>
+			<table>
+				<tr>
+					<td width='150' valign='top'>
+                        {%if $message.fields.i|@count > 1%}
+    						{%foreach  from=$message.fields.i item='image' key='key'%}
+    							<a class='message_images2' title="{%$image.title%}" href="{%$settings.patch%}uploads/images/tb/{%$image.value%}"><img width='100' style='vertical-align: middle;' src="{%$settings.patch%}uploads/images/ts/{%$image.value%}"  alt="{%$message.title%}" border="0" onmouseover="Tip(this, '{%$message.title%}')" onmouseout="UnTip(this)" /></a>
+    						{%/foreach%}
+                        {%/if%}
+					</td>
+					<td valign='top'>
+						<img id="mainimg" src="{%$settings.patch%}uploads/images/tb/{%$message.fields.i.0.value%}" alt="{%$message.title%}" border="0" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	{%/if%}
+
+	<span class='once_text'>
+        {%if $is_billing %}
+        	<div class='services'>
+        	   <p>{%$locale.159%}</p>
+        		<ul>
+        		{%foreach from=$services item='serv'%}
+    				{%if $settings.user%}
+    					{%assign var='href' value="`$settings.path`users/order/?service=`$serv.type`&message_id=`$message.id`" %}
+    				{%else%}
+    					{%assign var='href' value="`$settings.path`services.html?service=`$serv.type`&message_id=`$message.id`" %}
+    					{%assign var='iframeclass' value="class='group iframe dashed'" %}
+    				{%/if%}
+    				<li><a {%$iframeclass%} href="{%$href%}" onmouseover="Tip(this, '{%$serv.tip%}')" onmouseout="UnTip(this)">{%$serv.name%}</a></li>
+        		{%/foreach%}
+        		</ul>
+        	</div>
+        {%/if%}
+
+		{%$message.text%}
+		
+	</span>
+
+	{%foreach  from=$message.fields.p item='v'%}
+    	<div class='once_price'>
+            {%$v.name%}: 
+            <span id="price_{%$v.field_name%}">
+                {%if $settings.user || (!$settings.user && $v.hide == 0)%}
+                    {%$v.value.num%}
+                {%else%}
+                    {%$after_registration%}
+                {%/if%}
+            </span>
+            
+            {%if $settings.user || (!$settings.user && $v.hide == 0)%}
+                <ul class="price_{%$v.field_name%}">
+                    {%foreach from=$rates item='rat'%}
+                        <li {%if $rat.def == 1%}class="once_price_selected"{%/if%}><a href="#" onclick="calc_price('{%$v.field_name%}', {%$v.value.num%}, {%$rat.value%}, this); return false;">{%$rat.name|sslash%}</a></li>
+                    {%/foreach%}
+                </ul>
+            {%/if%}
+        </div>
+	{%/foreach%}
+    
+    <br/>
+    
+	<span class='once_information'>
+	{%$locale.764%}:
+	</span>
+		<table width='100%'>
+			<tr>
+				<td>
+					<ul class='once_list'>
+						<li>
+							<strong>{%$locale.281%}</strong>:
+        					{%if $message.user_id != 0%}
+        						<a class="userinfo" title="{%$locale.772%}" href="{%$settings.patch%}userinfo/{%$message.user_id%}/">{%$message.user_id_name%}</a>
+        					{%elseif $message.email != ""%}
+        						<a class="group iframe" title="{%$locale.157%}" href="{%$settings.patch%}sendmail/?messageid={%$message.id%}&userid={%$message.user_id%}">{%$message.user%}</a>
+        					{%else%}
+        						{%$message.user%}
+        					{%/if%}
+						</li>
+						<li>
+							<strong>{%$locale.17%}</strong>: {%$message.cat|linenav:$categories:'cat'%}
+						</li>
+						<li>
+							<strong>{%$locale.16%}</strong>: {%$message.region|linenav:$allregions:'region'%}
+						</li>
+                    	{%if $message.tags|@count > 0%}
+                    		<li>{%$locale.139%}:
+                    		{%foreach  from=$message.tags item='tag' name='i'%}
+                    			<a class="tag_link" href="{%$settings.path%}tags/{%$tag.word|urlencode%}/">{%$tag.word%}</a>{%if $smarty.foreach.i.last eq false %}, {%/if%}
+                    		{%/foreach%}
+                    		</li>
+                    	{%/if%}
+					</ul>
+				</td>
+				<td>
+					<span class='date'><strong>{%$locale.13%}</strong>: {%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}</span>
+					<span class='date'><strong>{%$locale.14%}</strong>: {%$message.date_del|date_format:"%d.%m.%Y %H:%M"%}</span>
+					<span class='view'><strong>{%$locale.686%}</strong>: {%$message.counter%}</span>
+					<span class='fav{%$message.fav%}'><a class='fav' id='fav-{%$message.id%}' name='{%$message.id%}' href=''>{%if $message.fav == 1%}{%$locale.228%}{%else%}{%$locale.695%}{%/if%}</a></span>
+				</td>
+			</tr>
+		</table>
+        
+    <hr />
+    {%if $message.fields_sorted|@count > 0%}
+    	<span class='once_custom'>{%$locale.778%}:</span>
+        
+        <ul class="once_list2">
+        	{%foreach  from=$message.fields_sorted item='v'%}
+                {%if    $v.field_type != 'y' && 
+                        $v.field_type != 'j' && 
+                        $v.field_type != 'i' && 
+                        $v.field_type != 'p'%}
+                    
+            		{%if $v.field_type == 'v'%}
+            			{%if $v.string_type == 'u'%}
+            				<li><strong>{%$v.name%}</strong>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href="{%$settings.patch%}redirect/?go={%$v.value%}" target='_blank'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</li>
+            			{%else%}
+            				<li><strong>{%$v.name%}</strong>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value%}{%else%}{%$after_registration%}{%/if%}</strong></li>
+            			{%/if%}
+            		{%/if%}
+            		{%if $v.field_type == 't'%}
+            			<li class="textarea"><strong>{%$v.name%}</strong>: <span class="textarea2">{%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value%}{%else%}{%$after_registration%}{%/if%}</span></li>
+            		{%/if%}
+            		{%if $v.field_type == 's'%}
+            			<li><strong>{%$v.name%}</strong>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</li>
+            		{%/if%}
+            		{%if $v.field_type == 'r'%}
+            			<li><strong>{%$v.name%}</strong>: {%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</li>
+            		{%/if%}
+            		{%if $v.field_type == 'c'%}
+            			<li><strong>{%$v.name%}</strong>:
+            			{%if $settings.user || (!$settings.user && $v.hide == 0)%}
+            				{%foreach from=$v.value item='val' name='key' %}
+            				<a href='{%$settings.patch%}sort/?{%$v.field_name%}[]={%$val.key%}'>{%$val.name%}</a>{%if $smarty.foreach.key.last eq false %}, {%/if%}
+            				{%/foreach%}
+            			{%else%}
+            				{%$after_registration%}
+            			{%/if%}
+            			</li>
+            		{%/if%}
+            
+                    {%if $v.field_type == 'f'%}
+                        <li><strong>{%$v.name%}: <a href="{%$settings.patch%}download/{%$message.id%}/{%$v.field_name|substr:2%}/{%$v.value.filename%}"><img src="{%$v.value.ico%}" width="33" height="22" border="0" class='help'>{%$v.value.filename|strtolower%}</a></strong></li>
+                    {%/if%}
+    
+                    
+                {%/if%}
+            {%/foreach%}
+        </ul>
+        <hr />
+    {%/if%}
+
+{%if $message.fields.y|@count > 0%}
+	{%foreach  from=$message.fields.y item='video' key='key'%}
+    <span class='once_custom'>{%$video.name%}:</span>
+	<div class='block_yotube'>
+		{%if $settings.user || (!$settings.user && $video.hide == 0)%}
+			<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/{%$video.value%}"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/{%$video.value%}" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>
+		{%else%}
+			<a href="{%$settings.path%}users/register/"><img src="{%$smarty.const.THEME%}images/video_{%$settings.locale%}.jpg" border="0"></a>
+		{%/if%}
+	</div>
+    <hr />
+	{%/foreach%}
+{%/if%}
+
+{%if $message.fields.j|@count > 0%}
+	{%foreach  from=$message.fields.j item='yandex' key='key'%}
+    <span class='once_custom'>{%$yandex.name%}:</span>
+	<div class='block_yamap'>
+		{%if $settings.user || (!$settings.user && $yandex.hide == 0)%}
+			<iframe scrolling='no' src="{%$settings.patch%}yamaps/?field={%$yandex.field_name%}&point={%$yandex.value%}&message" style="width:600px; height:400px;" frameborder="0" class='add'></iframe>
+		{%else%}
+			<a href="{%$settings.path%}users/register/"><img src="{%$smarty.const.THEME%}images/map_{%$settings.locale%}.jpg" border="0"></a>
+		{%/if%}
+	</div>
+    <hr />
+	{%/foreach%}
+{%/if%}
+
+
+
+{%if $message.simmessages%}
+    <span class='once_information'>
+        {%$locale.875%}:
+    </span>
+    
+        <ul class="once_sim">
+            {%foreach from=$message.simmessages  item='simmessage'%}
+            	<li><a href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$simmessage.link%}">{%$simmessage.title%}</a></li>
+            {%/foreach%}
+        </ul>
+    <hr />
+{%/if%}
+
+
+
+{%if $settings.comment_on%}
+	{%if $smarty.post.commentsubmit%}
+		<div align='center'>
+			{%if $message.comment_err|@count > 0%}
+				<div class='error'>
+					<ul>
+						{%foreach from=$message.comment_err  item='err'%}
+							<li>{%$err%}</li>
+						{%/foreach%}
+					</ul>
+				</div>
+			{%else%}
+				<div class='ok'>{%$locale.834%}</div>
+			{%/if%}
+		</div>
+	{%/if%}
+	{%if $message.comments_count < 1 %}
+        {%$locale.779%}
+    {%else%}
+        <span class='once_information'>
+            {%$locale.1020%}
+        </span>  
+        <br />
+        {%$message.comments_count_text%}
+    {%/if%}
+	<a href="#" id="commentadd">{%$locale.780%}</a>
+	<div id='commentform' {%if !$echocomform%}style='display:none;'{%/if%}>
+		{%if $echocomform%}{%include file='comment_add.html'%}{%/if%}
+	</div>
+	<div class='once_comments'>
+		{%if $message.comments_count > 0 %}      
+			{%foreach from=$message.comments  item='comment'%}
+				{%include file="comment.html"%}
+			{%/foreach%}
+		{%/if%}
+	</div>
+{%/if%}
+
+</div>
+
+
+
+
+
+
+
+
+
+<br />
+
+	{%if ($message.user_id != "" && $message.user_id == $settings.user.id) || $settings.editable%}
+		<div class='moder_panel'>
+		    <span class='m_edit'><a href="{%$settings.patch%}edit/{%$message.id%}">{%$locale.200%}</a></span>
+		    <span class='m_delete'><a name='message_{%$message.id%}' href="{%$settings.patch%}delete/{%$message.id%}">{%$locale.201%}</a></span>
+		</div>
+	{%/if%}
+
+<br />

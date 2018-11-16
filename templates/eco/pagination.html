@@ -1,0 +1,35 @@
+
+{%if $pages > 1%}
+    <div class="pagination-bar text-center">
+        <ul class="pagination">
+            {%assign var="page" value=$smarty.get.page %}
+            {%assign var="num_start" value=1%}
+            {%if $page > 3%}
+                {%assign var="num_start" value=$page-2%}
+            {%/if%}
+            {%assign var="num_end" value=$num_start+5%}
+            {%if $num_end > $pages%}
+                {%assign var="num_end" value=$pages%}
+                {%assign var="num_start" value=$num_end-5%}
+            {%/if%}
+            {%if $num_start < 1%}
+                {%assign var="num_start" value=1%}
+            {%/if%}
+            
+            {%if $page > 1%}
+                {%assign var="p" value=$page-1%}
+                <li><a class="pagination-btn" href="page{%$p%}.html{%$get_str%}"><i class="fa fa-arrow-left" aria-hidden="true"></i> <span class="hidden-xs">{%$locale.324%}</span></a></li>
+            {%/if%}
+            {%section name=page start=$num_start loop=$num_end+1 %}
+                {%assign var="p" value=$smarty.section.page.index%}
+                 <li {%if $smarty.get.page == $p%}class='active'{%/if%}><a href="page{%$p%}.html{%$get_str%}" >{%$p%}</a></li>
+            {%/section%}
+            {%if $page < $pages%}
+                {%assign var="p" value=$page+1%}
+                <li><a class="pagination-btn" href="page{%$p%}.html{%$get_str%}"><span class="hidden-xs">{%$locale.1193%}</span> <i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
+            {%/if%}
+
+        </ul>
+    </div>
+    <!--/.pagination-bar -->
+{%/if%}

@@ -1,0 +1,204 @@
+
+
+
+<!--Скрипт карты-->
+
+
+
+
+
+{%if $messages|@count > 0 && !$smarty.get.cat.0 == ''%}
+
+
+{%foreach from=$messages item='message' key='k' name='i'%}
+		{%assign var='fieldname' value='Адрес' %}
+			{%assign var='foo' value=false %}
+			{%foreach  from=$message item='v'%}
+				{%if $v.name == $fieldname%}
+					{%assign var='field' value=$v%}
+				{%/if%}
+				    {% if $field.value!="" %}
+        {%assign var='foo' value=true %}
+    {%/if%}
+			{%/foreach%}
+			{%/foreach%}
+  {% if $foo%}
+
+
+
+
+<script src="//api-maps.yandex.ru/2.1.29/?lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript">
+{%*$messages|@debug_print_var*%}
+{%assign var='lastregion' value=$second_region.name|@count%}
+{%assign var='lastregion' value=$lastregion-1%}
+{%assign var='lastregion' value=$second_region.name[$lastregion]%}
+{%if $lastregion==''%}{%assign var='lastregion' value=$locale.1271%}{%/if%}
+
+
+
+var myMaps=ymaps.ready(init);
+function init() {
+
+
+	var myMap=new Object();
+	ymaps.geocode('{%$lastregion%}', {
+		results: 1
+	}).then(function (res) {
+		var firstGeoObject = res.geoObjects.get(0),
+		coords = firstGeoObject.geometry.getCoordinates(),
+                bounds = firstGeoObject.properties.get('boundedBy');
+
+    		var myMap = new ymaps.Map('bmapping', {
+            		center: coords,
+            		zoom: 9,
+			behaviors: ['default', 'scrollZoom']
+		}, {
+            		searchControlProvider: 'yandex#search'
+        	});
+
+
+		var objects = ymaps.geoQuery()
+		{%foreach from=$messages item='message' key='k' name='i'%}
+			{%assign var='last_region' value=$message.array_regions|@count%}
+			{%assign var='last_region' value=`$last_region-1`%}
+			{%assign var='last_region' value=$message.array_regions[$last_region]%}
+
+					{%assign var='fieldname' value='Адрес' %}
+		
+			{%foreach  from=$message item='v'%}
+				{%if $v.name == $fieldname%}
+					{%assign var='field' value=$v%}
+				{%/if%}
+			{%/foreach%}
+{%if $field.value%}
+			.add(ymaps.geocode('{%$last_region.name%}, {%$field.value|escape:javascript|replace:"\r":" "|replace:"\n":" "%}', { results: 1 }))
+	{%/if%}
+{%assign var='field' value=''%}
+		{%/foreach%}
+		
+		.applyBoundsToMap(myMap, {checkZoomRange: true});
+
+
+		var balloons = [
+		{%foreach from=$messages item='message' key='k' name='i'%}
+		
+
+			
+		<!---->
+		{%assign var='fieldname' value='Адрес' %}
+			{%foreach  from=$message item='v'%}
+				{%if $v.name == $fieldname%}
+					{%assign var='field' value=$v%}
+				{%/if%}
+			{%/foreach%}
+	<!---->
+			{%if $field.value%}
+			{%if $message.fields.i|@count > 0%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+				[
+					'<div id="w_cart"><div id="foto_list_kar" class="karta_foto">{%if $message.fields.i.0.value != ""%}<table id="foto_kar"><tbody><tr><td style="vertical-align: middle;"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}"><img src="{%$settings.patch%}uploads/images/ts/{%$message.fields.i.0.value%}"></a></td></tr></tbody></table>{%else%}<table id="foto_kar"><tbody><tr><td style="vertical-align: middle;"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}"><img src="{%$smarty.const.THEME%}images/no_photo.jpg"></a></td></tr></tbody></table>{%/if%}</div><div id="kar_tit"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:85:'...'%}</a></div><div id="kar_cena">   <div id="body_cena_kar"><div id="cena_hover">{%if $message.fields.p == NULL%}{%$locale.1206%}{%else%}{%foreach  from=$message.fields.p item='v'%}{%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value.txt|droblenie%} {%$locale.1207%}{%assign var='fieldname' value='Срок аренды' %}{%foreach  from=$message item='v'%}{%if $v.name == $fieldname%}{%assign var='field' value=$v%}{%/if%}{%/foreach%}{%if $field.value == "Час"%}<span style="color: rgb(39, 150, 39)">{%$locale.1201%}</span>{%/if%}{%if $field.value == "Месяц"%}<span style="color: rgb(39, 150, 39)">{%$locale.1202%}</span>{%/if%}{%if $field.value == "Сутки"%}<span style="color: rgb(39, 150, 39)">{%$locale.1203%}</span>{%/if%}{%if $field.value == "На длительный срок"%}{%/if%}{%assign var='field' value=''%}{%else%}{%$after_registration%}{%/if%}{%/foreach%}{%/if%}</div><div id="torg"> {%if $message.f_482|@count > 1%}{%foreach from=$message.f_482.value item='val' name='key' %} +{%$val.name%}{%if $smarty.foreach.key.last eq false %}, {%/if%}{%/foreach%}{%/if%}</div></div></div>  <div class="kar_cat">{%$last_region.name%} | {%$message.cat|linenav:$categories:"cat"|escape:javascript|replace:"\r":" "|replace:"\n":" "%}</div> <div id="kar_data">Опубликовано: {%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}</div></div> ',
+                                	'{%$message.title|escape:javascript|replace:"\r":" "|replace:"\n":" "|truncate_utf:50:'...'%}',
+					'{%$message.id%}'
+				],
+			{%else%}
+				[
+					'<div id="w_cart"><div id="foto_list_kar" class="karta_foto">{%if $message.fields.i.0.value != ""%}<table id="foto_kar"><tbody><tr><td style="vertical-align: middle;"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}"><img src="{%$settings.patch%}uploads/images/ts/{%$message.fields.i.0.value%}"></a></td></tr></tbody></table>{%else%}<table id="foto_kar"><tbody><tr><td style="vertical-align: middle;"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}"><img src="{%$smarty.const.THEME%}images/no_photo.jpg"></a></td></tr></tbody></table>{%/if%}</div><div id="kar_tit"><a id="kar_a" href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:85:'...'%}</a></div><div id="kar_cena">   <div id="body_cena_kar"><div id="cena_hover">{%if $message.fields.p == NULL%}{%$locale.1206%}{%else%}{%foreach  from=$message.fields.p item='v'%}{%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value.txt|droblenie%} {%$locale.1207%}{%assign var='fieldname' value='Срок аренды' %}{%foreach  from=$message item='v'%}{%if $v.name == $fieldname%}{%assign var='field' value=$v%}{%/if%}{%/foreach%}{%if $field.value == "Час"%}<span style="color: rgb(39, 150, 39)">{%$locale.1201%}</span>{%/if%}{%if $field.value == "Месяц"%}<span style="color: rgb(39, 150, 39)">{%$locale.1202%}</span>{%/if%}{%if $field.value == "Сутки"%}<span style="color: rgb(39, 150, 39)">{%$locale.1203%}</span>{%/if%}{%if $field.value == "На длительный срок"%}{%/if%}{%assign var='field' value=''%}{%else%}{%$after_registration%}{%/if%}{%/foreach%}{%/if%}</div><div id="torg"> {%if $message.f_482|@count > 1%}{%foreach from=$message.f_482.value item='val' name='key' %} +{%$val.name%}{%if $smarty.foreach.key.last eq false %}, {%/if%}{%/foreach%}{%/if%}</div></div></div>  <div class="kar_cat">{%$last_region.name%} | {%$message.cat|linenav:$categories:"cat"|escape:javascript|replace:"\r":" "|replace:"\n":" "%}</div> <div id="kar_data">Опубликовано: {%$message.date_add|date_format:"%d.%m.%Y %H:%M"%}</div></div> ',
+                                	'{%$message.title|escape:javascript|replace:"\r":" "|replace:"\n":" "|truncate_utf:50:'...'%}',
+					'{%$message.id%}'
+				],
+			{%/if%}
+			{%assign var='field' value=''%}
+			  {%/if%}
+		{%/foreach%}
+			], i = 0;
+
+
+		var clusterer = ymaps.geoQuery(objects).clusterize();
+		clusterer.options.set({
+			clusterDisableClickZoom: false
+
+		});
+
+		clusterer.events.add('mouseenter', function (e) {
+    			var target = e.get('target');
+    			if (typeof target.getGeoObjects =='function') {
+         			target.options.set('preset', 'islands#redClusterIcons');
+    			}
+		});
+
+		clusterer.events.add('mouseleave', function (e) {
+			var target = e.get('target');
+			if (typeof target.getGeoObjects == 'function') {
+				target.options.set('preset', 'islands#blueClusterIcons');
+			}
+		});
+
+		objects.then(function () {
+			objects.each(function (object) {
+
+         			object.properties.set('balloonContentBody', balloons[i][0]);
+				object.properties.set('clusterCaption', balloons[i][1]);
+				object.properties.set('message_id', balloons[i][2]);
+
+
+				object.events.add('mouseenter', function () {
+
+         				object.options.set('preset', 'islands#redIcon');
+
+				});
+
+				object.events.add('mouseleave', function (e) {
+
+					object.options.set('preset', 'islands#blueIcon');
+				});
+
+
+
+				$('#message_'+balloons[i][2]).click(function(){
+					var geoObjectState = clusterer.getObjectState(object);
+					objects.each(function (objectIn) {
+						var geoObjectStateIn = clusterer.getObjectState(objectIn);
+						if (geoObjectStateIn.isClustered) {
+							geoObjectStateIn.cluster.options.set('preset', 'islands#blueClusterIcons');
+						} else {
+							objectIn.options.set('preset', 'islands#blueIcon');
+						}
+					});
+					if (geoObjectState.isClustered) {
+						myMap.setCenter(geoObjectState.cluster.geometry.getCoordinates());
+						clusterer.balloon.autoPan(geoObjectState.cluster);
+						geoObjectState.cluster.state.set('activeObject', object	);
+						geoObjectState.cluster.options.set('preset', 'islands#redClusterIcons');
+						clusterer.balloon.open(geoObjectState.cluster); 
+					} else {
+						myMap.setCenter(object.geometry.getCoordinates());
+						object.balloon.autoPan();
+						object.options.set('preset', 'islands#redIcon');
+						object.balloon.open();
+	                		}
+
+				});
+
+				i++;
+
+    			});
+		});
+
+
+		clusterer.options.set({
+        		gridSize: 80,
+		});
+
+
+
+    		myMap.geoObjects.add(clusterer);
+
+	});
+}
+</script>
+{%/if%}
+{%assign var='field' value=''%}
+
+<!--Конец скрипта карты-->
+
+{%/if%}

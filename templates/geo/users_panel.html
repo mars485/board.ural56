@@ -1,0 +1,40 @@
+
+
+{%if $settings.user%}
+
+
+<div class="userpanel">
+    <span class="welcome">{%$locale.18%}, {%$settings.user.name%}!</span>
+    <ul>
+        <li><b>{%$locale.158%}</b> <span style="{%if $settings.user.balance > 0%}color: green;{%else%}color: red;{%/if%}">{%$settings.user.balance%} {%$currency_names[$settings.currency].name2%}</span></li>
+        <li><b>{%$locale.765%}:</b> {%$usercounter.all%}</li>
+        <li><b>{%$locale.766%}:</b> {%$usercounter.mod%}</li>
+        <!--li><b>{%$locale.767%}:</b> {%$usercounter.com%}</li-->
+    </ul>
+</div>
+
+<div class="userpanelcenter">
+    <select size="1" onchange="document.location.href=this.options[this.selectedIndex].value">
+        <option value="#">{%$locale.81%}</option>
+        <option {%if $smarty.get.cat.1 == 'users' || $smarty.get.1 == "" %}selected{%/if%} value="{%$settings.patch%}users/">{%$locale.61%} ({%$usercounter.all%})</option>
+        <option {%if $smarty.get.cat.1 == 'moderated'%}selected{%/if%} value="{%$settings.patch%}users/moderated/">{%$locale.979%} ({%$usercounter.mod%})</option>
+        <option {%if $smarty.get.cat.1 == 'deleted'%}selected{%/if%} value="{%$settings.patch%}users/deleted/">{%$locale.980%} ({%$usercounter.del%})</option>
+        <option {%if $smarty.get.cat.1 == 'info'%}selected{%/if%} value="{%$settings.patch%}users/info/">{%$locale.126%}</option>
+        <option {%if $smarty.get.cat.1 == 'subscribe'%}selected{%/if%} value="{%$settings.patch%}users/subscribe/">{%$locale.62%}</option>
+        <option {%if $smarty.get.cat.1 == 'orders'%}selected{%/if%} value="{%$settings.patch%}users/orders/">{%$locale.209%}</option>
+        <option {%if $smarty.get.cat.1 == 'state'%}selected{%/if%} value="{%$settings.patch%}users/state/">{%$locale.63%}</option>
+        <option {%if $smarty.get.cat.1 == 'pay'%}selected{%/if%} value="{%$settings.patch%}users/pay/">{%$locale.64%}</option>
+        <option {%if $smarty.get.cat.1 == 'order'%}selected{%/if%} value="{%$settings.patch%}users/order/">{%$locale.65%}</option>
+
+    </select>
+</div>
+
+{%$panel_right%}
+
+
+
+
+{%else%}
+{%include file='users_login.html'%}
+{%/if%}
+

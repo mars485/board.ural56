@@ -1,0 +1,169 @@
+<div class="clearfix"></div>
+<div class="messages-list">
+
+
+<h4 class="line"> {%$messages_counter%}</h4>
+
+
+{%if $pages != ""%}
+    {%assign var='plim' value=10%}{%* Количество номеров страниц, которые будут выводиться за раз *%}
+    {%if $smarty.get.page < 1%}{%assign var='page' value=1%}{%else%}{%assign var='page' value=$smarty.get.page%}{%/if%}
+    {%if $smarty.get.page > $pages%}{%assign var='page' value=$pages%}{%/if%}
+    {%math equation="(ceil(p/l))*l" p=$page l=$plim assign='lastp'%}
+       {%if $lastp > $pages%}{%assign var='lastp' value=$pages%}{%/if%}
+       {%if $page <= $plim || $pages <= $plim%}{%assign var='firstp' value=0%}
+       {%else%}{%assign var='firstp' value=$lastp-$plim%}
+        {%/if%}
+        
+         <ul class="pagination">
+        {%if $page <= $plim%}{%else%}  
+         <li><a href="page1.html{%$get_str%}" title=""> 1 </a></li>
+         <li><a href="page{%$page-$plim%}.html{%$get_str%}" title=""> &laquo; </a></li>
+       {%/if%}
+       {%section name=page loop=$pages start=$firstp max=$plim%}
+          {%assign var="p" value=$smarty.section.page.index+1%}
+          <li {%if $page == $p%}class="active"{%/if%}><a href="page{%$p%}.html{%$get_str%}">{%$p%}</a></li>
+       {%/section%}
+       {%if $page <= $pages-$plim+1%} 
+         <li><a href="page{%$page+$plim%}.html{%$get_str%}" title=""> &raquo; </a></li>
+         <li><a href="page{%$pages%}.html{%$get_str%}" title=""> {%$pages%}</a> </li>
+       {%/if%}
+       </ul>
+      
+{%/if%}
+
+{%if $smarty.get.cat.0 != 'users'%}
+     {%if $messages|@count == 0%}
+              <div class="alert alert-danger">
+              <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+               {%$locale.143%}.
+              </div>
+     {%/if%}
+{%/if%}
+
+{%if $smarty.get.cat.0 == 'users'%}
+  <div class="pull-right">
+    <input id="MessagesAction" class="btn btn-danger" type="button" value="{%if $smarty.get.cat.1 != 'deleted'%}{%$locale.983%}{%else%}{%$locale.984%}{%/if%}" />
+    <input id="MessagesSelect" class="btn btn-primary" type="button" value="{%$locale.985%}" />    
+  </div>
+  <div class="clearfix"></div>
+{%/if%}
+
+{%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+{%assign var='count' value=$blocks.m|@count %}
+{%assign var='count' value=`$count-1`%}
+{%if $count < 0%}{%assign var='count' value=0%}{%/if%}
+{%assign var='counter' value=0%}
+{%foreach from=$messages item='message' name='i'%}
+  
+  {%if $message.marked == 1%}
+    {%assign var='mask' value='marked'%} 
+  {%else%}    
+      {%assign var='mask' value='panel-default'%}
+  {%/if%}
+
+
+
+<div id="message_{%$message.id%}" class="panel-default {%$mask%}">
+  <div class="panel-body">
+    <div class="col-lg-2 col-md-2 col-sm-3">
+    {%if $message.fields.i.0.value != ""%}      
+      <img class="img-thumbnail img-responsive" src="{%$settings.patch%}uploads/images/tb/{%$message.fields.i.0.value%}" alt="{%$message.title|truncate:400:'...'%}"/>                    
+    {%else%}
+      <img class="img-thumbnail img-responsive" src="{%$settings.patch%}images/no_photo.jpg" alt="{%$locale.109%}"/>
+    {%/if%}
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-9">
+    <h4><a data-toggle="tooltip" title="{%$locale.228%} / {%$locale.695%}" class='fav' id='fav-{%$message.id%}' name='{%$message.id%}' href='#'><span class="glyphicon glyphicon-star{%if $message.fav == 1%}-empty{%else%}{%/if%}"></span></a>
+        {%if $smarty.get.cat.0 == 'users'%}<input class="MessagesCheck" type="checkbox" value="{%$message.id%}" />{%/if%}
+         <a href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$message.title|truncate:100:'...'%}</a>
+        {%if ($message.user_id != "" && $message.user_id == $settings.user.id) || $settings.editable%}
+        <div class="user-moder pull-right">
+         <a data-toggle="tooltip" title="{%$locale.200%}" href="{%$settings.patch%}edit/{%$message.id%}"><span class="glyphicon glyphicon-edit"></span></a> 
+         {%if $message.status != 2%}
+         <span class='m_delete'><a name='message_{%$message.id%}' data-toggle="tooltip" title="{%$locale.201%}"  href="{%$settings.patch%}delete/{%$message.id%}"><span class="glyphicon glyphicon-trash"></span></a></span>
+		 {%else%}
+         <span class='m_restore'><a name='message_{%$message.id%}' data-toggle="tooltip" title="{%$locale.619%}"  href="{%$settings.patch%}restore/{%$message.id%}"><span class="glyphicon glyphicon-share"></span></a></span>
+         {%/if%}
+         
+        {%if $message.prolong%}
+	      <span class='m_prolong'><a name='message_{%$message.id%}' data-toggle="tooltip" title="{%$locale.145%}" href="{%$settings.patch%}prolongation/?message={%$message.id%}&key={%$message.id|cat:$settings.rand|md5%}"><span class="glyphicon glyphicon-share-alt"></span></a></span>
+        {%/if%}
+        </div>
+        {%/if%}
+    </h4>
+    <div class="row">
+    <div  class="col-xs-11">
+    <p>{%$message.text|strip_tags|truncate:450:"... <a href='`$settings.patch_region``$smarty.const.MESSAGES`/`$message.link`'>`$locale.15`</a>"%}
+    {%foreach  from=$message.fields.p item='v'%}
+      <div><strong>{%$locale.878%}</strong>: {%$v.value.txt%}</div>
+    {%/foreach%}
+    </p>
+    </div >
+    <div class="col-xs-1">
+    <ul class="list-unstyled"> 
+    {%if $message.marked=="1"%}<li><span data-toggle="tooltip" title="{%$locale.182%} - &#171; {%$locale.164%}  &#187;" class="glyphicon glyphicon-pencil"></span></li>{%/if%}
+    {%if $message.raised=="1"%}<li><span data-toggle="tooltip" title="{%$locale.182%} - &#171; {%$locale.163%}  &#187;" class="glyphicon glyphicon-open"></span></li>{%/if%}
+    {%if $message.block=="1"%}<li><span data-toggle="tooltip" title="{%$locale.182%} - &#171; {%$locale.165%}  &#187;" class="glyphicon glyphicon-stop"></span></li>{%/if%}
+    </ul>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-lg-12">
+       <ul class="list-unstyled list-inline">
+          <li><span data-toggle="tooltip" title="{%$message.date_add|date_format:"%d.%m.%Y %H:%M"%} — {%$message.date_del|date_format:"%d.%m.%Y %H:%M"%}"><span class="glyphicon glyphicon-calendar"></span> {%$message.date_add|date_format:"%d.%m.%Y"%}</span></li>
+          <li><span class="glyphicon glyphicon-eye-open"></span> {%$message.counter%}</li>
+          <li><span class="glyphicon glyphicon-comment"></span> {%$message.comments_count2%}</li>
+          <li><span class="glyphicon glyphicon-map-marker"></span> {%$message.region|linenav:$allregions:'region'%}</li>
+          <li><span class="glyphicon glyphicon-list-alt"></span> {%$message.cat|linenav:$categories:'cat'%}</li>
+            {%*//upd1701080*%}
+            {%if $message.shop%}
+                <li><span class="glyphicon glyphicon-shopping-cart"></span> <a data-toggle="tooltip" title="" data-original-title="{%$locale.1104%} {%$message.shop.name%}" href="{%$settings.path%}shops/{%$message.shop.link%}">{%$message.shop.name%}</a></li>
+            {%/if%}       
+       
+       </ul>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+ 
+{%assign var='counter' value=`$counter+1`%}
+
+{%if $counter == $settings.middle_block%}
+	{%assign var='counter' value=0%}
+	{%assign var='rand' value="0"|mt_rand:$count%}
+	{%$blocks.m.$rand%}
+{%/if%}
+
+{%/foreach%}
+
+
+
+{%if $pages != ""%}
+    {%assign var='plim' value=10%}{%* Количество номеров страниц, которые будут выводиться за раз *%}
+    {%if $smarty.get.page < 1%}{%assign var='page' value=1%}{%else%}{%assign var='page' value=$smarty.get.page%}{%/if%}
+    {%if $smarty.get.page > $pages%}{%assign var='page' value=$pages%}{%/if%}
+    {%math equation="(ceil(p/l))*l" p=$page l=$plim assign='lastp'%}
+       {%if $lastp > $pages%}{%assign var='lastp' value=$pages%}{%/if%}
+       {%if $page <= $plim || $pages <= $plim%}{%assign var='firstp' value=0%}
+       {%else%}{%assign var='firstp' value=$lastp-$plim%}
+        {%/if%}
+       
+         <ul class="pagination">
+        {%if $page <= $plim%}{%else%}  
+         <li><a href="page1.html{%$get_str%}" title=""> 1 </a></li>
+         <li><a href="page{%$page-$plim%}.html{%$get_str%}" title=""> &laquo; </a></li>
+       {%/if%}
+       {%section name=page loop=$pages start=$firstp max=$plim%}
+          {%assign var="p" value=$smarty.section.page.index+1%}
+          <li {%if $page == $p%}class="active"{%/if%}><a href="page{%$p%}.html{%$get_str%}">{%$p%}</a></li>
+       {%/section%}
+       {%if $page <= $pages-$plim+1%} 
+         <li><a href="page{%$page+$plim%}.html{%$get_str%}" title=""> &raquo; </a></li>
+         <li><a href="page{%$pages%}.html{%$get_str%}" title=""> {%$pages%}</a> </li>
+       {%/if%}
+       </ul>
+       
+{%/if%}
+</div>

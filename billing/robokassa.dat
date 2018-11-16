@@ -1,0 +1,97 @@
+RoboKassa
+//separator//
+744
+//separator//
+https://www.robokassa.ru/
+//separator//
+rur/WMRM|usd/WMZM
+//separator//
+
+<br /><br />
+<div align="center">
+<form action='{%if $abilling.key4 != ""%}{%$abilling.key4%}{%else%}https://merchant.roboxchange.com/Index.aspx{%/if%}' method=GET target='_blank'>
+<input type=hidden name=MrchLogin value={%$abilling.key1%}>
+<input type=hidden name=OutSum value={%$pay.amount%}>
+<input type=hidden name=InvId value={%$pay.order%}>
+<input type=hidden name=Desc value='{%$pay.comment%}'>
+<input type=hidden name=SignatureValue value={%"`$abilling.key1`:`$pay.amount`:`$pay.order`:`$abilling.key2`"|md5%}>
+<input type=hidden name=Culture value={%$settings.locale|substr:0:2%}>
+<input type=submit value='{%$locale.748%}'></form>
+</div>
+<!--//<html><script language=JavaScript
+src='https://merchant.roboxchange.com/Handler/MrchSumPreview.ashx?MrchLogin={%$abilling.key1%}&OutSum={%$pay.amount%}&InvId={%$pay.order%}&IncCurrLabel={%$pay.currency%}&Desc={%$pay.comment%}&SignatureValue={%"`$abilling.key1`:`$pay.amount`:`$pay.order`:`$abilling.key2`"|md5%}&Culture={%$settings.locale|substr:0:2%}&Encoding={%$locale.charset%}'></script></html>//-->
+
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'Robokassa login',
+				'help' => '745',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Password #1',
+				'help' => '746',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key3',
+				'name' => 'Password #2',
+				'help' => '747',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key4',
+				'name' => 'Server',
+				'help' => 'Укажите адрес сервера, тестовый http://test.robokassa.ru/Index.aspx или рабочий https://auth.robokassa.ru/Merchant/Index.aspx',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+// регистрационная информация (пароль #2)
+// registration info (password #2)
+$mrh_pass2 = $abilling['key3'];
+
+// чтение параметров
+// read parameters
+$out_summ = $_REQUEST["OutSum"];
+$inv_id = $_REQUEST["InvId"];
+$crc = $_REQUEST["SignatureValue"];
+
+$crc = strtoupper($crc);
+
+$my_crc = strtoupper(md5("$out_summ:$inv_id:$mrh_pass2"));
+
+// проверка корректности подписи
+// check signature
+if($my_crc == "")
+	{
+	echo "no sign\n";
+	exit();
+	}
+if ($my_crc != $crc)
+	{
+	echo "bad sign\n";
+	exit();
+	}
+
+// признак успешно проведенной операции
+// success
+
+
+if(make_order($inv_id, 'by robokassa, id '.$inv_id))
+	{
+	echo "OK$inv_id\n";
+	exit();
+	}
+else
+	{
+	echo "FAIL\n";
+	exit();
+	}
+
+

@@ -1,0 +1,11 @@
+{%foreach from=$el item=el%}
+    <li>
+        {%assign var="uri2" value=$uri%}
+        <a href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a>
+        {%if $el.cat%}
+            {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+            <ul class="list-unstyled list-inline list-region">{%include file="region_recursive.html" el=$el.cat%}</ul>
+        {%/if%}
+        {%assign var="uri" value=$uri2%}
+    </li>
+{%/foreach%}

@@ -1,0 +1,42 @@
+{%if $settings.login_error2 == 'true'%}
+<div class='alert alert-danger col-lg-12 center'>
+<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+{%$locale.47%}
+</div>
+{%/if%}  
+                  
+<!--Начало формы авторизации на сайте --->
+ <div class="row users-login">
+  <div class="{%if $settings.ulogin == 1%}col-md-6 {%else%} col-md-offset-3 col-md-6 col-sm-12 {%/if%}">
+  <h4>{%$locale.23%}</h4>
+  <form role="form" name='form' action='?' method='post'>
+      <div class="form-group input-group">
+        <span class='input-group-addon'>@</span>
+        <input class="form-control" name="email_login2" type="text" placeholder="{%$locale.26%}"/>
+      </div>
+      <div class="form-group input-group">
+        <span class='input-group-addon'><span class="glyphicon glyphicon-lock"></span></span>
+        <input class="form-control" name="password_login2" type="password" placeholder="{%$locale.30%}"/>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-md-6">
+          <div class="form-group">
+             <a class="pull-left" href="{%$settings.patch%}users/password_recovery/">{%$locale.519%}?</a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-md-6">
+            <div class="form-group">
+                <input class="btn btn-warning pull-right" type="submit" name="submit_login2" value='{%$locale.23%}'/>
+            </div>
+        </div>
+      </div>
+  </form>
+  </div>
+  {%if $settings.ulogin == 1%}
+  <div class="col-md-6">
+  <h4>{%$locale.977%}</h4>
+    <div id="uLogin2" data-ulogin="display=panel;fields=first_name,last_name,email;verify=1;providers=vkontakte,facebook,odnoklassniki,twitter,mailru,googleplus,yandex,webmoney,google;redirect_uri={%$settings.http%}%3A%2F%2F{%$smarty.server.HTTP_HOST%}{%$smarty.const.PATH%}users/?ulogin"></div>
+   </div>
+  {%/if%}
+ </div>
+  <!--//Начало формы авторизации на сайте --->

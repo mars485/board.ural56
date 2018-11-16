@@ -1,0 +1,34 @@
+  <link rel="stylesheet"  href="/massagesfoto/lightGallery.css"/>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/massagesfoto/lightGallery.js"></script>
+    <script>
+    	 $(document).ready(function() {
+			$("#lightGallery").lightGallery();
+		});
+    </script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	{%if $message.fields.i|@count > 0%}
+
+<div id="lightGallery" class="gallery">
+    	
+  <div style="" data-src="{%$settings.patch%}uploads/images/tb/{%$image.value%}"> 
+zsczsc
+</div>					
+				{%foreach  from=$message.fields.i item='image' key='key'%}			
+        <div style="display: none;" data-src="{%$settings.patch%}uploads/images/tb/{%$image.value%}"> 
+            <img style="display: none;" src="{%$settings.patch%}uploads/images/ts/{%$image.value%}" />
+        </div>
+		{%/foreach%}
+               
+</div>	
+
+	{%/if%}

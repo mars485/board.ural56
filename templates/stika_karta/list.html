@@ -1,0 +1,437 @@
+{%include file='list_karta.html'%}
+
+{%if $count_cat_messages == 0 && isset($count_cat_messages)%}
+
+
+              <div id="control" style="background: #D25E5E;">{%$locale.1263%}</div>
+
+{%/if%}
+
+
+
+
+
+
+
+
+
+{%if $smarty.get.cat.0 == 'search'%}
+{%if $messages|@count == "NULL"%}<div id="search_counter_no">По вашему запросу объявлений не найдено!<br/><p style="font-size: 18px;">Попробуйте изменить условия поиска.</p></div>{%else%}<div id="search_counter">{%$messages_counter%}</div>{%/if%}
+{%/if%}
+
+{%if $messages|@count > 0 && !$smarty.get.cat.0 == ''%}
+<div id="vid_k">
+<div id="vid_s"><a href="{%$settings.path%}change_template/?template=stika"><i class="fa fa-bars"></i> Список</a></div>
+<div id="vid_ka"><span><i class="fa fa-map-marker"></i> Карта</span></div>
+</div>
+{%/if%}
+
+
+
+
+<div style="width: 940px; display: table;">
+<div id="ob_left">
+
+
+
+
+{%if $smarty.get.cat.0 == 'users'%}
+    <style>
+    .MessagesCheck{
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+  
+    </style>
+
+    <input class="btn btn-default" id="MessagesAction" type="button" value="{%if $smarty.get.cat.1 != 'deleted'%}{%$locale.983%}{%else%}{%$locale.984%}{%/if%}" />
+    <input class="btn btn-default" id="MessagesSelect" type="button" value="{%$locale.985%}" />
+    <br/><br/><br/>
+{%/if%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%assign var='after_registration' value="<a href='`$settings.patch`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+{%assign var='count' value=$blocks.m|@count %}
+{%assign var='count' value=`$count-1`%}
+{%if $count < 0%}{%assign var='count' value=0%}{%/if%}
+{%assign var='counter' value=0%}
+{%foreach from=$messages item='message' name='i'%}
+
+
+
+{%if $message.marked == 1%}
+  {%assign var='mark' value=' marked'%}
+{%else%}
+  {%assign var='mark' value=''%}
+{%/if%}
+
+
+
+
+
+{%if $smarty.get.cat.0 == 'users'%}
+        <a class="users_edit" href="{%$settings.patch%}edit/{%$message.id%}">{%$locale.200%}</a>
+<div style="margin-left: 28px; float: left; padding-top: 8px;">
+          <input style="display: none;" class="MessagesCheck" id="{%$message.id%}" type="checkbox" name="{%$message.id%}" value="{%$message.id%}"><label for="{%$message.id%}">Выделить</label>
+        </div>
+
+{%/if%}
+
+<div class='message{%$mark%}' id='message_{%$message.id%}'>
+
+
+ 
+
+
+
+
+<div id="body_list_kar">
+<div id="zvezda_kar">
+<a class='fav' id='fav-{%$message.id%}' name='{%$message.id%}' href=''>{%if $message.fav == 1%}<img style="width: 20px;" src="{%$settings.path%}templates/stika/images/zvezda.png">{%else%}<img style="width: 20px;" src="{%$settings.path%}templates/stika/images/zvezda_active.png">{%/if%}</a>
+</div>
+<div id="h1_kar">
+
+<a href="{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+{%if $message.cat == 476 ||  $message.cat == 477 ||  $message.cat == 478 ||  $message.cat == 479%}
+
+
+{%assign var='fieldname' value='Количество комнат' %}
+{%foreach  from=$message item='v'%}
+{%if $v.name == $fieldname%}
+{%assign var='field' value=$v%}
+{%/if%}
+{%/foreach%}
+{%if $field.value%} {%$field.value%}-к квартира{%/if%}
+{%assign var='field' value=''%}
+   
+   
+   
+   
+{%else%}
+
+
+{%assign var='fieldname' value='Состояние' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+
+{%if $field.value%}
+
+
+
+
+{%$categories[$message.cat].name%}
+
+
+{%assign var='fieldname' value='Модель' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+{%if $field.value !== "Другая"%}{%$field.value%}{%/if%}
+{%if $message.f_201.value%}, {%$message.f_201.value%} г.{%/if%}
+
+
+ {%else%}{%$message.title|truncate:85:'...'%}{%/if%}
+   {%assign var='field' value=''%}
+
+
+{%/if%}
+
+
+
+
+
+
+{%if $message.cat == 479 ||  $message.cat == 480 ||  $message.cat == 481 ||  $message.cat == 482 ||  $message.cat == 483 ||  $message.cat == 484 ||  $message.cat == 485  ||  $message.cat == 486  ||  $message.cat == 487
+||  $message.cat == 488 ||  $message.cat == 489  ||  $message.cat == 490 ||  $message.cat == 491  ||  $message.cat == 492  ||  $message.cat == 493 ||  $message.cat == 494  ||  $message.cat == 495
+||  $message.cat == 496 ||  $message.cat == 497  ||  $message.cat == 498 ||  $message.cat == 499%}
+{%else%}
+
+<!--Услолвие для Недвижимости-->
+
+{%assign var='fieldname' value='Площадь, м²' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+<!--КОНЕЦ Услолвие для Недвижимости-->
+{%if $field.value%} {%$field.value%} м² {%/if%}
+   {%assign var='field' value=''%}
+   
+   
+   
+ {%assign var='fieldname' value='Этаж' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+
+{%if $field.value%} {%$field.value%} эт. {%/if%}
+   {%assign var='field' value=''%}
+{%/if%}
+
+
+
+
+
+</a>
+
+
+
+
+
+
+</div>
+  
+<!--Цена-->
+<div id="body_cena_kar">
+    <div id="cenabod"><div id="cena_hover">
+   {%if $message.fields.p == NULL%}
+       {%$locale.1206%}
+   {%else%}
+   {%foreach  from=$message.fields.p item='v'%}
+			
+					
+{%if $settings.user || (!$settings.user && $v.hide == 0)%}
+ 
+
+{%$v.value.txt|droblenie%} {%$locale.1207%}
+
+{%assign var='fieldname' value='Срок аренды' %}
+
+{%foreach  from=$message item='v'%}
+    {%if $v.name == $fieldname%}
+        {%assign var='field' value=$v%}
+    {%/if%}
+{%/foreach%}
+
+
+{%if $field.value == "Час"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1201%}</span>
+
+   {%/if%}
+   
+{%if $field.value == "Месяц"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1202%}</span>
+
+   {%/if%}
+   
+{%if $field.value == "Сутки"%}
+<span style="color: rgb(39, 150, 39)">{%$locale.1203%}</span>
+
+   {%/if%}
+
+{%if $field.value == "На длительный срок"%}
+
+   {%/if%}
+   
+   {%assign var='field' value=''%}
+{%else%}
+								{%$after_registration%}
+							{%/if%}
+					 
+{%/foreach%}
+			{%/if%}
+</div>
+<div id="torg"> {%if $message.f_482|@count > 1%}{%foreach from=$message.f_482.value item='val' name='key' %}
+  +{%$val.name%}{%if $smarty.foreach.key.last eq false %}, {%/if%}
+  {%/foreach%}{%/if%}</div>
+
+
+</div>
+ 
+    
+</div>
+
+            
+    <div id="regas_kar">  
+{%assign var='last_region' value=$message.array_regions|@count%}
+{%assign var='last_region' value=`$last_region-1`%}
+{%assign var='last_region' value=$message.array_regions[$last_region]%}
+
+{%$last_region.name%} | {%$message.cat|linenav:$categories:'cat'%}
+  </div>
+  <div id="data_list_kar"> {%$message.date_add|userdate%}</div>
+</div>
+
+          
+</div>
+
+{%assign var='counter' value=`$counter+1`%}
+
+{%if $counter == $settings.middle_block%}
+  {%assign var='counter' value=0%}
+  {%assign var='rand' value="0"|mt_rand:$count%}
+  {%$blocks.m.$rand%}
+
+{%/if%}
+
+{%/foreach%}
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+{%if $messages|@count > 0 && !$smarty.get.cat.0 == ''%}
+
+<!--Условие, если нет адреса ни в одном объявлении, то сменить карту на блок с предупреждением-->
+{%foreach from=$messages item='message' key='k' name='i'%}
+		{%assign var='fieldname' value='Адрес' %}
+			{%assign var='foo' value=false %}
+			{%foreach  from=$message item='v'%}
+				{%if $v.name == $fieldname%}
+					{%assign var='field' value=$v%}
+				{%/if%}
+				    {% if $field.value!="" %}
+        {%assign var='foo' value=true %}
+    {%/if%}
+			{%/foreach%}
+			{%/foreach%}
+{% if !$foo %}
+  <!--Блок с предупреждением, о том, что нет объявлений нап карте-->
+    <div id="no_karta">{%$locale.1264%} "<a href="{%$settings.path%}change_template/?template=stika">{%$locale.1265%}</a>"</div>
+   {%else%}
+  <!--Блок с картой-->
+    <div id="bmapping" style="overflow: hidden;width:560px;  height:560px; "></div>
+{%/if%}
+{%assign var='field' value=''%}
+<!--Конец условию, если нет адреса ни в одном объявлении, то сменить карту на блок с предупреждением-->
+
+{%/if%}
+</div>
+
+
+
+
+
+
+
+<!--Постраничная навигация-->
+{%if $pages != ""%}
+
+  <div id="control">{%$messages_counter%}</div>
+    {%/if%}
+{%if $pages != "" && $pages > 1%}
+
+{%if $pages != ""%}
+{%assign var='plim' value=10%}{%* Количество номеров страниц, которые будут выводиться за раз *%}
+{%if $smarty.get.page < 1%}{%assign var='page' value=1%}{%else%}{%assign var='page' value=$smarty.get.page%}{%/if%}
+{%if $smarty.get.page > $pages%}{%assign var='page' value=$pages%}{%/if%}
+{%math equation="(ceil(p/l))*l" p=$page l=$plim assign='lastp'%}
+   {%if $lastp > $pages%}{%assign var='lastp' value=$pages%}{%/if%}
+   {%if $page <= $plim || $pages <= $plim%}{%assign var='firstp' value=0%}
+   {%else%}{%assign var='firstp' value=$lastp-$plim%}
+    {%/if%}
+
+  
+
+   <div class="pagination">
+
+  
+   
+
+   
+   <div id="cenpag" style="float: left;">
+   <ul>
+   {%if $page > 1%}
+      <li id="lll"><a href="page{%$page-1%}.html{%$get_str%}" title="{%$locale.1204%}">{%$locale.1204%}</a></li>
+   {%/if%}
+   {%section name=page loop=$pages start=$firstp max=$plim%}
+      {%assign var="p" value=$smarty.section.page.index+1%}
+      <li id="lif"><a href="page{%$p%}.html{%$get_str%}" {%if $page == $p%}class="selected_page"{%/if%}>{%$p%}</a></li>
+   {%/section%}
+    {%if $page < $pages%}
+      <li id="lll"><a href="page{%$page+1%}.html{%$get_str%}" title="{%$locale.1205%}">{%$locale.1205%}</a></li>
+    
+   {%/if%}
+   </ul>
+   </div>
+   
+   
+   
+
+    </div>
+
+
+  
+  
+{%/if%}
+
+{%/if%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+$('.message').click(function(){
+    $('.message').removeClass('actives'); // снимаем со всех выделение
+    $(this).addClass('actives'); // выделяем кликнутый
+});
+
+
+
+
+</script>
+
+
+
+
+
+

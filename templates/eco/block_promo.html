@@ -1,0 +1,188 @@
+{%if $settings.rand_block == ""%}
+	{%assign var='rand_block' value='1'%}
+{%else%}
+	{%assign var='rand_block' value=$settings.rand_block%}
+{%/if%}
+{%if $promo_messages|@count < $settings.rand_block %}
+	{%assign var='rand_block' value=$promo_messages|@count%}
+{%/if%}
+
+{%if !(isset($block_index))%}
+    {%assign var='block_index' value=0%}
+{%/if%}
+    
+{%if $place == 'l' or $place == 'r' or $place == 't' or $place == 'b' or $place == 'h' or $place == 'f'%}
+
+    {%if $place == 'l'%}
+            <h5 class="list-title"><strong>{%$name%}</strong>
+                <a id="" class="link nextItem pull-right carousel-nav"> <i class="icon-right-open-big"></i></a>
+                <a id="" class="link prevItem pull-right carousel-nav"> <i class="icon-left-open-big"></i></a>
+            </h5>
+    {%/if%}
+    <div class="inner-box relative block_promo_{%$place%}">
+        {%if $place != 'l' %}
+            <h2 class="title-2">{%$name%}
+                <a id="" class="link nextItem pull-right carousel-nav"> <i class="icon-right-open-big"></i></a>
+                <a id="" class="link prevItem pull-right carousel-nav"> <i class="icon-left-open-big"></i></a>
+            </h2>
+        {%/if%}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="no-margin item-carousel owl-carousel owl-theme">        
+                {%section name='loop' loop=$rand_block%}
+                    {%assign var='message' value=`$promo_messages[$block_index]`%}
+                    {%assign var='block_index' value=$block_index+1%}
+                    {%if $block_index >= count($promo_messages)%}
+                        {%assign var='block_index' value=0%}
+                    {%/if%}
+                    <div class="item">
+                        <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                             <span class="item-carousel-thumb"> 
+                                 {%if $message.fields.i.0.value != ""%}
+                                	<img class="img-responsive" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="img">
+                                 {%else%}
+                                    <img class="thumbnail no-margin" src="{%$smarty.const.THEME%}images/noimage.png" alt="img">
+                                 {%/if%}
+                             </span>
+                            <span class="item-name"> {%$message.title%}  </span>
+                            {%if $message.fields.p.0%}
+                                <span class="price">  
+                                    {%if $rates_default.charcode == 'rur'%}
+                                        <i class="fa fa-rub" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                                    {%elseif $rates_default.charcode == 'usd'%}
+                                        <i class="fa fa-usd" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                                    {%elseif $rates_default.charcode == 'eur'%}
+                                        <i class="fa fa-eur" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                                    {%else%}
+                                        {%$message.fields.p.0.value.txt%}
+                                    {%/if%}
+                                </span>
+                            {%/if%}
+                        </a>
+                    </div>
+                {%/section%}
+                </div>
+            </div>
+        </div>
+    </div>
+{%/if%}
+
+
+
+
+
+
+
+
+{%if $place == 'm'%}
+
+    {%assign var='message' value=`$promo_messages[$block_index]`%}
+    {%assign var='block_index' value=$block_index+1%}
+    {%if $block_index >= count($promo_messages)%}
+        {%assign var='block_index' value=0%}
+    {%/if%}
+    
+    
+    
+    <div class="item-list{%if $message.marked == 1%} marked{%/if%}{%if $message.shop%} shop{%/if%}">
+        {%if $message.marked == 1%}
+            <div class="cornerRibbons AdsMarked">
+                <a href="#"> {%$locale.1197%}!</a>
+            </div>
+        {%elseif $message.raised == 1%}
+            <div class="cornerRibbons AdsRaised">
+                <a href="#"> TOP</a>
+            </div>
+        {%elseif $message.block == 1%}
+            <div class="cornerRibbons AdsBlock">
+                <a href="#"> VIP</a>
+            </div>
+        {%/if%}
+
+        <div class="col-sm-2 no-padding photobox">
+            {%if $message.fields.i.0.value != ""%}
+                <div class="add-image">
+                        <span class="photo-count"><i class="fa fa-camera"></i> {%$message.fields.i|@count%} </span> 
+                        <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                            <img class="thumbnail no-margin" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="img">
+                        </a>
+                </div>
+            {%else%}
+            <div class="add-image">
+            <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+                <img class="thumbnail no-margin" src="{%$smarty.const.THEME%}images/noimage.png" alt="img">
+            </a>
+            </div>
+            {%/if%}
+        </div>
+        
+        <!--/.photobox-->
+        <div class="col-sm-7 add-desc-box">
+            <div class="add-details">
+                <h5 class="add-title"><a href='{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>{%$message.title|truncate_utf:300:'...'%}</a></h5>
+                <span class="info-row">
+                    {%if $message.shop%}
+                    <span class="add-type business-ads tooltipHere" data-toggle="tooltip"
+                                                  data-placement="right" title="{%$locale.1104%}: {%$message.shop.name%}">M </span> 
+                    {%/if%}
+                    <span class="date">
+                        <i class=" icon-clock"></i>&nbsp;{%$message.date_add|userdate%} 
+                    </span>
+                    -
+                    <span class="item-location">
+                        <i class="fa fa-map-marker"></i>&nbsp;{%$allregions[$message.region].name%}
+                    </span> 
+                    
+                    <span class="category">- {%$categories[$message.cat].name%}</span>     
+                </span>
+            </div>
+        </div>
+        <!--/.add-desc-box-->
+        <div class="col-sm-3 text-right  price-box">
+            {%if $message.fields.p.0%}
+            <h2 class="item-price">
+                {%if $rates_default.charcode == 'rur'%}
+                    <i class="fa fa-rub" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                {%elseif $rates_default.charcode == 'usd'%}
+                    <i class="fa fa-usd" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                {%elseif $rates_default.charcode == 'eur'%}
+                    <i class="fa fa-eur" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                {%else%}
+                    {%$message.fields.p.0.value.txt%}
+                {%/if%}
+            </h2>
+            {%/if%}
+            
+            {%if $message.marked == 1%}
+                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                    <span>{%$locale.1197%}</span>
+                </a>
+            {%elseif $message.raised == 1%}
+                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                    <span>TOP</span> 
+                </a> 
+            {%elseif $message.block == 1%}
+                <a class="btn btn-danger  btn-sm make-favorite"> <i class="fa fa-certificate"></i> 
+                    <span>VIP</span>
+                </a>
+            {%/if%}
+
+            
+
+            
+            
+            
+            <a class="btn btn-default  btn-sm make-favorite"> 
+                <i class="fa fa-heart"></i> <span>Save</span> </a>
+            </div>
+        <!--/.add-desc-box-->
+    </div>
+    <!--/.item-list-->
+
+{%/if%}
+
+        
+
+
+

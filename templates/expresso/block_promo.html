@@ -1,0 +1,140 @@
+{%* верхнее обрамление левых-правых блоков при включённой опции "автопрокрутка блоков"*%}
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+ <h4><span class="glyphicon glyphicon-stop"></span> {%$locale.579%}</h4>
+ <div class="csw">
+	<div class="panelContainer item-carousel">  
+{%/if%}
+
+{%if $settings.message_block_type == 1 && ($place == 'l' or $place == 'r')%}
+ <h4><span class="glyphicon glyphicon-stop"></span> {%$locale.579%}</h4>
+<div class="panel panel-default">
+{%/if%}
+
+
+{%*считаем количество объявлений выводимых за раз*%}
+{%if $settings.rand_block == ""%}
+	{%assign var='rand_block' value='1'%}
+{%else%}
+	{%assign var='rand_block' value=$settings.rand_block%}
+{%/if%}
+{%if $promo_messages|@count < $settings.rand_block %}
+	{%assign var='rand_block' value=$promo_messages|@count%}
+{%/if%}
+
+
+
+
+{%*собственно вывод объявлений в зависимости от их расположения*%}
+{%section name='loop' loop=$rand_block%}
+	{%assign var='message' value=`$promo_messages[$smarty.section.loop.index]`%}
+
+    {%if $place == 'm'%}
+    <!--//среди объявлений -> //-->
+    
+     <div class="panel panel-default" >
+       <a title="{%$locale.978%}" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+          <div class="panel-body border-m" style="padding-top: 25px!important;">
+              <div class="col-lg-2 col-md-2 col-sm-2">
+               {%if $message.fields.i.0.value != ""%}  
+                <img class="img img-thumbnail img-responsive" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}"/>
+               {%/if%}
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-10">
+              <h4>{%$message.title%}<span class="label label-warning pull-right" style="position: absolute; top: -25px; right: -15px; border-radius: 0!important;">{%$locale.579%}</span></h4>
+              <p>{%$message.text|strip_tags|truncate:500:'...'%}</p>
+              </div>
+          </div>
+       </a>
+     </div>
+    
+    <!--// <- среди объявлений//-->
+    {%/if%}
+    
+    <!--// растяжка сверху-снизу//-->
+    {%if $place == 'h' or $place == 'f'%}
+    <div class="col-lg-6 block_f">
+      <div class="panel panel-default">
+       <a data-toggle="tooltip" title="{%$locale.978%}" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+          <div class="panel-body">
+              <div class="col-lg-2 col-md-2 col-sm-2">
+               {%if $message.fields.i.0.value != ""%}  
+                <img class="img img-thumbnail img-responsive" src="{%$settings.path%}uploads/images/ts/{%$message.fields.i.0.value%}" alt="{%$message.title%}"/>
+               {%/if%}
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-10">
+              <h4>{%$message.title%}</h4>
+              <p>{%$message.text|strip_tags|truncate:200:'...'%}</p>
+              <p class="pull-right">{%$locale.216%} &rarr;</p>
+              </div>
+          </div>
+       </a>
+     </div>
+    </div>
+    {%/if%}
+    <!--// <- растяжка сверху-снизу//-->
+    
+    <!--// над и под сообщениями//-->
+    {%if $place == 't' or $place == 'b'%}
+    <div class="col-lg-6 block_f">
+      <div class="panel panel-default">
+       <a data-toggle="tooltip" title="{%$locale.978%}" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">
+          <div class="panel-body">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+              <h4>{%$message.title%}</h4>
+              <p>{%$message.text|strip_tags|truncate:200:'...'%}</p>
+              <p class="pull-right">{%$locale.216%} &rarr;</p>
+              </div>
+          </div>
+       </a>
+     </div>
+    </div>
+    {%/if%}
+    <!--// <- над и под сообщениями//-->
+    
+    
+    
+    {%if $place == 'l' or $place == 'r'%}
+        {%if $settings.message_block_type == 1%}
+         <div class="panel-body"> 
+        {%/if%}
+        <!--//блоки слева-справа -> //-->    
+        {%if $settings.message_block_type == 2%}
+         <div class="panel owl-item">
+          <div style="padding: 10px;">
+        {%/if%}
+        
+          {%if $message.fields.i.0.value != ""%}  
+           <div class="thumbnail">
+            <img class="img-responsive" src="{%$settings.patch%}uploads/images/tb/{%$message.fields.i.0.value%}"  alt="{%$message.title%}" />
+           </div>
+          {%/if%} 
+        
+           <div class="caption">
+             <h4 data-toggle="tooltip" title="{%$message.title%}">{%$message.title|truncate_utf:20:'...'%}</h4>
+             <p>{%$message.text|strip_tags|truncate_utf:150:'...'%}</p>
+             <p><a {%if $settings.message_block_type == 2%} style='margin-bottom: 10px'{%/if%} class="btn btn-warning pull-right" href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$message.link%}">{%$locale.216%} &rarr;</a></p>
+           </div>
+        
+        
+        {%if $settings.message_block_type == 2%}
+          </div>
+         </div>
+        {%/if%}
+        {%if $settings.message_block_type == 1%}
+        </div>
+        {%/if%}
+        <!--// <- блоки слева-справа//-->
+        {%/if%}
+{%/section%}
+
+{%if $settings.message_block_type == 1 && ($place == 'l' or $place == 'r')%}
+</div>
+{%/if%}
+
+
+{%* нижнее обрамление левых-правых блоков при включённой опции "автопрокрутка блоков"*%}
+{%if $settings.message_block_type == 2 && ($place == 'l' or $place == 'r')%}
+	</div>
+</div>
+<div style="margin-bottom: 15px;">&nbsp;</div>
+{%/if%}

@@ -1,0 +1,26 @@
+<table width='100%' align='center' border='0'>
+	<tr class='state_list_head'>
+		<td width='15%'>{%$locale.189%}</td>
+		<td width='20%'>{%$locale.190%}</td>
+		<td width='15%'>{%$locale.191%}</td>
+		<td width='15%'>{%$locale.197%}</td>
+		<td width='35%'>{%$locale.192%}</td>
+	</tr>
+{%foreach from=$state item='serv'%}
+	<tr style="height: 10px;"><td></td><td></td></tr>
+	<tr class="state_list_{%$serv.type%}">
+		<td>{%$serv.time|date_format:"%d.%m.%Y %H:%M"%}</td>
+		<td>
+		{%if $serv.type == 'i' %}{%$locale.193%}
+		{%elseif $serv.type == 'p' %}{%$locale.194%}
+		{%elseif $serv.type == 'o' %}{%$locale.195%}
+		{%elseif $serv.type == 'm' %}{%$locale.196%}
+		{%elseif $serv.type == 'e' %}ERROR!
+		{%/if%}
+		</td>
+		<td>{%$serv.pay%}</td>
+		<td>{%$serv.rest%}</td>
+		<td>{%$serv.comments%}</td>
+	</tr>
+{%/foreach%}
+</table>

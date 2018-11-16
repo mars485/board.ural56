@@ -1,0 +1,78 @@
+.carousel  {
+width: 100%;
+   
+ 
+}
+.carousel-wrapper {
+   overflow: hidden; /* скрываем содержимое, выходящее за рамки основной области */
+   position:relative;
+}
+.carousel-items {
+   width: 1000%; /* устанавливаем большую ширину для набора элементов */
+   position: relative; /* позиционируем блок относительно основной области карусели */
+}
+.carousel-block {
+width: 1.9%;
+margin-right: 0.122%;
+float: left;
+}
+.carousel-block img{
+	display:block;
+}
+
+/*********** BUTTONS ***********/
+.carousel-button-left a, .carousel-button-right a {
+   width: 20px; 
+   height: 34px; 
+   position: relative;
+   top: 130px; 
+   cursor: pointer; 
+   text-decoration:none;
+}
+
+/*********** SHADOW ***********/
+.shadow{
+margin: auto;
+margin-bottom: 15px;
+height: 242px;
+width: 100%;
+max-width: 1400px;
+}
+
+#fotblok {
+overflow: hidden;
+width: 100%;
+height: 150px;
+border-bottom: 1px solid #E1E1E1;
+}
+
+.search_box {
+width: 365px;
+float: left;
+}
+
+.carousel-button-right a {
+  position: absolute;
+  right: 0;
+  z-index: 888;
+  background: url(carousel-right.png);
+  border-bottom: 1px solid #006A92;
+  border-left: 1px solid #006A92;
+  border-top: 1px solid #006A92;
+  top: 44%;
+  border-radius: 5px 0 0 5px;
+  background-color: #eee;
+}
+.carousel-button-left a {
+
+background: url(carousel-left.png);
+position: absolute;
+z-index: 888;
+left: 0;
+border-bottom: 1px solid #006A92;
+border-right: 1px solid #006A92;
+border-top: 1px solid #006A92;
+top: 44%;
+background-color: #eee;
+  border-radius: 0 5px  5px 0 ;
+}

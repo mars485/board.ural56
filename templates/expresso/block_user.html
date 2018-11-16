@@ -1,0 +1,7 @@
+
+{%if $settings.user%}
+	<b><span class="glyphicon glyphicon-user"></span> {%$settings.user.name%}</b> <a href="{%$settings.patch%}users/"><i class="icon-cog" valign="middle"></i></a><br/> {%$locale.19%} {%$user_counter%}<br/>
+	<a class="btn btn-warning" href="{%$settings.patch%}users/exit/"><span class="glyphicon glyphicon-log-out"></span> {%$locale.42%} </a> 
+{%else%}
+    <a class="btn btn-warning" href="{%$settings.patch%}users/"> <span class="glyphicon glyphicon-log-in"></span> {%$locale.951%} </a>	
+{%/if%}

@@ -1,0 +1,317 @@
+    
+    {%$blocks.f%}
+
+
+    <div class="footer">
+        <div class="row">
+            <div class="col-sm-3">
+                <h5 class="list-title"><i class="fa fa-home" aria-hidden="true"></i> Доска объявлений</h5>
+                <ul>
+                    <li><a href="{%$settings.path%}add/">{%$locale.264%}</a></li>
+                    <li><a href="{%$settings.path%}users/">{%$locale.41%}</a></li>
+                    <li><a href="{%$settings.path%}mail/">{%$locale.266%}</a></li>
+                    <li><a href="{%$settings.path%}notepad/">{%$locale.244%}</a></li>
+                    {%if $settings.shop == 1%}
+                        <li><a href="{%$settings.path%}shops/">{%$locale.1103%}</a></li>
+                    {%/if%}
+                    <li><a href="{%$settings.path%}articles/">{%$locale.976%}</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h5 class="list-title"><i class="fa fa-user" aria-hidden="true"></i> {%$locale.41%}</h5>
+                <ul>
+                    <li><a href="{%$settings.path%}users/">{%$locale.265%}</a></li>
+                    <li><a href="{%$settings.path%}users/moderated/">{%$locale.979%}</a></li>
+                    <li><a href="{%$settings.path%}users/update/">{%$locale.1098%}</a></li>
+                    <li><a href="{%$settings.path%}users/order/">{%$locale.65%}</a></li>
+                    <li><a href="{%$settings.path%}users/pay/">{%$locale.64%}</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3">
+                <h5 class="list-title"><i class="fa fa-files-o" aria-hidden="true"></i> {%$locale.920%}</h5>
+                <ul class="list-unstyled long-list">
+                    {%foreach from=$categories item='cat'%}
+                        {%if $cat.parent == 0%}
+                            <li><a href="{%$settings.path%}{%$cat.uri%}/">{%$cat.name%}</a></li>
+                        {%/if%}
+                    {%/foreach%}
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h5 class="list-title"><i class="fa fa-map-marker" aria-hidden="true"></i> {%$locale.1278%}</h5>
+                <ul class="list-unstyled long-list">
+                    {%foreach from=$allregions item='cat'%}
+                        {%if $cat.parent == 0%}
+                            <li><a href="{%$settings.path%}{%$cat.uri%}/">{%$cat.name%}</a></li>
+                        {%/if%}
+                    {%/foreach%}
+                </ul>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="pull-left"> &copy; {%'Y'|date%} <a href="{%$settings.path%}">{%$smarty.const.TITLE%}</a></div>
+            <div class="pull-right"> &copy; 2010 <a href="https://illusionweb.org">Скрипт доски объявлений Elite-Board</a></div>
+        </div>
+    </div>
+    <!-- /.footer -->
+</div>
+
+<div class="menu-overly-mask"></div>
+
+<!-- Modal Change Region -->
+{%* Диалог выбора региона *%}
+
+{%assign var='region_name' value=$regions|@count%}
+{%assign var='region_name' value=$region_name-1%}
+{%assign var='region_name' value=$second_region.name[$region_name]%}
+{%if isset($allregions[$second_region.id].parent) %}
+    {%assign var='parent_region_id' value=$allregions[$second_region.id].parent%}
+{%else%}
+    {%assign var='parent_region_id' value=0%}
+{%/if%}
+{%if isset($allregions[$parent_region_id].parent) %}
+    {%assign var='back_region_id' value=$allregions[$parent_region_id].parent%}
+{%else%}
+    {%assign var='back_region_id' value=0%}
+{%/if%}
+
+<script>
+var parent_region = {%$parent_region_id%};
+var back_region = {%$back_region_id%};
+var current_region = TPL_REGION_ID;
+</script>
+<div class="modal fade" id="selectRegion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel"><i class=" icon-map"></i> {%$locale.83%} </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="row region_control">
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_back">
+                                <i class=" icon-level-up  ln-shadow-box  shape-9"></i> 
+                                {%$locale.1199%}
+                               </a>
+                            </div>
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_all">
+                               <i class="icon-globe-1 ln-shadow-box  shape-9"></i> 
+                                {%$locale.1200%}
+                               </a>
+                            </div>
+                            <div class="col-xs-4">
+                               <a href="#" id="region_select_current" {%if $regions|@count == 0%}style="display:none"{%/if%}>
+                                   <i class="icon-location-circled  ln-shadow-box  shape-9"></i> 
+                                    {%$locale.1201%}
+                                        <span id="region_select_current_name">
+                                        {%$allregions[$parent_region_id].name%}
+                                        </span>
+                                </a>
+                            </div>
+
+
+
+                        </div>
+
+                        <div style="clear:both"></div>
+
+                        <hr class="hr-thin">
+                    </div>
+                    <div>
+                        
+                        <ul id="regionlist">
+                            
+                        </ul>
+                        <div id="region_loader_img" style="visibility: hidden;">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                            <div>{%$locale.1099%}...</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.modal -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+
+<script>window.jQuery || document.write('<script src="{%$smarty.const.THEME%}assets/js/jquery/3.2.1/jquery.min.js"><\/script>')</script>
+
+<!-- Modal Confirm Region -->
+{%* Диалог подтверждение региона при пером заходе на сайт *%}
+{%if count($smarty.cookies) == 0 && $region_name != ""%}
+    <div class="modal fade" id="welcome_region" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel2"><i class=" icon-map"></i> {%$locale.6%} {%$region_name%}?</h4>
+                </div>
+                <div class="modal-body">
+                    <a href="#" id="welcome_region_cansel" class="btn btn-success">{%$locale.1202%}</a>
+                    <a href="#" id="welcome_region_change" class="btn btn-warning">{%$locale.10%}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{%/if%}
+<!-- /.modal -->
+
+<!-- include main libs  -->
+<script src="{%$smarty.const.THEME%}assets/js/main_libs.js"></script>
+
+{%if $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="{%$smarty.const.THEME%}assets/css/featherlight.min.css">
+    <link rel="stylesheet" href="{%$smarty.const.THEME%}assets/css/featherlight.gallery.min.css">
+
+    <!-- Magnific Popup core JS file -->
+    <script src="{%$smarty.const.THEME%}assets/js/featherlight.min.js"></script>
+    <script src="{%$smarty.const.THEME%}assets/js/featherlight.gallery.min.js"></script>
+
+    <!-- bxSlider CSS file -->
+    <link href="{%$smarty.const.THEME%}assets/plugins/bxslider/jquery.bxslider.css" rel="stylesheet"/>
+    <!-- bxSlider Javascript file -->
+    <script src="{%$smarty.const.THEME%}assets/plugins/bxslider/jquery.bxslider.min.js"></script>
+    
+    <script>
+
+
+        $('.bxslider').bxSlider({
+            pagerCustom: '#bx-pager',
+            adaptiveHeight: true
+        });
+        
+    	$('a.popup-gallery').featherlightGallery({
+    		previousIcon: '&#9664;',     /* Code that is used as previous icon */
+    		nextIcon: '&#9654;',         /* Code that is used as next icon */
+    		galleryFadeIn: 100,          /* fadeIn speed when slide is loaded */
+    		galleryFadeOut: 300          /* fadeOut speed before slide is loaded */
+    	});
+        
+        
+    </script>
+
+{%if $smarty.get.cat.0 == $smarty.const.MESSAGES%}
+    {%if $settings.sharing == 1%}
+        <script src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+        <script src="//yastatic.net/share2/share.js"></script>
+    {%elseif $settings.sharing == 2%}
+        <link rel="stylesheet" href="{%$settings.path%}js/social/social-likes_classic.css">
+        <script src="{%$settings.path%}js/social/social-likes.min.js"></script>
+    {%/if%}
+{%/if%}
+
+{%/if%}
+
+{%if in_array($smarty.get.cat.0, array('edit', 'add', 'users'))%}
+    <script>
+        var CKToolbal = 'Basic';
+    </script>
+    <script src="{%$settings.path%}ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="{%$smarty.const.THEME%}assets/plugins/inputmask/inputmask_all.js"></script>
+{%/if%}
+
+{%if $settings.ulogin == 1 && !$settings.user%}
+    <script src="//ulogin.ru/js/ulogin.js"></script>
+{%/if%}
+
+{%if $smarty.get.cat.0 == 'users'%}
+    <!-- include footable   -->
+    <script src="{%$smarty.const.THEME%}assets/js/footable.js?v=2-0-1" type="text/javascript"></script>
+    <script src="{%$smarty.const.THEME%}assets/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#panel_ads').footable().on('footable_filtering', function (e) {
+                var selected = $('.filter-status').find(':selected').text();
+                if (selected && selected.length > 0) {
+                    e.filter += (e.filter && e.filter.length > 0) ? ' ' + selected : selected;
+                    e.clear = !e.filter;
+                }
+            });
+        });
+    </script>
+    {%if $smarty.get.cat.1 == 'shop'%}
+        <link href="{%$smarty.const.THEME%}assets/css/jquery.timepicker.min.css" rel="stylesheet"/>
+        <script src="{%$smarty.const.THEME%}assets/js/jquery.timepicker.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $('.wt_from').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '06:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('.wt_to').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '16:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        
+        $('.wt_pause').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '00',
+            maxTime: '23:30',
+            startTime: '12:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+        
+        $('.clone').click(function(event) {
+            var classname = $(this).attr('data-class');
+            $('.'+classname).each(
+              function(){
+                if($(this).val() != ""){
+                    $('.'+classname).val($(this).val());
+                    return false;
+                }
+              }
+            );
+            event.preventDefault();
+        });
+        
+        </script>
+
+    {%/if%}
+{%/if%}
+
+<!-- include custom script for site  -->
+<script src="{%$smarty.const.THEME%}assets/js/script.js"></script>
+
+<!--[if lte IE 8]>
+    <div id="browser_reject">
+        <a href="#" onclick="document.getElementById('browser_reject').style.display = 'none'; return false;">[x]</a>
+        {%$locale.1228%}
+        <a href="//www.google.ru/chrome/browser/desktop/">Google Crome</a>,
+        <a href="//www.mozilla.org/ru/firefox/new/">Mozilla Firefox</a>,
+        <a href="//www.microsoft.com/windows/microsoft-edge">Microsoft Edge</a>
+    </div>
+<![endif]-->
+
+</body>
+</html>

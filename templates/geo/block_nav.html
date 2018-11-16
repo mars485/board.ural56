@@ -1,0 +1,14 @@
+<ul class="navigation">
+{%foreach  from=$navigation item='nav'%}
+	{%if $nav.status == 0 || $nav.status == $settings.user.status || ($nav.status == 9 && !$settings.user) || ($nav.status == 8 && $settings.user)%}
+		{%if $nav.url == 'seporator'%}
+			<li class="seporator">&nbsp;</li>
+		{%else%}
+
+
+		    <li><a href="{%$nav.url%}" class="nav">{%$nav.name%}</a></li>
+	    {%/if%}
+	{%/if%}
+{%/foreach%}
+</ul>
+

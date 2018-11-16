@@ -1,0 +1,17 @@
+<center>
+	{%if $ok%}
+		<div class='ok'>
+	        {%$locale.101%}
+		</div>
+	{%else%}
+		<div class='ok'>
+	        {%$locale.299%}
+		</div>
+		{%if $settings.user%}
+			{%$locale.298%}: {%$count%} {%$currency_names[$settings.currency].name2%}<br />
+			<input type="button" value="{%$locale.297%}" onclick="document.location.href='{%$settings.path%}add/debit/?payment_id={%$payment_id%}';" class='add' style='width:150px; margin:3px;'>
+		{%else%}
+			<iframe scrolling='no' src="{%$settings.patch%}add2/?service=a&message_id={%$save_id%}&payment_id={%$payment_id%}" style="width:100%; height:600px;" frameborder="0" class='add'></iframe>
+		{%/if%}
+	{%/if%}
+</center>

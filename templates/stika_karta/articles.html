@@ -1,0 +1,61 @@
+<div style="width: 100%; display: table;">
+    <div id="katname">{%$articles_cat.name%}</div>
+    <div class="article_description">
+        {%$articles_cat.description%}
+    </div>
+
+
+
+<div id="lenta_top">{%$locale.2%} {%$articles_count_word%}</div>
+</div>
+<div style="width: 100%;height: 1px;"></div>
+
+
+{%foreach from=$articles item='article'%}
+    <div class="article">
+        <h4><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$article.name%}</a></h4>
+        <div class="smalldate">{%$locale.1255%} {%$article.pubdate|date_format:"%d.%m.%Y"%}</div>
+        <div id="n_text">
+            {%$article.content.short|truncate:1780:"..."%} {%if $article.content.short|count_characters > 1300%}<div id="dal"><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$articles_cat.uri%}/{%$article.uri%}">{%$locale.1256%}</a></div>{%/if%}
+           
+               
+       
+        </div>
+    </div>
+{%/foreach%}
+
+
+   <div class="pagination" style="margin-top: 40px;">
+   <ul>
+{%if $page > 1%}
+      <li id="lll"><a href="page{%$page-1%}.html{%$get_str%}" title="{%$locale.1254%}">{%$locale.1254%}</a></li>
+   {%/if%}
+	<div align='left' class='pages'>
+	
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<li id="lll"><a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a></li>
+
+	{%/section%}
+	 
+	    {%if $page < $pages%}
+      <li id="lll"><a href="page{%$page+1%}.html{%$get_str%}" title="{%$locale.1254%}">{%$locale.1254%}</a></li>
+    
+   {%/if%}
+
+
+ </ul>
+   </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+

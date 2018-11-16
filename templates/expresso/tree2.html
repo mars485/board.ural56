@@ -1,0 +1,21 @@
+<div class="categories-list">
+{%foreach from=$tree item=el%}
+    {%assign var="count" value=$el.id|count_msg%}
+    <div class='category-group'>
+        <p>
+        {%if $el.img != ""%}
+            <img src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$tree_array.name%}'/>
+        {%/if%}
+        {%*//upd1701080*%}
+        <strong><a style="margin-left: 5px;" href='{%$settings.path_rel%}{%$el.uri%}/'>{%$el.name%}</a></strong>&nbsp;<span class="badge">{%$count%}</span>
+        </p>
+        <p>
+            {%foreach from=$el.cat item='el2' name='ind'%}
+                {%assign var="count" value=$el2.id|count_msg%}
+                {%*//upd1701080*%}
+            	<a href="{%$settings.path_rel%}{%$el.uri%}/{%$el2.uri%}/" class="links">{%$el2.name%} &nbsp;({%$count%})</a>{%if $smarty.foreach.ind.last eq false %},&nbsp;{%/if%}
+            {%/foreach%}
+        </p>
+    </div>
+{%/foreach%}
+</div>

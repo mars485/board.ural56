@@ -1,0 +1,17 @@
+<div class="blockchange">
+<form name="language" action="{%$settings.path%}change_language/" method="get">
+<p align="center">Select your language</p>
+
+
+<select size="1" name="language">
+	{%foreach from=$languages item='language'%}
+  	<option value="{%$language%}" {%if $settings.locale == $language%}selected{%/if%}>{%$language%}</option>
+	{%/foreach%}
+</select>
+
+<br />
+
+<input type="submit" value="{%$locale.673%}">
+
+</form>
+</div>

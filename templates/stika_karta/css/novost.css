@@ -1,0 +1,44 @@
+.jcarousel ul {
+    padding: 0;
+    margin: 0;
+	list-style-type: none;
+}
+#title_jc {
+    color: #057EAC;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+#text_jc {
+    color: #6A6A6A;
+    font-size: 13px;
+    line-height: 13px;
+    max-height: 40px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+#podrobnee a {
+    color: #056A80;
+    text-decoration: underline;
+}
+#podrobnee {
+float: left;
+
+}
+
+#data_right {
+    float: right;
+    color: #595959;
+    font-size: 13px;
+}
+#data_jc {
+width: 100%;
+display: table;
+}
+#body_jc {
+margin-bottom: 10px;
+}
+
+.jcarousel-control-prev, .jcarousel-control-next {
+display: none;
+}

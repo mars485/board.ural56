@@ -1,0 +1,168 @@
+<html>
+	<head>
+	<title>{%$locale.308%} / {%$mod.name%}</title>
+	<meta http-equiv='content-type' content='text/html; charset={%$locale.charset%}' />
+	<meta http-equiv='pragma' content='no-cache' />
+	<link href='{%$smarty.const.THEME%}style_admin.css' rel='stylesheet' type='text/css' />
+
+	<script type="text/javascript" src="{%$settings.path%}js/jquery.js"></script>
+
+	<script type="text/javascript" src="{%$settings.path%}js/tip.js"></script>
+	<script type="text/javascript" src="{%$settings.path%}js/functions.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#clearcashe').click(function(){
+			$.ajax({
+            type: "GET",
+            data: "unit=clearcashe",
+             url: "{%$settings.patch%}admin/",
+             cache: true,
+             success: function(html){
+                alert(html);
+             }
+        	});
+
+		})
+        
+    });
+    </script>
+
+    {%if $smarty.get.unit == 'cat' || $smarty.get.unit == 'region'%}
+    
+    <script type="text/javascript" src="{%$settings.path%}js/jquery-ui-1.8.11.custom.min.js"></script> 
+    <script type="text/javascript" src="{%$settings.path%}js/jquery.ui.nestedSortable.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#clearcashe').click(function(){
+			$.ajax({
+            type: "GET",
+            data: "unit=clearcashe",
+             url: "{%$settings.patch%}admin/",
+             cache: true,
+             success: function(html){
+                alert(html);
+             }
+        	});
+
+		})
+
+		$('ol.sortable').nestedSortable({
+			disableNesting: 'no-nest',
+			forcePlaceholderSize: true,
+			handle: 'div',
+			helper:	'clone',
+			items: 'li',
+			maxLevels: 3,
+			opacity: .6,
+			placeholder: 'placeholder',
+			revert: 250,
+			tabSize: 25,
+			tolerance: 'pointer',
+			toleranceElement: '> div',
+              stop: function(){
+                $('#savesort').attr('disabled', false);
+                $('#savesort').val('*{%$locale.872%}');
+                }
+		});
+
+		$('#savesort').click(function(){
+			serialized = $('ol.sortable').nestedSortable('serialize');
+
+        	$.ajax({
+            type: "POST",
+            data: serialized,
+             url: "{%$settings.patch%}admin/?unit={%$smarty.get.unit%}&act=savesort",
+             cache: true,
+             success: function(html){
+                if(html == 'ok')
+                {
+                $('#savesort').val('{%$locale.872%}');
+                $('#savesort').attr('disabled', true);
+                } 
+             else
+                 {
+                 alert(html);
+                 }
+             }
+        	});
+
+		})
+
+	});
+
+	function dump(arr,level) {
+		var dumped_text = "";
+		if(!level) level = 0;
+
+		//The padding given at the beginning of the line.
+		var level_padding = "";
+		for(var j=0;j<level+1;j++) level_padding += "    ";
+
+		if(typeof(arr) == 'object') { //Array/Hashes/Objects
+			for(var item in arr) {
+				var value = arr[item];
+
+				if(typeof(value) == 'object') { //If it is an array,
+					dumped_text += level_padding + "'" + item + "' ...\n";
+					dumped_text += dump(value,level+1);
+				} else {
+					dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+				}
+			}
+		} else { //Strings/Chars/Numbers etc.
+			dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+		}
+		return dumped_text;
+	}
+
+    </script>
+
+    {%/if%}
+    
+    
+    
+	<script type="text/javascript">
+
+	function sh(id)
+		{
+		var klappText = document.getElementById('s' + id);
+		if (klappText.style.display == 'none')
+			{
+			klappText.style.display = 'block';
+			}
+		else
+			{
+			klappText.style.display = 'none';
+			}
+		}
+	function mp(img_this,img_src)
+		{
+		img_this.src=img_src;
+		}
+	</script>
+
+    {%$add_head%}
+
+	</head>
+
+<body background='{%$smarty.const.THEME%}images/admin/fon.jpg' topmargin='0' leftmargin='0' >
+
+<div id='mess' class='tip'></div>
+
+<table class='gl_table' width='100%' cellpadding='0' cellspacing='0'><tr><td cellpadding='0' cellspacing='0'><table border='0' width='100%' height='144' cellpadding='0' cellspacing='0'>
+<tr>
+<td width='163' cellpadding='0' cellspacing='0'>
+<a href='?'><img src='{%$smarty.const.THEME%}images/admin/left_verh.jpg' width='163' height='144' border='0'></a></td>
+<td cellpadding='0'  width='266' cellspacing='0' background='{%$smarty.const.THEME%}images/admin/center_verh.jpg'><img src='{%$smarty.const.THEME%}images/admin/px.gif' width='260' height='144' align='left'></td>
+<td align='center' cellpadding='0'  width='100%' cellspacing='0' background='{%$smarty.const.THEME%}images/admin/verh_fon.jpg'><img src='{%$smarty.const.THEME%}images/admin/eb.gif'></td>
+<td align='right' cellpadding='0' cellspacing='0'>
+<img src='{%$smarty.const.THEME%}images/admin/pravo_verh.jpg' width='51' height='144'></td>
+</tr>
+<tr>
+<td></td>
+<td rowspan='2' bgcolor='#fff4e8' colspan='2' align='justify' valign='top' style='background-repeat:no-repeat; background-position:left top' cellpadding='0' cellspacing='0'>
+
+<h1>{%$mod.name%}</h1>
+

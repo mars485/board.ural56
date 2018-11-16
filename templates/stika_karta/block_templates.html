@@ -1,0 +1,17 @@
+<div class="blockchange">
+<form name="" action="{%$settings.path%}change_template/" method="get">
+<p align="center">{%$locale.672%}</p>
+
+
+<select size="1" name="template">
+	{%foreach from=$templates item='template'%}
+  	<option value="{%$template%}" {%if $settings.theme == $template%}selected{%/if%}>{%$template%}</option>
+	{%/foreach%}
+</select>
+
+<br />
+
+<input type="submit" value="{%$locale.673%}">
+
+</form>
+</div>

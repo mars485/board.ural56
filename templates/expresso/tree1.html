@@ -1,0 +1,20 @@
+
+<table class="table">
+    {%foreach from=$tree item=el%}
+        <tr><td class="info">
+            {%assign var="uri" value=$settings.region_path%}
+    	    {%if $el.img != ""%}
+    	    	<img class='png' src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$el.name%}' />
+    	    {%/if%}
+            {%assign var="count" value=$el.id|count_msg%}
+            <a href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a>&nbsp;<span class='badge'>{%$count%}</span>
+            </td>
+        </tr>
+            {%if $el.cat%}
+            <tr><td>
+                {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+                <ul>{%include file="tree1_recursive.html" el=$el.cat%}</ul>
+            </td></tr>
+            {%/if%}
+    {%/foreach%}
+</table>

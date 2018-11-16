@@ -1,0 +1,80 @@
+
+
+
+</td>
+		</tr>
+
+		<tr>
+			<td valign='top' background='{%$smarty.const.THEME%}images/admin/menu_niz_fon.jpg'>
+				<table background='{%$smarty.const.THEME%}images/admin/menu_fon.jpg' cellpadding='0' cellspacing='0'>
+					<tr>
+					<td height='10'>&nbsp;</td>
+					</tr>
+				{%foreach from=$modules item='m'%}
+					{%if $m.name != ""%}
+						<tr>
+						<td width='163'><a href='?unit={%$m.id%}'><img src='{%$smarty.const.THEME%}images/admin/s.gif' align='left' border='0'>{%$m.name%}</a></td>
+						</tr>
+						<tr><td height='3'></td></tr>
+					{%/if%}
+				{%/foreach%}
+					<tr>
+						<td height='95' background='{%$smarty.const.THEME%}images/admin/menu_inf.jpg' width='100%'></td>
+					</tr>
+
+
+
+					<tr>
+						<td height='30' background='{%$smarty.const.THEME%}images/admin/menu_fon.jpg' align='center'>
+
+<ul class='infoblock'>
+	{%foreach from=$infoblock item='inf'%}
+       	<li>{%$inf.k%}: <b>{%$inf.v%}</b></li>
+	{%/foreach%}
+</ul>
+
+</td>
+					</tr>
+
+					<tr>
+						<td height='95' background='{%$smarty.const.THEME%}images/admin/menu_do2.jpg' width='100%'></td>
+					</tr>
+
+					<tr>
+						<td background='{%$smarty.const.THEME%}images/admin/menu_fon.jpg' align='center'>
+
+<a href="javascript:try { window.external.AddFavorite(location.href, document.title); } catch (e) {} try { window.sidebar.addPanel(document.title, location.href, ''); } catch (e) {}"><img src='{%$smarty.const.THEME%}images/admin/ico/k.png' border='0' width='32' height='32' onmouseover="Tip(this, '{%$locale.248%}')" onmouseout="UnTip(this)" ></a>
+<a href='../' target='_blank'><img src='{%$smarty.const.THEME%}images/admin/ico/a.png' border='0' width='32' height='32' onmouseover="Tip(this, '{%$locale.249%}')" onmouseout="UnTip(this)" ></a>
+<a href='#' id='clearcashe'><img src='{%$smarty.const.THEME%}images/admin/ico/r.png' border='0' width='32' height='32' onmouseover="Tip(this, 'Очистить кэш')" onmouseout="UnTip(this)" ></a>
+<a href='out.php' target='_blank'><img src='{%$smarty.const.THEME%}images/admin/ico/e.png' border='0' width='32' height='32' onmouseover="Tip(this, '{%$locale.250%}')" onmouseout="UnTip(this)" ></a>
+
+</td>
+					</tr>
+										<tr>
+											<td height='95' background='{%$smarty.const.THEME%}images/admin/menu_sup.jpg' width='100%'></td>
+										</tr>
+					
+										<tr>
+											<td background='{%$smarty.const.THEME%}images/admin/menu_fon.jpg' align='center'>
+											<iframe src='http://illusionweb.ru/board_support/' style='width:163px; height:250px;' frameborder='no'></iframe>
+											</td>
+										</tr>
+					
+										<tr>
+											<td height='60' background='{%$smarty.const.THEME%}images/admin/menu_niz.jpg' width='100%'></td></tr>
+									</table>
+					
+								</td>
+					
+								</table>
+					<table width='100%' align='center' cellpadding='0' cellspacing='0'>
+							<tr>
+							<td height='36' width='163' background='{%$smarty.const.THEME%}images/admin/niz_fon.jpg'>
+					        <img src='{%$smarty.const.THEME%}images/admin/menu_niz_fon2.jpg' border='0' width='163' height='142'></td><td background='{%$smarty.const.THEME%}images/admin/niz_fon.jpg' align='left'><a href='mailto:support@illusionweb.ru'><div align='left'>support@illusionweb.ru</div></a></td>
+					        <td width='100%' background='{%$smarty.const.THEME%}images/admin/niz_fon.jpg' align='center'><a href='http://illusionweb.ru/design/'><img src='{%$smarty.const.THEME%}images/admin/niz_center.jpg' align='center' border='0'></a></td>
+					        <td width='200' background='{%$smarty.const.THEME%}images/admin/niz_fon.jpg' align='right'><table><tr><td align='right'><a href='http://illusionweb.ru/'>www.illusionweb.ru</a></td><td width='100'></td></tr></table></td>
+							</tr>
+					</table></td></tr></table>
+					
+						</body>
+					  </html>

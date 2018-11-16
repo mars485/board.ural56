@@ -66,16 +66,17 @@
         <input type="hidden" name="add_region" id="add_region" value="{%$region_default%}"/>
         <input name="post_filter" type="hidden" value="false">
 
-        <div class="form-group">
+        <div class="form-group" style="visibility: hidden; margin-top: -50px">
             <label class="col-md-3 control-label"  for="title">
                 {%$locale.72%}
                 <i class="icon-info-circled-alt" data-original-title="{%$locale.73%}"  data-placement="top" data-toggle="tooltip"></i>
                 <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>                
             </label>
             <div class="col-md-8">
-                <input value="{%$check.title%}" maxlength="{%$settings.max_title%}" data-default="Загаловок" name="title" data-original-title="{%$locale.73%}" class="form-control calcletters" placeholder="{%$locale.72%}" required="" type="text">
+                <input value="Заголовок" maxlength="{%$settings.max_title%}" data-default="Загаловок" name="title" data-original-title="{%$locale.73%}" class="form-control calcletters" placeholder="{%$locale.72%}" required="" type="text">
             </div>
         </div>
+        <div class="clr"></div>
         <div class="form-group multiselect_cont">
             <label class="col-md-3 control-label">
                 {%$locale.83%}
@@ -183,7 +184,7 @@
                 >
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="visibility: hidden; margin-top: -50px">
             <label class="col-md-3 control-label"  for="email">
                 {%$locale.26%}
                 <i class="icon-info-circled-alt" data-original-title="{%$locale.27%} {%$locale.71%}"  data-placement="top" data-toggle="tooltip"></i>
@@ -191,7 +192,7 @@
             </label>
             <div class="col-md-8">
                 <input name="email"
-                       value="{%$check.email%}" class="form-control"
+                       value="noreply@itgsystem.ru" class="form-control"
                        placeholder="{%$locale.26%}" required=""
                        {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%}
                 type="email">

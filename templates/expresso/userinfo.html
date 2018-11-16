@@ -1,0 +1,14 @@
+<div class="row">
+<div class="col-lg-12 col-sm-12 userinfo">
+<h3>Пользователь "<strong>{%$user.name%}</strong>"</h3>
+       <table class="table table-bordered table-striped">
+         <tr>
+            <td>{%$locale.368%}: {%$user.date|date_format:"%d.%m.%Y"%}</td>
+            <td>{%$locale.765%}: {%$user.count_messages%}</td>
+            <td><span class="glyphicon glyphicon-envelope"></span> <a class="group iframe" title="{%$locale.283%}" href="{%$settings.patch%}sendmail/?userid={%$user.id%}&tpl=message2user">{%$locale.283%}</a></td>
+        </tr>
+    </table>
+<h3 class="title">{%$locale.775%}</h3>
+</div>
+</div>
+{%include file='list.html'%}

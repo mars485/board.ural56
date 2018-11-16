@@ -1,0 +1,74 @@
+WebMoney
+//separator//
+WebMoney Transfer — международная система расчетов и среда для ведения бизнеса в сети
+//separator//
+http://www.webmoney.ru
+//separator//
+rur/rur|usd/usd|uah/uah|eur/eur
+//separator//
+
+<form method="POST" action="https://merchant.webmoney.ru/lmi/payment.asp" target="_blank">  
+  <input type="hidden" name="LMI_PAYMENT_AMOUNT" value="{%$pay.amount%}" />
+  <input type="hidden" name="LMI_PAYMENT_DESC_BASE64" value="{%$pay.comment|base64_encode%}" />
+  <input type="hidden" name="LMI_PAYMENT_NO" value="{%$pay.order%}" />
+  <input type="hidden" name="LMI_PAYEE_PURSE" value="{%$abilling.key1%}" />
+  <input type="hidden" name="LMI_SIM_MODE" value="0" />
+  <div align="center"><input type='submit' value='{%$locale.668%}' style='font-size:14px;'></div>
+</form>
+
+//separator//
+ html_2
+//separator//
+$form[] = array(
+                'id' => 'key1',
+                'name' => 'Purse',
+                'help' => 'Укажите Ваш кошелёк',
+                'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Secret Key',
+				'help' => 'Secret Key',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+
+
+$_CRC  = $_POST['LMI_PAYEE_PURSE'];
+$_CRC .= $_POST['LMI_PAYMENT_AMOUNT'];
+$_CRC .= $_POST['LMI_PAYMENT_NO'];
+$_CRC .= $_POST['LMI_MODE'];
+$_CRC .= $_POST['LMI_SYS_INVS_NO'];
+$_CRC .= $_POST['LMI_SYS_TRANS_NO'];
+$_CRC .= $_POST['LMI_SYS_TRANS_DATE'];
+$_CRC .= $abilling['key2'];
+$_CRC .= $_POST['LMI_PAYER_PURSE'];
+$_CRC .= $_POST['LMI_PAYER_WM'];
+
+
+$_CRC1 = strtoupper(hash('sha256', $_CRC));
+$_CRC2 = strtoupper(md5($_CRC));
+
+
+
+$_HASH = $_POST['LMI_HASH'];
+
+if($_HASH == ""){
+	echo 'no hash';
+	exit();
+}
+if($_HASH != $_CRC1 AND $_HASH != $_CRC2){
+    echo 'error hash';
+    exit();
+}
+if(!check_payment($_POST['LMI_PAYMENT_NO'])){
+    echo 'no payment id';
+    exit();
+}
+if(make_order($_POST['LMI_PAYMENT_NO'], 'by WebMoney, id '.$_POST['LMI_PAYMENT_NO'])){
+	echo 'OK';
+	exit();
+}

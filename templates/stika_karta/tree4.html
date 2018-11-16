@@ -1,0 +1,102 @@
+
+	
+	<!-- custom scrollbar plugin -->
+	<script src="{%$smarty.const.THEME%}js/jquery.mCustomScrollbar.concat.min.js"></script>
+<link rel="stylesheet" href="{%$smarty.const.THEME%}css/jquery.mCustomScrollbar.css">
+ 	<script>
+		(function($){
+			$(window).load(function(){
+				
+				$("#content-3").mCustomScrollbar({
+					scrollButtons:{enable:true},
+					theme:"light-thick",
+					scrollbarPosition:"outside"
+				});
+				
+				$("#content-4").mCustomScrollbar({
+					theme:"rounded-dots",
+					scrollInertia:400
+				});
+				
+				$("#content-5").mCustomScrollbar({
+					axis:"x",
+					theme:"dark-thin",
+					autoExpandScrollbar:true,
+					advanced:{autoExpandHorizontalScroll:true}
+				});
+				
+				$("#content-6").mCustomScrollbar({
+					axis:"x",
+					theme:"light-3",
+					advanced:{autoExpandHorizontalScroll:true}
+				});
+				
+				$("#content-7").mCustomScrollbar({
+					scrollButtons:{enable:true},
+					theme:"3d-thick"
+				});
+				
+				$("#content-8").mCustomScrollbar({
+					axis:"yx",
+					scrollButtons:{enable:true},
+					theme:"3d",
+					scrollbarPosition:"outside"
+				});
+				
+				$("#content-9").mCustomScrollbar({
+					scrollButtons:{enable:true,scrollType:"stepped"},
+					keyboard:{scrollType:"stepped"},
+					mouseWheel:{scrollAmount:188},
+					theme:"rounded-dark",
+					autoExpandScrollbar:true,
+					snapAmount:188,
+					snapOffset:65
+				});
+				
+			});
+		})(jQuery);
+	</script>
+
+
+
+<div id="ob">
+
+{%foreach from=$tree item=el%}
+
+
+
+
+
+<div id="menfon_razver" style="margin-bottom: 20px;">
+<a href="{%$settings.path_region%}{%$uri%}{%$el.uri%}/">
+<img style=" max-height: 70px;" src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$el.name%}'>
+</a>
+
+<div class="tree_name">
+{%$el.name%}
+</div>
+
+	<div id="content-2" class="content mCustomScrollbar light" data-mcs-theme="minimal-dark">
+	<ul>
+    {%assign var="count" value=$el.id|count_msg%}
+            {%foreach from=$el.cat item='el2' name='ind'%}
+             <li>
+            	<a href="{%$el.uri%}/{%$el2.uri%}/">{%$el2.name%}</a>
+				</li>
+            {%/foreach%}
+			
+
+</ul>
+
+</div>
+
+ 
+
+
+
+</div>{%/foreach%}
+ 
+
+	
+
+</div>

@@ -1,0 +1,48 @@
+{%if $place == 'l'%}
+    <div class="locations-list  list-filter">
+        <h5 class="list-title">
+            <strong>{%$name%}</strong>
+            {%if $data.block_type == 'search'%}
+                <span class="pull-right">
+                    <a href="#" class="gotomap" data-original-title="{%$locale.1257%}"  data-placement="top" data-toggle="tooltip">
+                        <i class="icon-map"></i>
+                    </a>
+                </span>
+            {%/if%}
+        </h5>
+        {%$html%}
+    </div>
+{%/if%}
+
+{%if $place == 'r' or $place == 'h' or $place == 'f'%}
+    <div class="inner-box block_{%$place%}">
+        <h5 class="title-2">
+            {%$name%}
+            {%if $data.block_type == 'search'%}
+                <span class="pull-right">
+                    <a href="#" class="gotomap" data-original-title="{%$locale.1257%}"  data-placement="top" data-toggle="tooltip">
+                        <i class="icon-map"></i>
+                    </a>
+                </span>
+            {%/if%}
+        </h5>
+        <div class="inner-box-content">
+            {%$html%}
+        </div>
+    </div>
+{%/if%}
+
+{%if $place == 'm'%}
+    <div class="block_{%$place%}">
+        {%$html%}
+    </div>
+{%/if%}
+
+{%if $place == 't' || $place == 'b'%}
+    <div class="inner-box relative block_{%$place%}">
+        <h2 class="title-2">{%$name%}</h2>
+        <div class="inner-box-content">
+            {%$html%}
+        </div>
+    </div>
+{%/if%}

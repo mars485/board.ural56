@@ -1,0 +1,235 @@
+{%if is_array($shops)%}    
+
+    {%********************* список магазинов *********************%}
+    
+    <h2>{%$locale.1103%}</h2>
+    <p>&nbsp;</p>
+    
+    {%if $second_region%}
+        <p class="lead">
+            <a href="{%$settings.path%}change_region/?act=change_region&clean_region&back={%$settings.path|urlencode%}{%$smarty.get.cat.0%}%2F">
+                {%$locale.1117%} &rarr;
+            </a>
+        </p>
+    {%/if%}
+    
+    {%include file='tree2.html'%}
+    
+    <div class="clear2"></div>
+    
+
+
+    {%if $count_num > 0%}
+        <div class="alert alert-warning" role="alert">{%$count_text%}</div>
+    {%/if%}
+
+    <ul id="shops">
+        {%foreach from=$shops item='shop'%}
+            {%assign var='work' value=$shop.worktime|worktime%}
+            <li>
+                <div class="img">
+                    {%if $shop.img%}<img src="{%$shop.img%}" alt="{%$shop.name%}"/>{%/if%}
+                </div>
+                <div class="cont">
+                        <h4>
+                        <a href="{%$shop.link%}">{%$shop.name%}</a>
+                        {%if $work == 1%}
+                            <span class="badge bg-info">{%$locale.1245%}</span>
+                        {%elseif $work == 2%}
+                            <span class="badge">{%$locale.1246%}</span>
+                        {%elseif $work == 3%}
+                            <span class="badge">{%$locale.1247%}</span>
+                        {%elseif $work == 4%}
+                            <span class="badge">{%$locale.1248%}</span>
+                        {%/if%}
+                        </h4>
+                        <p>{%$shop.description%}</p>
+                </div>
+                
+                <div class="clear2"></div>
+                <p><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> <strong>{%$shop.count_text%}</strong></p>
+                <p><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> <strong>{%$locale.1118%}</strong>: {%if $shop.region != 0%}{%$shop.region|linenav:$allregions:'region'%}{%else%}{%$locale.1120%}{%/if%}</p>
+                <p><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> <strong>{%$locale.1119%}</strong>: {%if $shop.cat != 0%}{%$shop.cat|linenav:$categories:'cat'%}{%else%}{%$locale.1120%}{%/if%}</p>
+
+            </li>
+        {%/foreach%}
+    </ul>
+    {%if $pages != ""%}
+    	<div align='left' class='pages'>
+    	{%$locale.140%}:
+    	{%section name=page loop=$pages%}
+    		{%assign var="p" value=$smarty.section.page.index+1%}
+    		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+    	{%/section%}
+    	</div>
+    {%/if%}
+    
+{%elseif is_array($shop)%}
+
+    {%********************* описание магазина *********************%}
+
+        {%assign var='work' value=$shop.worktime|worktime%}
+        
+        <h3>{%$shop.name%}</h3>
+    
+        <div id="logo_block">
+            {%if $shop.img%}
+                <style>
+                    #YMapsID{
+                        margin-left:300px;
+                    }
+                </style>
+                <div class="img">
+                    <img src="{%$shop.img%}" alt="{%$shop.name%}"/>
+                </div>
+            {%/if%}
+            {%if $shop.map != ""%}            
+                <div id="YMapsID"></div>
+                {%if $settings.maptype == 1%}
+                    <script>
+                
+                      function initMap() {
+                        
+                        var pl = false;
+                        var myLatLng = {lat: {%$shop.point.0%}, lng: {%$shop.point.1%}};
+                        
+                        
+
+
+        
+                        var map = new google.maps.Map(document.getElementById("YMapsID"), {
+                          zoom: {%$shop.point.2%},
+                          center: myLatLng
+                        });
+                        
+                        pl = placeMarker(myLatLng);
+                        
+                        var infowindow = new google.maps.InfoWindow({
+                            content: "{%$shop.name%}<div style=\'font-size:10px;\'>{%$shop.addr%}{%if $shop.phone1 != ""%}, {%$shop.phone1%}{%/if%}</div>"
+                        });
+                        infowindow.open(map, pl);
+                        pl.addListener('click', function() {
+                            infowindow.open(map, pl);
+                            map.setCenter(pl.getPosition());
+                        });
+
+
+                        function placeMarker(location) {
+                            var marker = new google.maps.Marker({
+                                position: location, 
+                                map: map
+                            });
+                            return marker;
+                        } 
+                        
+                     }
+                    </script>
+                    <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key={%$settings.mapkey%}&callback=initMap">
+                    </script>
+                {%else%}
+                    <script src="http://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+                    <script type="text/javascript">
+                        ymaps.ready(init);
+                        function init () {
+                            var myMap = new ymaps.Map('YMapsID', {
+                                    center: [{%$shop.point.0%}, {%$shop.point.1%}],
+                                    zoom: {%$shop.point.2%}
+                                });
+                        		var myPlacemark = new ymaps.Placemark(
+                        		[{%$shop.point.0%}, {%$shop.point.1%}] , {
+                                    balloonContent: "{%$shop.name%}<div style=\'font-size:10px;\'>{%$shop.addr%}{%if $shop.phone1 != ""%}, {%$shop.phone1%}{%/if%}</div>"
+                                }, {
+                                    draggable: false
+                                });
+                                myMap.controls.add('smallZoomControl', { top: 5, left: 5 });
+                        		myMap.geoObjects.add(myPlacemark);
+                                myPlacemark.balloon.open(); 
+                        }       
+                    </script>
+                {%/if%}
+            {%/if%}
+            <div class="clear2"></div>
+            
+
+        </div>
+        <div id="search_block">
+            
+            <form name="shop_search" action="{%$settings.path%}search/" method="GET">
+            <input type="hidden" name="shop" value="{%$shop.id%}"/>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <input type="text" name="text" placeholder="Поиск в магазине &laquo;{%$shop.name%}&raquo;" />
+                    </td>
+                    <td style="width: 150px;">
+                        <input type="submit" value="Искать" class="btn btn-default" />
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+        <div class="clear2"></div>
+        <div class="cont">
+        <script>
+
+        $(document).ready(function() {
+            //переключатель табов
+            $('#shoptabs a').click(function(e){
+                
+                var halftime = 250;
+                $('.shoptab').hide(halftime);
+                $('.'+$(this).attr('rel')).delay(halftime).show(halftime);
+                $('#shoptabs li a').removeClass('active');
+                $(this).addClass('active');
+               	e.preventDefault();   
+              });
+        });
+        </script>
+            <ul id="shoptabs">
+                <li><a href="#" rel="description2" class="active">{%$locale.1121%}</a></li>
+                <li><a href="#" rel="contacts">{%$locale.1122%}</a></li>
+                <li><a href="#" rel="delivery">{%$locale.1123%}</a></li>
+                <li><a href="#" rel="worktime">{%$locale.1231%}</a></li>
+            </ul>
+            <div id="shopblock">
+                <div class="shoptab description2">
+                    <p>{%$shop.description%}</p>
+                </div>
+                <div class="shoptab contacts" style="display: none;">
+                    <p><strong>{%$locale.458%}</strong>: {%if $shop.addr != ""%}{%$shop.addr%}{%else%}{%$locale.1120%}{%/if%}</p>
+                    <p><strong>{%$locale.1109%}</strong>: {%if $shop.phone1 != ""%}{%$shop.phone1%}{%else%}{%$locale.1120%}{%/if%}</p>
+                    <p><strong>{%$locale.1110%}</strong>: {%if $shop.phone2 != ""%}{%$shop.phone2%}{%else%}{%$locale.1120%}{%/if%}</p>
+                </div>
+                <div class="shoptab delivery" style="display: none; margin:3px;">
+                    {%if $shop.delivery != ""%}
+                        <h3>{%$locale.1124%}</h3>
+                        {%$shop.delivery%}
+                    {%/if%}
+                    {%if $shop.payment != ""%}
+                        <h3>{%$locale.1125%}</h3>
+                        {%$shop.payment%}
+                    {%/if%}
+                </div>
+                <div class="shoptab worktime">
+                    <ul>
+                        {%foreach from=$shop.worktime_list item='w'%}
+                            <li>{%$w%}</li>
+                        {%/foreach%}
+                    </ul>
+                </div>                
+            </div>
+            <p><strong>{%$locale.1118%}</strong>: {%if $shop.region != 0%}{%$shop.region|linenav:$allregions:'region'%}{%else%}{%$locale.1120%}{%/if%}</p>
+            <p><strong>{%$locale.1119%}</strong>: {%if $shop.cat != 0%}{%$shop.cat|linenav:$categories:'cat'%}{%else%}{%$locale.1120%}{%/if%}</p>
+            <p><strong>{%$locale.1126%}</strong>:</p>
+        </div>
+        
+        {%include file='tree2.html'%}
+            
+        <div class="clear2"></div>    
+    
+    {%assign var='messages' value=$shop.messages%}
+    {%include file='list.html'%}
+    
+{%/if%}
+

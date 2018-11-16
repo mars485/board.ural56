@@ -1,0 +1,82 @@
+SpryPay
+//separator//
+644
+//separator//
+http://www.sprypay.ru/
+//separator//
+rur/rur|usd/usd|uah/uah|eur/eur
+//separator//
+<form action='http://sprypay.ru/sppi/' method='post' target='_blank'>
+
+<input type='hidden' name='spShopId' value='{%$abilling.key1%}'>
+<input type='hidden' name='spShopPaymentId' value='{%$pay.order%}'>
+<input type='hidden' name='spAmount' value='{%$pay.amount%}' >
+<input type='hidden' name='spCurrency' value='{%$pay.currency%}'>
+<input type='hidden' name='spPurpose' value='{%$pay.comment%}'>
+<input type='hidden' name='spUserEmail' value='{%$settings.user.email%}'>
+<input type='hidden' name='spUserDataUserid' value='{%$settings.user.id%}'>
+<br /><br />
+<div align="center"><input type='submit' value='{%$locale.668%}' style='font-size:14px;'></div>
+
+
+</form>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'SpryPay ShopId',
+				'help' => '627',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'SpryPay SecretKey',
+				'help' => '628',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+$_CRC  = $_GET['spPaymentId'];
+$_CRC .= $_GET['spShopId'];
+$_CRC .= $_GET['spShopPaymentId'];
+$_CRC .= $_GET['spBalanceAmount'];
+$_CRC .= $_GET['spAmount'];
+$_CRC .= $_GET['spCurrency'];
+$_CRC .= $_GET['spCustomerEmail'];
+$_CRC .= $_GET['spPurpose'];
+$_CRC .= $_GET['spPaymentSystemId'];
+$_CRC .= $_GET['spPaymentSystemAmount'];
+$_CRC .= $_GET['spPaymentSystemPaymentId'];
+$_CRC .= $_GET['spEnrollDateTime'];
+$_CRC .= $abilling['key2'];
+
+$_CRC = md5($_CRC);
+
+$_HASH = $_GET['spHashString'];
+
+
+
+if($_HASH == "")
+	{
+	echo 'no hash';
+	exit();
+	}
+if($_HASH != $_CRC)
+	{
+    echo 'error hash';
+    exit();
+	}
+if(!check_payment($_GET['spShopPaymentId']))
+	{
+    echo 'no payment id';
+    exit();
+	}
+
+if(make_order($_GET['spShopPaymentId'], 'by SpryPay.ru, id '.$_GET['spPaymentId']))
+	{
+	echo 'OK';
+	exit();
+	}

@@ -1,0 +1,21 @@
+
+        
+        <ul>
+            <li>
+                <a href='{%$settings.path%}change_region/?act=change_region&clean_region'>{%$locale.9%}</a>
+                <ul>
+                    {%foreach from=$regions_recursive.cat item=el%}
+                        <li>
+                            {%assign var="uri" value=$settings.path%}
+                            <a href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a>
+                            {%if $el.cat%}
+                                {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+                                <ul>{%include file="region_recursive.html" el=$el.cat%}</ul>
+                            {%/if%}
+                        </li>
+                    {%/foreach%}
+                </ul>
+            </li>
+        </ul>
+
+        

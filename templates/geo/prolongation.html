@@ -1,0 +1,60 @@
+<center>
+
+<form name='frm' action='?message={%$smarty.get.message%}&key={%$smarty.get.key%}' method='post'>
+<b>{%$locale.146%}:</b><br /><br />
+{%if $err%}
+		<center>
+			<div class='error'>
+				<ul>
+					{%foreach  from=$err item='er'%}
+					<li>{%$er%}</li>
+					{%/foreach%}
+				</ul>
+			</div>
+		</center>
+{%elseif $pay%}
+<script>
+    function functionLoop(){
+        var sum = parseFloat(document.getElementById('active_service').value);
+        if(isNaN(sum)){
+            sum = '{%$locale.1057%}';
+        }else{
+            sum = sum + ' {%$Currency%}';
+        }
+        document.getElementById('recount_sum').innerHTML = sum;
+    }
+    var intervalID = setInterval("functionLoop()",500);
+</script>
+    
+    <ul style="margin-left: 20px;">
+        {%foreach from=$messages item='message' name='i'%}
+            <li>{%$message.title%}</li>
+        {%/foreach%}
+    </ul>
+    
+    <p>{%$locale.78%}:</p>
+		<iframe scrolling='no' src="{%$settings.path%}timing/?days={%$check.active_days%}&count={%$messages|@count%}" style="width:100%; height:50px;" frameborder="0" class="add" id="frame_days"></iframe>
+	    <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+	    <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+    <p>{%$locale.298%}: <span id="recount_sum">??</span></p>
+<br /><br />
+<input type='submit' name='submit_prolong' value='{%$locale.145%}'  class='add' style='width:200px;'>
+
+{%else%}
+<div class='ok'>
+<select size='1' name='timing' class='add' style='width:200px;'>
+	<option value=''>{%$locale.81%}</option>
+	{%foreach  from=$timing item='time'%}
+	<option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+	{%/foreach%}
+</select>
+</div>
+<br /><br />
+<input type='submit' name='submit_prolong' value='{%$locale.145%}'  class='add' style='width:200px;'>
+{%/if%}
+
+
+</form>
+
+</center>
+

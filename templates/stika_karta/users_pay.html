@@ -1,0 +1,39 @@
+<div id="head_pay">{%$locale.1104%}</div>
+
+
+
+
+<div class='order'>
+
+{%if $go%}
+
+	<p>{%$locale.191%}: <b>{%$Count%}</b> {%$Currency%}</p>
+	<p>{%$locale.661%}: </p>
+<ul style='text-align:left; margin-left:20px;'>
+	{%foreach from=$billing item='bil'%}
+		{%if $bil.status == 1%}
+			<li><a href="?p={%$bil.uri%}&id={%$payment_id%}">{%$bil.name%}</a> - {%$bil.descr%}</li>
+		{%/if%}
+	{%/foreach%}
+</ul>
+
+{%else%}
+
+{%if $err%}
+	<center>
+		<div class='error'>
+		<div style="color: #FFF;">{%$locale.629%}</div>
+		</div>
+	</center>
+{%/if%}
+
+	<form class="line-height" action='?' method='post'>
+	
+	{%$locale.191%}:
+	<input id="pay_input" type='text' name='num' value='' size='4'  style='text-align:center;'>
+	{%$Currency%}
+	<br /><br />
+	<input id="zakaz_sumbit_gos" type='submit' value='{%$locale.64%}'>
+	</form>
+{%/if%}
+</div>

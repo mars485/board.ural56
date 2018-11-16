@@ -1,0 +1,135 @@
+{%assign var='category' value=$second_cat.id%}
+{%if $smarty.get.add_cat%}
+    {%assign var='category' value=$smarty.get.add_cat%}
+{%/if%}
+
+{%assign var='region' value=$second_region.id%}
+{%if $smarty.get.add_region%}
+    {%assign var='region' value=$smarty.get.add_region%}
+{%/if%}
+
+<div class="block_search">
+    <form name="block_search" method="GET" action="{%$settings.path%}search/">
+        <input type="hidden" name="add_cat" class="add_cat" value="{%$category%}" />
+        <input type="hidden" name="add_region" class="add_region" value="{%$region%}" />
+        <input type="hidden" name="map"  class="add_map"  value="{%$smarty.get.map%}" />
+        
+        <div class="search-col relative search_text">
+              <i class="icon-docs icon-append"></i>
+              <div class="input-group">
+                  <input type="text" name="text" class="form-control has-icon" placeholder="{%$locale.873%}" value="{%$smarty.get.text%}" />
+                  <span class="input-group-btn">
+                      <button class="btn btn-primary" type="submit">
+                         <i class="fa fa-search"></i>
+                      </button>
+                  </span>
+              </div>
+        </div>
+        
+        <div class="checkbox shop_search" style="display: none;" >
+            <label>
+                <input class="shop_id" type="checkbox" name="shop" value="" checked >{%$locale.1128%} &laquo;<span class="shop_name"></span>&raquo;
+            </label>
+        </div>
+        
+        {%if $smarty.get.cat.0 == 'search'%}
+
+
+            {%******* список рубрик *******%}
+            <div class="float_field">
+                <h5 class="list-title">
+                    <strong>
+                        {%if $category%}
+                            {%assign var='category_parent' value=$categories[$category].parent%}
+                            <a href="#" class="a-submit" data-var="add_cat" data-value="{%$category_parent%}">
+                                <i class="fa fa-angle-left"></i>
+                                {%if $category_parent == 0%}
+                                    {%$locale.1198%}
+                                {%else%}
+                                    {%$categories[$category_parent].name%}
+                                {%/if%}
+                            </a>
+                        {%else%}
+                            {%$locale.1198%}
+                            {%assign var='category' value=0%}
+                        {%/if%}
+                    </strong>
+                </h5>
+                {%if $category != 0%}
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#" class="a-submit" data-var="add_cat" data-value="{%$categories[$category].id%}">
+                                <span class="title"><strong>{%$categories[$category].name%}</strong></span>
+                            </a>
+                {%/if%}
+            
+                        <ul class="list-unstyled long-list">
+                            {%foreach from=$categories item=cat%}
+                                {%if $cat.parent == $category%}
+                                    <li>
+                                        <a href="#" class="a-submit" data-var="add_cat" data-value="{%$cat.id%}"> 
+                                            <span class="title">{%$cat.name%}</span>
+                                        </a>
+                                    </li>
+                                {%/if%}
+                            {%/foreach%}
+                        </ul> 
+                {%if $category != 0%}
+                        </li>
+                    </ul>
+                {%/if%}  
+                
+            </div>
+            {%******* список регионов *******%}
+            <div class="float_field">
+                <h5 class="list-title">
+                    <strong>
+                        {%if $region%}
+                            {%assign var='region_parent' value=$allregions[$region].parent%}
+                            <a href="#" class="a-submit" data-var="add_region" data-value="{%$region_parent%}">
+                                <i class="fa fa-angle-left"></i>
+                                {%if $region_parent == 0%}
+                                    {%$locale.9%}
+                                {%else%}
+                                    {%$allregions[$region_parent].name%}
+                                {%/if%}
+                            </a>
+                        {%else%}
+                            {%$locale.9%}
+                            {%assign var='region' value=0%}
+                        {%/if%}
+                    </strong>
+                </h5>
+                {%if $region != 0%}
+                    <ul class="list-unstyled">
+                        <li>
+                            <a href="#" class="a-submit" data-var="add_region" data-value="{%$allregions[$region].id%}">
+                                <span class="title"><strong>{%$allregions[$region].name%}</strong></span>
+                            </a>
+                {%/if%}
+            
+                        <ul class="list-unstyled long-list" data-max="3">
+                            {%foreach from=$allregions item=reg%}
+                                {%if $reg.parent == $region%}
+                                    <li>
+                                        <a href="#" class="a-submit" data-var="add_region" data-value="{%$reg.id%}"> 
+                                            <span class="title">{%$reg.name%}</span>
+                                        </a>
+                                    </li>
+                                {%/if%}
+                            {%/foreach%}
+                        </ul> 
+                {%if $region != 0%}
+                        </li>
+                    </ul>
+                {%/if%} 
+            </div>             
+        {%/if%}
+        {%******* доп. поля *******%}
+        <div class="block_search_ajax"></div>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit"><i class="fa fa-search" aria-hidden="true"></i> {%$locale.203%}</button>
+        </div>
+        
+    </form>
+</div>

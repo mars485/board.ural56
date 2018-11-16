@@ -1,0 +1,50 @@
+<h3 style="color: #1C6E8E;">{%$locale.1257%} {%$locale.1258%}</h3>
+
+<ul class="articles_cat">
+{%foreach from=$articles_cat item='cat'%}
+    <li><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$cat.uri%}/">{%$cat.name%}</a> ({%$cat.count%})</li>
+{%/foreach%}
+</ul>
+
+<h3 style=" margin-top: 100px;color: #1C6E8E;">{%$locale.1259%}</h3>
+
+
+
+
+
+  
+
+        <!-- Example assets -->
+        <link rel="stylesheet" type="text/css" href="{%$smarty.const.PATH%}articles_js/jcarousel.responsive.css">
+
+        <script type="text/javascript" src="{%$smarty.const.PATH%}articles_js/jquery.jcarousel.min.js"></script>
+
+        <script type="text/javascript" src="{%$smarty.const.PATH%}articles_js/jcarousel.responsive.js"></script>
+
+<div id="victim">
+  <div class="jcarousel-wrapper">
+                <div class="jcarousel">
+                    <ul>
+					{%foreach from=$articles item='article'%}
+					
+                        <li>
+						<div id="body_jc">
+						<div id="title_jc">{%$article.name|truncate:50:"..."%}</div>
+						<div id="text_jc">{%$article.content.short|strip_tags|truncate:640:"..."%}</div>
+						<div id="data_jc"><div id="podrobnee">
+				
+						 <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$article.cat_uri%}/{%$article.uri%}">{%$locale.1260%}</a>
+						
+						</div> <div id="data_right">{%$article.pubdate|date_format:"%d.%m.%Y"%}</div></div>
+						</div>
+						</li>
+						{%/foreach%}
+                        </ul>
+                </div>
+
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+
+                <p class="jcarousel-pagination"></p>
+            </div>
+			 </div>

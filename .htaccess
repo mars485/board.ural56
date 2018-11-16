@@ -1,0 +1,18 @@
+AddDefaultCharset UTF-8
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?%{QUERY_STRING} [L]
+
+#<IfModule mod_security.c>
+#SecFilterEngine Off
+#SecFilterScanPOST Off
+#</IfModule>
+#<IfModule security_module>
+#SecFilterEngine Off
+#SecFilterScanPOST Off
+#</IfModule>
+#<IfModule security2_module>
+#SecFilterEngine Off
+#SecFilterScanPOST Off
+#</IfModule>

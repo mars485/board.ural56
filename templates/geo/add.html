@@ -1,0 +1,156 @@
+<script type="text/javascript">
+
+function insert_tag(tag)
+	{
+	if(tag == '')
+		{
+		document.getElementById('tagsinput').value = '';
+		}
+	else
+		{
+		if(document.getElementById('tagsinput').value !=  "")
+			{
+			document.getElementById('tagsinput').value = document.getElementById('tagsinput').value + ', ' + tag;
+			}
+		else
+			{
+		    document.getElementById('tagsinput').value = tag;
+			}
+		}
+	}
+</script>
+
+<center>
+
+
+
+
+	{%if $err|@count > 0%}
+		<center>
+			<div class='error'>
+				<ul>
+					{%foreach  from=$err item='er'%}
+					<li>{%$er%}</li>
+					{%/foreach%}
+				</ul>
+			</div>
+		</center>
+	{%/if%}
+
+	{%if $redirect%}
+		<center>
+			<div class='ok'>
+			{%if $editable%}
+		        {%$locale.134%}
+		        <br />
+		        {%if $settings.default_message_status == 0%}
+		        {%$locale.135%}
+		        {%elseif $settings.default_message_status == 1 && $settings.user%}
+		        <br /><br />
+		        &raquo; <a href="{%$settings.patch%}users/">{%$locale.104%}</a> <br />
+		        &raquo; <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a>
+                {%else%}
+		        &raquo; <a href="{%$settings.patch%}messages/{%$check.id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+		        &raquo; <a href="{%$settings.patch%}edit/{%$check.id%}">{%$locale.136%}</a>                
+		        {%/if%}
+		  	{%else%}
+		        {%$locale.101%}<br />  
+		        <br />
+		        {%if $settings.default_message_status == 0%}
+		        {%$locale.102%}<br />  
+		        {%elseif $settings.default_message_status == 1 && $settings.user%}
+		        {%$locale.103%} <br />
+		        &raquo; <a href="{%$settings.patch%}users/">{%$locale.104%}</a> <br />
+		        &raquo; <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+                {%else%}
+		        &raquo; <a href="{%$settings.patch%}messages/{%$save_id%}-{%$check.title|cpu%}.html">{%$locale.978%}</a> <br />               
+		        {%/if%}
+                {%if $RegisteredUser%}
+                    &raquo; {%$locale.48%}
+                {%/if%}
+		  	{%/if%}
+			</div>
+		</center>
+	{%else%}
+    
+		<form name='add' action='?' method='post' enctype='multipart/form-data'>
+        <input type='hidden' name='form_id' value='{%$form_id%}'/>
+        <input type='hidden' name='add_cat' value=''/>
+        <input type='hidden' name='add_region' value=''/>
+        
+		<table border='0' width='600' class='add'>
+		<tr><td width='200'></td><td width='400'></td></tr>
+		{%if $settings.user %}
+			<tr><td align='left'><img class='help' src="{%$settings.patch%}images/pxl.gif" width="16" height="15" alt="" border="0" />&nbsp;{%$locale.28%}:{%$req%}</td><td align='left'><input type='text' value='{%$settings.user.name%}'  disabled="disabled" class='add'  /></td></tr>
+			<tr><td align='left'><img class='help' src="{%$settings.patch%}images/pxl.gif" width="16" height="15" alt="" border="0" />&nbsp;{%$locale.26%}:{%$req%}</td><td align='left'><input type='text' value='{%$settings.user.email%}'  disabled="disabled" class='add'  /></td></tr>
+		{%else%}
+			<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.29%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.28%}{%$req%}</td><td align='left'><input {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%} name='name' type='text' value='{%$check.user%}' class='add'/></td></tr>
+			<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.27%}{%$locale.71%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.26%}{%$req%}</td><td align='left'><input {%if $smarty.const.ADMINSTATUS && $check.user_id != ""%}disabled{%/if%} name='email' type='text' value='{%$check.email%}' class='add'/></td></tr>
+            {%if !$editable%}
+                <tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.988%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.22%}{%if $settings.unreg != 1%}{%$req%}{%/if%}</td><td align='left'><input name='password1' type='password' value='' class='add' id="password1" /></td></tr>
+                <tr style="display: none;"><td align='left'><img class='help' src="{%$settings.patch%}images/pxl.gif" width="16" height="15" alt="" border="0" />&nbsp;{%$locale.33%}{%if $settings.unreg != 1%}{%$req%}{%/if%}</td><td align='left'><input name='password2' type='password' value='' class='add' id="password2" /></td></tr>
+            {%/if%}
+        {%/if%}
+
+
+		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.73%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.72%}{%$req%}</td><td align='left'><input name='title' type='text' value='{%$check.title%}' class='add'/></td></tr>
+		{%if !$editable%}
+    		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.77%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.78%}{%$req%}</td><td align='left'>
+    			{%if $settings.active_service == 1%}
+    				{%if !$editable%}
+    					<iframe scrolling='no' src="{%$settings.patch%}timing/?days={%$check.active_days%}" style="width:100%; height:50px;" frameborder="0" class="add" id="frame_days"></iframe>
+    				    <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+    				    <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+    			    {%/if%}
+    			{%else%}
+    				<select size='1' name='timing' class='add'>
+    					<option value=''>{%$locale.81%}</option>
+    					{%foreach  from=$timing item='time'%}
+    					   <option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+    					{%/foreach%}
+    				</select>
+    			{%/if%}
+    		</td></tr>
+        {%/if%}
+
+		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.84%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.83%}{%$req%}</td><td align='left'><iframe scrolling='no' src="{%$settings.patch%}add/select/region/?i={%if $check.region == ""%}{%$second_region.id%}{%else%}{%$check.region%}{%/if%}" style="width:100%; " frameborder="0" class='add' id="frame_region"></iframe>
+		</td></tr>
+
+		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.80%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.79%}{%$req%}</td><td align='left'><iframe scrolling='no' src="{%$settings.patch%}add/select/cat/?i={%$check.cat%}" style="width:100%;" frameborder="0" class='add' id="frame_cat"></iframe></td></tr>
+       </table>
+
+		<div id='fields'></div>
+
+        <table border='0' width='600' class='add'>
+		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.75%} {%$settings.max_text%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.74%}{%$req%}</td><td align='left'> </td></tr>
+		<tr><td align='center' colspan='2'>
+		{%if $settings.fckeditor == 1%}
+		<textarea class="ckeditor" cols="80" name="content" rows="10">{%$check.content%}</textarea>
+		{%else%}
+		<textarea class='add' name='content' rows='5' style='width:100%;'>{%$check.content%}</textarea>
+		{%/if%}</td></tr>
+
+		<tr><td align='left'><img class='help' onmouseover="Tip(this, '{%$locale.106%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.107%}:<br />
+		<img  src="{%$settings.patch%}images/pxl.gif" width="16" height="1" alt="" border="0">&nbsp;<font  style='font-size:10px;'>[<a href="javascript:insert_tag('');">{%$locale.108%}</a>]</font>
+		</td><td align='left'><input name='tagsinput' type='text' value='{%$check.tags%}' id='tagsinput' class='add'><br />
+		<div class='tag_block'>
+			{%foreach from=$settings.tags item='tag'%}
+				<a class="{%$tag.tag_class%}" href="javascript:insert_tag('{%$tag.tag_name%}');">{%$tag.tag_name%}</a>&nbsp;
+			{%/foreach%}
+		</div>
+		</td></tr>
+
+		{%if $settings.captcha == 1%}
+		<tr><td><img class='help' onmouseover="Tip(this, '{%$locale.45%}')" onmouseout="UnTip(this)" src="{%$settings.patch%}images/help.gif" width="16" height="15" alt="{%$locale.32%}" border="0"/>&nbsp;{%$locale.44%}
+		<center><img src='{%$settings.patch%}captcha/{%"100000"|mt_rand:900000%}'  width='80' height='40'/></center>
+		</td><td><input name='captcha' type='text' value='' class='add' style="width:80px;"/></td></tr>
+		{%/if%}
+		<tr><td colspan='2'><input class='add' style='width:100%; height:20px;' type='submit' name='submit' value='{%$locale.55%}'></td></tr>
+		</table>
+		<input name='post_filter' type='hidden' value='false'>
+		</form>
+	{%/if%}
+
+
+
+</center>

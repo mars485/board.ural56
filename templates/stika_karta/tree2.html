@@ -1,0 +1,44 @@
+<style>
+#tree_cat_tree {
+display: none;
+}
+</style>
+
+<div>
+<div id="tree_h1">{%$locale.1268%}</div>
+<div id="width_tree">
+{%foreach from=$tree item=el%}
+
+
+
+
+
+<div id="menfon_polniy">
+
+
+<div class="tree_name_polniy">
+<a href="{%$settings.path_region%}{%$uri%}{%$el.uri%}/">{%$el.name%}</a>
+</div>
+
+	<div id="menfon_polniy_rubriki" style="margin-top: 0;">
+
+
+	{%foreach from=$el.cat item='el2' name='ind'%}
+                {%assign var="count" value=$el2.id|count_msg%}
+            	<a style="display: block; width: 100%;" href="{%$el.uri%}/{%$el2.uri%}/" class="zpt">{%$el2.name%}&nbsp;<span class="zpt">({%$count%})</span></a>
+				
+            {%/foreach%}		
+
+
+</div>
+
+ 
+
+
+
+</div>{%/foreach%}
+ 
+
+	</div>
+
+</div>

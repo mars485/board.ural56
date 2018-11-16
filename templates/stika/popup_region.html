@@ -1,0 +1,26 @@
+<div style="width: 100%; display: table;">
+  <div id="gor_name">Выбор города</div> <div id="gor_name_vse">  <a href='{%$settings.path%}change_region/?act=change_region&clean_region'>{%$locale.9%}</a></div>
+</div>
+
+
+<div id="region_body">
+<div id="ul_r">
+    
+      <div id="ul_reg">
+     
+            {%foreach from=$regions_recursive.cat item=el%}
+                {%if $el.main%}
+             
+                    {%assign var="uri" value=$settings.path%}
+                    <!--<a href="{%$uri%}{%$el.uri%}/" data="{%$el.id%}">{%$el.name%}</a>-->
+                    {%if $el.cat%}
+                        {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+                        <ul>{%include file="region_recursive.html" el=$el.cat%}</ul>
+                    {%/if%}
+             
+                {%/if%}
+            {%/foreach%}
+      
+   </div>
+</div>
+</div>

@@ -1,0 +1,57 @@
+{%include file='header.html'%}
+    {%$blocks.h%}
+	<div id="blocks_l">
+{%$blocks.l%}
+</div>
+<!--Окно регионов-->
+<div id="popup">
+	<div class="popup_content">
+		<div class="region_content"></div>
+		<div id="sel_reg">
+			<iframe scrolling='no' src="{%$settings.patch%}add_reg/select/region/?i={%$second_region.id%}&search=true" style="width:100%; height: 50px; no-repeat;background-position: left center;" frameborder="0" class='add' id="region_frame"></iframe>
+			<input class="reg_i" type="submit" id="region_changer" value="Выбрать"/>
+		</div>
+	</div>
+	<div id="close">Закрыть</div>
+</div>
+<!--Окно регионов-->
+
+
+<!--Хлебные крошки-->
+{%if $smarty.get.cat.0 == 'messages'%}
+<div id="tree_cat_tree_mass">
+
+<a href="{%$settings.path%}">{%$locale.1214%}</a>
+<a href='{%$tit.link%}' class='cat_ser'> <span>  /  </span>{%$message.cat|linenav:$categories:'cat'%} / {%foreach from=$title_normal item='tit' name='i'%}{%if $smarty.foreach.i.index == 0%}{%else%}{%$tit.name|truncate_utf:120:'...'%}{%/if%}{%/foreach%}</a>
+
+
+</div>
+    {%else%}
+    {%if !$smarty.get.cat.0 == ''%}
+  <div id="tree_cat_tree" style="margin-bottom: 20px;">
+
+<a href="{%$settings.path%}">{%$locale.1214%}</a>
+{%foreach from=$title_normal item='tit' name='i'%}
+{%if $smarty.foreach.i.index == 0%}
+{%else%}
+<a href='{%$tit.link%}' class='cat_ser'> <span>  >  </span>{%$tit.name|truncate_utf:120:'...'%}</a>
+{%/if%}
+{%/foreach%}
+
+</div>
+
+{%else%}
+
+{%/if%}
+
+{%/if%}
+<!--Хлебные крошки-->
+
+
+<!--Таблица -Основной контейнер-->
+<table cellpadding="0" cellspacing="0" border="0" id="table_body">
+<tbody>
+<tr><td>
+<div id="width">
+
+

@@ -1,0 +1,30 @@
+<h4>{%$locale.1027%}</h4>
+
+<div class="row articles_cat">
+{%foreach from=$articles_cat item='cat'%}
+    <div class="col-lg-4 col-md-6 cil-sm-6 col-xs-12"><a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$cat.uri%}/">{%$cat.name%}</a> ({%$cat.count%})</div>
+{%/foreach%}
+</div>
+
+<h4>{%$locale.1037%}</h4>
+
+{%foreach from=$articles item='article'%}
+    <div class="article">
+        <h4><span class="glyphicon glyphicon-share-alt"></span> <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$article.cat_uri%}/{%$article.uri%}">{%$article.name%}</a></h4>
+        <div>
+            {%$article.content.short%}
+            {%if $article.content.more%}
+                <a href="{%$smarty.const.PATH%}{%$smarty.get.cat.0%}/{%$article.cat_uri%}/{%$article.uri%}">{%$locale.15%}</a>
+            {%/if%}
+        </div>
+        <span class="smalldate"> <span class="glyphicon glyphicon-calendar"></span> {%$article.pubdate|date_format:"%d.%m.%Y"%}</span>
+    </div>
+{%/foreach%}
+
+{%if $pages > 1%}
+	<span>{%$locale.140%}:</span>
+	{%section name=page loop=$pages%}
+		{%assign var="p" value=$smarty.section.page.index+1%}
+		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+	{%/section%}
+{%/if%}

@@ -1,0 +1,13 @@
+
+{%foreach from=$el item=el%}
+    <li>
+        {%assign var="uri2" value=$uri%}
+        {%assign var="count" value=$el.id|count_msg%}
+        <a href="{%$uri%}{%$el.uri%}/">{%$el.name%}</a>&nbsp;<span{%if $count == 0%} class='empty'{%/if%}>({%$count%})</span>
+        {%if $el.cat%}
+            {%assign var="uri" value=$uri|cat:$el.uri|cat:"/"%}
+            <ul>{%include file="tree1_recursive.html" el=$el.cat%}</ul>
+        {%/if%}
+        {%assign var="uri" value=$uri2%}
+    </li>
+{%/foreach%}

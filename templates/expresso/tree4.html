@@ -1,0 +1,15 @@
+<div class="categories-list">
+{%foreach from=$tree item=el%}
+    <div class='category-group'>
+    	<table class="table">
+            <tbody>
+          		<tr><td colspan='2' class="info"><a href="{%$settings.path_rel%}{%$el.uri%}/">{%$el.name%}</a></td></tr>
+        		{%foreach from=$el.cat item='el2' name='ind'%}
+                    {%assign var="count" value=$el2.id|count_msg%}
+        			 <tr><td>&raquo; <a href="{%$settings.path_rel%}{%$el.uri%}/{%$el2.uri%}/">{%$el2.name%}</a></td><td width='4'><span class="badge"><b class="mcount{%if $count == 0%}null{%/if%}">{%$count%}</b></span></td></tr>
+                {%/foreach%}
+    		</tbody>
+    	</table>
+    </div>
+{%/foreach%}
+</div>

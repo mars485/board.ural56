@@ -1,0 +1,114 @@
+
+<form name='frm' class="container_form" action='{%$settings.patch%}sort/?' method='GET'>
+<div style='border:1px dotted #808080; margin:0px;'>
+<table border='0' width='100%'>
+	<tr>
+		<td colspan='2'>
+		<fieldset class='field'><legend>{%$locale.17%}</legend>
+			<select size='1' name='cat_id'>
+			<option value='' >{%$locale.204%}</option>
+			{%$category_select%}
+			</select>
+		</fieldset>
+		</td>
+		<td>
+		<fieldset class='field'><legend>{%$locale.72%}</legend>
+			<input name='title' type='text' value='{%$smarty.get.title%}' style='width:100%'>
+		</fieldset>
+		</td>
+	</tr>
+	<tr>
+		<td valign='top'>
+		<fieldset class='field'><legend>{%$locale.16%}</legend>
+			<select size='1' name='region_id'>
+			<option value='' >{%$locale.204%}</option>
+			{%$region_select%}
+			</select>
+		</fieldset>
+		<fieldset class='field'><legend>{%$locale.74%}</legend>
+			<input name='text' type='text' value='{%$smarty.get.text%}' style='width:100%'>
+		</fieldset>
+		</td>
+		<td valign='top'>
+		<fieldset class='field'><legend>{%$locale.199%}</legend>
+			<input name='sort_by' {%if $smarty.get.sort_by == 'date_add'%}checked{%/if%} type='radio' value='date_add'>&nbsp;&nbsp;{%$locale.13%}<br />
+			{%foreach from=$fields item='field'%}
+				{%if $field.type != 'c' &&  $field.type != 'i' &&  $field.type != 'f'%}
+					    <input name='sort_by' type='radio' value='f_{%$field.id%}' {%if $smarty.get.sort_by == "f_`$field.id`"%}checked{%/if%}>&nbsp;&nbsp;{%$field.name%}<br />
+				{%/if%}
+			{%/foreach%}
+			<br />
+			<input name='desc' {%if $smarty.get.desc != ""%}checked{%/if%} type='checkbox' value='yes'>&nbsp;&nbsp;{%$locale.205%}
+		</fieldset>
+		</td>
+		<td valign='top'>
+		<fieldset class='field'><legend>{%$locale.202%}</legend>
+			{%foreach from=$fields item='field'%}
+				{%if $field.type == 'f' OR  $field.type == 'i' OR  $field.type == 'y' OR  $field.type == 'j'%}
+					    <input name='must[]' type='checkbox' {%foreach from=$smarty.get.must item='m'%}{%if $m == "f_`$field.id`"%} checked {%/if%}{%/foreach%} value='f_{%$field.id%}' >&nbsp;&nbsp;{%$field.name%}<br />
+				{%/if%}
+			{%/foreach%}
+		</fieldset>
+		</td>
+	</tr>
+	<tr>
+	<td colspan='3'><hr width='100%' color='#FFFFFF' size='1' noshadow></td>
+	</tr>
+	<tr>
+		<td colspan='3' valign='top'>
+		{%foreach from=$fields item='field'%}
+		{%assign var="id" value=`$field.id`%}
+		{%assign var="id" value=f_$id%}
+		{%assign var="default" value=`$smarty.get.$id`%}
+
+			{%if $field.type != 'i' &&  $field.type != 'f' &&  $field.type != 'y' &&  $field.type != 'j'%}
+				<fieldset class='float_field'><legend>{%$field.name%}</legend>
+
+					{%if $field.type == 'v' || $field.type == 't'%}
+							{%if $field.type_string == 'n' %}
+							{%assign var="sid" value=cond_$id%}
+								<select size='1' name='cond_{%$id%}'>
+								<option {%if $smarty.get.$sid == 'eq'%}selected{%/if%} value='eq'>{%$locale.206%}</option>
+								<option {%if $smarty.get.$sid == 'over'%}selected{%/if%} value='over'>{%$locale.207%}</option>
+								<option {%if $smarty.get.$sid == 'less'%}selected{%/if%} value='less'>{%$locale.208%}</option>
+								</select>
+							{%/if%}
+						<input name='{%$id%}' type='text' value='{%$default%}' size='30'>
+					{%/if%}
+
+					{%if $field.type == 's'%}
+						<select size='1' name='{%$id%}' >
+							<option value='' >{%$locale.204%}</option>
+							{%foreach  from=$field.values_array item='vl' key='k'%}
+							<option {%if $default == $k && $default != ""%} selected {%/if%} value='{%$k%}' >{%$vl%}</option>
+							{%/foreach%}
+						</select>
+					{%/if%}
+
+					{%if $field.type == 'r'%}
+						<input name='{%$id%}' type='radio' value=''>&nbsp;{%$locale.204%}<br />
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+						<input name='{%$id%}'  {%if $default == $k && $default != ""%} checked {%/if%}  type='radio' value='{%$k%}'>&nbsp;{%$vl%}<br />
+						{%/foreach%}
+					{%/if%}
+
+					{%if $field.type == 'c'%}
+						{%foreach  from=$field.values_array item='vl' key='k'%}
+
+						<input name='{%$id%}[]' {%foreach from=$default item='def'%}{%if $def == $k%} checked {%/if%}{%/foreach%} type='checkbox' value='{%$k%}' >&nbsp;{%$vl%}<br />
+						{%/foreach%}
+					{%/if%}
+
+				</fieldset>
+			{%/if%}
+		{%/foreach%}
+		</td>
+	</tr>
+    <tr>
+	    <td colspan='3' align='center'>
+	    <input type='submit' value='{%$locale.203%}' style='font-size:14px; font-weight:bold; font-family:Arial,Tahoma; margin:4px; padding:4px; width:200px;'>
+	    </td>
+    </tr>
+</table>
+</div>
+</form>

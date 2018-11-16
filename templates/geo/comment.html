@@ -1,0 +1,15 @@
+<div class='comm_user'>
+	{%if $comment.userinfo%}
+		<a class="userinfo" title="{%$locale.772%}" href="{%$settings.patch%}userinfo/{%$comment.userinfo.id%}/">{%$comment.userinfo.name%}</a>
+	{%else%}
+		<a class="comm_usermail group iframe" title="{%$locale.157%}" href="{%$settings.patch%}sendmail/?comment_id={%$comment.id%}">{%$comment.user_name%}</a>
+	{%/if%}
+    <span class="smalldate">{%$comment.date|date_format:"%d.%m.%Y %H:%M"%}</span>
+        {%if $comment.editable%}
+            <span class="editblock" style="visibility: hidden;">
+                <a href="" name="{%$comment.id%}" class="comm_edit" >{%$locale.200%}</a>
+                <a href="" name="{%$comment.id%}" class="comm_delete">{%$locale.201%}</a>
+            </span>
+        {%/if%}
+    <div class="comm_text">{%$comment.text|wordwrap:50%}</div>
+</div>

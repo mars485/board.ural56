@@ -1,0 +1,49 @@
+
+<div class='alert alert-info'>{%$counter%}</div>
+
+{%if $subsc|count > 0%}
+	{%foreach  from=$subsc item='s'%}
+        <form name='form{%$s.id%}' action='?' method='post'>
+        <div class="row">
+            <div class="col-md-1">
+                <input name='id' type='hidden' value='{%$s.id%}'>
+                <input type='submit' name='submit_subcscribe_{%$s.id%}' value='X' class="btn btn-danger" />
+            </div>
+            <div class="col-md-11">
+                <p class="lead">
+        		{%foreach  from=$s.cat item='linenav' name='i'%}
+        		  {%$linenav.name%}
+        		  {%if $smarty.foreach.i.last eq false %} / {%/if%}
+        		{%/foreach%}
+                </p>
+            </div>
+        </div>
+    </form>
+	{%/foreach%}
+
+{%/if%}
+
+
+
+<form name='form' action='?' method='post' class="form-horizontal">
+
+    <div class="form-group">
+        <label class="col-md-4">{%$locale.124%}</label>
+        <div class="col-md-8">
+            <input type="hidden" name="add_cat" id="add_cat" value="{%$shop.cat%}"/>
+            <div class="multiselect" data-name="cat" data-default="{%$shop.cat%}">
+                <p class="text-info">{%$categories[$shop.cat].name%} <a class="btn btn-warning btn-xs" href="#">{%$locale.837%}</a></p>
+            </div>
+            <div class="alert alert-success" id="alert_cat_success" style="display: none;">{%$locale.82%}</div>
+            <div class="alert alert-warning" id="alert_cat_warning" style="display: none;">{%$locale.1177%}</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-8 col-md-offset-4">
+            <input type='submit' name='submit_subscribe' value='{%$locale.125%}'  class='btn btn-success'>
+        </div>
+    </div>
+
+
+
+</form>

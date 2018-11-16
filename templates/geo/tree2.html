@@ -1,0 +1,15 @@
+{%foreach from=$tree item=el%}
+    {%assign var="count" value=$el.id|count_msg%}
+    <div class='maintree'>
+        {%if $el.img != ""%}
+            <img src='{%$settings.path%}images/cat/{%$el.img%}' alt='{%$tree_array.name%}' border='0' align='left'/>
+        {%/if%}
+        <p><strong><a href='{%$settings.region_path%}{%$el.uri%}/'>{%$el.name%}</a></strong>&nbsp;[{%$count%}]</p>
+        <p style='font-style:italic; color:silver;'>
+            {%foreach from=$el.cat item='el2' name='ind'%}
+                {%assign var="count" value=$el2.id|count_msg%}
+            	<a href="{%$el.uri%}/{%$el2.uri%}/" style='font-style:italic; color:silver;'>{%$el2.name%}</a>&nbsp;({%$count%}){%if $smarty.foreach.ind.last eq false %},&nbsp;{%/if%}
+            {%/foreach%}
+        </p>
+    </div>
+{%/foreach%}

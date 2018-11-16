@@ -1,0 +1,55 @@
+{%if $messages|@count > 0%}
+    <script>
+    function functionLoop(){
+        if(document.getElementById('active_service').value == 'b'){
+                sum = '<a href={%$settings.path%}>{%$locale.180%}</a>';
+            }
+            else{
+            var sum = parseFloat(document.getElementById('active_service').value) * {%$messages|@count%};
+            if(isNaN(sum)){
+                sum = '{%$locale.1057%}';
+            }else{
+                sum = sum + ' {%$Currency%}';
+            }
+        }   
+        document.getElementById('recount_sum').innerHTML = sum;
+    }
+    var intervalID = setInterval("functionLoop()",500);
+    </script>
+    <p>{%$locale.981%}:</p>
+    
+    <ul style="margin-left: 20px;">
+        {%foreach from=$messages item='message' name='i'%}
+            <li>{%$message.title%}</li>
+        {%/foreach%}
+    </ul>
+    
+    <p>{%$locale.78%}:</p>
+    <form name='add' action='' method='post'>
+		<iframe scrolling='no' src="{%$settings.patch%}timing/?days={%$check.active_days%}&count={%$messages|@count%}" style="width:100%; height:50px;" frameborder="0" class="add" id="frame_days"></iframe>
+	    <input name="active_service" id="active_service" type="hidden" value="{%$check.active_service%}"/>
+	    <input name="active_days" id="active_days" type="hidden" value="{%$check.active_days%}"/>
+        <input type="submit" name="debit" value="{%$locale.619%}" />
+    </form>
+    <p>{%$locale.1053%}{%$messages|@count%} {%$messages|@count|om_number_smarty:$locale[3]:$locale[4]:$locale[5]%}: <span id="recount_sum">??</span></p>
+{%elseif $err%}
+		<center>
+			<div class='error'>
+				<ul>
+					{%foreach  from=$err item='er'%}
+					<li>{%$er%}</li>
+					{%/foreach%}
+				</ul>
+			</div>
+		</center>
+{%else%}
+<center>
+    <div class='ok'>
+    {%$locale.982%}
+    <br /><br />
+    » <a href="{%$settings.patch%}users/">{%$locale.104%}</a> <br />
+    </div>
+    </center>
+{%/if%}
+
+

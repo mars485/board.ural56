@@ -1,0 +1,16 @@
+<center>
+<div class='ok'>
+<form name='frm' action='?message={%$smarty.get.message%}&key={%$smarty.get.key%}' method='post'>
+<b>{%$locale.146%}:</b><br /><br />
+<select size='1' name='timing' class='add' style='width:200px;'>
+	<option value=''>{%$locale.81%}</option>
+	{%foreach  from=$timing item='time'%}
+	<option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+	{%/foreach%}
+</select>
+<br /><br />
+<input type='submit' name='submit_prolong' value='{%$locale.145%}'  class='add' style='width:200px;'>
+</form>
+</div>
+<center>
+

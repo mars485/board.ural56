@@ -1,0 +1,37 @@
+<script>
+	
+	
+
+var sort_by = '';
+var desc = '';
+$(document).ready(function() {
+loadFields('0');
+});
+
+            
+</script>
+
+<form name='add' id="search_s" action='{%$settings.path%}search/?' method='GET'>
+
+<fieldset class='float_field'><legend>{%$locale.17%}</legend>
+    <iframe scrolling='no' src="{%$settings.patch%}add/select/cat/?i={%$smarty.get.add_cat%}&search=true" style="width:100%; height: 50px;background: url({%$smarty.const.THEME%}images/245.GIF) no-repeat;background-position: left center;" frameborder="0" class='add' id="frame_cat"></iframe>
+</fieldset>
+
+<fieldset class='float_field'><legend>{%$locale.16%}</legend>
+    <iframe scrolling='no' src="{%$settings.patch%}add/select/region/?i={%$smarty.get.add_region%}&search=true" style="width:100%; height: 50px; background: url({%$smarty.const.THEME%}images/245.GIF) no-repeat;background-position: left center;" frameborder="0" class='add' id="frame_region"></iframe>
+</fieldset>
+
+        <input type='hidden' name='add_cat' value=''/>
+        <input type='hidden' name='add_region' value=''/>
+
+<fieldset class='float_field'><legend>{%$locale.873%}</legend>
+    <input value="{%$smarty.get.text%}" id="input_search" name="text" style="width:100%;"/>
+</fieldset>
+
+<div id="search_fields"></div>
+
+
+
+
+</form>
+<table style="width: 100%;"></table>

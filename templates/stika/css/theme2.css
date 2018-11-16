@@ -1,0 +1,163 @@
+#right{
+
+display: none;
+}
+.marked #h1 a {
+color: #000;
+}
+.marked #cena_hover {
+font-weight: 600;
+}
+.marked #cena_hover {
+font-weight: 600;
+}
+
+.marked #foto_list {
+background: none;
+border: 0;
+}
+.message {
+  padding: 15px;
+  margin-right: 9px;
+  margin-right: 9px;
+  width: 270px;
+  height: 245px;
+  float: left;
+  position: relative;
+  margin-top: -15px;
+    margin-bottom: 40px;
+	  border: 1px solid #eee;
+}
+
+
+#body_list {
+padding-left: 0;
+  height: 125px;
+  padding-top: 5px;
+}
+#foto_list {
+  border: 1px solid #e1e1e1;
+  padding: 8px;
+  transition: border .3s;
+  -moz-transition: border .3s;
+  -webkit-transition: border .3s;
+  -o-transition: border .3s;
+  width: 252px;
+  max-width: 252px;
+position: absolute;
+
+}
+
+
+#foto {
+width: 100%;
+border-spacing: 0;
+height: 100%;
+}
+
+#foto_list img {
+  max-width: 252px;
+  max-height: 150px;
+  height: 128px;
+}
+#h1 {
+width: 100%;
+height: 23px;
+position: absolute;
+top: 170px;
+overflow: hidden;
+}
+#h1 a{
+  color: #5d5d5e;
+  font-weight: 700;
+  font-size: 17px;
+  display: table;
+  }
+#text_massages {
+display: none;
+}
+#regas {
+font-size: 12px;
+color: #B1B1B1;
+  position: absolute;
+  margin-top: 200px;
+  height: 15px;
+  overflow: hidden;
+}
+#regas a {
+font-size: 12px;
+color: #B1B1B1
+}
+#body_cena {
+  top: 190px;
+  position: absolute;
+  height: 22px;
+  font-size: 14px;
+  color: #000;
+  font-family: Tahoma;
+    margin-top: 7px;
+	    color: #D5483E;
+  }
+  #cena_hover, #torg {
+  float: left;
+ 
+  }
+  
+#zvezda {
+display: block;
+  position: absolute;
+  right: 5px;
+  top: 3px;
+  }
+  
+#obol {
+  display: block;
+  float: left;
+  }
+#data_list {
+  color: #C3BEBE;
+  font-size: 12px;
+    margin-top: 220px;
+  position: absolute;
+}
+#torg {
+font-weight: 400;
+font-size: 12px;
+height: 13px;
+line-height: 18px;
+ text-transform: lowercase;
+ margin-left: 5px;
+ color: #999;
+   color: #3684AD;
+}
+
+
+#smena1 {
+    background: #FFF url(../images/smena2.png) 10px -17px no-repeat;
+	}
+	#smena1:hover {
+    background: #FFF url(../images/smena2.png) 10px 10px no-repeat;
+	}
+	
+	#smena {
+	        background: #FFF url(../images/smena.png) 10px 10px no-repeat;
+	}
+	#smena:hover {
+background: #FFF url(../images/smena.png) 10px -17px no-repeat;
+	}
+	
+	.marked {
+background: #F8EEC6;
+  border: 1px solid rgb(166, 186, 216);
+border-radius: 5px;
+}
+
+#vid_k {
+    width: 100%;
+    display: table;
+    margin-bottom: 20px;
+}
+
+.block-stretch {
+display: none;
+}

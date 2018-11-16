@@ -1,0 +1,27 @@
+<div align="center">
+	<div class='count_block'>{%$messages_counter%}</div>
+</div>
+
+{%if $pages > 1%}
+	<div align='left' class='pages'>
+    	<span>{%$locale.140%}:</span>
+    	{%section name=page loop=$pages%}
+    		{%assign var="p" value=$smarty.section.page.index+1%}
+    		<a href="page{%$p%}.html{%$get_str%}" {%if $smarty.get.page == $p%}class='selected_page'{%/if%}>{%$p%}</a>&nbsp;
+    	{%/section%}
+	</div>
+{%/if%}
+
+
+<ul class="allusers">
+    {%foreach from=$allusers item='user' name='i'%}
+        <li>
+        <div></div>
+        <a href="{%$settings.path%}userinfo/{%$user.id%}/">{%$user.name%}</a>
+        <span {%if $user.messages == 0%}style="color:silver;"{%/if%}>({%$user.messages%})</span>
+        </li>
+    {%/foreach%}
+</ul>
+
+<div class="clear"></div>
+

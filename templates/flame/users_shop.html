@@ -1,0 +1,383 @@
+
+    {%if $err%}
+    	<center>
+    		<div class='error'>
+    			<ul>
+    				{%foreach  from=$err item='er'%}
+    				<li>{%$er%}</li>
+    				{%/foreach%}
+    			</ul>
+    		</div>
+    	</center>
+    {%/if%}
+    
+    <p>
+        {%$locale.1054%}:
+        {%if $shop.status == 0%}<span style="color: silver;">{%$locale.1056%}</span>{%/if%}
+        {%if $shop.status == 1%}<span style="color: green;">{%$locale.1055%}</span>{%/if%}
+        {%if $shop.status == 2%}<span style="color: red;">{%$locale.1151%}</span>{%/if%}
+    </p>
+
+    {%*//upd170216*%}
+    {%if $settings.shop_pay == 1%}
+        <p>
+            {%$locale.1169%}: 
+            {%if $shop.next_pay_diff == 0%}
+                {%$locale.1170%}
+            {%elseif $shop.next_pay_diff > 0%}
+                <span style="color: green;">{%$shop.next_pay_timestamp|date_format:"%d.%m.%Y"%}</span>
+                {%if $shop.next_pay_diff < 10%}
+                    , {%$locale.1171%} {%$shop.next_pay_diff%} {%$shop.next_pay_diff|om_number:$locale.173:$locale.174:$locale.175%}
+                {%/if%}
+            {%elseif $shop.next_pay_diff < 0%}
+                {%$shop.next_pay_timestamp|date_format:"%d.%m.%Y"%}, 
+                <span style="color: red;">{%$locale.1172%}</span>
+            {%/if%}
+        </p>
+        <p>
+            <style>
+
+            </style>
+            <a href="#" id="shop_pay_prolong">
+                <i class="glyphicon glyphicon-share-alt"></i> {%$locale.1173%}
+            </a>
+            <div style="display: none;" id="shop_pay_prolong_cont" >
+                <h3>{%$locale.1174%}</h3>
+                {%foreach from=$settings.shop_pay_types item='pt' key='id'%}
+                    <div class="shop_pay_prolong alert alert-success text-center">
+                        <p class="lead"><i class="fa fa-calendar-o" aria-hidden="true"></i> {%$pt.name%}</p>
+                        <p class="price">{%$pt.price%} {%$Currency%}</p>
+                        <a class="btn btn-success" title="{%$locale.145%}" href="?act=prolong&id={%$id%}" >
+                             <i class="glyphicon glyphicon-share-alt"></i> {%$locale.145%}
+                        </a>
+                        
+                    </div>
+                {%/foreach%}
+                <div class="clear2"></div>
+            </div>
+        </p>
+    {%/if%}
+
+    <ul class="nav nav-tabs">
+        <li {%if $act==""%}class="active"{%/if%}><a href="?">{%$locale.1121%}</a></li>
+        <li {%if $act=="contacts"%}class="active"{%/if%}><a href="?act=contacts">{%$locale.1122%}</a></li>
+        <li {%if $act=="delivery"%}class="active"{%/if%}><a href="?act=delivery">{%$locale.1123%}</a></li>
+        <li {%if $act=="worktime"%}class="active"{%/if%}><a href="?act=worktime">{%$locale.1231%}</a></li>
+        
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active">
+            {%if !$shop%}  
+                <div class="alert alert-info">
+                    <p><i class="icon-info"></i> {%$locale.1132%}</p>
+                    <p>{%$locale.1133%}</p>
+                </div>
+                <form action="" method="POST" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"  for="name">
+                            {%$locale.1145%}
+                        </label>
+                        <div class="col-md-8">
+                            <input maxlength="{%$settings.shop_max_name%}" required="" value="{%$smarty.post.name%}" type="text" name="name" class="form-control calcletters" placeholder="{%$locale.1221%} {%$settings.user.name|htmlspecialchars%}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"  for="description">
+                            {%$locale.358%}
+                        </label>
+                        <div class="col-md-8">
+                            <textarea maxlength="{%$settings.shop_max_description%}" required="" class='form-control calcletters' name='description' rows='5' placeholder="{%$locale.1221%} {%$settings.user.name|htmlspecialchars%} &mdash;  {%$locale.1141%}">{%$smarty.post.description%}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="text-center"><input type="submit" class='add btn btn-success'  value="{%$locale.1134%}"></p>
+                    </div>
+                    
+                </form>
+            {%elseif $smarty.get.act == "create"%}
+                <div class="ok bg-success">
+                    <p class="lead"><i class="icon-ok"></i>{%$locale.1135%}</p>
+                    <p class="text-primary">{%$locale.1136%}</p>
+                </div>
+                
+            {%elseif $smarty.get.act == ""%}
+                <form action="" name="add" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="sh_name">{%$locale.1145%}</label>
+                        <p><input id="sh_name" required="" type="text" name="name" maxlength="{%$settings.shop_max_name%}" class="calcletters form-control" placeholder="{%$locale.1221%} {%$settings.user.name|htmlspecialchars%}" value="{%$shop.name%}"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="sh_description">{%$locale.358%}</label>
+                		{%if $settings.fckeditor == 1%}
+                		  <textarea id="sh_description" class="ckeditor" cols="80" name="description" placeholder="{%$settings.user.name|htmlspecialchars%} &mdash;  {%$locale.1141%}" rows="10">{%$shop.description%}</textarea>
+                		{%else%}
+                		  <textarea id="sh_description" maxlength="{%$settings.shop_max_description%}" class='calcletters form-control' name='description' rows='5' style='width:100%;' placeholder="{%$locale.1221%} {%$settings.user.name|htmlspecialchars%} &mdash;  {%$locale.1141%}">{%$shop.description%}</textarea>
+                		{%/if%}
+
+                    </div>
+                    <div class="form-group">
+                        <label for="sh_img">
+                            {%$locale.539%} 
+                        </label>
+                        <p class="text-muted">({%$locale.1140%} {%$image_size.width%} X {%$image_size.height%}px)</p>
+                        <p><img src="{%$shop.logo%}?rnd={%100|rand:999%}"/></p>
+                        <p>{%$locale.7%} &mdash; <input id="sh_img" type="file" name="img" value="{%$locale.7%}"/></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>{%$locale.1118%}</label>
+                        <input type="hidden" name="add_region" id="add_region" value="{%$shop.region%}"/>
+                        <div class="multiselect" data-name="region" data-default="{%$shop.region%}">
+                            <p class="text-info">{%$allregions[$shop.region].name%} <a class="btn btn-warning btn-xs" href="#">{%$locale.837%}</a></p>
+                        </div>
+                        <div class="alert alert-success" id="alert_region_success" style="display: none;">{%$locale.82%}</div>
+                        <div class="alert alert-warning" id="alert_region_warning" style="display: none;">{%$locale.1177%}</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>{%$locale.1119%}</label>
+                        <input type="hidden" name="add_cat" id="add_cat" value="{%$shop.cat%}"/>
+                        <div class="multiselect" data-name="cat" data-default="{%$shop.cat%}">
+                            <p class="text-info">{%$categories[$shop.cat].name%} <a class="btn btn-warning btn-xs" href="#">{%$locale.837%}</a></p>
+                        </div>
+                        <div class="alert alert-success" id="alert_cat_success" style="display: none;">{%$locale.82%}</div>
+                        <div class="alert alert-warning" id="alert_cat_warning" style="display: none;">{%$locale.1177%}</div>
+                    </div>
+                    
+                    <input name='post_filter' type='hidden' value='false'>
+                    <p>
+                        <input class='add btn btn-primary' type='submit' name='submit' value='{%$submit_text%}'>
+                    </p>
+                    
+                </form>
+            {%elseif $smarty.get.act == "contacts"%}
+                <form action="" name="shop" method="POST">
+                    <div class="form-group">
+                        <label>{%$locale.458%}</label>
+                        <input maxlength="{%$settings.shop_max_addr%}" type="text" name="addr" class="calcletters form-control" placeholder="{%$locale.1142%}" value="{%$shop.addr%}">
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label>{%$locale.1109%}</label>
+                        <input type="text" name="phone1" class="form-control phonemask"  placeholder="+7 812 123-23-56" value="{%$shop.phone1%}">
+                    </div>
+                    <div class="form-group">
+                        <label>{%$locale.1110%}</label>
+                        <input type="text" name="phone2" class="form-control phonemask"  placeholder="+7 812 123-23-56" value="{%$shop.phone2%}">
+                    </div>
+                    <div class="form-group">
+                        <label>{%$locale.410%}</label>
+                        <input  maxlength="{%$settings.shop_max_site%}" type="url" name="site" class="calcletters form-control"  placeholder="https://example.com" value="{%$shop.site%}">
+                    </div>
+                    <div class="form-group">
+                        <label>{%$locale.1143%}</label>
+                    
+                        <input type="hidden" value="{%$shop.map%}" name="map" id="shopmap" />
+                        <div id="YMapsID" style="width:100%;height:400px"></div>
+                        
+                        {%if $settings.maptype == 1%}
+                            <script>
+                        
+                              function initMap() {
+                                
+                                var pl = false;
+                                var myLatLng = {lat: {%$shop.point.0%}, lng: {%$shop.point.1%}};
+                        
+                                var map = new google.maps.Map(document.getElementById("YMapsID"), {
+                                  zoom: {%$shop.point.2%},
+                                  center: myLatLng
+                                });
+                                
+                                pl = placeMarker(myLatLng);
+                                
+                                google.maps.event.addListener(map, "click", function(event) {
+                                    if(pl != false){
+                                        pl.setMap(null);
+                                    }
+                                    pl = placeMarker(event.latLng);
+                                    var lat = pl.getPosition().lat();
+                                    var lng = pl.getPosition().lng();
+                                    var geopoint = lat + "," + lng + "," + map.getZoom();
+                                    document.getElementById("shopmap").value = geopoint;
+                                });
+
+                                function placeMarker(location) {
+                                    var marker = new google.maps.Marker({
+                                        position: location, 
+                                        map: map
+                                    });
+                                    return marker;
+                                } 
+                                
+                             }
+                            </script>
+                            <script async defer
+                            src="https://maps.googleapis.com/maps/api/js?key={%$settings.mapkey%}&callback=initMap">
+                            </script>
+                            
+                        {%else%}
+                        
+                            <script src="https://api-maps.yandex.ru/2.0/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+                            <script type="text/javascript">
+                                ymaps.ready(init);
+                                function init () {
+                                    var myMap = new ymaps.Map('YMapsID', {
+                                            center: [{%$shop.point.0%}, {%$shop.point.1%}],
+                                            zoom: {%$shop.point.2%}
+                                        });
+                                        
+                                    myMap.controls
+                                        .add("zoomControl")
+                                        .add("typeSelector")
+                                        .add("mapTools")
+                                        .add(new ymaps.control.ScaleLine())
+                                        .add("searchControl")
+                                        .add(new ymaps.control.MiniMap({
+                                            type: "yandex#publicMap"
+                                        }));                            
+                                        
+                                        {%if $shop.map != ""%}
+                                    		var myPlacemark = new ymaps.Placemark(
+                                    		[{%$shop.point.0%}, {%$shop.point.1%}] , {
+                                                
+                                            }, {
+                                                draggable: false
+                                            });
+                                    		myMap.geoObjects.add(myPlacemark);
+                                        {%/if%}
+            
+                                    myMap.events.add("click",
+                                        function(e) {
+                                            myMap.balloon.open(
+                                                e.get("coordPosition"), {
+                                                    contentBody: "{%$locale.680%}"
+                                                }  
+                                            );
+                                                var geopoint = e.get("coordPosition") + "," + myMap.getZoom();
+                                                top.document.getElementById("shopmap").value = geopoint;
+                                        }
+                                    );
+                                }
+                            </script>
+                        {%/if%}
+                        
+                    </div>
+                    <p>
+                        <input class='add btn btn-primary' type='submit' name='submit' value='{%$submit_text%}'>
+                    </p>
+                </form>
+                
+            {%elseif $smarty.get.act == "delivery"%}
+                <form action="" name="shop" method="POST">
+                    <div class="form-group">
+                        <label>{%$locale.1137%}</label>
+                        <p>
+                    		{%if $settings.fckeditor == 1%}
+                    		  <textarea class="ckeditor" cols="80" name="payment" placeholder="{%$locale.1138%}" rows="10">{%$shop.payment%}</textarea>
+                    		{%else%}
+                    		  <textarea maxlength="{%$settings.shop_max_payment%}" class='form-control calcletters' name='payment' rows='5' style='width:100%;' placeholder="{%$locale.1138%}">{%$shop.payment%}</textarea>
+                    		{%/if%}
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label>{%$locale.1144%}</label>
+                        <p>
+                    		{%if $settings.fckeditor == 1%}
+                    		  <textarea class="ckeditor" cols="80" name="delivery" placeholder="{%$locale.1139%}" rows="10">{%$shop.delivery%}</textarea>
+                    		{%else%}
+                    		  <textarea maxlength="{%$settings.shop_max_delivery%}" class='form-control calcletters' name='delivery' rows='5' style='width:100%;' placeholder="{%$locale.1139%}">{%$shop.delivery%}</textarea>
+                    		{%/if%}
+                        </p>
+                    </div>
+                    <input name='post_filter' type='hidden' value='false'>
+                    <p>
+                        <input class='add btn btn-primary' type='submit' name='submit' value='{%$submit_text%}'>
+                    </p>
+                </form> 
+            {%elseif $smarty.get.act == "worktime"%}
+                <form action="" name="shop" method="POST">
+                    <table class="table table-hover">
+                        <thead> 
+                            <tr> 
+                                <th>{%$locale.1240%}</th> 
+                                <th>
+                                    {%$locale.1241%}
+                                        <a href="#" class="clone" data-class="wt_from" 
+                                            data-original-title="{%$locale.1232%}"  
+                                            data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-clone" aria-hidden="true"></i></a>
+                                </th> 
+                                <th>
+                                    {%$locale.1242%}
+                                        <a href="#" class="clone" data-class="wt_to" 
+                                            data-original-title="{%$locale.1232%}"  
+                                            data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-clone" aria-hidden="true"></i></a>
+                                </th> 
+                                <th>
+                                    {%$locale.1243%}
+                                        <a href="#" class="clone" data-class="wt_pause1" 
+                                            data-original-title="{%$locale.1232%}"  
+                                            data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-clone" aria-hidden="true"></i></a>
+                                </th> 
+                                <th>
+                                    {%$locale.1244%}
+                                        <a href="#" class="clone" data-class="wt_pause2" 
+                                            data-original-title="{%$locale.1232%}"  
+                                            data-placement="top" data-toggle="tooltip">
+                                        <i class="fa fa-clone" aria-hidden="true"></i></a>
+                                </th> 
+
+                            </tr>
+                        </thead>
+                        {%foreach from=$weeks item='w' key='w_key'%}
+                            {%assign var='wt' value=$shop.worktime_array[$w_key]%}
+                            <tr>
+                                <td>{%$w%}</td>
+                                <td>
+                                    <input name="wt[{%$w_key%}][from]" 
+                                        type="text" 
+                                        value="{%$wt.from%}"
+                                        class="form-control wt_from"/>
+                                </td>
+                                <td>
+                                    <input name="wt[{%$w_key%}][to]" 
+                                        type="text" 
+                                        value="{%$wt.to%}"
+                                        class="form-control wt_to"/>
+                                </td>
+                                <td>
+                                    <input name="wt[{%$w_key%}][p_from]" 
+                                        type="text" 
+                                        value="{%$wt.p_from%}"
+                                        class="form-control wt_pause wt_pause1"/>
+                                </td>
+                                <td>
+                                    <input name="wt[{%$w_key%}][p_to]" 
+                                        type="text" 
+                                        value="{%$wt.p_to%}"
+                                        class="form-control wt_pause wt_pause2"/>
+                                </td>
+                            </tr>
+                        {%/foreach%}
+
+                    </table>
+                    <p>
+                        <input class='add btn btn-primary' type='submit' name='submit' value='{%$submit_text%}'>
+                    </p>
+                </form> 
+            {%elseif $smarty.get.act == "prolong"%}
+                {%if $go%}
+                    {%include file='users_pay.html'%}
+                {%else%}
+                    <div class="ok">
+                        {%$locale.227%}
+                    </div>
+                {%/if%}
+            {%/if%}
+        </div>
+
+    </div>

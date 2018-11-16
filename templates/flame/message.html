@@ -1,0 +1,362 @@
+{%if $MessageDisabled%}
+
+    <div class="alert alert-warning">
+        <p>{%$locale.1265%}</p>
+    </div>
+
+{%else%}
+
+    {%assign var='after_registration' value="<a href='`$settings.path`users/register/' title='`$locale.117`'>`$locale.76`</a>" %}
+    {%assign var='contact_link' value="`$settings.path`sendmail/?messageid=`$message.id`&userid=`$message.user_id`"%}
+    {%if $message.user_id != 0%}
+        {%assign var='username' value=$message.user_id_name%}
+    {%else%}
+        {%assign var='username' value=$message.user%}
+    {%/if%}
+    
+    <div class="inner ads-details-wrapper">
+        <span class="info-row"> 
+            <span class="date">
+                <i class=" icon-clock"> </i> {%$message.date_add|userdate%} ({%$locale.1215%} {%$message.date_del|date_format:"%d.%m.%Y"%})
+            </span>
+            <span class="date">
+                <i class="fa fa-hashtag"></i> {%$message.id%}
+            </span>
+            <span class="item-location">
+                <i class="fa fa-map-marker"></i> {%$allregions[$message.region].name%}
+            </span> 
+        </span>
+        {%if $message.fields.i|@count > 0%}
+            <div class="ads-image ads-img-v2 {%if $message.fields.i|@count == 1%}oneimg{%/if%}">
+                {%if $message.fields.p.0%}
+                    <h1 class="pricetag">
+                        {%if $rates_default.charcode == 'rur'%}
+                            <i class="fa fa-rub" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                        {%elseif $rates_default.charcode == 'usd'%}
+                            <i class="fa fa-usd" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                        {%elseif $rates_default.charcode == 'eur'%}
+                            <i class="fa fa-eur" aria-hidden="true"></i> {%$message.fields.p.0.value.num%}
+                        {%else%}
+                            {%$message.fields.p.0.value.txt%}
+                        {%/if%}
+                    </h1>
+                {%/if%}
+                
+                <div class="img-slider-box">
+                    <div class="slider-left">
+                        <ul class="bxslider">
+            				{%foreach  from=$message.fields.i item='image'%}
+                                <li><a class="popup-gallery" title="{%$message.title%}" href="{%$settings.path%}uploads/images/tb/{%$image.value%}"><img src="{%$settings.path%}uploads/images/tb/{%$image.value%}" alt="{%$message.title%}"/></a></li>
+            				{%/foreach%}
+                        </ul>
+                    </div>
+                    {%if $message.fields.i|@count > 1%}
+                        <div id="bx-pager" class="scrollbar">
+                            {%foreach  from=$message.fields.i item='image' name='thimages'%}
+                                <a class="thumb-item-link" data-slide-index="{%$smarty.foreach.thimages.index%}" href="">
+                                    <img src="{%$settings.path%}uploads/images/ts/{%$image.value%}" alt="img"/>
+                                </a>
+                            {%/foreach%}
+                        </div>
+                    {%/if%}
+                </div>
+                
+            </div>
+        {%/if%}
+    
+        {%if $message.approved == 0%}
+            <div class="notapproved_text alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <small>
+                    <noindex>
+                        <!--googleoff: all-->
+                            {%$settings.approve_text%}
+                        <!--googleon: all-->
+                    </noindex>
+                </small>
+            </div>
+        {%/if%}
+            
+        <div class="Ads-Details">
+            <h5 class="list-title"><strong>{%$locale.1176%}</strong></h5>
+    
+            <ul class="Ads-options">
+            	{%foreach  from=$message.fields_sorted item='v'%}
+                    {%if    $v.field_type != 'y' && 
+                            $v.field_type != 'j' && 
+                            $v.field_type != 'i' && 
+                            $v.field_type != 't' 
+                            %}
+                        
+                		{%if $v.field_type == 'v' && $v.string_type != 't'%}
+                			{%if $v.string_type == 'u'%}
+                				<li><span class="opt_name">{%$v.name%}</span>: <strong>{%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href="{%$settings.patch%}redirect/?go={%$v.value%}" target='_blank'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</strong></li>
+                			{%else%}
+                				<li><span class="opt_name">{%$v.name%}</span>: <strong>{%if $settings.user || (!$settings.user && $v.hide == 0)%}{%$v.value%}{%else%}{%$after_registration%}{%/if%}</strong></li>
+                			{%/if%}
+                		{%/if%}
+                        
+                		{%if $v.field_type == 'p'%}
+                				<li>
+                                    <span class="opt_name">{%$v.name%}</span>: 
+                                    <strong>
+                                        {%if $settings.user || (!$settings.user && $v.hide == 0)%}
+                                            {%if $rates_default.charcode == 'rur'%}
+                                                <i class="fa fa-rub" aria-hidden="true"></i> {%$v.value.num%}
+                                            {%elseif $rates_default.charcode == 'usd'%}
+                                                <i class="fa fa-usd" aria-hidden="true"></i> {%$v.value.num%}
+                                            {%elseif $rates_default.charcode == 'eur'%}
+                                                <i class="fa fa-eur" aria-hidden="true"></i> {%$v.value.num%}
+                                            {%else%}
+                                                {%$v.value.txt%}
+                                            {%/if%}
+                                        {%else%}
+                                            {%$after_registration%}
+                                        {%/if%}
+                                    </strong>
+                                </li>
+                		{%/if%}
+    
+                		{%if $v.field_type == 's'%}
+                			<li><span class="opt_name">{%$v.name%}</span>: <strong>{%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</strong></li>
+                		{%/if%}
+                		{%if $v.field_type == 'r'%}
+                			<li><span class="opt_name">{%$v.name%}</span>: <strong>{%if $settings.user || (!$settings.user && $v.hide == 0)%}<a href='{%$settings.patch%}sort/?{%$v.field_name%}={%$v.field_value%}'>{%$v.value%}</a>{%else%}{%$after_registration%}{%/if%}</strong></li>
+                		{%/if%}
+                		{%if $v.field_type == 'c'%}
+                			<li>
+                                
+                                    <span class="opt_name">{%$v.name%}</span>:
+                                    <strong>
+                            			{%if $settings.user || (!$settings.user && $v.hide == 0)%}
+                            				{%foreach from=$v.value item='val' name='key' %}
+                            				<a href='{%$settings.patch%}sort/?{%$v.field_name%}[]={%$val.key%}'>{%$val.name%}</a>{%if $smarty.foreach.key.last eq false %}, {%/if%}
+                            				{%/foreach%}
+                            			{%else%}
+                            				{%$after_registration%}
+                            			{%/if%}
+                                    </strong>
+                			</li>
+                		{%/if%}
+                
+                        {%if $v.field_type == 'f'%}
+                            <li>
+                                <span class="opt_name">{%$v.name%}</span>:
+                                <strong>  
+                                    <a href="{%$settings.patch%}download/{%$message.id%}/{%$v.field_name|substr:2%}/{%$v.value.filename%}"><i class="fa fa-download" aria-hidden="true"></i> {%$locale.617%}</a>
+                                </strong>
+                            </li>
+                        {%/if%}
+        
+                        
+                    {%/if%}
+                {%/foreach%}
+                
+            	{%if $message.tags|@count > 0%}
+            		<li><span class="opt_name">{%$locale.139%}</span>:
+            		{%foreach  from=$message.tags item='tag' name='tags'%}
+            			<a href="{%$settings.path%}tags/{%$tag.word|urlencode%}/">{%$tag.word%}</a>{%if $smarty.foreach.tags.last eq false %}, {%/if%}
+            		{%/foreach%}
+            		</li>
+            	{%/if%}
+                
+            </ul>     
+    
+            <p>
+                {%$message.text%}
+            </p>
+        
+    
+            {%foreach from=$message.fields.t item='txt'%}
+                    <h5 class="list-title"><strong>{%$txt.name%}</strong></h5>    
+                    <div class="Ads-txt">
+                        {%if $settings.user || (!$settings.user && $v.hide == 0)%}
+                            {%$txt.value%}
+                        {%else%}
+                            <noindex>
+                                <div class="alert alert-warning">{%$locale.1216%} <a href="{%$settings.path%}users/register/">{%$locale.1217%}</a></div>
+                            </noindex>
+                        {%/if%}
+                    </div>
+            {%/foreach%}
+            
+            {%if $message.fields.y|@count > 0%}
+            	{%foreach  from=$message.fields.y item='video' key='key'%}
+                    <h5 class="list-title"><strong>{%$video.name%}</strong></h5>
+                	{%if $settings.user || (!$settings.user && $video.hide == 0)%}
+                        <iframe width="100%" height="315" src="//www.youtube.com/embed/{%$video.value%}" frameborder="0" allowfullscreen></iframe>
+                	{%else%}
+                        <noindex>
+                            <div class="alert alert-warning">{%$locale.1216%} <a href="{%$settings.path%}users/register/">{%$locale.1217%}</a></div>
+                        </noindex>
+                	{%/if%}
+            	{%/foreach%}
+            {%/if%}
+            
+            {%if $message.fields.j|@count > 0%}
+            	{%foreach  from=$message.fields.j item='yandex' key='key'%}
+                    <h5 class="list-title"><strong>{%$yandex.name%}</strong></h5>
+                	<div class='block_yamap'>
+                		{%if $settings.user || (!$settings.user && $yandex.hide == 0)%}
+                			<iframe scrolling='no' src="{%$settings.patch%}yamaps/?field={%$yandex.field_name%}&point={%$yandex.value%}&message" style="width:100%; height:400px;" frameborder="0" class='add'></iframe>
+                		{%else%}
+                            <noindex>
+                                <div class="alert alert-warning">{%$locale.1216%} <a href="{%$settings.path%}users/register/">{%$locale.1217%}</a></div>
+                            </noindex>
+                		{%/if%}
+                	</div>
+            	{%/foreach%}
+            {%/if%}
+            
+            {%if $message.shop%}
+                <h5 class="list-title">
+                    <strong>
+                        {%$locale.1104%} &laquo;<a href="{%$settings.path%}shops/{%$message.shop.link%}">{%$message.shop.name%}</a>&raquo;
+                    </strong>
+                </h5>
+                {%if $message.shop.delivery != ""%}
+                    <p><strong>{%$locale.1124%}</strong></p>
+                    {%$message.shop.delivery%}
+                {%/if%}
+                {%if $message.shop.payment != ""%}
+                    <p><strong>{%$locale.1125%}</strong></p>
+                    {%$message.shop.payment%}
+                {%/if%}
+                {%if $message.shopmessages|@count != 0%}
+                    <p>
+                        <strong>
+                            {%$locale.1158%} &laquo;{%$message.shop.name%}&raquo;
+                        </strong>
+                    </p>
+                    <ul class="list-check">
+                        {%foreach from=$message.shopmessages  item='shopmessage'%}
+                        	<li>
+                                <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$shopmessage.link%}">{%$shopmessage.title%}</a>
+                                {%if $shopmessage.fields.p.0%}
+                                    <span class="badge">
+                                        {%if $rates_default.charcode == 'rur'%}
+                                            <i class="fa fa-rub" aria-hidden="true"></i> {%$shopmessage.fields.p.0.value.num%}
+                                        {%elseif $rates_default.charcode == 'usd'%}
+                                            <i class="fa fa-usd" aria-hidden="true"></i> {%$shopmessage.fields.p.0.value.num%}
+                                        {%elseif $rates_default.charcode == 'eur'%}
+                                            <i class="fa fa-eur" aria-hidden="true"></i> {%$shopmessage.fields.p.0.value.num%}
+                                        {%else%}
+                                            {%$shopmessage.fields.p.0.value.txt%}
+                                        {%/if%}
+                                    </span>
+                                {%/if%}
+                            </li>
+                        {%/foreach%}
+                    </ul>
+                {%/if%}
+            {%/if%}  
+        
+            {%if $message.simmessages%}
+                    <h5 class="list-title"><strong>{%$locale.875%}</strong></h5>
+                    <ul class="list-check">
+                        {%foreach from=$message.simmessages  item='simmessage'%}
+                        	<li>
+                                <a href="{%$settings.path%}{%$smarty.const.MESSAGES%}/{%$simmessage.link%}">{%$simmessage.title%}</a>
+                                {%if $simmessage.fields.p.0%}
+                                    <span class="badge">
+                                        {%if $rates_default.charcode == 'rur'%}
+                                            <i class="fa fa-rub" aria-hidden="true"></i> {%$simmessage.fields.p.0.value.num%}
+                                        {%elseif $rates_default.charcode == 'usd'%}
+                                            <i class="fa fa-usd" aria-hidden="true"></i> {%$simmessage.fields.p.0.value.num%}
+                                        {%elseif $rates_default.charcode == 'eur'%}
+                                            <i class="fa fa-eur" aria-hidden="true"></i> {%$simmessage.fields.p.0.value.num%}
+                                        {%else%}
+                                            {%$simmessage.fields.p.0.value.txt%}
+                                        {%/if%}
+                                    </span>
+                                {%/if%}
+                            </li>
+                        {%/foreach%}
+                    </ul>
+            {%/if%}   
+            {%if $is_billing %}
+            	<div class='services'>
+                    <h5 class="list-title"><i class="icon-certificate icon-color-1"></i> <strong>{%$locale.1294%}</strong></h5>
+            		{%foreach from=$services item='serv'%}
+
+        					{%assign var='href' value="`$settings.path`services.html?service=`$serv.type`&message_id=`$message.id`" %}
+        					{%assign var='iframeclass' value='premium_modal' %}
+
+                            <a href="{%$href%}" class="{%$iframeclass%} btn btn-primary btn-xs">
+                                {%if $serv.type == 'm'%}
+                                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
+                                {%elseif $serv.type == 'r'%}
+                                    <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+                                {%elseif $serv.type == 'b'%}
+                                    <i class="fa fa-th-large" aria-hidden="true"></i>
+                                {%else%}
+                                    <i class="icon-certificate"></i>
+                                {%/if%}
+                                {%$serv.name%}
+                            </a>
+            		{%/foreach%}
+            	</div>
+            {%/if%} 
+            {%if $settings.sharing != 0%}
+                <div class="sharing">
+                    <h5 class="list-title"><strong>{%$locale.1267%}</strong></h5>
+                    {%if $settings.sharing == 1%}
+                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,twitter,whatsapp" data-counter=""></div>
+                    {%elseif $settings.sharing == 2%}
+                        <div class="social-likes">
+                        	<div class="facebook" title="{%$locale.1302%}">Facebook</div>
+                        	<div class="twitter" title="{%$locale.1303%}">Twitter</div>
+                        	<div class="mailru" title="{%$locale.1304%}">{%$locale.1299%}</div>
+                        	<div class="vkontakte" title="{%$locale.1305%}">{%$locale.1300%}</div>
+                        	<div class="odnoklassniki" title="{%$locale.1306%}">{%$locale.1301%}</div>
+                        </div>
+                    {%/if%}
+                </div>
+            {%/if%}
+            <div class="content-footer text-left">
+                <a class="btn btn-default contact_modal" href="{%$contact_link%}">
+                    <i class=" icon-mail-2"></i> {%$locale.919%} 
+                </a> 
+                
+                {%if $message.user_array.phone != ""%}
+                    <a class="btn btn-info btn-phone" href="#" id="user_{%$message.user_array.id%}">
+                        <i class="icon-phone-1"></i> <span>{%$locale.1218%}</span>
+                    </a>
+                {%/if%}
+                
+                {%foreach from=$message.fields.v item='phone'%}
+                    {%if $phone.string_type == 't'%}
+                        <a class="btn btn-info btn-phone" href="#" id="{%$phone.field_name%}_{%$message.id%}">
+                            <i class="icon-phone-1"></i> <span>{%$phone.name%}</span>
+                        </a>
+                    {%/if%}
+                {%/foreach%}
+                
+                <a class="btn {%if $message.fav == 1%}btn-default{%else%}btn-success{%/if%} make-favorite notepad" data-id="{%$message.id%}"> 
+                    <i class="fa fa-bookmark-o"></i> <span>{%$locale.228%}</span> 
+                </a>
+    
+                
+            </div>
+            
+            
+            
+            
+            
+        </div>
+    </div>
+    
+    <!--/.ads-details-wrapper-->
+    
+    {%if $settings.comment_on%}
+      
+    </div>
+    <div class="inner-box category-content comment-block">
+        {%include file='comments.html'%}
+      
+    {%/if%}
+      
+    {%include file='form_contact.html'%}
+    {%include file='form_premium.html'%}
+
+{%/if%}

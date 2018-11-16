@@ -1,0 +1,18 @@
+
+	{%if $ok%}
+		<div class='alert alert-success'>
+	        <p class="lead"><i class="fa fa-check" aria-hidden="true"></i> {%$locale.101%}</p>
+		</div>
+	{%else%}
+		<div class='alert alert-success'>
+	        <p class="lead"><i class="fa fa-exclamation" aria-hidden="true"></i> {%$locale.299%}</p>
+		</div>
+		{%if $settings.user %}{%*&& $settings.user.balance >= $count*%}
+			{%$locale.298%}: {%$count%} {%$currency_names[$settings.currency].name2%}<br />
+			<input type="button" value="{%$locale.297%}" onclick="document.location.href='{%$settings.path%}add/debit/?payment_id={%$payment_id%}';" class='btn btn-primary btn-lg'>
+		{%else%}
+			<iframe scrolling='no' src="{%$settings.patch%}add2/?service=a&message_id={%$save_id%}&payment_id={%$payment_id%}" class='frame_pay'></iframe>
+		{%/if%}
+        <p>&nbsp;</p>
+	{%/if%}
+

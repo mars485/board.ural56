@@ -1,0 +1,28 @@
+<div class='comm_user' style="margin-top: 20px; margin-bottom: 30px; -moz-box-shadow: 0px 0px 25px #ccc;
+-webkit-box-shadow: 0px 0px 25px #ccc;
+box-shadow: 0px 0px 25px #ccc; position: relative;">
+	<div style=" background: #54AFDF;
+padding: 5px;
+font-size: 12px;
+color: #FFF; "><i class="fa fa-user"></i> {%if $comment.userinfo%}{%$comment.userinfo.name%}
+	{%else%}
+		{%$comment.user_name%}
+	{%/if%}
+    <span class="smalldate">  <i class="fa fa-calendar"></i> {%$comment.date|date_format:"%d.%m.%Y в %H:%M"%}
+	{%if $comment.user_id==$settings.user.id and $settings.user.id!=0 and $comment.status==0%}
+        <span>
+		&nbsp;&nbsp;{%$locale.1112%}
+	</span>
+	{%/if%}
+    </span>
+      </div>
+        {%if $comment.editable%}
+            <span  style="position: absolute; right: 10px;  margin-top: -20px; " class="editblock" style="visibility: hidden;">
+                <a style="color: #FFF;" href="" name="{%$comment.id%}" class="comm_edit" >{%$locale.200%}</a>
+                <a style="color: #FFF;" href="" name="{%$comment.id%}" class="comm_delete">{%$locale.201%}</a>
+            </span>
+        {%/if%}
+    <div class="comm_text" style="padding: 10px;">
+	    {%$comment.text|wordwrap:50%}
+    </div>
+</div>

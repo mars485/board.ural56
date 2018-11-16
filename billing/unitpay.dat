@@ -1,0 +1,119 @@
+Unitpay
+//separator//
+646
+//separator//
+https://unitpay.ru/
+//separator//
+rur/RUB|byr/BYR|eur/EUR|usd/USD
+//separator//
+<form action="https://unitpay.ru/pay/{%$abilling.key1%}" method="post" style="text-align:center;" target="_blank">
+<input type="hidden" value="{%$pay.order%}" name="account">
+<input type="hidden" value="{%$pay.amount%}" name="sum">
+<input type="hidden" value="{%$pay.comment%}" name="desc">
+<input type="hidden" value="{%$pay.currency%}" name="currency">
+<input  type="submit" class="btn btn-small" value="{%$locale.668%}">
+</form>
+</center>
+//separator//
+ html_2
+//separator//
+$form[] = array(
+				'id' => 'key1',
+				'name' => 'Публичный ключ проекта',
+				'help' => 'Публичный ключ отображается в виде параметра в URL формы на странице Форма оплаты. Н-р: https://unitpay.ru/pay/10547-4321, публичный ключ - 0547-4321',
+				'type' => 'input'
+				);
+$form[] = array(
+				'id' => 'key2',
+				'name' => 'Секретный ключ (SECRET KEY)',
+				'help' => 'Секретный ключ находится на странице настроек Вашего проекта и имеет вид: 5u3dea586ed96340fa93ad0d7dc3f439',
+				'type' => 'input'
+				);
+
+
+//separator//
+
+
+/**
+ * Формирование цифровой подписи для массива параметров
+ *
+ * @param array $params
+ * @param string $secretKey
+ * @return string
+ */
+function md5sign($method, $params, $secretKey)
+{
+    $delimiter = '{up}';
+    ksort($params);
+    unset($params['sign']);
+    unset($params['signature']);
+    array_push($params, $secretKey);
+    array_unshift($params, $method);
+
+    return hash('sha256', join($delimiter, $params));
+}
+
+/**
+ * Ошибочный ответ партнера
+ *
+ * @param $message
+ */
+function responseError($message)
+{
+    $error = array(
+        "jsonrpc" => "2.0",
+        "error" => array("code" => -32000, "message" => $message),
+        'id' => 1);
+    echo json_encode($error);
+    exit();
+}
+
+/**
+ * Успешный ответ партнера
+ *
+ * @param $message
+ */
+function responseSuccess($message)
+{
+    $success = array(
+        "jsonrpc" => "2.0",
+        "result" => array("message" => $message),
+        'id' => 1);
+    echo json_encode($success);
+    exit();
+}
+
+// Ваш секретный ключ из личного кабинета
+$secretKey = $abilling['key2'];
+$method = $_GET['method'];
+$params = $_GET['params'];
+
+if ($params['signature'] != md5sign($method, $params, $secretKey)) {
+    responseError("Некорректная цифровая подпись");
+}
+
+switch ($method) {
+    case 'check':
+        if(check_payment($params['account'])){
+            responseSuccess("Успех");
+        }else{
+            responseError("Ошибка проверки платежа");
+        }
+        break;
+    case 'pay':
+        if(check_payment($params['account'])){
+            make_order($params['account'], 'by UnitPay, id '.$params['unitpayId']);
+            responseSuccess("Успех");
+        }else{
+            responseError("Ошибка проверки платежа");
+        }    
+        // Оказываем услугу
+        break;
+    case 'error':
+        // Фиксируем ошибку оплаты
+        responseError("Ошибка оплаты");
+        break;
+    default:
+        responseError("Некорректный метод, поддерживаются методы: error, check и pay");
+        exit;
+}

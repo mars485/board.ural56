@@ -1,0 +1,41 @@
+
+	{%if $err|@count > 0%}
+        <div class="alert alert-danger error" role="alert">
+            {%foreach from=$err item='er'%}
+                <p>{%$er%}</p>
+            {%/foreach%}
+        </div>
+    {%elseif isset($smarty.post.msg)%}
+        <div class="alert alert-success ok" role="alert">
+                <p>{%$locale.227%}</p>
+        </div>
+    {%/if%}
+    {%if $messages|@count > 0%}
+    <h4 class="line">{%$locale.142%}</h4>
+    <form name="prolong_few" action="" method="POST">
+        <ul style="margin: 20px;">
+            {%foreach from=$messages item='message'%}
+                <li>
+                    <input checked name="msg[]" class="MessagesCheck" type="checkbox" value="{%$message.id%}" />
+                    <a href='{%$settings.patch%}{%$smarty.const.MESSAGES%}/{%$message.link%}'>
+                        {%$message.title|truncate_utf:50:'...'%}
+                    </a>
+                </li>
+            {%/foreach%}
+        </ul>
+        
+        <select size='1' name='timing' class='add' style='width:200px;'>
+        	<option value=''>{%$locale.81%}</option>
+        	{%foreach  from=$timing item='time'%}
+        	   <option value='{%$time.id%}' {%if $check.timing == $time.id%}selected{%/if%}>{%$time.text%}</option>
+        	{%/foreach%}
+        </select>
+        <br />
+        <p><input type="submit" class="btn btn-default" value="{%$locale.145%}"></p>
+        
+    </form>
+    {%elseif !isset($smarty.post.msg)%}
+        <div class="alert alert-warning error" role="alert">
+                <p>{%$locale.1092%}</p>
+        </div>
+    {%/if%}
