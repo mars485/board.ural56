@@ -73,7 +73,7 @@
                 <i class="fa fa-asterisk" aria-hidden="true" data-original-title="{%$locale.392%}"  data-placement="top" data-toggle="tooltip"></i>                
             </label>
             <div class="col-md-8">
-                <input value="Заголовок" maxlength="{%$settings.max_title%}" data-default="Загаловок" name="title" data-original-title="{%$locale.73%}" class="form-control calcletters" placeholder="{%$locale.72%}" required="" type="text">
+                <input value="{%$check.content%}" maxlength="{%$settings.max_title%}"  name="title" data-original-title="{%$locale.73%}" class="form-control calcletters" placeholder="{%$locale.72%}" required="" type="text">
             </div>
         </div>
         <div class="clr"></div>
@@ -199,7 +199,7 @@
             </div>
         </div>
         {%if !$editable%}
-        <div class="form-group" style="visibility: hidden; margin-top: -50px>"
+        <!--div class="form-group" style="visibility: hidden; margin-top: -50px>"
             <label class="col-md-3 control-label"  for="password1">
                 {%$locale.22%}
                 <i class="icon-info-circled-alt" data-original-title="{%$locale.988%}"  data-placement="top" data-toggle="tooltip"></i>
@@ -228,7 +228,7 @@
                 </div>
 
             </div>
-        </div>
+        </div-->
         {%/if%}
         {%/if%}
                
