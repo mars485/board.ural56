@@ -374,7 +374,7 @@ else
 			    status='".$sstatus."',
 			    sendmail='0',
 			    email='".$check['email']."',
-			    title='".wordwrap_utf8(trim($check['title']),50)."',
+			    title='".wordwrap_utf8(trim($check['content']),20)."',
 			    text='".$check['content']."',
 			    marked='0',
                 approved='".$approved."',
